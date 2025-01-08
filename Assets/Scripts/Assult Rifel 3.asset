@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9bbf9ed18411f7f4f88b45acb94ce75a, type: 3}
-  m_Name: RifleInfo
+  m_Name: Assult Rifel 3
   m_EditorClassIdentifier: 
-  gameObject: {fileID: 0}
+  weaponName: Assult Rifel 3
   shootDamage: 1
   shootRate: 0.5
-  reloadRate: 1
   shootDist: 80
   currentAmmo: 30
   maxAmmo: 30
   ammoTypeName: Long Range Calibre
+  reloadRate: 1
   hitEffect: {fileID: 0}
   shootSound: []
   shootSoundVol: 0

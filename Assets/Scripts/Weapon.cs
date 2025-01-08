@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,7 +7,16 @@ public class Weapon : MonoBehaviour
 {
     [SerializeField] WeaponInformation gunInfo;
 
-    // Start is called before the first frame update
+    private void Start()
+    {
+        PlayerShoot.shootInput += PlayerShoot_shootInput;
+    }
+
+    private void PlayerShoot_shootInput()
+    {
+        gunInfo.currentAmmo--;
+    }
+
     public int GetAmmo()
     {
         return gunInfo.currentAmmo;
@@ -15,11 +25,6 @@ public class Weapon : MonoBehaviour
     public void SetAmmo(int newAmmo)
     {
         gunInfo.currentAmmo = newAmmo;
-    }
-
-    public void Shoot()
-    {
-        gunInfo.currentAmmo--;
     }
 
     public void Reload()
