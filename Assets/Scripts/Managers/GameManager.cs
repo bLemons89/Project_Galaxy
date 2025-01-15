@@ -52,7 +52,7 @@ public class GameManager : MonoBehaviour
         // Pause Input
         if(Input.GetButtonDown("Cancel") || Input.GetButtonDown("Pause"))
         {
-            if (menuActive = null)
+            if (menuActive == null)
             {
                 StatePause();
                 menuActive = backgroundScreen;
