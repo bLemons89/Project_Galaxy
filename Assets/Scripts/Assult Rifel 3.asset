@@ -20,6 +20,7 @@ MonoBehaviour:
   maxAmmo: 30
   ammoTypeName: Long Range Calibre
   reloadRate: 1
+  maximumDistance: 100
   hitEffect: {fileID: 0}
   shootSound: []
   shootSoundVol: 0

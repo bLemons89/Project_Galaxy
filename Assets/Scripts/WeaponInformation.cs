@@ -16,15 +16,24 @@ public class WeaponInformation : ScriptableObject
     public int maxAmmo;
     public string ammoTypeName;
     public int reloadRate;
+    public int maximumDistance;
 
-    [Header("Audio Info")]
-    public ParticleSystem hitEffect;
-    public AudioClip[] shootSound;
-    public float shootSoundVol;
-    public AudioClip reloadSound;
-    public float reloadSoundVol;
-    public AudioClip emptySound;
-    public float emptySoundVol;
-    public Sprite weaponSprite;
+    [Header("Area Damage")]
+    public float areaOfEffectRadius;
+    public int splashDamage;
+
+    [Header("Sprite Info for UI")]
+    public Sprite weaponSprite; // sprite to show UI weapon changes, if needed.
+
+    // Anything below are from the class PP2, I am not sure if you would like to use these:
+    //[Header("Audio Info")]
+    //public ParticleSystem hitEffect;
+    //public AudioClip[] shootSound;
+    //public float shootSoundVol;
+    //public AudioClip reloadSound;
+    //public float reloadSoundVol;
+    //public AudioClip emptySound;
+    //public float emptySoundVol;
+    
 
 }
