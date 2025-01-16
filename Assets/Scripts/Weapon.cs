@@ -27,7 +27,7 @@ public class Weapon : MonoBehaviour
     {
         if(gunInfo.currentAmmo > 0)
         {
-            if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hitInfo, gunInfo.maximumDistance))
+            if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hitInfo, gunInfo.shootDistance))
             {
                 Debug.Log(hitInfo.transform.name);
                 gunInfo.currentAmmo--;

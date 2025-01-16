@@ -50,7 +50,7 @@ public class playerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!gameManager.instance.IsPaused)
+        if (!GameManager.instance.IsPaused)
         {
             //always checking for these
             Movement();

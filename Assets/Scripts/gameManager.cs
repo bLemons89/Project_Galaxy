@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class gameManager : MonoBehaviour
+public class GameManager : MonoBehaviour
 {
     //singleton
-    public static gameManager instance;
+    public static GameManager instance;
 
     [Header("=== OVERLAYS ===")]
     [SerializeField] public GameObject backgroundScreen;

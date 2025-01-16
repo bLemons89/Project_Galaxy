@@ -7,7 +7,7 @@ using UnityEngine;
 public class PlayerShoot : MonoBehaviour
 {
     public static event Action shootInput;
-    public static event Action weaponReload;
+    public static event Action weaponReload;        
 
     private void Update()
     {

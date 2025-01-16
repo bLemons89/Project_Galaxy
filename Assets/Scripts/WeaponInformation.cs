@@ -11,12 +11,12 @@ public class WeaponInformation : ScriptableObject
     [Header("Shooting")]
     public int shootDamage;
     public float shootRate;    
-    public int shootDist;
+    public int shootDistance;
     public int currentAmmo;
     public int maxAmmo;
     public string ammoTypeName;
     public int reloadRate;
-    public int maximumDistance;
+    
 
     [Header("Area Damage")]
     public float areaOfEffectRadius;
