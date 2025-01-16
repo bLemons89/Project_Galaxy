@@ -17,6 +17,9 @@ public abstract class ItemBase : ScriptableObject
     [SerializeField] protected ItemType itemType;
     [SerializeField] protected int maxStackSize = 1;
     
+    public string ItemName => itemName;
+    public int MaxStackSize => maxStackSize;
+
     public enum ItemType
     {
         Weapon,

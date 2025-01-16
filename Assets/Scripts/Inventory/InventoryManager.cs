@@ -23,10 +23,44 @@ public class InventoryManager : MonoBehaviour
     //inventory storage
     List<InventorySlot> inventorySlots = new List<InventorySlot>();
 
-    // Update is called once per frame
-    void Update()
+    //handles item pickup
+    public void OnPickup(ItemBase item, int quantity)
     {
-        
+        Debug.Log($"InventoryManager handling pickup: {item.ItemName}, Quantity: {quantity}");
+
+        //check if item already exists
+        InventorySlot existingSlot = inventorySlots.Find(slot => slot.Item == item);    //lambda expression, returns null if no match
+        //check if item is stackable, if the item already exists
+        if (existingSlot != null && item.MaxStackSize > 1)
+        {
+            //store number of that item that can fit in the current stack
+            int availableSpace = item.MaxStackSize - existingSlot.Quantity;
+            //store how many of the items collected to be stored in the current stack
+            //i.e. if max stack = 10, player has 7 and collects 5, only 3 will be stored
+            int addedQuantity = Mathf.Min(availableSpace, quantity);
+            //adjust stack number
+            existingSlot.Quantity += addedQuantity;
+
+            //adjust quantity for possible left overs
+            quantity -= addedQuantity;
+        }
+
+        //new slot if no stack or if left over
+        if(quantity > 0)
+        {
+            inventorySlots.Add(new InventorySlot(item, quantity));
+        }
+
+        Debug.Log($"Added {quantity} of {item.ItemName} to inventory.");
+
+        //update ui??
+    }
+
+    // Update is called once per frame
+    void UpdateUI()
+    {
+        //event to update UI
+        Debug.Log("Inventory UI updated.");
     }
 }
 
