@@ -7,17 +7,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class InventoryManager : MonoBehaviour
 {
     //singleton
     public static InventoryManager Instance;
 
+    //Unity Event notifies Inventory was updated
+    public UnityEvent OnInventoryUpdated;
+
     // Start is called before the first frame update
     void Awake()
     {
         if (Instance == null)
             Instance = this;
+        else
+            Destroy(gameObject);
     }
 
     //inventory storage
@@ -27,6 +33,8 @@ public class InventoryManager : MonoBehaviour
     public void OnPickup(ItemBase item, int quantity)
     {
         Debug.Log($"InventoryManager handling pickup: {item.ItemName}, Quantity: {quantity}");
+
+        //add inventory limit maxSlots if statement return
 
         //check if item already exists
         InventorySlot existingSlot = inventorySlots.Find(slot => slot.Item == item);    //lambda expression, returns null if no match
@@ -54,6 +62,9 @@ public class InventoryManager : MonoBehaviour
         Debug.Log($"Added {quantity} of {item.ItemName} to inventory.");
 
         //update ui??
+
+        //notifies that inventory was updated
+        OnInventoryUpdated?.Invoke();   //Unity event (for other managers to listen for)
     }
 
     // Update is called once per frame
