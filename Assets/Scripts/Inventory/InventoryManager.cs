@@ -21,7 +21,10 @@ public class InventoryManager : MonoBehaviour
     void Awake()
     {
         if (Instance == null)
+        {
             Instance = this;
+            DontDestroyOnLoad(gameObject); //keeps inventory between scenes
+        }
         else
             Destroy(gameObject);
     }
@@ -32,7 +35,7 @@ public class InventoryManager : MonoBehaviour
     //handles item pickup
     public void OnPickup(ItemBase item, int quantity)
     {
-        Debug.Log($"InventoryManager handling pickup: {item.ItemName}, Quantity: {quantity}");
+        //Debug.Log($"InventoryManager handling pickup: {item.ItemName}, Quantity: {quantity}");
 
         //add inventory limit maxSlots if statement return
 
@@ -49,6 +52,8 @@ public class InventoryManager : MonoBehaviour
             //adjust stack number
             existingSlot.Quantity += addedQuantity;
 
+            //Debug.Log($"Existing Slot had {quantity} of {item.ItemName} added to it with a total of {existingSlot.Quantity} in the slot.");
+
             //adjust quantity for possible left overs
             quantity -= addedQuantity;
         }
@@ -57,9 +62,11 @@ public class InventoryManager : MonoBehaviour
         if(quantity > 0)
         {
             inventorySlots.Add(new InventorySlot(item, quantity));
+
+            //Debug.Log($"New Slot created with item {item.ItemName} and quantity {quantity}");
         }
 
-        Debug.Log($"Added {quantity} of {item.ItemName} to inventory.");
+        //Debug.Log($"Added {quantity} of {item.ItemName} to inventory.");
 
         //update ui??
 
