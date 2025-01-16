@@ -28,7 +28,7 @@ public class GameManager : MonoBehaviour
 
     // Getters and Setters //
     public bool IsPaused
-    { 
+    {
         get => isPaused;
         set => isPaused = value;
     }
