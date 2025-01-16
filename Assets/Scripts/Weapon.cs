@@ -6,7 +6,6 @@ using UnityEngine;
 public class Weapon : MonoBehaviour
 {
     
-
     [SerializeField] WeaponInformation gunInfo;
 
     private void Start()
@@ -36,7 +35,11 @@ public class Weapon : MonoBehaviour
         }
         else
         {
-            Debug.Log("No More Ammo, Press r to Reload!!");
+            // Inform the player running out of ammo using Text or HUD image to
+            // inform the player to press "r" to reload the ammo
+            #if UNITY_EDITOR
+                Debug.Log("No More Ammo, Press r to Reload!!");
+            #endif
         }
         
     }
@@ -53,8 +56,15 @@ public class Weapon : MonoBehaviour
 
     public void Reload()
     {
-        Debug.Log($"Reloading ammo: {gunInfo.currentAmmo}");
+        #if UNITY_EDITOR
+            Debug.Log($"Reloading ammo: {gunInfo.currentAmmo}");
+        #endif
+
         gunInfo.currentAmmo = gunInfo.maxAmmo;
     }
 
+    public int GetShootDamage()
+    {
+        return gunInfo.shootDamage;
+    }
 }
