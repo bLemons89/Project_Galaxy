@@ -11,12 +11,15 @@ public class HealthSystem : MonoBehaviour
     [Header("===== STATS =====")]
     [SerializeField] float maxHealth;
     float currentHealth;
+    float previousHealth;
 
     [Header("===== VISUAL =====")]
     [SerializeField] Image healthBarBack;
     [SerializeField] Image healthBarFill;
     [SerializeField] Gradient healthGradient;
-    [SerializeField] float fillSpeed;
+    [SerializeField] float topFillSpeed;
+    [SerializeField] float bottomFillSpeed;
+    [SerializeField] Image easeBar;
 
     [Header("===== CRITICAL HEALTH =====")]
     [SerializeField] TextMeshProUGUI critWarningText;
@@ -29,6 +32,7 @@ public class HealthSystem : MonoBehaviour
 
     // Flags //
     bool isMax;
+    bool isHeal;
     bool isCrit;
     bool isDead;
     //bool isInvincible;
@@ -42,6 +46,7 @@ public class HealthSystem : MonoBehaviour
 
         //set flags
         isMax = true;
+        isHeal = false;
         isCrit = false;
         isDead = false;
     }
@@ -72,6 +77,7 @@ public class HealthSystem : MonoBehaviour
         if (currentHealth > 0)
         {
             currentHealth -= damageAmt;
+            isHeal = false;
         }
         //check for death
         if (currentHealth <= 0 && !isDead)
@@ -85,6 +91,7 @@ public class HealthSystem : MonoBehaviour
         if(currentHealth < maxHealth)
         {
             currentHealth += healAmt;
+            isHeal = true;
         }
     }
 
@@ -92,9 +99,19 @@ public class HealthSystem : MonoBehaviour
     void UpdateHealthBar()
     {
         float fillAmount = currentHealth / maxHealth;
-        healthBarFill.DOFillAmount(fillAmount, fillSpeed);
-        healthBarFill.color = healthGradient.Evaluate(currentHealth / maxHealth);
 
+        if (isHeal)
+        { 
+            healthBarFill.DOFillAmount(fillAmount, topFillSpeed);
+            easeBar.DOFillAmount(fillAmount, bottomFillSpeed);
+        }
+        else
+        {
+            healthBarFill.DOFillAmount(fillAmount, bottomFillSpeed);
+            easeBar.DOFillAmount(fillAmount, topFillSpeed);
+        }
+
+        healthBarFill.color = healthGradient.Evaluate(currentHealth / maxHealth);
     }
 
     // Critical Health //
@@ -119,13 +136,16 @@ public class HealthSystem : MonoBehaviour
     }
     void StartFlashing()
     {
-        CancelInvoke("FlashCritWarning"); // Ensure no duplicate calls
-        InvokeRepeating("FlashCritWarning", 0f, flashSpeed); // Start flashing
+        // Ensure no duplicate calls
+        CancelInvoke("FlashCritWarning"); 
+        // Start flashing
+        InvokeRepeating("FlashCritWarning", 0f, flashSpeed);
     }
     void StopFlashing()
     {
         CancelInvoke("FlashCritWarning");
-        critWarningText.gameObject.SetActive(false); // Hide the warning text
+        // Hide the warning text
+        critWarningText.gameObject.SetActive(false);
     }
     void FlashCritWarning()
     {

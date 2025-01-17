@@ -45,6 +45,8 @@ public class GameManager : MonoBehaviour
         player = GameObject.FindWithTag("Player");
         playerScript = player.GetComponent<playerScript>();
 
+        // find and set other reference
+
     }
 
    
