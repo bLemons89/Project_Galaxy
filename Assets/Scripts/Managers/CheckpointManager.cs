@@ -34,6 +34,8 @@ public class CheckpointManager : MonoBehaviour
         lastCheckpointPosition = position;
 
         Debug.Log($"Checkpoint set at: {lastCheckpointPosition}");
+
+        //event sent to player respawn
     }    
 
     //public Vector3 GetCheckpointPosition()        //backup in case public getter does not work

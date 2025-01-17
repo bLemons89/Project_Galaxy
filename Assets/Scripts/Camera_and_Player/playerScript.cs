@@ -31,6 +31,8 @@ public class playerScript : MonoBehaviour
     // Vectors //
     Vector3 moveDirection;
     Vector3 horizontalVelocity;
+    //vector to store checkpoint
+
 
     // Getters and Setters //
 
@@ -102,6 +104,30 @@ public class playerScript : MonoBehaviour
 
         playerController.Move(horizontalVelocity * Time.deltaTime);
         horizontalVelocity.y -= gravity * Time.deltaTime;
+    }
+
+    public void Respawn()
+    {
+        if (CheckpointManager.instance)
+        {
+            Vector3 respawnPosition = CheckpointManager.instance.LastCheckpointPosition;
+
+            Debug.Log($"Last Checkpoint position stored for respawn at {respawnPosition}");
+
+            //disable controller to move player
+            playerController.enabled = false;
+            transform.position = respawnPosition;
+            playerController.enabled = true;
+
+            //resetting speed to prevent glitches
+            horizontalVelocity = Vector3.zero;
+
+            Debug.Log($"Player respawned at {respawnPosition}");
+        }
+        else
+        {
+            Debug.Log("No CheckpointManager, unable to respawn");
+        }
     }
 
 }
