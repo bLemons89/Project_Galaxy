@@ -2085,7 +2085,7 @@ MonoBehaviour:
     m_ColorSpace: -1
     m_NumColorKeys: 3
     m_NumAlphaKeys: 2
-  speed: 3
+  fillSpeed: 1
   critWarningText: {fileID: 378509871}
   critHealth: 0.2
   flashSpeed: 0.5

@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEditor;
+using DG.Tweening;
 
 public class HealthSystem : MonoBehaviour
 {
@@ -15,9 +16,7 @@ public class HealthSystem : MonoBehaviour
     [SerializeField] Image healthBarBack;
     [SerializeField] Image healthBarFill;
     [SerializeField] Gradient healthGradient;
-    [SerializeField] float speed;
-    
-    float lerpSpeed;
+    [SerializeField] float fillSpeed;
 
     [Header("===== CRITICAL HEALTH =====")]
     [SerializeField] TextMeshProUGUI critWarningText;
@@ -62,10 +61,7 @@ public class HealthSystem : MonoBehaviour
             isMax = false;
         }
         
-        lerpSpeed = speed * Time.deltaTime;
-
         UpdateHealthBar();
-        ColorChange();
 
         CheckForCriticalHealth();
     }
@@ -92,21 +88,14 @@ public class HealthSystem : MonoBehaviour
         }
     }
 
-
     // Health Bar //
     void UpdateHealthBar()
     {
-        healthBarFill.fillAmount = Mathf.Lerp(healthBarFill.fillAmount, currentHealth / maxHealth, lerpSpeed);
-    }
-    void ColorChange()
-    {
-        //try gradient
+        float fillAmount = currentHealth / maxHealth;
+        healthBarFill.DOFillAmount(fillAmount, fillSpeed);
         healthBarFill.color = healthGradient.Evaluate(currentHealth / maxHealth);
 
-        //Color healthColor = Color.Lerp(Color.red, Color.green, currentHealth/maxHealth);
-        //healthBarFill.color = healthColor;
     }
-
 
     // Critical Health //
    void CheckForCriticalHealth()
@@ -142,48 +131,5 @@ public class HealthSystem : MonoBehaviour
     {
         critWarningText.gameObject.SetActive(!critWarningText.gameObject.activeSelf);
     }
-
-
-
-
-
-
-    //void CheckForCriticalHealth()
-    //{
-    //    if (currentHealth <= maxHealth * critHealth)
-    //    {   //make sure coroutine isn't already playing
-    //        if(!isCrit)
-    //        {
-    //            //change flag
-    //            isCrit = true;
-    //            critWarningText.gameObject.SetActive(true); // Ensure it starts visible
-    //            InvokeRepeating("FlashCritWarning", 0, flashSpeed);
-
-    //        }
-    //    }
-    //    else
-    //    {  
-    //        //stop when leaves the threshhold
-    //        if(isCrit)
-    //        {
-    //            //change flag
-    //            isCrit = false;
-    //            CancelInvoke("FlashCritWarning"); // Stop repeating
-
-    //            //turn off
-    //            critWarningText.gameObject.SetActive(false);
-    //        }           
-    //    }
-    //}
-
-    //private IEnumerator CritWarning()
-    //{
-    //    while(true)
-    //    {
-    //        //toggle text on/off
-    //        critWarningText.gameObject.SetActive(!critWarningText.gameObject.activeSelf);
-    //        yield return new WaitForSeconds(flashSpeed);
-    //    }
-    //}
 
 }
