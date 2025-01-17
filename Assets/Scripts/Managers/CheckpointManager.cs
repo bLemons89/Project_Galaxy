@@ -2,7 +2,7 @@
     Author: Juan Contreras
     Edited By:
     Date Created: 01/16/2025
-    Date Updated: 01/16/2025
+    Date Updated: 01/17/2025
     Description: Class to manage checkpoints the player sets off in game
  */
 using System.Collections;
@@ -14,10 +14,9 @@ public class CheckpointManager : MonoBehaviour
 {
     public static CheckpointManager instance;
 
-    Vector3 checkpointPosition;
-    bool activeCheckpoint;
+    Vector3 lastCheckpointPosition;
 
-    public bool ActiveCheckpoint => activeCheckpoint;       //true if there is a current checkpoint saved
+    public Vector3 LastCheckpointPosition => lastCheckpointPosition;
 
     // Awake is called before the first frame update
     void Awake()
@@ -32,20 +31,13 @@ public class CheckpointManager : MonoBehaviour
     public void SetCheckpoint(Vector3 position)
     {
         //store position of checkpoint
-        checkpointPosition = position;
-        //activate checkpoint
-        activeCheckpoint = true;
+        lastCheckpointPosition = position;
 
-        Debug.Log($"Checkpoint set at: {checkpointPosition}");
+        Debug.Log($"Checkpoint set at: {lastCheckpointPosition}");
     }    
 
-    public Vector3 GetCheckpointPosition()         //may not need as long as there is always a checkpoint
-    {
-        if (activeCheckpoint)
-        {
-            return checkpointPosition;
-        }
-        else
-            return Vector3.zero;
-    }
+    //public Vector3 GetCheckpointPosition()        //backup in case public getter does not work
+    //{
+    //    return lastCheckpointPosition;
+    //}
 }
