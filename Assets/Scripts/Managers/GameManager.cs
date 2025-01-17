@@ -44,13 +44,16 @@ public class GameManager : MonoBehaviour
         // find and set player reference
         player = GameObject.FindWithTag("Player");
         playerScript = player.GetComponent<playerScript>();
+
     }
 
    
     void Update()
     {
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
         // Pause Input
-        if(Input.GetButtonDown("Cancel") || Input.GetButtonDown("Pause"))
+        if (Input.GetButtonDown("Cancel") || Input.GetButtonDown("Pause"))
         {
             if (menuActive == null)
             {
@@ -82,5 +85,4 @@ public class GameManager : MonoBehaviour
         menuActive.SetActive(false);
         menuActive = null;
     }
-
 }
