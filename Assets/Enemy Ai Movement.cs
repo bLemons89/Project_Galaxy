@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+<<<<<<< Updated upstream
 using UnityEngine.AI;
 
 public class EnemyAiMovement : MonoBehaviour
@@ -19,17 +20,37 @@ public class EnemyAiMovement : MonoBehaviour
     private bool canAttack = true;
     private Coroutine roamCoroutine;
     private Vector3 startPos;
+=======
+
+public class PlayerController : MonoBehaviour
+{
+    [SerializeField] private float moveSpeed = 5f;
+    [SerializeField] private float rotationSpeed = 720f; // Degrees per second
+    [SerializeField] private Rigidbody rb;
+    [SerializeField] private Camera mainCamera;
+
+    private Vector3 moveDirection;
+>>>>>>> Stashed changes
 
     // Start is called before the first frame update
     void Start()
     {
+<<<<<<< Updated upstream
         startPos = transform.position;
         agent.speed = roamSpeed;
+=======
+        if (rb == null)
+            rb = GetComponent<Rigidbody>();
+
+        if (mainCamera == null)
+            mainCamera = Camera.main;
+>>>>>>> Stashed changes
     }
 
     // Update is called once per frame
     void Update()
     {
+<<<<<<< Updated upstream
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
 
         if (distanceToPlayer <= detectionRadius)
@@ -104,6 +125,46 @@ public class EnemyAiMovement : MonoBehaviour
         Vector3 direction = (player.position - transform.position).normalized;
         Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
         transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
+=======
+        ProcessInput();
+    }
+
+    private void FixedUpdate()
+    {
+        MovePlayer();
+        RotatePlayer();
+    }
+
+    private void ProcessInput()
+    {
+        // Capture movement input
+        float horizontal = Input.GetAxis("Horizontal");
+        float vertical = Input.GetAxis("Vertical");
+
+        moveDirection = new Vector3(horizontal, 0f, vertical).normalized;
+    }
+
+    private void MovePlayer()
+    {
+        Vector3 velocity = moveDirection * moveSpeed;
+        rb.velocity = new Vector3(velocity.x, rb.velocity.y, velocity.z);
+    }
+
+    private void RotatePlayer()
+    {
+        if (moveDirection.sqrMagnitude > 0.01f)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(moveDirection, Vector3.up);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+        }
+    }
+
+    // Draw a gizmo to show detection testing
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, 0.5f); // Player indicator
+>>>>>>> Stashed changes
     }
 }
 
