@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     [Header("===== PLAYER =====")]
     private GameObject player;
     private playerScript playerScript;
+    [SerializeField] GameObject playerDamageScreen;
 
     [Header("===== TEMP VARIABLES =====")]
     [SerializeField] GameObject menuActive;
@@ -31,6 +32,11 @@ public class GameManager : MonoBehaviour
     {
         get => isPaused;
         set => isPaused = value;
+    }
+    public GameObject PlayerDamageScreen
+    {
+        get => playerDamageScreen;
+        set => playerDamageScreen = value;
     }
 
 

@@ -20,6 +20,7 @@ public class HealthSystem : MonoBehaviour
     [SerializeField] float topFillSpeed;
     [SerializeField] float bottomFillSpeed;
     [SerializeField] Image easeBar;
+    [SerializeField] float dmgFlashDuration;
 
     [Header("===== CRITICAL HEALTH =====")]
     [SerializeField] TextMeshProUGUI critWarningText;
@@ -78,6 +79,11 @@ public class HealthSystem : MonoBehaviour
         {
             currentHealth -= damageAmt;
             isHeal = false;
+
+            if(CompareTag("Player"))
+            {
+                Invoke("FlashDamageScreen", 0f);
+            }
         }
         //check for death
         if (currentHealth <= 0 && !isDead)
@@ -151,5 +157,18 @@ public class HealthSystem : MonoBehaviour
     {
         critWarningText.gameObject.SetActive(!critWarningText.gameObject.activeSelf);
     }
+    
+    // Player Damage Screen //
+    private void FlashDamageScreen()
+    {
+        GameManager.instance.PlayerDamageScreen.SetActive(true);
+        Invoke("HideDamageScreen", dmgFlashDuration);
+    }
+    private void HideDamageScreen()
+    {
+        GameManager.instance.PlayerDamageScreen.SetActive(false);
+    }
+
+
 
 }
