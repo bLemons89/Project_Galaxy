@@ -1,5 +1,6 @@
 /*
     Author: Juan Contreras
+    Edited by:
     Date Created: 01/16/2025
     Date Updated: 01/16/2025
     Description: Shard class scriptable objects for the player to use and store in inventory
