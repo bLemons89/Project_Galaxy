@@ -121,7 +121,7 @@ NavMeshSettings:
     preserveTilesOutsideBounds: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 23800000, guid: 6dfe723148c2349488fed2ae7cf5d9ea, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 0fd70356aedd2194b9754beeeb267100, type: 2}
 --- !u!1 &28975611
 GameObject:
   m_ObjectHideFlags: 0
@@ -260,7 +260,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 80249620}
-  - component: {fileID: 80249621}
   - component: {fileID: 80249619}
   - component: {fileID: 80249618}
   - component: {fileID: 80249617}
@@ -271,7 +270,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!136 &80249617
 CapsuleCollider:
@@ -361,22 +360,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &80249621
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 80249616}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d8a0e53d8f9d57c4283705e77e73cf71, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  roamDist: 20
-  roamSpeed: 3
-  roamTime: 2
-  agent: {fileID: 80249623}
 --- !u!135 &80249622
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -672,7 +655,7 @@ GameObject:
   - component: {fileID: 999581202}
   - component: {fileID: 999581201}
   m_Layer: 0
-  m_Name: Menu
+  m_Name: TestingMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -926,7 +909,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1066935539}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd779b41db81ea94bb45e9f0daa34fce, type: 3}
+  m_Script: {fileID: 11500000, guid: bbff7b02849cf6341925774cbe78a1ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   backgroundScreen: {fileID: 1672654680}
@@ -1212,7 +1195,7 @@ GameObject:
   - component: {fileID: 1672654683}
   - component: {fileID: 1672654682}
   m_Layer: 0
-  m_Name: Background
+  m_Name: TestingBackground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1608,10 +1591,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1962645384}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ee7334d8020a8849a556e854f6c51d8, type: 3}
+  m_Script: {fileID: 11500000, guid: f874d6f74f8efea4a99983e71bc7dab4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sensitivity: 150
+  sensitivity: 130
   verticalMin: -90
   verticalMax: 90
 --- !u!1 &1983781478
@@ -1865,7 +1848,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1997385105}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 342d0be3870a24f44b9317b2eb4397a7, type: 3}
+  m_Script: {fileID: 11500000, guid: 49519f3a695def34e9af241276c214d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   playerModel: {fileID: 1997385107}
@@ -1874,8 +1857,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   speed: 2
-  sprintMod: 3
-  jumpMax: 2
+  sprintMod: 2
+  jumpMax: 1
   jumpSpeed: 5
   gravity: 10
 --- !u!114 &1997385113

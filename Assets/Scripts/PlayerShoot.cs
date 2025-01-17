@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Runtime.Serialization.Formatters;
 using UnityEngine;
 
+// Attach this script on the Player Prefab to use
+
 public class PlayerShoot : MonoBehaviour
 {
     public static event Action shootInput;
