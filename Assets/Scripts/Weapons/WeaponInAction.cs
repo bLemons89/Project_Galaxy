@@ -6,9 +6,13 @@ using UnityEngine;
 public class WeaponInAction : MonoBehaviour
 {
     public static event Action OnBulletProjectile;
+    public static event Action OnGettingHit;
 
     [SerializeField] WeaponInformation gunInfo;
-    
+
+    // Is the object getting shot? 
+    private bool isShot = false;
+
     private void Start()
     {
         PlayerShoot.OnShootInput += PlayerShoot_shootInput;
@@ -27,13 +31,23 @@ public class WeaponInAction : MonoBehaviour
     {
         if(gunInfo.currentAmmo > 0)
         {
+            // check if the raycast hit object
             if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hitInfo, gunInfo.shootDistance))
             {
                 // Bullet need to start moving here
-                OnBulletProjectile?.Invoke();
+                // OnBulletProjectile?.Invoke();
 
-                Debug.Log(hitInfo.transform.name);
+                Debug.Log(hitInfo.transform.name + $" Got Hit");
+                
+                OnGettingHit?.Invoke();
+                
+                isShot = true; // got shot
+                
                 gunInfo.currentAmmo--;
+            }
+            else
+            {
+                isShot = false; // did not get shot
             }
             
         }
@@ -70,6 +84,11 @@ public class WeaponInAction : MonoBehaviour
     public int GetShootDamage()
     {
         return gunInfo.shootDamage;
+    }
+
+    public bool IsShot()
+    {
+        return isShot;
     }
 
 }
