@@ -30,7 +30,7 @@ public class WeaponInAction : MonoBehaviour
             if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hitInfo, gunInfo.shootDistance))
             {
                 // Bullet need to start moving here
-                OnBulletProjectile?.Invoke();
+                // OnBulletProjectile?.Invoke();
 
                 Debug.Log(hitInfo.transform.name);
                 gunInfo.currentAmmo--;

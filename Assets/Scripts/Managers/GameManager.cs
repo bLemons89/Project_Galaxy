@@ -58,8 +58,8 @@ public class GameManager : MonoBehaviour
    
     void Update()
     {
-        Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
         // Pause Input
         if (Input.GetButtonDown("Cancel") || Input.GetButtonDown("Pause"))
         {
