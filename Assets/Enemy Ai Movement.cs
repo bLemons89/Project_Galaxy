@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+<<<<<<< Updated upstream
 using UnityEngine.AI;
 
 public class EnemyAiMovement : MonoBehaviour
@@ -29,27 +30,24 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Camera mainCamera;
 
     private Vector3 moveDirection;
+>>>>>>> Stashed changes
 
 
     // Start is called before the first frame update
     void Start()
     {
-
         startPos = transform.position;
         agent.speed = roamSpeed;
-
         if (rb == null)
             rb = GetComponent<Rigidbody>();
 
         if (mainCamera == null)
             mainCamera = Camera.main;
-
     }
 
     // Update is called once per frame
     void Update()
     {
-
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
 
         if (distanceToPlayer <= detectionRadius)
@@ -124,7 +122,6 @@ public class PlayerController : MonoBehaviour
         Vector3 direction = (player.position - transform.position).normalized;
         Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
         transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
-
         ProcessInput();
     }
 
@@ -163,7 +160,6 @@ public class PlayerController : MonoBehaviour
     {
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, 0.5f); // Player indicator
-
     }
 }
 
