@@ -1,4 +1,3 @@
-THIS BRANCH IS NOT WORKING PROPERLY DO NOT USE!!!!!
 
 Please use the Unity Unity 2022.3.53f1 LTS and VS Team Project.
 
