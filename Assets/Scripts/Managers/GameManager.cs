@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
     [Header("===== TEMP VARIABLES =====")]
     [SerializeField] GameObject menuActive;
 
+    
     // Flags //
     private bool isPaused;
 
@@ -81,6 +82,12 @@ public class GameManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         menuActive.SetActive(false);
         menuActive = null;
+    }
+
+    public void Retry()
+    {
+        SceneManagerScript.instance.ResetScene();
+        GameManager.instance.playerScript.Respawn();
     }
 
 }

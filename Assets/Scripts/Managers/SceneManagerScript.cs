@@ -1,0 +1,76 @@
+using UnityEngine.SceneManagement;
+using UnityEngine;
+using System;
+using System.Collections;
+using TMPro;
+
+
+// Put this script on the object to trigger which scene to enter
+public class SceneManagerScript : MonoBehaviour
+{
+    public static SceneManagerScript instance;
+
+
+    [SerializeField] private string sceneToLoad;
+
+    [Header("===== Display Timer Count Down =====")]
+    [SerializeField] private TMP_Text TimerCountDown;
+
+    private string triggeringTag = "Player";
+
+    private int restartSceneTimer;
+    private float counter;
+    
+    private void Awake()
+    {
+        instance = this;
+    }
+
+    private void Start()
+    {                
+        restartSceneTimer = 10;        
+        StartCoroutine(DelayLoading());
+    }
+
+    private void Update()
+    {
+        TimerCountDown.text = counter.ToString("F0");
+        counter += Time.deltaTime;
+           
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        // Check if the object entering the trigger has the specified tag
+        if (other.CompareTag(triggeringTag))
+        {
+            // Load the specified scene
+            if (!string.IsNullOrEmpty(sceneToLoad))
+            {
+                Debug.Log($"Triggering scene change to {sceneToLoad}.");
+                SceneManager.LoadScene(sceneToLoad);
+            }
+            else
+            {
+                Debug.LogError("Scene name is not specified!");
+            }
+        }
+    }
+
+    // if player died the ScreenManagerScript needs to reset the scene, trigger the loadingScreen
+    // respawn the player to the latest checked point
+
+    public void ResetScene()
+    {      
+        // reset the location of the enemy position, reset part location, etc. 
+        Scene thisScene = SceneManager.GetActiveScene();
+        Debug.Log("Active Scene is '" + thisScene.name + "'.");
+
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    IEnumerator DelayLoading(){
+        yield return new WaitForSeconds(restartSceneTimer);     
+        ResetScene();
+    }
+}

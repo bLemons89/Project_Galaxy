@@ -4,5 +4,14 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Levels/Sandboxes/sandboxHarry1.unity
+    guid: 2c7f0a421cb7d244d9c9497be6ba2931
+  - enabled: 1
+    path: Assets/Levels/Sandboxes/LoadingScene.unity
+    guid: d9a3ff47cc27c474495f548991dfa79f
+  - enabled: 1
+    path: Assets/Levels/Sandboxes/sandboxHarry2.unity
+    guid: 57de9c3a199587d49a3309b77007d142
   m_configObjects: {}
