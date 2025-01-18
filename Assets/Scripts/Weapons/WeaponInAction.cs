@@ -10,18 +10,20 @@ public class WeaponInAction : MonoBehaviour
 
     [SerializeField] WeaponInformation gunInfo;
 
+    InventorySlot playerInventory;
+
     // Is the object getting shot? 
     private bool isShot = false;
 
     private void Start()
-    {
+    {       
         PlayerShoot.OnShootInput += PlayerShoot_shootInput;
         PlayerShoot.OnWeaponReload += Reload;
     }    
 
     // Example from Unity: Draws a 10 meter long green line from the position for 1 frame.
     void Update()
-    {
+    {      
         Vector3 forward = transform.TransformDirection(Vector3.forward) * 10;
         Debug.DrawRay(transform.position, forward, Color.green);
     }
@@ -60,7 +62,7 @@ public class WeaponInAction : MonoBehaviour
             #endif
         }
         
-    }
+    } 
 
     public int GetAmmo()
     {
