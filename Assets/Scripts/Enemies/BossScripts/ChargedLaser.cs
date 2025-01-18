@@ -1,14 +1,42 @@
+/*
+    Author: Juan Contreras
+    Edited by:
+    Date Created: 01/17/2025
+    Date Updated: 01/18/2025
+    Description: Interface for the charged laser ability for the boss
+ */
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
-public class ChargedLaser : IBossAbility
+public class ChargedLaser : MonoBehaviour, IBossAbility
 {
+    //effects and animations needed
+    /*
+    - charge effect
+    - laser effect
+    - charge sound
+    - shoot sound
+    - laser beam asset
+    */
+
+    [Header("LASER INTERACTION SETTINGS")]
     [SerializeField] [Range(0.5f, 5f)] float chargeTime = 2.0f;             //time to charge the laser
     [SerializeField] [Range(0.3f, 3f)] float lockOnShootDelay = 1.0f;       //delay to shoot once boss locks on
+    [SerializeField][Range(1f, 10f)] float aimRotationSpeed = 5.0f;         //how fast to turn and look at the player when aiming the laser
+
+    [Header("MORE LASER SETTINGS")]
+    [SerializeField] LineRenderer laserBeam;
+    [SerializeField] [Range(0.1f, 10.0f)] float laserWidth = 0.5f;
+    [SerializeField] [Range(0.1f, 2.0f)] float laserDuration = 0.5f;
+    [SerializeField] GameObject warningIndicatorPrefab;
+    [SerializeField] [Range(1, 20)] int damageAmount = 10;
 
     Boss boss;
     Vector3 lockedShootPos;
+
+    GameObject warningIndicatorInstance;
 
     public void Initialize(Boss boss )
     {
@@ -44,9 +72,18 @@ public class ChargedLaser : IBossAbility
         //after laser is charged, lock position to shoot
         lockedShootPos = boss.Player.position;
 
+        //create warning indicator before shooting
+        if(warningIndicatorPrefab != null)
+        {
+            warningIndicatorInstance = UnityEngine.Object.Instantiate(warningIndicatorPrefab, lockedShootPos, Quaternion.identity);
+        }
+
         Debug.Log($"Laser locked at {lockedShootPos}");
 
         yield return new WaitForSeconds(lockOnShootDelay);
+
+        //destroy indicator right before firing
+        if(warningIndicatorInstance != null) { UnityEngine.Object.Destroy(warningIndicatorInstance); }
 
         //shoot
         ShootLaser(lockedShootPos);
@@ -59,8 +96,11 @@ public class ChargedLaser : IBossAbility
         {
             //turn to look at the player
             Vector3 directionToPlayer = player.position - boss.transform.position;
-            directionToPlayer.y = 0;
-            boss.transform.rotation = Quaternion.LookRotation(directionToPlayer);
+            //directionToPlayer.y = 0;                                              //use if boss is jittery
+            boss.transform.rotation = Quaternion.Lerp(
+                boss.transform.rotation,
+                Quaternion.LookRotation(directionToPlayer),
+                Time.deltaTime * aimRotationSpeed);
         }
     }
 
@@ -68,7 +108,47 @@ public class ChargedLaser : IBossAbility
     {
         Debug.Log($"Boss: Firing laser at {targetPosition}");
         //shoot laser logic
+        if(laserBeam != null)
+        {
+            //start and end of laser
+            laserBeam.SetPosition(0, boss.transform.position);
+            laserBeam.SetPosition(1, targetPosition);
 
+            //setting laser width
+            laserBeam.startWidth = laserWidth;
+            laserBeam.endWidth = laserWidth;
 
+            //show laser for the set duration
+            laserBeam.enabled = true;
+            boss.StartCoroutine(DisableLaserBeam());
+        }
+
+        //check if player is in laser damage range
+        if(Vector3.Distance(targetPosition, boss.Player.position) <= laserWidth)
+        {
+            Debug.Log("Player hit by laser");
+
+            //damage the player
+            //player health variable
+            //check if player health is null
+            //call takeDamage(damageAmount) on player
+        }
     }
+
+    IEnumerator DisableLaserBeam()
+    {
+        Debug.Log("Disabling laser.");
+        //turn off the beam after a set duration
+        yield return new WaitForSeconds(laserDuration);
+        laserBeam.enabled = false;
+    }
+
+    /*void OnDrawGizmos()                                 //DELETE WHEN DONE TESTING
+    {
+        if (lockedShootPos != Vector3.zero)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawSphere(lockedShootPos, 0.5f);
+        }
+    }*/
 }

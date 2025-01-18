@@ -1,7 +1,7 @@
 /*
     Author: Juan Contreras
     Date Created: 01/16/2025
-    Date Updated: 01/16/2025
+    Date Updated: 01/18/2025
     Description: Everything related to the player's inventory starts here
 
     Possible Edits: 
@@ -35,6 +35,8 @@ public class InventoryManager : MonoBehaviour
 
     //inventory storage
     List<InventorySlot> inventorySlots = new List<InventorySlot>();
+
+    public List<InventorySlot> InventorySlotsList => inventorySlots;
 
     //handles item pickup
     public void OnPickup(ItemBase item, int quantity)
