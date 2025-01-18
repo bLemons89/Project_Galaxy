@@ -14,12 +14,18 @@ public class Boss : MonoBehaviour
     int currentEncounter = 1;
     List<IBossAbility> abilities = new List<IBossAbility>();
 
+    Transform player;
+
+    public Transform Player => player;
+
+    //Unity Events to notify when each ability is activated for animation and sound
+
     public void AddAbility(IBossAbility ability)
     {
         abilities.Add(ability);
         ability.Initialize(this);
     }
-
+    //the pattern in which the boss activates the abilities
     public void ActivateAbilities()
     {
         //logic to when to activate abilities (not done)
@@ -28,7 +34,7 @@ public class Boss : MonoBehaviour
             ability.Execute();
         }
     }
-
+    //called when boss is defeated
     public void SetupNextEncounter()
     {
         currentEncounter++;
@@ -58,6 +64,13 @@ public class Boss : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        SetupAbilities();
+        player = GameObject.FindWithTag("Player")?.transform;
+
+        if (player == null)
+        {
+            Debug.LogError("Boss: Player not found.");
+        }
+        else
+            SetupAbilities();
     }
 }
