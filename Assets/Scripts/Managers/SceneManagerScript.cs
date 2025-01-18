@@ -16,8 +16,9 @@ public class SceneManagerScript : MonoBehaviour
     [Header("===== Display Timer Count Down =====")]
     [SerializeField] private TMP_Text TimerCountDown;
 
-    private string triggeringTag = "Player";
+    private string playerTag = "Player";
 
+    // this variable is use to reset the scene testing
     private int restartSceneTimer;
     private float counter;
 
@@ -29,7 +30,9 @@ public class SceneManagerScript : MonoBehaviour
     private void Start()
     {
         restartSceneTimer = 15;
-        StartCoroutine(DelayLoading());
+        
+        // This Coroutine for testing rest the scene
+        // StartCoroutine(DelayLoading());
     }
 
     private void Update()
@@ -42,7 +45,7 @@ public class SceneManagerScript : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         // Check if the object entering the trigger has the specified tag
-        if (other.CompareTag(triggeringTag))
+        if (other.CompareTag(playerTag))
         {
             // Load the specified scene
             if (!string.IsNullOrEmpty(sceneToLoad))
