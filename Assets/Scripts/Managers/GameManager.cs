@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,11 +8,15 @@ public class GameManager : MonoBehaviour
 {
     //singleton
     public static GameManager instance;
+    ButtonFunctions buttonFunctions;
 
     [Header("===== MANAGERS =====")]
 
     [Header("===== OVERLAYS =====")]
     [SerializeField] public GameObject backgroundScreen;
+    [SerializeField] public GameObject settingsCanvasGroup;
+    private CanvasGroup backgroundScreenGroup;
+    private CanvasGroup settingsGroup;
 
     [Header("===== PLAYER =====")]
     private GameObject player;
@@ -38,11 +43,26 @@ public class GameManager : MonoBehaviour
         get => playerDamageScreen;
         set => playerDamageScreen = value;
     }
-
+    public GameObject BackgroundScreen
+    {
+        get => backgroundScreen;
+        set => backgroundScreen = value; 
+    }
+    public CanvasGroup BackgroundScreenGroup
+    {
+        get => backgroundScreenGroup;
+        set => backgroundScreenGroup = value;
+    }
+    public CanvasGroup SettingsGroup
+    {
+        get => settingsGroup; 
+        set => settingsGroup = value;
+    }
 
     void Awake()
     {
         instance = this;
+        buttonFunctions = FindObjectOfType<ButtonFunctions>();
 
         // set original values
         timeScaleOrig = Time.timeScale;
@@ -51,8 +71,10 @@ public class GameManager : MonoBehaviour
         player = GameObject.FindWithTag("Player");
         playerScript = player.GetComponent<playerScript>();
 
-        // find and set other reference
-
+        backgroundScreenGroup = backgroundScreen.GetComponent<CanvasGroup>();
+        backgroundScreenGroup.alpha = 0f;
+        backgroundScreen.transform.localScale = Vector3.zero;
+        settingsGroup = settingsCanvasGroup.GetComponent<CanvasGroup>();
     }
 
    
@@ -68,6 +90,8 @@ public class GameManager : MonoBehaviour
                 StatePause();
                 menuActive = backgroundScreen;
                 menuActive.SetActive(true);
+
+                buttonFunctions.BackgroundGroupOpen();
             }
             else if (menuActive == backgroundScreen)
             {
@@ -90,7 +114,9 @@ public class GameManager : MonoBehaviour
         Time.timeScale = timeScaleOrig;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-        menuActive.SetActive(false);
-        menuActive = null;
+
+        buttonFunctions.BackgroundGroupClose();
+
+        menuActive = null;        
     }
 }
