@@ -1,5 +1,6 @@
 /*
     Author: Juan Contreras
+    Edited By:
     Date Created: 01/15/2025
     Date Updated: 01/16/2025
     Description: Class to use when creating scriptable objects for collectibles to be
