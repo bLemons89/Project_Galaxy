@@ -2,7 +2,7 @@
     Author: Juan Contreras
     Edited by:
     Date Created: 01/17/2025
-    Date Updated: 01/17/2025
+    Date Updated: 01/18/2025
     Description: Logic for how the boss interacts with the player depending on the encounter.
  */
 using System.Collections;
@@ -47,8 +47,8 @@ public class Boss : MonoBehaviour
         switch(currentEncounter)
         {
             case 1:
-                AddAbility(new ChargedLaser());
-                AddAbility(new GroundAttack());
+                FindAbility("ChargedLaser");
+                //FindAbility("GroundAttack");
                 break;
             case 2:
                 //AddAbility();
@@ -59,6 +59,24 @@ public class Boss : MonoBehaviour
                 //AddAbility();
                 break;
         }
+    }
+
+    public void FindAbility(string abilityName)
+    {
+        Transform abilityTransform = transform.Find(abilityName);
+        if (abilityTransform != null)
+        {
+            IBossAbility ability = abilityTransform.GetComponent<IBossAbility>();
+            if (ability != null)
+            {
+                AddAbility(ability);
+                abilityTransform.gameObject.SetActive(true);
+            }
+            else
+                Debug.Log($"Ability {abilityName} is not found.");
+        }
+        else
+            Debug.Log($"Ability transform for {abilityName} not found.");
     }
 
     // Start is called before the first frame update
@@ -72,5 +90,8 @@ public class Boss : MonoBehaviour
         }
         else
             SetupAbilities();
+
+        ActivateAbilities();
     }
+
 }
