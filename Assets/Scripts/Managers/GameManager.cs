@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     [Header("===== PLAYER =====")]
     private GameObject player;
     private playerScript playerScript;
+    [SerializeField] GameObject playerDamageScreen;
 
     [Header("===== TEMP VARIABLES =====")]
     [SerializeField] GameObject menuActive;
@@ -32,6 +33,11 @@ public class GameManager : MonoBehaviour
         get => isPaused;
         set => isPaused = value;
     }
+    public GameObject PlayerDamageScreen
+    {
+        get => playerDamageScreen;
+        set => playerDamageScreen = value;
+    }
 
 
     void Awake()
@@ -44,13 +50,18 @@ public class GameManager : MonoBehaviour
         // find and set player reference
         player = GameObject.FindWithTag("Player");
         playerScript = player.GetComponent<playerScript>();
+
+        // find and set other reference
+
     }
 
    
     void Update()
     {
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
         // Pause Input
-        if(Input.GetButtonDown("Cancel") || Input.GetButtonDown("Pause"))
+        if (Input.GetButtonDown("Cancel") || Input.GetButtonDown("Pause"))
         {
             if (menuActive == null)
             {
@@ -82,5 +93,4 @@ public class GameManager : MonoBehaviour
         menuActive.SetActive(false);
         menuActive = null;
     }
-
 }
