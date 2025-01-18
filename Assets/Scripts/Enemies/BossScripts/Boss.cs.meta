@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+<<<<<<< HEAD:Assets/Scripts.cs.meta
+guid: 4cd371fb7b45dea4d8c6488f70241b4f
+=======
+guid: 02f602b93dbd6d24d9843962a9bbf339
+>>>>>>> remotes/origin/Development:Assets/Scripts/Enemies/BossScripts/Boss.cs.meta
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
