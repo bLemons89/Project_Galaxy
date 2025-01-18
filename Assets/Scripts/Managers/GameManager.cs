@@ -21,6 +21,9 @@ public class GameManager : MonoBehaviour
     [Header("===== TEMP VARIABLES =====")]
     [SerializeField] GameObject menuActive;
 
+    [Header("===== MUSIC =====")]
+    //[SerializeField] private AudioClip playMusic;
+
     // Flags //
     private bool isPaused;
 
@@ -53,9 +56,12 @@ public class GameManager : MonoBehaviour
 
         // find and set other reference
 
+        // Music for game
+        //AudioManager.Instance.PlayMusic(playMusic);
+        
     }
 
-   
+
     void Update()
     {
         Cursor.visible = true;

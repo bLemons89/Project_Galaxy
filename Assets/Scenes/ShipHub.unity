@@ -30982,6 +30982,50 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6671817761720141096, guid: 4e34fdd406248bc4c9c2185b8fc59b9f, type: 3}
   m_PrefabInstance: {fileID: 1227968391}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1229771482
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1229771484}
+  - component: {fileID: 1229771483}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1229771483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1229771482}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0114f83322a1ba94ca43510d247f195c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1229771484
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1229771482}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 156.91635, y: 6.3036284, z: -95.46408}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1231546021
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -31187,6 +31231,8 @@ MonoBehaviour:
   jumpMax: 1
   jumpSpeed: 5
   gravity: 10
+  playerWalk: {fileID: 8300000, guid: 994009fe1e4b98d43acf3cd45fcbf95d, type: 3}
+  playMusic: {fileID: 8300000, guid: 8bc5c4cb1dbdae0479df8fade6007c99, type: 3}
 --- !u!143 &1235634820
 CharacterController:
   m_ObjectHideFlags: 0
@@ -32392,7 +32438,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   backgroundScreen: {fileID: 1824407556}
+  playerDamageScreen: {fileID: 0}
   menuActive: {fileID: 0}
+  playMusic: {fileID: 8300000, guid: f694d8c7e5d065344b2d43b97d43b35b, type: 3}
 --- !u!4 &1270573527
 Transform:
   m_ObjectHideFlags: 0
@@ -54175,8 +54223,9 @@ PrefabInstance:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 1270573527}
   - {fileID: 1989069453}
+  - {fileID: 1270573527}
+  - {fileID: 1229771484}
   - {fileID: 1235634818}
   - {fileID: 226292923}
   - {fileID: 1857713936}

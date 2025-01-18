@@ -1,18 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
-using UnityEditor.Animations;
 using UnityEngine;
-using UnityEngine.Playables;
 
 #region Static Instance
 
 public class AudioManager : MonoBehaviour
 {
-    private AudioManager instance;
+    private static AudioManager instance;
 
-    public AudioManager Instance
+    public static AudioManager Instance
     {
         get
         {
@@ -50,9 +47,9 @@ public class AudioManager : MonoBehaviour
         // make sure we don't destroy this instance
         DontDestroyOnLoad(this.gameObject);
 
-        musicSource = GetComponent<AudioSource>();
-        musicSource2 = GetComponent<AudioSource>();
-        sfxSource = GetComponent<AudioSource>();
+        musicSource = this.gameObject.AddComponent<AudioSource>();
+        musicSource2 = this.gameObject.AddComponent<AudioSource>();
+        sfxSource = this.gameObject.AddComponent<AudioSource>();
 
         // Music Sorce loops, just keep them going
         musicSource.loop = true;
@@ -61,13 +58,22 @@ public class AudioManager : MonoBehaviour
 
     public void PlayMusic(AudioClip musicClip)
     {
-        //Determin which source is playing
+        //Determine which source is playing
         AudioSource activeSource = (IsPlaying) ? musicSource : musicSource2;
-        musicSource.clip = musicClip;
-        musicSource.Play();
+
+        activeSource.clip = musicClip;
+        activeSource.volume = 1;
+        activeSource.Play();
     }
 
-    public void PlayMusicWithFade(AudioClip musicClip, float transitionTime = 1.0f)
+    public void PlayMusicwithFade(AudioClip newClip, float transitionTime = 1.0f)
+    {
+        AudioSource activeSource = (IsPlaying) ? musicSource : musicSource2;
+
+        StartCoroutine(UpdateMusicWithFade(activeSource, newClip, transitionTime));
+    }
+
+    public void PlayMusicWithCrossFade(AudioClip musicClip, float transitionTime = 1.0f)
     {
         AudioSource activeSource = (IsPlaying) ? musicSource : musicSource2;
         AudioSource newSource = (IsPlaying) ? musicSource2 : musicSource;
@@ -81,7 +87,7 @@ public class AudioManager : MonoBehaviour
         StartCoroutine(UpdateMusicWithCrossFade(activeSource, newSource, transitionTime));
     }
 
-    IEnumerator UpdateMusicWithFade(AudioSource activeSource, AudioClip newClip, float transitionTime)
+    private IEnumerator UpdateMusicWithFade(AudioSource activeSource, AudioClip newClip, float transitionTime)
     {
         // Make Sure the source is active and playing
         if (!activeSource.isPlaying)
@@ -91,7 +97,7 @@ public class AudioManager : MonoBehaviour
             float t = 0.0f;
 
             //fade out music
-            for (t = 0.0f; t <= transitionTime; t += Time.deltaTime)
+            for (t = 0.0f; t < transitionTime; t += Time.deltaTime)
             {
                 activeSource.volume = (1 - (t / transitionTime));
                 yield return null;
@@ -100,10 +106,10 @@ public class AudioManager : MonoBehaviour
             activeSource.clip = newClip;
             activeSource.Play();
 
-            // fad in music
-            for(t = 0.0f; t <= transitionTime; t+= Time.deltaTime)
+            // fade in music
+            for(t = 0.0f; t < transitionTime; t += Time.deltaTime)
             {
-                activeSource.volume += (1 - (t / transitionTime));
+                activeSource.volume = (t / transitionTime);
                 yield return null;
             }
         }
@@ -113,7 +119,7 @@ public class AudioManager : MonoBehaviour
     {
         float t = 0.0f;
 
-        for(t = 0.0f; t<= transitionTime; t += Time.deltaTime)
+        for(t = 0.0f; t < transitionTime; t += Time.deltaTime)
         {
             original.volume = (1 - (t / transitionTime));
             newSource.volume = (t / transitionTime);
