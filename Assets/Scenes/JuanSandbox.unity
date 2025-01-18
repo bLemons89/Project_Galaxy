@@ -121,7 +121,7 @@ NavMeshSettings:
     preserveTilesOutsideBounds: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 0}
+  m_NavMeshData: {fileID: 23800000, guid: 1aacfa221ca406b468fe51684781f547, type: 2}
 --- !u!1 &14506963
 GameObject:
   m_ObjectHideFlags: 0
@@ -700,6 +700,7 @@ GameObject:
   m_Component:
   - component: {fileID: 330401463}
   - component: {fileID: 330401468}
+  - component: {fileID: 330401469}
   - component: {fileID: 330401466}
   - component: {fileID: 330401465}
   - component: {fileID: 330401464}
@@ -809,7 +810,7 @@ LineRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330401462}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -822,7 +823,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: e197f36ddad9f8e4fbd6860276c10b6a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -917,6 +918,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02f602b93dbd6d24d9843962a9bbf339, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveSpeed: 3
+  chargeSpeed: 20
+  keepDistance: 6
+  chargeCooldown: 10
+  chargeStopDistance: 4
+--- !u!195 &330401469
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 330401462}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 1
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &351877527
 GameObject:
   m_ObjectHideFlags: 0
@@ -3890,7 +3918,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &1676722054
 Transform:

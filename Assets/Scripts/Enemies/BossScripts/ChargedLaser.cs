@@ -2,7 +2,7 @@
     Author: Juan Contreras
     Edited by:
     Date Created: 01/17/2025
-    Date Updated: 01/17/2025
+    Date Updated: 01/18/2025
     Description: Interface for the charged laser ability for the boss
  */
 using System.Collections;
@@ -18,7 +18,7 @@ public class ChargedLaser : MonoBehaviour, IBossAbility
     - laser effect
     - charge sound
     - shoot sound
-    - lase beam asset
+    - laser beam asset
     */
 
     [Header("LASER INTERACTION SETTINGS")]
