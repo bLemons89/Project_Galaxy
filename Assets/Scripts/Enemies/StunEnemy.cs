@@ -17,7 +17,10 @@ public class StunEnemy : EnemyBase
     [SerializeField] float enemySpeedMult;      //Speed multiplier
     [SerializeField] int fleeDistance = 2;
 
-    enum EnemyState { Chasing, Fleeing }            //Behavior changes when taking orb
+    //for interactions with the player
+    GameObject player;
+    playerScript playerSettings;
+    enum EnemyState { Roaming, Chasing, Fleeing }            //Behavior changes when taking orb
     EnemyState currentState = EnemyState.Chasing;   //Starts by chasing the player
 
     bool isFleeing = false;     //Used to set speed once
@@ -29,6 +32,11 @@ public class StunEnemy : EnemyBase
         //Initializing stats
         //currentHealth = enemyHP;
         agent.speed *= speed;
+        if (GameManager.instance != null)
+        {
+            player = GameManager.instance.Player;
+            playerSettings = GameManager.instance.PlayerScript;
+        }
     }
 
     // Update is called once per frame
@@ -37,23 +45,14 @@ public class StunEnemy : EnemyBase
         Behavior();     //the way the enemy acts around the player
     }
 
-    public void StunEnemyTakeDamage(float amount)
+    void StunEnemyTakeDamage(float amount)
     {
         //drop orb right before dying
         if (currentHealth - amount <= 0)
         {
-            if (GameManager.instance.OrbScripts != null)
-            {
-                foreach (orbManager orb in GameManager.instance.OrbScripts)
-                {
-                    if (enemyHasItem && orb.transform.parent == transform)
-                    {
-                        orb.DropOrb(transform);     //drop orb at location of the parent
-                    }
-                }
-            }
+            //drop item logic
         }
-        //calling base method for damage handling
+        //call damage method (handles death)
         Debug.Log($"Stun Enemy: Took {amount} damage");
         //use unity event here
     }
@@ -62,96 +61,92 @@ public class StunEnemy : EnemyBase
     {
         switch (currentState)
         {
+            case EnemyState.Roaming:
+                //Roam();s
+                break;
             case EnemyState.Chasing:
-                chasePlayer();
+                ChasePlayer();
                 break;
             case EnemyState.Fleeing:
-                fleePlayer();
+                FleePlayer();
                 break;
         }
     }
 
-    private void chasePlayer()
+    void ChasePlayer()
     {
-        bool playerHasOrb = false;
-        //checks if the player is holding an orb
-        if (GameManager.instance.OrbScripts != null)
-        {
-            foreach (orbManager orb in GameManager.instance.OrbScripts)
-            {
-                if (orb.IsHoldingOrb)
-                {
-                    playerHasOrb = true;
-                    break;
-                }
-            }
-        }
+        bool isInventoryEmpty = true;
 
-        if (playerHasOrb)
+        //checks if the player's inventory is empty
+        if (InventoryManager.instance != null)
         {
-            //move to player location anywhere on the scene when the player has the orb
-            agent.SetDestination(GameManager.instance.Player.transform.position);
-            //stun and take orb from player
-            if (Vector3.Distance(transform.position, GameManager.instance.Player.transform.position) < agent.stoppingDistance)
+            if (InventoryManager.instance.InventorySlotsList.Count > 0)
+                isInventoryEmpty = false;
+        }
+        else
+            Debug.Log("Stun Enemy: No Inventory Manager Instance");
+
+        //will only go after player if inventory is not empty
+        if (!isInventoryEmpty)
+        {
+            //move to player location anywhere on the scene when the player is within range
+            agent.SetDestination(player.transform.position);
+            //stun and take item from player
+            if (Vector3.Distance(transform.position, player.transform.position) < agent.stoppingDistance)
             {
-                stunPlayer();               //stuns the player
-                takeOrbFromPlayer();        //takes orb and flees
+                StunPlayer();               //stuns the player
+                TakeItemFromPlayer();        //takes item and flees
             }
         }
     }
 
-    private void fleePlayer()
+    void FleePlayer()
     {
         //enemy runs faster
         if (!isFleeing)
         {
-            agent.speed = (GameManager.instance.PlayerScript.Speed *
-                GameManager.instance.PlayerScript.SprintMod) - 1;       //He runs slightly slower than player sprint speed
+            agent.speed = (playerSettings.Speed *
+                playerSettings.SprintMod) - 1;       //He runs slightly slower than player sprint speed
+
             //Prevent speed from being set more than once
             isFleeing = true;
         }
 
         //find direction away from player
-        Vector3 playerPosition = GameManager.instance.Player.transform.position;
+        Vector3 playerPosition = player.transform.position;
         Vector3 fleeDirection = (transform.position - playerPosition).normalized;
 
         //destination to run to
-        Vector3 fleeDestination = transform.position + fleeDirection * agent.stoppingDistance * fleeDistance;
+        Vector3 fleeDestination = transform.position + fleeDirection * agent.stoppingDistance * fleeDistance;       //don't need agent.stoppingDistance??
 
         //move to that destination
         agent.SetDestination(fleeDestination);
     }
 
-    private void stunPlayer()
+    private void StunPlayer()
     {
-        playerController player = GameManager.instance.Player.GetComponent<playerController>();
-        //stun player for set duration if holding an orb
-        foreach (orbManager orb in GameManager.instance.OrbScripts)
-        {
-            if (orb.IsHoldingOrb)
-            {
-                player.stun(stunDuration);
-                break;
-            }
-        }
+        CharacterController player = playerSettings.GetComponent<CharacterController>();
+        //stun player for set duration
+        //player.stun(stunDuration);        //stun status effect method here
     }
 
-    private void takeOrbFromPlayer()
+    private void TakeItemFromPlayer()
     {
-        //accessing orb manager
-        foreach (orbManager orb in GameManager.instance.OrbScripts)
+        //accessing inventory manager
+        foreach (var item in InventoryManager.instance.InventorySlotsList)
         {
 
-            //taking orb from player
-            if (orb.IsHoldingOrb)
-            {
-                //takes orb and attaches to the enemy
-                orb.takeOrb(transform);    //Passing enemy transform
-                currentState = EnemyState.Fleeing;  //Change enemy state when taking the orb
-                enemyHasItem = true;
-                //turn off orb UI icon
-                GameManager.instance.toggleImage(false);
-                break;
-            }
+            //taking a random item from player
+            //generate random index to take item from slot
+
+            //takes orb and attaches to the enemy
+            //orb.takeOrb(transform);    //have a way for the enemy to hold the inventory item (remove item from inventory too)
+            currentState = EnemyState.Fleeing;  //Change enemy state when taking the orb
+            enemyHasItem = true;
+            //UI changes?
+            //GameManager.instance.toggleImage(false);
+            break;
+
         }
     }
+}

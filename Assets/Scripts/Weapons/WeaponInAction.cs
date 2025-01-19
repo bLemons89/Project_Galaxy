@@ -53,7 +53,7 @@ public class WeaponInAction : MonoBehaviour
         Vector3 forward = transform.TransformDirection(Vector3.forward) * 10;
         Debug.DrawRay(transform.position, forward, Color.green);
 
-        if (InventoryManager.Instance.InventorySlotsList.Count > 0)
+        if (InventoryManager.instance.InventorySlotsList.Count > 0)
         {
             CheckWeaponInventory();
         }
@@ -123,9 +123,9 @@ public class WeaponInAction : MonoBehaviour
     {       
         InventorySlot myInventorySlot;
 
-        while(inventoryIndex < InventoryManager.Instance.InventorySlotsList.Count && numberOfWeapon < 3)
+        while(inventoryIndex < InventoryManager.instance.InventorySlotsList.Count && numberOfWeapon < 3)
         {
-            myInventorySlot = InventoryManager.Instance.InventorySlotsList[inventoryIndex];
+            myInventorySlot = InventoryManager.instance.InventorySlotsList[inventoryIndex];
 
             if (myInventorySlot.Item.name == "Assault Rifle")
             {

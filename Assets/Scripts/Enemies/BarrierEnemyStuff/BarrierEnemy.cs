@@ -47,7 +47,7 @@ public class BarrierEnemy : EnemyBase
         foreach (Collider ally in alliesInRange)
         {
             //checking if colliders in range or not itself and only enemy types
-            if (ally.gameObject != this.gameObject && ally.GetComponent<baseEnemy>() != null)
+            if (ally.gameObject != this.gameObject && ally.GetComponent<EnemyBase>() != null)
             {
                 //current distance to an enemy(ally) in range
                 distance = Vector3.Distance(transform.position, ally.transform.position);
@@ -93,24 +93,42 @@ public class BarrierEnemy : EnemyBase
 
         foreach (Collider ally in alliesInRange)
         {
-            //checking if colliders in range or not itself and only enemy types
-            if (ally.gameObject != this.gameObject && ally.GetComponent<baseEnemy>() != null)
+            //checking for allies to give barriers to
+            CheckForAllies(ally);
+        }
+    }
+
+    void CheckForAllies(Collider ally)
+    {
+        //checking if colliders in range are not itself and only enemy types
+        if (ally.gameObject != this.gameObject && ally.GetComponent<EnemyBase>() != null)
+        {
+            //check if ally already has a barrier on them (limits one per ally)
+            if (ally.GetComponentInChildren<barrier>() == null)
             {
-                //check if ally already has a barrier on them (limits one per ally)
-                if (ally.GetComponentInChildren<barrier>() == null)
-                {
-                    //instantiate a barrier object on the ally's position
-                    //ally.bounds.center creates the barrier at the center of the collider
-                    GameObject barrier = Instantiate(barrierObj, ally.bounds.center, Quaternion.identity);
-
-                    //attach barrier to ally to follow them
-                    barrier.transform.SetParent(ally.transform);
-
-                    //destroy barrier after lifetime is over
-                    if (barrierObj)
-                        Destroy(barrier, barrierLifetime);
-                }
+                //assign barrier to an ally
+                GiveBarrier(ally);
             }
         }
+    }
+
+    void GiveBarrier(Collider ally)
+    {
+        //instantiate a barrier object on the ally's position
+        //ally.bounds.center creates the barrier at the center of the collider
+        GameObject barrier = Instantiate(barrierObj, ally.bounds.center, Quaternion.identity);
+
+        //attach barrier to ally to follow them
+        barrier.transform.SetParent(ally.transform);
+
+        //destroy barrier
+        DestroyBarrier(barrier);
+    }
+
+    void DestroyBarrier(GameObject barrier)
+    {
+        //destroy barrier after lifetime is over
+        if (barrierObj)
+            Destroy(barrier, barrierLifetime);
     }
 }
