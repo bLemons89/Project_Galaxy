@@ -20,10 +20,14 @@ public class playerScript : MonoBehaviour
     [SerializeField][Range(5, 30)] int jumpSpeed;
     [SerializeField][Range(10,60)] int gravity;
 
+    [Header("===== SFX =====")]
+    [SerializeField] private AudioClip playerWalk;
+    [SerializeField] private AudioClip playMusic;
+
     // Flags //
     bool isSprinting;
     //bool isShooting;
-    //bool isPlayingStep;
+    bool isPlayingStep;
     //bool isReloading
 
     // Cache //
@@ -31,12 +35,14 @@ public class playerScript : MonoBehaviour
     // Vectors //
     Vector3 moveDirection;
     Vector3 horizontalVelocity;
+    //vector to store checkpoint
+
 
     // Getters and Setters //
 
     void Start()
     {
-        
+        AudioManager.Instance.PlayMusicWithCrossFade(playMusic);
     }
 
     void Update()
@@ -54,9 +60,17 @@ public class playerScript : MonoBehaviour
     // Player Movement //
     void Movement()
     {
+
         //resets jumps once player is on the ground
         if(playerController.isGrounded)
         {
+            // player movement detected
+            if (moveDirection.magnitude > 0.3f && !isPlayingStep)
+            {
+                //AudioManager.Instance.PlaySFX(playerWalk);
+                StartCoroutine(playStep());
+            }
+
             jumpCount = 0;
 
             //falling/ledge
@@ -66,7 +80,7 @@ public class playerScript : MonoBehaviour
         //tie movement to camera, normalized to handle diagonal movement
         moveDirection = (transform.right * Input.GetAxis("Horizontal")) +
                         (transform.forward * Input.GetAxis("Vertical"));
-        
+
         playerController.Move(moveDirection * speed * Time.deltaTime);
 
         Jump();
@@ -102,6 +116,42 @@ public class playerScript : MonoBehaviour
 
         playerController.Move(horizontalVelocity * Time.deltaTime);
         horizontalVelocity.y -= gravity * Time.deltaTime;
+    }
+
+    public void Respawn()
+    {
+        if (CheckpointManager.instance)
+        {
+            Vector3 respawnPosition = CheckpointManager.instance.LastCheckpointPosition;
+
+            Debug.Log($"Last Checkpoint position stored for respawn at {respawnPosition}");
+
+            //disable controller to move player
+            playerController.enabled = false;
+            transform.position = respawnPosition;
+            playerController.enabled = true;
+
+            //resetting speed to prevent glitches
+            horizontalVelocity = Vector3.zero;
+
+            Debug.Log($"Player respawned at {respawnPosition}");
+        }
+        else
+        {
+            Debug.Log("No CheckpointManager, unable to respawn");
+        }
+    }
+
+    IEnumerator playStep()
+    {
+        isPlayingStep = true;
+        AudioManager.Instance.PlaySFX(playerWalk, 0.5f);
+
+        if (!isSprinting)
+            yield return new WaitForSeconds(0.5f);
+        else
+            yield return new WaitForSeconds(0.3f);
+        isPlayingStep = false;
     }
 
 }

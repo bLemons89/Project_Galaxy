@@ -19,6 +19,12 @@ public class GameManager : MonoBehaviour
     private playerScript playerScript;
     [SerializeField] GameObject playerDamageScreen;
 
+    [Header("===== TEMP VARIABLES =====")]
+    [SerializeField] GameObject menuActive;
+
+    [Header("===== MUSIC =====")]
+    //[SerializeField] private AudioClip playMusic;
+
     // Flags //
     private bool isPaused;
 
@@ -44,9 +50,15 @@ public class GameManager : MonoBehaviour
         playerScript = player.GetComponent<playerScript>();
 
         buttonFunctions.ButtonsInitialize();
+        
+        // find and set other reference
+
+        // Music for game
+        //AudioManager.Instance.PlayMusic(playMusic);
+        
     }
 
-   
+
     void Update()
     {
         // Pause Input

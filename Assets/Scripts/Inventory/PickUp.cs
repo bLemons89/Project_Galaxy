@@ -20,7 +20,7 @@ public class PickUp : MonoBehaviour
     //unity event to notify InventoryManager
     public UnityEvent<ItemBase, int> OnPickup;
 
-    void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider other)         //add key press input check in if statement
     {
         //prevent other triggers from triggering??
 

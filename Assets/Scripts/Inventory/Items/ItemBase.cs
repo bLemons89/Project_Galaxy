@@ -1,5 +1,6 @@
 /*
     Author: Juan Contreras
+    Edited By:
     Date Created: 01/15/2025
     Date Updated: 01/15/2025
     Description: Abstract class to use when creating scriptable objects for items to be

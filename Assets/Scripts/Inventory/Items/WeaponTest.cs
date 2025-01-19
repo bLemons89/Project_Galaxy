@@ -1,5 +1,6 @@
 /*
     Author: Juan Contreras
+    Edited By:
     Date Created: 01/15/2025
     Date Updated: 01/16/2025
     Description: Weapon base class scriptable objects for the player to use and store in inventory
