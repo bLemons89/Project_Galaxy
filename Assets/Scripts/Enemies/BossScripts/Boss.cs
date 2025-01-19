@@ -58,8 +58,8 @@ public class Boss : MonoBehaviour
 
     void Update()
     {
-        if(!isCharging)
-            StartMovementBehavior();
+        //if(!isCharging)
+            //StartMovementBehavior();
     }
 
     public void AddAbility(IBossAbility ability)
@@ -90,7 +90,7 @@ public class Boss : MonoBehaviour
         {
             case 1:
                 FindAbility("ChargedLaser");
-                //FindAbility("GroundAttack");
+                FindAbility("GroundAttack");
                 break;
             case 2:
                 //AddAbility();
@@ -125,9 +125,8 @@ public class Boss : MonoBehaviour
     public void StartMovementBehavior()
     {
         //calling the movement coroutine
-        if(movementRoutine != null && !isOnCooldown) StopCoroutine(movementRoutine);
-
-        movementRoutine = StartCoroutine(MovementBehavior());
+        if(movementRoutine == null)
+            movementRoutine = StartCoroutine(MovementBehavior());
     }
 
     IEnumerator MovementBehavior()
@@ -139,11 +138,11 @@ public class Boss : MonoBehaviour
                 MaintainDistance();
 
                 //charge after cooldown
-                isOnCooldown = true;
                 yield return new WaitForSeconds(chargeCooldown);
 
-                StartCoroutine(ChargeAtPlayer());
-                isOnCooldown= false;
+                //another check in case bool changes while on cooldown from other coroutine (might not need)
+                if(!isCharging)
+                    StartCoroutine(ChargeAtPlayer());
             }
 
             yield return null;
@@ -171,14 +170,6 @@ public class Boss : MonoBehaviour
             Vector3 destination = transform.position + directionAway * keepDistance;
             agent.SetDestination(destination);
         }
-        else if (!agent.isStopped)
-        {
-            agent.isStopped = true;
-
-            //agent.SetDestination(transform.position);  //don't move while at a distance
-
-            Debug.Log("Boss: Away from player");
-        }
     }
 
     IEnumerator ChargeAtPlayer()
@@ -189,7 +180,6 @@ public class Boss : MonoBehaviour
         //run towards the player
         Vector3 targetPosition = player.position;
         agent.SetDestination(targetPosition);
-
 
         while (Vector3.Distance(transform.position, player.position) > chargeStopDistance)
         {
