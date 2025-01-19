@@ -13,14 +13,14 @@ public class StunEnemy : EnemyBase
 {
     [Header("     Stun Enemy Stats     ")]
     [SerializeField] float stunDuration;
-    //[SerializeField] private int enemyHP;
+    [SerializeField] int distanceFromPlayer;    //how close to get to the player to take the item
     [SerializeField] float enemySpeedMult;      //Speed multiplier
-    [SerializeField] int fleeDistance = 2;
+    [SerializeField] int fleeDistance = 2;      //distance to keep from player (might not need)
 
     //for interactions with the player
     GameObject player;
     playerScript playerSettings;
-    enum EnemyState { Roaming, Chasing, Fleeing }            //Behavior changes when taking orb
+    enum EnemyState { Roaming, Chasing, Fleeing }            //Behavior changes when taking item
     EnemyState currentState = EnemyState.Chasing;   //Starts by chasing the player
 
     bool isFleeing = false;     //Used to set speed once
@@ -32,6 +32,8 @@ public class StunEnemy : EnemyBase
         //Initializing stats
         //currentHealth = enemyHP;
         agent.speed *= speed;
+        agent.stoppingDistance = distanceFromPlayer;
+
         if (GameManager.instance != null)
         {
             player = GameManager.instance.Player;
@@ -47,7 +49,7 @@ public class StunEnemy : EnemyBase
 
     void StunEnemyTakeDamage(float amount)
     {
-        //drop orb right before dying
+        //drop item right before dying
         if (currentHealth - amount <= 0)
         {
             //drop item logic
@@ -82,6 +84,8 @@ public class StunEnemy : EnemyBase
         {
             if (InventoryManager.instance.InventorySlotsList.Count > 0)
                 isInventoryEmpty = false;
+            else
+                Debug.Log("Stun Enemy: Player Inventory Empty");
         }
         else
             Debug.Log("Stun Enemy: No Inventory Manager Instance");
@@ -89,11 +93,14 @@ public class StunEnemy : EnemyBase
         //will only go after player if inventory is not empty
         if (!isInventoryEmpty)
         {
+            Debug.Log("Stun Enemy: Chasing after player");
+
             //move to player location anywhere on the scene when the player is within range
             agent.SetDestination(player.transform.position);
             //stun and take item from player
             if (Vector3.Distance(transform.position, player.transform.position) < agent.stoppingDistance)
             {
+
                 StunPlayer();               //stuns the player
                 TakeItemFromPlayer();        //takes item and flees
             }
@@ -125,6 +132,8 @@ public class StunEnemy : EnemyBase
 
     private void StunPlayer()
     {
+        Debug.Log("Stun Enemy: Stunning player");
+
         CharacterController player = playerSettings.GetComponent<CharacterController>();
         //stun player for set duration
         //player.stun(stunDuration);        //stun status effect method here
@@ -132,21 +141,21 @@ public class StunEnemy : EnemyBase
 
     private void TakeItemFromPlayer()
     {
+        Debug.Log("Taking item from player");
         //accessing inventory manager
         foreach (var item in InventoryManager.instance.InventorySlotsList)
         {
-
             //taking a random item from player
             //generate random index to take item from slot
 
-            //takes orb and attaches to the enemy
-            //orb.takeOrb(transform);    //have a way for the enemy to hold the inventory item (remove item from inventory too)
-            currentState = EnemyState.Fleeing;  //Change enemy state when taking the orb
+            //takes item and attaches to the enemy
+            Debug.Log($"Stun Enemy: {item.Item} taken from player");
+            //item.takeItem(transform);    //have a way for the enemy to hold the inventory item (remove item from inventory too)
+            currentState = EnemyState.Fleeing;  //Change enemy state when taking the item
             enemyHasItem = true;
             //UI changes?
             //GameManager.instance.toggleImage(false);
             break;
-
         }
     }
 }
