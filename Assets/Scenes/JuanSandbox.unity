@@ -784,6 +784,7 @@ Transform:
   m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 1
   m_Children:
+  - {fileID: 1267887385}
   - {fileID: 1512072601}
   - {fileID: 1506948668}
   - {fileID: 832764014}
@@ -2052,8 +2053,8 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   wavePrefab: {fileID: 2079680882}
-  maxRadius: 14.1
-  innerSafeRadius: 10.1
+  maxRadius: 14
+  innerSafeRadius: 13
   expansionSpeed: 2
   damageAmount: 10
   fadeDuration: 0.93
@@ -3889,6 +3890,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1261547379}
   m_CullTransparentMesh: 1
+--- !u!1 &1267887384
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1267887385}
+  m_Layer: 0
+  m_Name: LEAVE ABILITIES OFF
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1267887385
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1267887384}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 0.70710677, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 3.6526458, y: 2.9346242, z: -3.9130297}
+  m_LocalScale: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 330401463}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1287015952
 GameObject:
   m_ObjectHideFlags: 0

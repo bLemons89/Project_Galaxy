@@ -15,6 +15,7 @@ public abstract class EnemyBase : MonoBehaviour
 {
     [Header("     Base Enemy Stats     ")]
     [SerializeField] protected NavMeshAgent agent;      //Components shared between all/most enemy types
+    [SerializeField] protected int speed;
     [SerializeField] protected Renderer model;
     [SerializeField] protected Animator animator;
 
