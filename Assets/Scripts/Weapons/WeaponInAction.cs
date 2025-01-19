@@ -123,23 +123,23 @@ public class WeaponInAction : MonoBehaviour
     {       
         InventorySlot myInventorySlot;
 
-        while(inventoryIndex < InventoryManager.Instance.InventorySlotsList.Count && numberOfWeapon < 3)
+        while (inventoryIndex < InventoryManager.Instance.InventorySlotsList.Count && numberOfWeapon < 3)
         {
             myInventorySlot = InventoryManager.Instance.InventorySlotsList[inventoryIndex];
 
-            if (myInventorySlot.Item.name == "Assault Rifle")
-            {
+            if (myInventorySlot.Item.ItemName == "AR")
+            {                
                 hasAssaultRifle = true;
                 CurrentWeapon(assaultRifleModel, assaultRifleScriptableObject);
                 numberOfWeapon++;
-            }
-            else if (myInventorySlot.Item.name == "Shotgun")
+            }                  
+            else if (myInventorySlot.Item.ItemName == "SG")
             {
                 hasShotgunRifle = true;
                 CurrentWeapon(shotgunModel, shotgunScriptableObject);
                 numberOfWeapon++;
             }
-            else if (myInventorySlot.Item.name == "Energy Rifle")
+            else if (myInventorySlot.Item.ItemName == "ER")
             {
                 hasEnergyRifle = true;
                 CurrentWeapon(energyRifleModel, energyRifleScriptableObject);

@@ -27,9 +27,11 @@ public class PickUp : MonoBehaviour
         //check for player collider
         if(other.CompareTag("Player"))
         {
-            //trigger unity event to notify inventory manager
-            OnPickup?.Invoke(item, quantity);
-    
+            if (item != null)
+            {
+                //trigger unity event to notify inventory manager
+                OnPickup?.Invoke(item, quantity);
+            }
             //destroy item in the world
             Destroy(gameObject);
         }
