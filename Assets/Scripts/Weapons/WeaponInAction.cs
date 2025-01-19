@@ -135,7 +135,7 @@ public class WeaponInAction : MonoBehaviour
         InventorySlot myInventorySlot;
 
 
-        while (inventoryIndex < InventoryManager.Instance.InventorySlotsList.Count && numberOfWeapon < 3)
+        while (inventoryIndex < InventoryManager.instance.InventorySlotsList.Count && numberOfWeapon < 3)
         {
             myInventorySlot = InventoryManager.instance.InventorySlotsList[inventoryIndex];
 
