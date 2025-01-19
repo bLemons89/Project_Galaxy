@@ -22,11 +22,13 @@ public abstract class ItemBase : ScriptableObject
     public string ItemName => itemName;
     public int MaxStackSize => maxStackSize;
 
+    public ItemType GetItemType => itemType;
     public enum ItemType
     {
         Weapon,
         Ammo,
         Collectible,
+        Health,
     }
 
     public abstract void IntendedUse();

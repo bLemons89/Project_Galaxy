@@ -12,12 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bbf9ed18411f7f4f88b45acb94ce75a, type: 3}
   m_Name: Shotgun
   m_EditorClassIdentifier: 
-  itemName: Shotgun
+  itemName: SG
   icon: {fileID: 0}
   itemType: 0
   maxStackSize: 1
   value: 0
-  weaponPrefabs: {fileID: 6536510104674936741, guid: b034a42daa6b23a459727bf741d00205, type: 3}
   weaponName: Shotgun
   shootDamage: 3
   shootRate: 1
