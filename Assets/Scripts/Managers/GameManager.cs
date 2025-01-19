@@ -20,6 +20,8 @@ public class GameManager : MonoBehaviour
 
     [Header("===== TEMP VARIABLES =====")]
     [SerializeField] GameObject menuActive;
+    [SerializeField] GameObject menuWin;
+    [SerializeField] GameObject menuLose;
 
     [Header("===== MUSIC =====")]
     //[SerializeField] private AudioClip playMusic;
@@ -42,6 +44,9 @@ public class GameManager : MonoBehaviour
         set => playerDamageScreen = value;
     }
 
+    public GameObject Player => player;
+
+    public playerScript PlayerScript => playerScript;
 
     void Awake()
     {
@@ -57,7 +62,7 @@ public class GameManager : MonoBehaviour
         // find and set other reference
 
         // Music for game
-        //AudioManager.Instance.PlayMusic(playMusic);
+        //AudioManager.instance.PlayMusic(playMusic);
         
     }
 
@@ -99,5 +104,20 @@ public class GameManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         menuActive.SetActive(false);
         menuActive = null;
+    }
+
+    public void WinGame()
+    {
+        StatePause();
+        menuActive = menuWin;
+        menuActive.SetActive(true);
+
+    }
+
+    public void LoseGame()
+    {
+        StatePause();
+        menuActive = menuLose;
+        menuActive.SetActive(true);
     }
 }
