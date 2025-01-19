@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 
-public class EnemyAiMovement : MonoBehaviour
+public class EnemyAiMovement2 : MonoBehaviour
 {
     [SerializeField] int roamDist;
     [SerializeField] int roamSpeed;
