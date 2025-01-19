@@ -27,6 +27,8 @@ public class ButtonFunctions : GameManager
 
     private bool settingsButton;
 
+    SceneManagerScript sceneManager;
+
     // Getters and Setters //
     public GameObject BackgroundScreen
     { get => backgroundScreen; set => backgroundScreen = value; }
@@ -69,31 +71,14 @@ public class ButtonFunctions : GameManager
 
     public void Restart() 
     {
-        //Respawn the player at last checkpoint...how to handle items?
+        sceneManager.ResetScene();
+        //GameManager.instance.PlayerScript.Respawn();
     }
     
-    public void SettingsButton()
-    {
-        if(controlsMenu.activeSelf)
-        {
-            controlsPos.DOAnchorPos(new Vector2(0, 2024), 0.25f)
-                       .SetEase(Ease.OutQuad)
-                       .SetUpdate(true);
-        }
-
-        pauseMenu.SetActive(false);
-        settingsMenu.SetActive(true);
-
-        settingsPos.DOAnchorPos(new Vector2(0, 0), 0.25f)
-                   .SetEase(Ease.InQuad)
-                   .SetUpdate(true);
-    }
-
     public void SaveGame() 
     {
         //Navigate to Save/Load Screen
     }
-
 
     public void MainMenu() 
     {
@@ -107,6 +92,23 @@ public class ButtonFunctions : GameManager
         #else
                     Application.Quit();
         #endif
+    }
+
+    public void SettingsButton()
+    {
+        if (controlsMenu.activeSelf)
+        {
+            controlsPos.DOAnchorPos(new Vector2(0, 2024), 0.25f)
+                       .SetEase(Ease.OutQuad)
+                       .SetUpdate(true);
+        }
+
+        pauseMenu.SetActive(false);
+        settingsMenu.SetActive(true);
+
+        settingsPos.DOAnchorPos(new Vector2(0, 0), 0.25f)
+                   .SetEase(Ease.InQuad)
+                   .SetUpdate(true);
     }
 
     // Settings Buttons //
@@ -128,7 +130,6 @@ public class ButtonFunctions : GameManager
                    });     
         pauseMenu.SetActive(true);
     }
-
 
     // Screens //
     public void BackgroundGroupOpen()

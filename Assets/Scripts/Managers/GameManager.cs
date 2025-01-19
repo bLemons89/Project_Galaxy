@@ -11,8 +11,10 @@ public class GameManager : MonoBehaviour
     ButtonFunctions buttonFunctions;
 
     [Header("===== MANAGERS =====")]
-    //scene manager
-    //audio manager
+    private GameObject sceneManagerEmpty;
+    private GameObject audioManagerEmpty;
+    private SceneManagerScript sceneManager;
+    private AudioManager audioManager;
 
     [Header("===== PLAYER =====")]
     private GameObject player;
@@ -36,6 +38,8 @@ public class GameManager : MonoBehaviour
     {get => isPaused; set => isPaused = value;}
     public GameObject PlayerDamageScreen
     {get => playerDamageScreen; set => playerDamageScreen = value;}
+    public playerScript PlayerScript
+    {get => playerScript; set => playerScript = value;}
 
     void Awake()
     {
@@ -45,22 +49,29 @@ public class GameManager : MonoBehaviour
         // set original values
         timeScaleOrig = Time.timeScale;
 
+        sceneManagerEmpty = GameObject.FindWithTag("Scene Manager");
+        sceneManager = sceneManagerEmpty.GetComponent<SceneManagerScript>();
+
+        audioManagerEmpty = GameObject.FindWithTag("Audio Manager");
+        audioManager = audioManagerEmpty.GetComponent<AudioManager>();
+
         // find and set player reference
         player = GameObject.FindWithTag("Player");
         playerScript = player.GetComponent<playerScript>();
 
         buttonFunctions.ButtonsInitialize();
         
-        // find and set other reference
-
         // Music for game
         //AudioManager.Instance.PlayMusic(playMusic);
         
     }
 
-
     void Update()
     {
+        //delete this 
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+
         // Pause Input
         if (Input.GetButtonDown("Cancel") || Input.GetButtonDown("Pause"))
         {

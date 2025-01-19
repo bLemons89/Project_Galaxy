@@ -10,7 +10,6 @@ public class SceneManagerScript : MonoBehaviour
 {
     public static SceneManagerScript instance;
 
-
     [SerializeField] private string sceneToLoad;
 
     [Header("===== Display Timer Count Down =====")]

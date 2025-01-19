@@ -150,12 +150,19 @@ public class HealthSystem : MonoBehaviour
     void StopFlashing()
     {
         CancelInvoke("FlashCritWarning");
-        // Hide the warning text
-        critWarningText.gameObject.SetActive(false);
+
+        if(critWarningText != null)
+        { 
+            // Hide the warning text
+            critWarningText.gameObject.SetActive(false);
+        }
     }
     void FlashCritWarning()
     {
-        critWarningText.gameObject.SetActive(!critWarningText.gameObject.activeSelf);
+        if(critWarningText != null) 
+        { 
+            critWarningText.gameObject.SetActive(!critWarningText.gameObject.activeSelf);
+        }
     }
     
     // Player Damage Screen //
