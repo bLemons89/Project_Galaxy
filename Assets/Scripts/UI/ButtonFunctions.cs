@@ -7,85 +7,176 @@ using DG.Tweening;
 using Unity.VisualScripting;
 using UnityEngine.UIElements;
 using UnityEditor;
+using TMPro;
 
-public class ButtonFunctions : MonoBehaviour
+public class ButtonFunctions : GameManager
 {
-    //public RectTransform settingsPos, controlPos;
+    [Header("===== OVERLAYS =====")]
+    private CanvasGroup backgroundGroup;
+    private CanvasGroup pauseGroup;
+    private CanvasGroup pauseButtonsGroup;
+    private CanvasGroup settingsGroup;
 
-    // Pause Menu Buttons //
+    [SerializeField] GameObject backgroundScreen;
+    [SerializeField] GameObject pauseMenu;
+    [SerializeField] GameObject settingsMenu;
+    [SerializeField] GameObject controlsMenu;
+    [SerializeField] GameObject pauseButtons;
+    
+    [SerializeField] RectTransform settingsPos, controlsPos;
+
+    private bool settingsButton;
+
+    // Getters and Setters //
+    public GameObject BackgroundScreen
+    { get => backgroundScreen; set => backgroundScreen = value; }
+    public GameObject PauseMenu
+    { get => pauseMenu; set => pauseMenu = value; }
+    public GameObject SettingsMenu
+    { get => settingsMenu; set => settingsMenu = value; }
+    public GameObject PauseButtons
+    { get => pauseButtons; set => pauseButtons = value; }
+
+    public CanvasGroup BackgroundGroup
+    { get => backgroundGroup; set => backgroundGroup = value; }
+    public CanvasGroup PauseGroup
+    { get => pauseGroup; set => pauseGroup = value; }
+    public CanvasGroup SettingsGroup
+    { get => settingsGroup; set => settingsGroup = value; }
+    public CanvasGroup PauseButtonsGroup
+    { get => pauseButtonsGroup; set => pauseButtonsGroup = value; }
+
+    public void ButtonsInitialize()
+    {
+        //find and set UI canvas groups
+        backgroundGroup = backgroundScreen.GetComponent<CanvasGroup>();
+        pauseGroup = pauseMenu.GetComponent<CanvasGroup>();
+        pauseButtonsGroup = pauseMenu.GetComponent<CanvasGroup>();
+        settingsGroup = settingsMenu.GetComponent<CanvasGroup>();
+ 
+        // for animate in
+        backgroundGroup.alpha = 0f;
+        backgroundScreen.transform.localScale = Vector3.zero;
+
+        settingsButton = false;
+    }
+    
+    // Pause Buttons //
     public void Resume()
     {
-        GameManager.instance.StateUnPause();
+        StateUnPause();
     }
 
-    //Restart
-    //Respawn the player at last checkpoint...how to handle items?
-
-
-    //Settings
+    public void Restart() 
+    {
+        //Respawn the player at last checkpoint...how to handle items?
+    }
+    
     public void SettingsButton()
     {
-        CanvasGroup settingsGroup = GameManager.instance.SettingsGroup;
-        settingsGroup.gameObject.SetActive(true);
-        //settingsGroup.alpha = 0f;
-        //settingsGroup.transform
-        //           .DOScale(Vector3.one, 0.5f)
-        //           .SetEase(Ease.OutBack)
-        //           .SetUpdate(true)
-        //           .OnStart(() =>
-        //           {
-        //               settingsGroup.DOFade(1f, 0.25f)
-        //               .SetUpdate(true);
-        //           });
+        if(controlsMenu.activeSelf)
+        {
+            controlsPos.DOAnchorPos(new Vector2(0, 2024), 0.25f)
+                       .SetEase(Ease.OutQuad)
+                       .SetUpdate(true);
+        }
+
+        pauseMenu.SetActive(false);
+        settingsMenu.SetActive(true);
+
+        settingsPos.DOAnchorPos(new Vector2(0, 0), 0.25f)
+                   .SetEase(Ease.InQuad)
+                   .SetUpdate(true);
     }
 
-    //Save Game
-    //Navigate to Save/Load Screen
+    public void SaveGame() 
+    {
+        //Navigate to Save/Load Screen
+    }
 
-    //Main Menu
-    //Navigate to Main Menu Scene
+
+    public void MainMenu() 
+    {
+        //Navigate to Main Menu Scene
+    }
 
     public void Quit()
     {
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#else
-            Application.Quit();
-#endif
+        #if UNITY_EDITOR
+                UnityEditor.EditorApplication.isPlaying = false;
+        #else
+                    Application.Quit();
+        #endif
     }
 
-    // Settings Menu Buttons //
-    public void SoundButton()
-    {
-        //controlPos.DOAnchorPos(new Vector2(1989, 0), 0.25f);
-        //soundPos.DOAnchorPos(new Vector2(0, 0), 0.25f);
-    }
+    // Settings Buttons //
     public void ControlsButton()
     {
-        //soundPos.DOAnchorPos(new Vector2(-1989, 0), 0.25f);
-        //controlPos.DOAnchorPos(new Vector2(0, 0), 0.25f);
+        controlsMenu.SetActive(true);
+        controlsPos.DOAnchorPos(new Vector2(0, 0), 0.25f)
+                   .SetEase(Ease.OutQuad)
+                   .SetUpdate(true);
+    }
+    public void BackButton()
+    {
+        settingsPos.DOAnchorPos(new Vector2(0, -1100), 0.25f)
+                   .SetEase(Ease.OutQuad)
+                   .SetUpdate(true)
+                   .OnComplete(() =>
+                   {
+                       settingsMenu.SetActive(false);
+                   });     
+        pauseMenu.SetActive(true);
     }
 
+
+    // Screens //
     public void BackgroundGroupOpen()
     {
-        // zoom and fade in
-        GameManager.instance.BackgroundScreen.transform.DOScale(Vector3.one, 0.5f)
-                   .SetEase(Ease.OutBack)
-                   .SetUpdate(true);
-        GameManager.instance.BackgroundScreenGroup.DOFade(0.98f, 0.25f)
-        .SetUpdate(true);
+        if (DOTween.IsTweening(backgroundScreen.transform)) return;
 
+        backgroundScreen.SetActive(true);
+
+        backgroundScreen.transform.DOScale(Vector3.one, 0.25f)
+                        .SetEase(Ease.InOutQuad)
+                        .SetUpdate(true);
+        backgroundGroup.DOFade(0.98f, 0.25f)
+                       .SetUpdate(true);
+
+        pauseMenu.SetActive(true);
+        pauseMenu.transform.DOScale(Vector3.one, 0.5f)
+                           .SetEase(Ease.InOutBack)
+                           .SetUpdate(true);
+        pauseGroup.DOFade(1f, .5f)
+                  .SetUpdate(true);
+
+        pauseButtons.SetActive(true);
+        
     }
     public void BackgroundGroupClose()
     {
-        // Kill any previous animations to prevent conflicts
-        DOTween.Kill(GameManager.instance.BackgroundScreen); 
+        if (DOTween.IsTweening(backgroundScreen.transform)) return;
 
-        GameManager.instance.BackgroundScreen.transform.DOScale(Vector3.zero, 0.5f).SetEase(Ease.InOutQuad).SetUpdate(true);
-        GameManager.instance.BackgroundScreenGroup.DOFade(0f, 0.25f).SetUpdate(true).OnKill(() =>
-        {
-            // Only deactivate the background after the animations are finished
-            GameManager.instance.BackgroundScreen.SetActive(false);
-        });
-    }
+        pauseMenu.transform.DOScale(Vector3.zero, 0.5f)
+                           .SetEase(Ease.InOutBack)
+                           .SetUpdate(true);
+        pauseGroup.DOFade(1f, .5f)
+                  .SetUpdate(true)
+                  .OnComplete(() =>
+                  {
+                      pauseMenu.SetActive(false);
+                  });
+
+        backgroundScreen.transform
+                     .DOScale(Vector3.zero, 0.5f)
+                     .SetEase(Ease.InOutQuad)
+                     .SetUpdate(true);
+        
+        backgroundGroup.DOFade(0f, 0.5f)
+                       .SetUpdate(true)
+                       .OnComplete(() => 
+                       { 
+                         backgroundScreen.SetActive(false); 
+                       });
+    }    
 }

@@ -6,7 +6,43 @@ using System;
 
 public class AnimationHelper : MonoBehaviour
 {
-    private readonly static int[] animations =
+   
+
+
+}
+
+public enum Animations
+{
+    IDLE_1,
+    IDLE_2, 
+    IDLE_3,
+    RUN_FORWARD,
+    RUN_BACKWARD,
+    RUN_LEFT,
+    RUN_RIGHT,
+    SHOOT,
+    RELOAD,
+    JUMP_START,
+    JUMP_IN_AIR,
+    JUMP_LAND,
+    DEATH,
+    NONE,
+
+    FADE_IN, 
+    FADE_OUT,
+    WIPE_LEFT,
+    WIPE_RIGHT,
+    WIPE_UP,
+    WIPE_DOWN,
+
+    WINDOW_IN,
+    WINDOW_OUT,
+
+}
+
+/*
+    For Later:
+ private readonly static int[] animations =
     {
         Animator.StringToHash("Idle 1"),
         Animator.StringToHash("Idle 2"),
@@ -45,34 +81,11 @@ public class AnimationHelper : MonoBehaviour
         }
 
     }
-
-
-}
-
-public enum Animations
-{
-    IDLE_1,
-    IDLE_2, 
-    IDLE_3,
-    RUN_FORWARD,
-    RUN_BACKWARD,
-    RUN_LEFT,
-    RUN_RIGHT,
-    SHOOT,
-    RELOAD,
-    JUMP_START,
-    JUMP_IN_AIR,
-    JUMP_LAND,
-    DEATH,
-    NONE,
-
-    FADE_IN, 
-    FADE_OUT,
-    WIPE_LEFT,
-    WIPE_RIGHT,
-    WIPE_UP,
-    WIPE_DOWN,
-
-
-
-}
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ */
