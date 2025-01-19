@@ -39,6 +39,8 @@ public class playerScript : MonoBehaviour
 
 
     // Getters and Setters //
+    public int Speed => speed;  //stun enemy uses this
+    public int SprintMod => sprintMod; //stun enemy
 
     void Start()
     {
@@ -67,7 +69,7 @@ public class playerScript : MonoBehaviour
             // player movement detected
             if (moveDirection.magnitude > 0.3f && !isPlayingStep)
             {
-                //AudioManager.Instance.PlaySFX(playerWalk);
+                //AudioManager.instance.PlaySFX(playerWalk);
                 StartCoroutine(playStep());
             }
 

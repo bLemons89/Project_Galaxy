@@ -40,11 +40,18 @@ public class WeaponInAction : MonoBehaviour
     private bool isSwitchWeapon = false;
     private int inventoryIndex = 0;
     private int numberOfWeapon = 0;
+    private int numberOfAmmo = 0;
 
     private void Start()
     {
         PlayerShoot.OnShootInput += PlayerShoot_shootInput;
         PlayerShoot.OnWeaponReload += Reload;
+        TakingAmmo.OnTakingAmmo += TakingAmmo_OnTakingAmmo;
+    }
+
+    private void TakingAmmo_OnTakingAmmo()
+    {
+        numberOfAmmo++;        
     }
 
     // Example from Unity: Draws a 10 meter long green line from the position for 1 frame.
@@ -53,7 +60,7 @@ public class WeaponInAction : MonoBehaviour
         Vector3 forward = transform.TransformDirection(Vector3.forward) * 10;
         Debug.DrawRay(transform.position, forward, Color.green);
 
-        if (InventoryManager.Instance.InventorySlotsList.Count > 0)
+        if (InventoryManager.instance.InventorySlotsList.Count > 0)
         {
             CheckWeaponInventory();
         }
@@ -104,9 +111,13 @@ public class WeaponInAction : MonoBehaviour
     }
 
     public void Reload()
-    {       
-        gunInfo.currentAmmo = gunInfo.maxAmmo;
-        relaodMessage.SetActive(false);
+    {
+        if (numberOfAmmo > 0)
+        {
+            gunInfo.currentAmmo = gunInfo.maxAmmo;
+            --numberOfAmmo;
+            relaodMessage.SetActive(false);
+        }
     }
 
     public int GetShootDamage()
@@ -123,23 +134,24 @@ public class WeaponInAction : MonoBehaviour
     {       
         InventorySlot myInventorySlot;
 
-        while(inventoryIndex < InventoryManager.Instance.InventorySlotsList.Count && numberOfWeapon < 3)
-        {
-            myInventorySlot = InventoryManager.Instance.InventorySlotsList[inventoryIndex];
 
-            if (myInventorySlot.Item.name == "Assault Rifle")
-            {
+        while (inventoryIndex < InventoryManager.instance.InventorySlotsList.Count && numberOfWeapon < 3)
+        {
+            myInventorySlot = InventoryManager.instance.InventorySlotsList[inventoryIndex];
+
+            if (myInventorySlot.Item.ItemName == "AR")
+            {                
                 hasAssaultRifle = true;
                 CurrentWeapon(assaultRifleModel, assaultRifleScriptableObject);
                 numberOfWeapon++;
-            }
-            else if (myInventorySlot.Item.name == "Shotgun")
+            }                  
+            else if (myInventorySlot.Item.ItemName == "SG")
             {
                 hasShotgunRifle = true;
                 CurrentWeapon(shotgunModel, shotgunScriptableObject);
                 numberOfWeapon++;
             }
-            else if (myInventorySlot.Item.name == "Energy Rifle")
+            else if (myInventorySlot.Item.ItemName == "ER")
             {
                 hasEnergyRifle = true;
                 CurrentWeapon(energyRifleModel, energyRifleScriptableObject);

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bbf9ed18411f7f4f88b45acb94ce75a, type: 3}
   m_Name: Assault Rifle
   m_EditorClassIdentifier: 
-  itemName: Assault  Rifle
+  itemName: AR
   icon: {fileID: 0}
   itemType: 0
   maxStackSize: 1

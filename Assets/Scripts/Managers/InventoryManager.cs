@@ -16,7 +16,7 @@ using UnityEngine.Events;
 public class InventoryManager : MonoBehaviour
 {
     //singleton
-    public static InventoryManager Instance;
+    public static InventoryManager instance;
 
     //Unity Event notifies Inventory was updated
     public UnityEvent OnInventoryUpdated;
@@ -24,9 +24,9 @@ public class InventoryManager : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        if (Instance == null)
+        if (instance == null)
         {
-            Instance = this;
+            instance = this;
             DontDestroyOnLoad(gameObject); //keeps inventory between scenes
         }
         else

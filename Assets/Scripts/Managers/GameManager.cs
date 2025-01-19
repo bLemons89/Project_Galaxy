@@ -44,6 +44,9 @@ public class GameManager : MonoBehaviour
         set => playerDamageScreen = value;
     }
 
+    public GameObject Player => player;
+
+    public playerScript PlayerScript => playerScript;
 
     void Awake()
     {
@@ -59,7 +62,7 @@ public class GameManager : MonoBehaviour
         // find and set other reference
 
         // Music for game
-        //AudioManager.Instance.PlayMusic(playMusic);
+        //AudioManager.instance.PlayMusic(playMusic);
         
     }
 

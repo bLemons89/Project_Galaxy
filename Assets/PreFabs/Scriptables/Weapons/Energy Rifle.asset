@@ -12,12 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bbf9ed18411f7f4f88b45acb94ce75a, type: 3}
   m_Name: Energy Rifle
   m_EditorClassIdentifier: 
-  itemName: Energy Rifle
+  itemName: ER
   icon: {fileID: 0}
   itemType: 0
   maxStackSize: 1
   value: 0
-  weaponPrefabs: {fileID: 4675086562006422597, guid: c8d60d6e5877ec34389af201fc11acc2, type: 3}
   weaponName: Energy Rifle
   shootDamage: 2
   shootRate: 1
