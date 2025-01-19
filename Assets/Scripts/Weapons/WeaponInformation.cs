@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Inventory/Weapon Information")]
+
 public class WeaponInformation : ItemBase
 {
     [Header ("Info")]
-    public string weaponName;
+    public string weaponName;    
 
     [Header("Shooting")]
     public int shootDamage;
@@ -28,7 +29,7 @@ public class WeaponInformation : ItemBase
     public override void IntendedUse()
     {
         throw new System.NotImplementedException();
-    }
+    }   
 
     // Anything below are from the class PP2, I am not sure if you would like to use these:
     //[Header("Audio Info")]
