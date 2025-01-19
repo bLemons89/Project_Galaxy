@@ -9,6 +9,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class ChargedLaser : MonoBehaviour, IBossAbility
 {
@@ -20,6 +21,8 @@ public class ChargedLaser : MonoBehaviour, IBossAbility
     - shoot sound
     - laser beam asset
     */
+    public UnityEvent<float> OnDamage;
+
 
     [Header("LASER INTERACTION SETTINGS")]
     [SerializeField] [Range(0.5f, 5f)] float chargeTime = 2.0f;             //time to charge the laser
@@ -129,9 +132,8 @@ public class ChargedLaser : MonoBehaviour, IBossAbility
             Debug.Log("Player hit by laser");
 
             //damage the player
-            //player health variable
-            //check if player health is null
             //call takeDamage(damageAmount) on player
+            OnDamage?.Invoke(damageAmount);     //Health System
         }
     }
 
@@ -142,13 +144,4 @@ public class ChargedLaser : MonoBehaviour, IBossAbility
         yield return new WaitForSeconds(laserDuration);
         laserBeam.enabled = false;
     }
-
-    /*void OnDrawGizmos()                                 //DELETE WHEN DONE TESTING
-    {
-        if (lockedShootPos != Vector3.zero)
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawSphere(lockedShootPos, 0.5f);
-        }
-    }*/
 }

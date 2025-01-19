@@ -1,20 +1,29 @@
+/*
+    Author: Juan Contreras
+    Edited by:
+    Date Created: 01/18/2025
+    Date Updated: 01/19/2025
+    Description: Interface for the ground attack ability for the boss
+ */
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.Events;
 public class GroundAttack : MonoBehaviour, IBossAbility
 {
+    public UnityEvent<float> OnDamage;
+
     Boss boss;
 
     [Header("DAMAGE WAVE SETTINGS")]
     [SerializeField] GameObject wavePrefab;
     [SerializeField][Range(5f, 20f)] float maxRadius = 10;
-    [SerializeField][Range(5f, 20f)] float innerSafeArea = 8;      //area inside the attack where the player is unaffected
+    [SerializeField][Range(5f, 20f)] float innerSafeRadius = 8;      //area inside the attack where the player is unaffected
     [SerializeField] int expansionSpeed = 5;
-    [SerializeField] int damageAmount = 10;
+    [SerializeField] float damageAmount = 10;
     [SerializeField][Range(0.5f, 3.0f)] float fadeDuration = 2f;
 
-    Vector3? attackCenter = null;    //to be set once in DamagePlayer()
+    Vector3 attackCenter;    //to be set once in DamagePlayer()
     float distanceToPlayer;
 
     public void Initialize(Boss boss)
@@ -45,19 +54,20 @@ public class GroundAttack : MonoBehaviour, IBossAbility
         float currentRadius = 0f;
         float alpha = 1f;       //for fade
 
+        float innerRadius = 0f;
         while (currentRadius <  maxRadius)
         {
-            //increase radius
-            currentRadius += expansionSpeed * Time.deltaTime;
-            waveInstance.transform.localScale = new Vector3(currentRadius, 1f, currentRadius);
-
             //damage the player
-            DamagePlayer(maxRadius);
+            DamagePlayer(currentRadius, innerRadius, spawnPos);
+
+            //increase radius
+            currentRadius += expansionSpeed * 2f * Time.deltaTime;
+            waveInstance.transform.localScale = new Vector3(currentRadius, 1f, currentRadius);      //multiply by 2?
 
             yield return null;
         }
         //reset to null for next attack
-        attackCenter = null;
+        //attackCenter = null;
 
         //fade out effect
         float fadeTimer = 0f;
@@ -81,43 +91,37 @@ public class GroundAttack : MonoBehaviour, IBossAbility
         GameObject.Destroy(waveInstance);
     }
 
-    private void DamagePlayer(float outerRadius)
+    private void DamagePlayer(float currentRadius, float innerRadius, Vector3 attackCenter)
     {
-        //changes at the same rate as the outer radius
-        //float innerRadius = outerRadius - innerSafeArea;
+        //increase inside at the same rate as outside once outside radius reaches desired size
+        if((currentRadius - innerRadius) >= (maxRadius - innerSafeRadius))
+            innerRadius = currentRadius - (maxRadius - innerSafeRadius);
 
-        if(attackCenter == null)
-            attackCenter = boss.transform.position;
-
-        // if (attackCenter != null)
-        //{
-        //    float distanceToPlayer = Vector3.Distance(attackCenter.Value, boss.Player.position);
-        //}
         if (attackCenter != null)
         {
             //array since this returns an array and could not find one to return a single collider
-            Collider[] outerHit = Physics.OverlapSphere(attackCenter.Value, outerRadius);
+            Collider[] outerHit = Physics.OverlapSphere(attackCenter, currentRadius);
 
             foreach (Collider hit in outerHit)
             {
                 //check for the player
                 if (hit.CompareTag("Player"))
                 {
-                    //tracking if player jumped (to avoid)
-                    //float heightDifference = Mathf.Abs(boss.Player.position.y - boss.Player.position.y);    //Note: Potential bug if player is at a lower level
-                    float distanceToCenter = Vector3.Distance(attackCenter.Value, hit.transform.position);
+                    //calculate to see if player is in center (safe area)
+                    float distanceToCenter = Vector3.Distance(attackCenter, hit.transform.position);
 
                     //check if player is outside inner safe area
-                    if (distanceToCenter >= innerSafeArea/2)
+                    if (distanceToCenter >= innerRadius)
                     {
                         Debug.Log("Player hit by ground attack");
                         //call player take damage with (damageAmount)
+                        OnDamage?.Invoke(damageAmount);
                     }
                     else
                         Debug.Log("Player was not hit by ground attack");
-                }
 
-                Debug.Log($"if ({attackCenter} >= {innerSafeArea} && ({attackCenter} <= {outerRadius})");
+                    Debug.Log($"if ({distanceToCenter} >= {innerRadius} Current radius: {currentRadius}");
+                }
             }
         }
     }

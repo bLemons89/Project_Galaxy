@@ -2,7 +2,7 @@
     Author: Juan Contreras
     Edited by:
     Date Created: 01/17/2025
-    Date Updated: 01/18/2025
+    Date Updated: 01/19/2025
     Description: Logic for how the boss interacts with the player depending on the encounter.
  */
 using System.Collections;
@@ -28,8 +28,10 @@ public class Boss : MonoBehaviour
     [SerializeField] [Range(1, 5)] int chargeStopDistance = 2; //distance for the boss to stop at when charging
 
     bool isCharging;
-    bool isOnCooldown;
     Coroutine movementRoutine;
+
+    //new
+    bool isGroundAttacking;
 
     public Transform Player => player;
 
@@ -51,15 +53,12 @@ public class Boss : MonoBehaviour
             agent.speed = moveSpeed;
             SetupAbilities();           //double call in set next encounter method
             StartMovementBehavior();
-
-            ActivateAbilities();
         }
     }
 
     void Update()
     {
-        //if(!isCharging)
-            //StartMovementBehavior();
+
     }
 
     public void AddAbility(IBossAbility ability)
@@ -73,7 +72,8 @@ public class Boss : MonoBehaviour
         //logic to when to activate abilities (not done)
         foreach (IBossAbility ability in abilities)
         {
-            ability.Execute();
+            if(!isGroundAttacking)  //prevent attacks while charging
+                ability.Execute();
         }
     }
     //called when boss is defeated
@@ -103,6 +103,7 @@ public class Boss : MonoBehaviour
         }
     }
 
+    //may be able to remove upon refactor
     public void FindAbility(string abilityName)
     {
         Transform abilityTransform = transform.Find(abilityName);
@@ -138,11 +139,20 @@ public class Boss : MonoBehaviour
                 MaintainDistance();
 
                 //charge after cooldown
-                yield return new WaitForSeconds(chargeCooldown);
+                //yield return new WaitForSeconds(chargeCooldown);
 
                 //another check in case bool changes while on cooldown from other coroutine (might not need)
-                if(!isCharging)
-                    StartCoroutine(ChargeAtPlayer());
+                if (!isGroundAttacking)
+                {
+                    //StartCoroutine(ChargeAtPlayer());
+                    StartGroundAttack();
+                }
+                else
+                {
+                    ActivateSpecificAbility<ChargedLaser>();
+
+                    yield return new WaitForSeconds(2);
+                }
             }
 
             yield return null;
@@ -156,7 +166,7 @@ public class Boss : MonoBehaviour
         if (distanceToPlayer > keepDistance + 1f) //with adjustment for natural-like movement
         {
             //head to the player when far
-            agent.isStopped = false;
+            agent.isStopped = false;                                //don't need?
             agent.SetDestination(player.position);
             Debug.Log("Boss: Moving closer to the player.");
         }
@@ -169,6 +179,18 @@ public class Boss : MonoBehaviour
             Vector3 directionAway = (transform.position - player.position).normalized;
             Vector3 destination = transform.position + directionAway * keepDistance;
             agent.SetDestination(destination);
+        }
+    }
+
+    //just found out this is a thing
+    public void ActivateSpecificAbility<T>()where T : IBossAbility
+    {
+        foreach (IBossAbility ability in abilities)
+        {
+            if(ability is T)
+            {
+                ability.Execute();
+            }
         }
     }
 
@@ -192,25 +214,73 @@ public class Boss : MonoBehaviour
         }
 
         //start ground attack once close
-        StartGroundAttack();
+        //StartGroundAttack();
+        ActivateSpecificAbility<GroundAttack>();
 
         //reset
         isCharging = false;
         agent.speed = moveSpeed;
     }
 
+    //can go into GroundAttack interface
+    IEnumerator ChargeThenGroundAttack()
+    {
+        //charge at player
+        isCharging = true;
+        agent.isStopped = false;
+        agent.speed = chargeSpeed;
+
+        Vector3 targetPosition = player.position;
+        agent.SetDestination(targetPosition);
+
+        while (Vector3.Distance(transform.position, player.position) > chargeStopDistance)
+        {
+            Debug.Log("Boss: Charging at player");
+            //keep updating position to chase even if player is moving
+            targetPosition = player.position;
+            agent.SetDestination(targetPosition);
+            //wait for next frame
+            yield return null;
+        }
+
+        //reset
+        isCharging = false;
+        agent.speed = moveSpeed;
+
+        //start ground attack
+        Debug.Log("Boss: Starting GroundAttack");
+        ActivateSpecificAbility<GroundAttack>();
+
+        //reset state after ground attack
+
+        agent.isStopped = false;
+        StartMovementBehavior();
+
+        //ground attack cool down
+        yield return new WaitForSeconds(chargeCooldown);
+
+        isGroundAttacking = false;
+    }
+
+
     public void StartGroundAttack()
     {
-        Debug.Log("Boss: Starting GroundAttack");
-
-        //trigger ground attack from list of abilities
-        foreach(IBossAbility ability in abilities)
+        if (!isGroundAttacking)
         {
-            if(ability.GetType().Name == "GroundAttack")
-            {
-                ability.Execute();
-                break;
-            }
+            Debug.Log("Boss: Starting GroundAttack");
+
+            isGroundAttacking = true;
+
+            StopAllAbilities();
+
+            StartCoroutine(ChargeThenGroundAttack());
         }
+    }
+
+    void StopAllAbilities()
+    {
+        //stop whatever he is doing
+        agent.isStopped = true;
+        Debug.Log("Boss: Stopping all abilities for GroundAttack");
     }
 }
