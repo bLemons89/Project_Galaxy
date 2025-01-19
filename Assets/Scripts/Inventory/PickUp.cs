@@ -29,9 +29,10 @@ public class PickUp : MonoBehaviour
         {
             //trigger unity event to notify inventory manager
             OnPickup?.Invoke(item, quantity);
-
+    
             //destroy item in the world
             Destroy(gameObject);
         }
     }
+
 }

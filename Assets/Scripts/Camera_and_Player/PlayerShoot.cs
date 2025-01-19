@@ -22,7 +22,7 @@ public class PlayerShoot : MonoBehaviour
         {           
             OnWeaponReload?.Invoke();
         }
-    }
+    }    
 
 
 }
