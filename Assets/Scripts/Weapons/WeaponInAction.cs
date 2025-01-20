@@ -33,6 +33,13 @@ public class WeaponInAction : MonoBehaviour
     public static event Action OnGettingHit;
 
     private WeaponInformation gunInfo;
+
+    public WeaponInformation GunInfo
+    { get { return gunInfo; }
+        set { gunInfo = value; }
+    }
+    public GameObject GunModelPlaceHolder => gunModelPlaceHolder;
+
     // Is the object getting shot? 
     private bool isShot = false;
 
@@ -45,6 +52,7 @@ public class WeaponInAction : MonoBehaviour
     private int inventoryIndex = 0;
     private int numberOfWeapon = 0;
     private int numberOfAmmo = 0;
+    int currentAmmo;
 
     private void Awake()
     {
@@ -55,7 +63,7 @@ public class WeaponInAction : MonoBehaviour
         }
 
         Instance = this;
-        DontDestroyOnLoad(gameObject); // Make this GameObject persistent.
+        //DontDestroyOnLoad(gameObject); // Make this GameObject persistent.
     }
 
     private void Start()
@@ -63,6 +71,8 @@ public class WeaponInAction : MonoBehaviour
         PlayerShoot.OnShootInput += PlayerShoot_shootInput;
         PlayerShoot.OnWeaponReload += Reload;
         TakingAmmo.OnTakingAmmo += TakingAmmo_OnTakingAmmo;
+
+
     }
 
     private void TakingAmmo_OnTakingAmmo()
@@ -76,11 +86,14 @@ public class WeaponInAction : MonoBehaviour
         Vector3 forward = transform.TransformDirection(Vector3.forward) * 10;
         Debug.DrawRay(transform.position, forward, Color.green);
 
+        /*
         if (InventoryManager.instance.InventorySlotsList.Count > 0)
         {
             CheckWeaponInventory();
         }
-        
+        */
+
+
         SwitchWeapon();
 
         // press P to Restart Scene
@@ -91,10 +104,19 @@ public class WeaponInAction : MonoBehaviour
        
     }
 
+    public void UpdateAmmo()
+    {
+        if(gunInfo != null)
+            currentAmmo = gunInfo.currentAmmo;
+    }
+
     private void PlayerShoot_shootInput()
     {
-        if (gunInfo != null && gunInfo.currentAmmo > 0)
+        if (currentAmmo > 0)
         {
+            if(relaodMessage.activeSelf)
+                relaodMessage.SetActive(false);
+
             // check if the raycast hit object
             if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hitInfo, gunInfo.shootDistance))
             {
@@ -105,41 +127,53 @@ public class WeaponInAction : MonoBehaviour
 
                 // we need to get enemy damage here
                 // OnGettingHit?.Invoke();
-                
+                if (gunInfo != null)
+                {
+                    HealthSystem enemyHealthSystem = hitInfo.transform.GetComponent<HealthSystem>();
+                    enemyHealthSystem.Damage(1);
+                }
 
                 isShot = true; // got shot
 
-                gunInfo.currentAmmo--;
 
-                if (gunInfo.currentAmmo < 2)
+                //exits if statement when used
+                /*if (currentAmmo < 2)
                 {
-                    relaodMessage.SetActive(true);
-                }                             
+                    
+                }*/
             }
             else
             {
                 isShot = false; // did not get shot
             }
 
-        }
+            currentAmmo--;
 
+            Debug.Log($"Current Ammo: {currentAmmo}");
+        }
+        else if (gunInfo)
+        {
+            if(!relaodMessage.activeSelf)
+                relaodMessage.SetActive(true);
+
+        }
     }
 
     public int GetAmmo()
     {
-        return gunInfo.currentAmmo;
+        return currentAmmo;
     }
 
     public void SetAmmo(int newAmmo)
     {
-        gunInfo.currentAmmo = newAmmo;
+        currentAmmo = newAmmo;
     }
 
     public void Reload()
     {
         if (numberOfAmmo > 0)
         {
-            gunInfo.currentAmmo = gunInfo.maxAmmo;
+            currentAmmo = gunInfo.maxAmmo;
             --numberOfAmmo;
             relaodMessage.SetActive(false);
         }
@@ -155,7 +189,7 @@ public class WeaponInAction : MonoBehaviour
         return isShot;
     }
 
-    private void CheckWeaponInventory()
+    public void CheckWeaponInventory()
     {       
         InventorySlot myInventorySlot;
 
@@ -185,6 +219,7 @@ public class WeaponInAction : MonoBehaviour
 
             inventoryIndex++;
         }
+        UpdateAmmo();
         
     }
 

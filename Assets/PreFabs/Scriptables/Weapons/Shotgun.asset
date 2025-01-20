@@ -17,6 +17,7 @@ MonoBehaviour:
   itemType: 0
   maxStackSize: 1
   value: 0
+  itemModel: {fileID: 6536510104674936741, guid: b034a42daa6b23a459727bf741d00205, type: 3}
   weaponName: Shotgun
   shootDamage: 3
   shootRate: 1

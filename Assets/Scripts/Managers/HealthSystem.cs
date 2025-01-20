@@ -82,11 +82,18 @@ public class HealthSystem : MonoBehaviour
             }
         }
         //check for death
-        if (currentHealth <= 0 && !isDead)
+        if (currentHealth <= 0)
         {
-            isDead = true;
+            //isDead = true;
             //Handle Death - message, respawn
-            OnDeath?.Invoke();
+            if (this.CompareTag("Player"))
+            {
+                OnDeath?.Invoke();
+
+                currentHealth = maxHealth;
+            }
+            else
+                Destroy(this.gameObject);
         }
     }
     public void Heal(float healAmt)
@@ -112,14 +119,15 @@ public class HealthSystem : MonoBehaviour
             healthBarFill.DOFillAmount(fillAmount, topFillSpeed);
             easeBar.DOFillAmount(fillAmount, bottomFillSpeed);
         }
-        else
+        else if (easeBar != null)
         {
             easeBar.color = Color.red;
             healthBarFill.DOFillAmount(fillAmount, bottomFillSpeed);
             easeBar.DOFillAmount(fillAmount, topFillSpeed);
         }
 
-        healthBarFill.color = healthGradient.Evaluate(currentHealth / maxHealth);        
+        if(healthBarFill != null)
+            healthBarFill.color = healthGradient.Evaluate(currentHealth / maxHealth);        
     }
 
     // Critical Health //

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Events;
 
 public class RangedEnemy : EnemyBase
 {
@@ -15,7 +16,7 @@ public class RangedEnemy : EnemyBase
     [SerializeField] int roamDist;  //sphere distance of roaming
     [SerializeField] int roamTimer; //how long to wait before move again
 
-    public static event Action OnShootingPlayer;
+    public UnityEvent<float> OnShootPlayer;
 
     private GameObject player;
     private bool isRoaming = false;
@@ -34,7 +35,7 @@ public class RangedEnemy : EnemyBase
         currentAmmo = equippedWeapon.maxAmmo;
         shootDistance = equippedWeapon.shootDistance;
         maxAmmo = equippedWeapon.maxAmmo;
-        shootRate = equippedWeapon.shootRate;
+        shootRate = equippedWeapon.shootRate + 1;
 
         player = GameManager.instance.Player; //assume GameManager handles player reference
         startingPos = transform.position; //to remember the starting position for roaming
@@ -44,31 +45,38 @@ public class RangedEnemy : EnemyBase
             Debug.LogError("RangedEnemy: No weapon equipped");
         }
         
-        StartCoroutine(roam());
+        StartCoroutine(RoamRoutine());
     }
 
     void Update()
     {
-        EnemyHPBar.fillAmount = (float)currentHealth / maxHealth;
+        //EnemyHPBar.fillAmount = (float)currentHealth / maxHealth;
 
         Behavior();
     }
 
     protected override void Behavior()
     {
-        if (player == null) return;
+        if (player == null || this == null) return;
 
         //aim at the player
         AimAtPlayer();
 
-        //check if the enemy can shoot
+        //check if the enemy can ShootRoutine
         if (CanShootPlayer())
         {
             ShootAtPlayer();
         }
     }
 
-    private void AimAtPlayer()
+    public override void TakeDamage(float amount)      //All enemies take damage
+    {
+        currentHealth -= amount;
+        if (currentHealth <= 0)
+            Destroy(gameObject);        //Dead
+    }
+
+    void AimAtPlayer()
     {
         //calculate direction to the player
         Vector3 direction = (player.transform.position - transform.position).normalized;
@@ -79,21 +87,14 @@ public class RangedEnemy : EnemyBase
         
     }
 
-    private bool CanShootPlayer()
+    bool CanShootPlayer()
     {
         //check if the player is within shooting distance
         float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
         return distanceToPlayer <= shootDistance;
     }
 
-    public override void takeDamage(float amount)      //All enemies take damage
-    {
-        currentHealth -= amount;
-        if (currentHealth <= 0)
-            Destroy(gameObject);        //Dead
-    }
-
-    private void ShootAtPlayer()
+    void ShootAtPlayer()
     {      
 
         //check if the weapon has ammo
@@ -103,18 +104,18 @@ public class RangedEnemy : EnemyBase
             //if not shooting, begin shooting
             if (!isShooting)
             {
-                StartCoroutine(shoot());
+                StartCoroutine(ShootRoutine());
             }
             
         }
         else
         {
             Debug.Log("RangedEnemy: Out of ammo, reloading...");
-            StartCoroutine(ReloadWeapon());
+            StartCoroutine(ReloadRoutine());
         }
     }
 
-    private System.Collections.IEnumerator ReloadWeapon()
+    IEnumerator ReloadRoutine()
     {
         yield return new WaitForSeconds(reloadRate);
         currentAmmo = maxAmmo;
@@ -123,7 +124,7 @@ public class RangedEnemy : EnemyBase
 
 
     // Enemy Roaming //
-    IEnumerator roam()
+    IEnumerator RoamRoutine()
     {
         // turn on 
         isRoaming = true;
@@ -147,14 +148,14 @@ public class RangedEnemy : EnemyBase
         isRoaming = false;
     }
 
-    IEnumerator shoot()
+    IEnumerator ShootRoutine()
     {
         // turn on
         isShooting = true;
                
         if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hitInfo, shootDistance))
         {
-            OnShootingPlayer?.Invoke();
+            OnShootPlayer?.Invoke(1);                                   //adjust damage
             Debug.Log(hitInfo.transform.name + $" Got Hit");
             --currentAmmo;
         }
@@ -165,6 +166,4 @@ public class RangedEnemy : EnemyBase
         // turn off
         isShooting = false;
     }
-
-
 }
