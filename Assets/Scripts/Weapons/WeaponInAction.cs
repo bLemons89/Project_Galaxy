@@ -8,6 +8,8 @@ using UnityEngine.UI;
 
 public class WeaponInAction : MonoBehaviour
 {
+    private static WeaponInAction Instance;
+
     [Header("PUT YOUR WEAPON PREFABS MODELS SAMPLES HERE")]
     [SerializeField] GameObject assaultRifleModel;
     [SerializeField] GameObject shotgunModel;
@@ -42,6 +44,18 @@ public class WeaponInAction : MonoBehaviour
     private int numberOfWeapon = 0;
     private int numberOfAmmo = 0;
 
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject); // Destroy duplicate instance.
+            return;
+        }
+
+        Instance = this;
+        DontDestroyOnLoad(gameObject); // Make this GameObject persistent.
+    }
+
     private void Start()
     {
         PlayerShoot.OnShootInput += PlayerShoot_shootInput;
@@ -66,6 +80,13 @@ public class WeaponInAction : MonoBehaviour
         }
         
         SwitchWeapon();
+
+        // press P to Restart Scene
+        if (Input.GetButtonDown("Restart Scene"))
+        {
+            SceneManagerScript.Instance.ResetScene();
+        }
+       
     }
 
     private void PlayerShoot_shootInput()
