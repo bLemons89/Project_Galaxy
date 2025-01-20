@@ -9,10 +9,10 @@ public class GameManager : MonoBehaviour
     //singleton
     public static GameManager instance;
     ButtonFunctions buttonFunctions;
+    //RadialMenu radialMenu;
 
     [Header("===== MANAGERS =====")]
-    private GameObject sceneManagerEmpty;
-    private GameObject audioManagerEmpty;
+    private GameObject gameManager;
     private SceneManagerScript sceneManager;
     private AudioManager audioManager;
 
@@ -20,15 +20,19 @@ public class GameManager : MonoBehaviour
     private GameObject player;
     private playerScript playerScript;
     [SerializeField] GameObject playerDamageScreen;
+    //[SerializeField] GameObject radialMenuObject;
 
     [Header("===== TEMP VARIABLES =====")]
     [SerializeField] GameObject menuActive;
+    [SerializeField] GameObject menuWin;
+    [SerializeField] GameObject menuLose;
 
     [Header("===== MUSIC =====")]
     //[SerializeField] private AudioClip playMusic;
 
     // Flags //
     private bool isPaused;
+    //private bool radialIsOpen
 
     // Cache //
     float timeScaleOrig;
@@ -36,24 +40,28 @@ public class GameManager : MonoBehaviour
     // Getters and Setters //
     public bool IsPaused
     {get => isPaused; set => isPaused = value;}
+    public GameObject MenuActive
+    { get => menuActive; set => menuActive = value; }
+
     public GameObject PlayerDamageScreen
-    {get => playerDamageScreen; set => playerDamageScreen = value;}
+    {get => playerDamageScreen; set => playerDamageScreen = value;}   
     public playerScript PlayerScript
-    {get => playerScript; set => playerScript = value;}
+    { get => playerScript; set => playerScript = value; }
+    public GameObject Player => player;
 
     void Awake()
     {
         instance = this;
         buttonFunctions = FindObjectOfType<ButtonFunctions>();
+        //radialMenu = FindObjectOfType<RadialMenu>();
 
         // set original values
         timeScaleOrig = Time.timeScale;
+        //radialIsOpen = false;
 
-        sceneManagerEmpty = GameObject.FindWithTag("Scene Manager");
-        sceneManager = sceneManagerEmpty.GetComponent<SceneManagerScript>();
-
-        audioManagerEmpty = GameObject.FindWithTag("Audio Manager");
-        audioManager = audioManagerEmpty.GetComponent<AudioManager>();
+        gameManager = GameObject.FindWithTag("GameManager");
+        sceneManager = gameManager.GetComponent<SceneManagerScript>();
+        audioManager = gameManager.GetComponent<AudioManager>();
 
         // find and set player reference
         player = GameObject.FindWithTag("Player");
@@ -68,7 +76,7 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        //delete this 
+        //delete this when done testing health buttons
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
 
@@ -102,6 +110,22 @@ public class GameManager : MonoBehaviour
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         
+        //if(buttonFunctions.BackgroundScreen.activeSelf)
         buttonFunctions.BackgroundGroupClose();
     }
+    public void WinGame()
+    {
+        StatePause();
+        menuActive = menuWin;
+        menuActive.SetActive(true);
+
+    }
+
+    public void LoseGame()
+    {
+        StatePause();
+        menuActive = menuLose;
+        menuActive.SetActive(true);
+    }
+
 }

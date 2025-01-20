@@ -32,7 +32,6 @@ public class HealthSystem : MonoBehaviour
     //[Header("===== DAMAGE TYPE =====")]
 
     // Flags //
-    bool isMax;
     bool isHeal;
     bool isCrit;
     bool isDead;
@@ -46,7 +45,6 @@ public class HealthSystem : MonoBehaviour
         currentHealth = maxHealth;
 
         //set flags
-        isMax = true;
         isHeal = false;
         isCrit = false;
         isDead = false;
@@ -59,13 +57,9 @@ public class HealthSystem : MonoBehaviour
         if (currentHealth > maxHealth)
         {
             currentHealth = maxHealth;
-            isMax = true;
         }
         //most conditions
-        else if (currentHealth < maxHealth)
-        {
-            isMax = false;
-        }
+        
         
         UpdateHealthBar();
 
@@ -106,18 +100,23 @@ public class HealthSystem : MonoBehaviour
     {
         float fillAmount = currentHealth / maxHealth;
 
+        DOTween.Kill(healthBarFill);
+        DOTween.Kill(easeBar);
+
         if (isHeal)
-        { 
+        {
+            easeBar.color = Color.green;
             healthBarFill.DOFillAmount(fillAmount, topFillSpeed);
             easeBar.DOFillAmount(fillAmount, bottomFillSpeed);
         }
         else
         {
+            easeBar.color = Color.red;
             healthBarFill.DOFillAmount(fillAmount, bottomFillSpeed);
             easeBar.DOFillAmount(fillAmount, topFillSpeed);
         }
 
-        healthBarFill.color = healthGradient.Evaluate(currentHealth / maxHealth);
+        healthBarFill.color = healthGradient.Evaluate(currentHealth / maxHealth);        
     }
 
     // Critical Health //
@@ -175,7 +174,4 @@ public class HealthSystem : MonoBehaviour
     {
         GameManager.instance.PlayerDamageScreen.SetActive(false);
     }
-
-
-
 }

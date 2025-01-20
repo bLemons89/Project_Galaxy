@@ -9,154 +9,238 @@ using UnityEngine.UIElements;
 using UnityEditor;
 using TMPro;
 
-public class ButtonFunctions : GameManager
+public class ButtonFunctions : MonoBehaviour
 {
-    [Header("===== OVERLAYS =====")]
+    SceneManagerScript sceneManager;
+
+    [Header("===== MENUS =====")]
+    [SerializeField] GameObject backgroundScreen;
     private CanvasGroup backgroundGroup;
+
+    [SerializeField] GameObject pauseMenu;
     private CanvasGroup pauseGroup;
+    [SerializeField] GameObject pauseTitle;
+    private TextMeshProUGUI titleText;
+    [SerializeField] GameObject pauseButtons;
     private CanvasGroup pauseButtonsGroup;
+
+    [SerializeField] GameObject settingsMenu;
     private CanvasGroup settingsGroup;
 
-    [SerializeField] GameObject backgroundScreen;
-    [SerializeField] GameObject pauseMenu;
-    [SerializeField] GameObject settingsMenu;
     [SerializeField] GameObject controlsMenu;
-    [SerializeField] GameObject pauseButtons;
-    
-    [SerializeField] RectTransform settingsPos, controlsPos;
+    private CanvasGroup controlsGroup;
 
+    // Flags //
     private bool settingsButton;
 
-    SceneManagerScript sceneManager;
+    // For Settings //
+    [SerializeField] private bool enableFlickering;
 
     // Getters and Setters //
     public GameObject BackgroundScreen
     { get => backgroundScreen; set => backgroundScreen = value; }
     public GameObject PauseMenu
     { get => pauseMenu; set => pauseMenu = value; }
-    public GameObject SettingsMenu
-    { get => settingsMenu; set => settingsMenu = value; }
+    public GameObject PauseTitle
+    { get => pauseTitle; set => pauseTitle = value; }
     public GameObject PauseButtons
     { get => pauseButtons; set => pauseButtons = value; }
-
-    public CanvasGroup BackgroundGroup
-    { get => backgroundGroup; set => backgroundGroup = value; }
-    public CanvasGroup PauseGroup
-    { get => pauseGroup; set => pauseGroup = value; }
-    public CanvasGroup SettingsGroup
-    { get => settingsGroup; set => settingsGroup = value; }
-    public CanvasGroup PauseButtonsGroup
-    { get => pauseButtonsGroup; set => pauseButtonsGroup = value; }
+    public GameObject SettingsMenu
+    { get => settingsMenu; set => settingsMenu = value; }
 
     public void ButtonsInitialize()
     {
         //find and set UI canvas groups
         backgroundGroup = backgroundScreen.GetComponent<CanvasGroup>();
         pauseGroup = pauseMenu.GetComponent<CanvasGroup>();
-        pauseButtonsGroup = pauseMenu.GetComponent<CanvasGroup>();
+        titleText = pauseTitle.GetComponent<TextMeshProUGUI>();
+        pauseButtonsGroup = pauseButtons.GetComponent<CanvasGroup>();
         settingsGroup = settingsMenu.GetComponent<CanvasGroup>();
- 
+
         // for animate in
         backgroundGroup.alpha = 0f;
         backgroundScreen.transform.localScale = Vector3.zero;
 
+        enableFlickering = true;
         settingsButton = false;
+
     }
-    
+
     // Pause Buttons //
     public void Resume()
     {
-        StateUnPause();
+        GameManager.instance.StateUnPause();
     }
 
-    public void Restart() 
+    public void Restart()
     {
-        sceneManager.ResetScene();
+        //sceneManager.ResetScene();
         //GameManager.instance.PlayerScript.Respawn();
     }
-    
-    public void SaveGame() 
+
+    public void SaveGame()
     {
         //Navigate to Save/Load Screen
     }
 
-    public void MainMenu() 
+    public void MainMenu()
     {
         //Navigate to Main Menu Scene
     }
 
     public void Quit()
     {
-        #if UNITY_EDITOR
-                UnityEditor.EditorApplication.isPlaying = false;
-        #else
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
                     Application.Quit();
-        #endif
+#endif
     }
 
     public void SettingsButton()
     {
-        if (controlsMenu.activeSelf)
-        {
-            controlsPos.DOAnchorPos(new Vector2(0, 2024), 0.25f)
-                       .SetEase(Ease.OutQuad)
-                       .SetUpdate(true);
-        }
+        //if (controlsMenu.activeSelf)
+        //{
+        //    controlsPos.DOAnchorPos(new Vector2(0, 2024), 0.25f)
+        //               .SetEase(Ease.OutQuad)
+        //               .SetUpdate(true);
+        //}
 
-        pauseMenu.SetActive(false);
-        settingsMenu.SetActive(true);
+        //pauseMenu.SetActive(false);
+        //settingsMenu.SetActive(true);
 
-        settingsPos.DOAnchorPos(new Vector2(0, 0), 0.25f)
-                   .SetEase(Ease.InQuad)
-                   .SetUpdate(true);
+        //settingsPos.DOAnchorPos(new Vector2(0, 0), 0.25f)
+        //           .SetEase(Ease.InQuad)
+        //           .SetUpdate(true);
     }
 
     // Settings Buttons //
     public void ControlsButton()
     {
-        controlsMenu.SetActive(true);
-        controlsPos.DOAnchorPos(new Vector2(0, 0), 0.25f)
-                   .SetEase(Ease.OutQuad)
-                   .SetUpdate(true);
+        //controlsMenu.SetActive(true);
+        //controlsPos.DOAnchorPos(new Vector2(0, 0), 0.25f)
+        //           .SetEase(Ease.OutQuad)
+        //           .SetUpdate(true);
     }
     public void BackButton()
     {
-        settingsPos.DOAnchorPos(new Vector2(0, -1100), 0.25f)
-                   .SetEase(Ease.OutQuad)
-                   .SetUpdate(true)
-                   .OnComplete(() =>
-                   {
-                       settingsMenu.SetActive(false);
-                   });     
-        pauseMenu.SetActive(true);
+        //settingsPos.DOAnchorPos(new Vector2(0, -1100), 0.25f)
+        //           .SetEase(Ease.OutQuad)
+        //           .SetUpdate(true)
+        //           .OnComplete(() =>
+        //           {
+        //               settingsMenu.SetActive(false);
+        //           });     
+        //pauseMenu.SetActive(true);
     }
 
     // Screens //
     public void BackgroundGroupOpen()
     {
-        if (DOTween.IsTweening(backgroundScreen.transform)) return;
-
+        DOTween.KillAll();
+        //Turn on
         backgroundScreen.SetActive(true);
+        backgroundGroup.alpha = 0f;
+        backgroundScreen.transform.localScale = Vector3.zero;
 
+        //Scale/Fade
         backgroundScreen.transform.DOScale(Vector3.one, 0.25f)
                         .SetEase(Ease.InOutQuad)
                         .SetUpdate(true);
         backgroundGroup.DOFade(0.98f, 0.25f)
                        .SetUpdate(true);
-
+        //Turn on
         pauseMenu.SetActive(true);
+        pauseGroup.alpha = 0f;
+        pauseMenu.transform.localScale = Vector3.zero;
+
+        //Scale/Fade
         pauseMenu.transform.DOScale(Vector3.one, 0.5f)
                            .SetEase(Ease.InOutBack)
                            .SetUpdate(true);
         pauseGroup.DOFade(1f, .5f)
                   .SetUpdate(true);
+        //Turn on
+        pauseTitle.SetActive(true);
+        titleText.alpha = 0f;
+        pauseTitle.transform.localScale = Vector3.zero;
 
-        pauseButtons.SetActive(true);
-        
+        //Scale/Fade
+        pauseTitle.transform.DOScale(Vector3.one, 0.25f)
+                  .SetEase(Ease.InOutQuad)
+                  .SetUpdate(true);
+
+        titleText.DOFade(1f, 1f)
+                 .SetEase(Ease.InOutElastic)
+                 .SetUpdate(true);
+
+        titleText.DOFade(0.75f, 0.15f)
+                 .SetEase(Ease.InOutExpo)
+                 .SetLoops(-1, LoopType.Restart)
+                 .SetDelay(0.5f)
+                 .SetUpdate(true);
+
+        float randomDelay = Random.Range(0.5f, 1.5f);
+        titleText.DOFade(1f, Random.Range(0.1f, 0.5f))
+                 .SetEase(Ease.InOutElastic)
+                 .SetDelay(randomDelay)
+                 .SetUpdate(true);
+
+        //Animate in
+        float totalDelay = .5f;
+        float delayBetween = 0.15f;
+        for (int i = 0; i < pauseButtonsGroup.transform.childCount; i++)
+        {
+            GameObject button = pauseButtons.transform.GetChild(i).gameObject;
+
+            button.SetActive(true);
+            button.transform.localScale = Vector3.zero;
+
+            button.transform.DOScale(Vector3.one, 0.15f)
+                            .SetEase(Ease.InOutQuad)
+                            .SetDelay(totalDelay)
+                            .SetUpdate(true);
+
+            TextMeshProUGUI buttonText = button.GetComponentInChildren<TextMeshProUGUI>();
+
+            if (enableFlickering)
+            {
+                buttonText.DOFade(0.75f, 0.15f)
+                 .SetEase(Ease.InOutExpo)
+                 .SetLoops(-1, LoopType.Restart)
+                 .SetDelay(0.5f)
+                 .SetUpdate(true);
+
+                buttonText.DOFade(1f, Random.Range(0.1f, 0.5f))
+                          .SetEase(Ease.InOutElastic)
+                          .SetDelay(randomDelay)
+                          .SetUpdate(true);
+            }
+            totalDelay += delayBetween;
+        }
     }
     public void BackgroundGroupClose()
     {
-        if (DOTween.IsTweening(backgroundScreen.transform)) return;
+        DOTween.KillAll();
+
+        for (int i = 0; i < pauseButtonsGroup.transform.childCount; i++)
+        {
+            GameObject button = pauseButtons.transform.GetChild(i).gameObject;
+
+            button.transform.DOScale(Vector3.zero, 0.15f)
+                            .SetEase(Ease.InOutQuad)
+                            .SetDelay(0.15f)
+                            .SetUpdate(true);
+
+            button.SetActive(false);
+        }
+
+        //Scale/Fade
+        pauseTitle.transform.DOScale(Vector3.zero, 0.25f)
+                  .SetEase(Ease.InOutQuad)
+                  .SetUpdate(true);
+        //Turn off
+        pauseTitle.SetActive(false);
 
         pauseMenu.transform.DOScale(Vector3.zero, 0.5f)
                            .SetEase(Ease.InOutBack)
@@ -172,12 +256,12 @@ public class ButtonFunctions : GameManager
                      .DOScale(Vector3.zero, 0.5f)
                      .SetEase(Ease.InOutQuad)
                      .SetUpdate(true);
-        
+
         backgroundGroup.DOFade(0f, 0.5f)
                        .SetUpdate(true)
-                       .OnComplete(() => 
-                       { 
-                         backgroundScreen.SetActive(false); 
+                       .OnComplete(() =>
+                       {
+                           backgroundScreen.SetActive(false);
                        });
-    }    
+    }
 }

@@ -6,7 +6,7 @@ public class Bullet : MonoBehaviour
 {
 
     // Bullet can damage player and enemy
-    [SerializeField] private Rigidbody rigidbody;
+    //[SerializeField] private Rigidbody rigidbody;
     [SerializeField] private int bulletDamageAmount;
     [SerializeField] private int speed; // how fast the bullet travel
     [SerializeField] private WeaponInformation weaponInformation;
@@ -34,7 +34,7 @@ public class Bullet : MonoBehaviour
         Vector3 directionWithSpread = new Vector3(x, y, 0);
         this.GetComponent<Rigidbody>().AddForce(directionWithSpread);
 
-        rigidbody.velocity = transform.forward * speed;
+        GetComponent<Rigidbody>().velocity = transform.forward * speed;
         
         Debug.Log($"Bullet position: {this.transform.position}");
 
@@ -43,16 +43,16 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {       
-        IDamage dmg = other.GetComponent<IDamage>();
+        //IDamage dmg = other.GetComponent<IDamage>();
 
-        if (dmg != null)
-        {
-            dmg.takeDamage(bulletDamageAmount);
-        }
+        //if (dmg != null)
+        //{
+        //    dmg.takeDamage(bulletDamageAmount);
+        //}
 
-        #if UNITY_EDITOR
-                Debug.Log($"{this.name} collide with {other.name}");
-        #endif
+        //#if UNITY_EDITOR
+        //        Debug.Log($"{this.name} collide with {other.name}");
+        //#endif
     }
 
     public int GetBulletDamageAmount()
@@ -75,7 +75,7 @@ public class Bullet : MonoBehaviour
         Vector3 directionWithSpread = new Vector3(x, y, 0);
         this.GetComponent<Rigidbody>().AddForce(directionWithSpread);
 
-        rigidbody.velocity = transform.forward * speed;
+        GetComponent<Rigidbody>().velocity = transform.forward * speed;
 
         Debug.Log($"Bullet position: {this.transform.position}");
 

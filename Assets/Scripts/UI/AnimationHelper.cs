@@ -6,8 +6,23 @@ using System;
 
 public class AnimationHelper : MonoBehaviour
 {
-   
+    public void ZoomIn(GameObject thing, float duration, Ease easeType)
+    {
+        thing.transform.DOScale(Vector3.one, duration).SetEase(easeType).SetUpdate(true);
+    }
+    public void ZoomOut(GameObject thing, float duration, Ease easeType)
+    {
+        thing.transform.DOScale(Vector3.zero, duration).SetEase(easeType).SetUpdate(true);
+    }
 
+    public void FadeIn(CanvasGroup group, float duration, float alpha, Ease easeType)
+    {
+        group.DOFade(alpha, duration).SetEase(easeType).SetUpdate(true);
+    }
+    public void FadeOut(CanvasGroup group, float duration, Ease easeType)
+    {
+        group.DOFade(0f, duration).SetEase(easeType).SetUpdate(true);
+    }
 
 }
 
