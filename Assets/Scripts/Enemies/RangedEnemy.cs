@@ -5,15 +5,15 @@ using UnityEngine;
 public class RangedEnemy : EnemyBase
 {
     [Header("     Ranged Enemy Stats     ")]
-    [SerializeField] private WeaponInformation equippedWeapon; // Weapon data (Scriptable Object)
-    [SerializeField] private Transform gunTransform; // Where the gun is attached
-    [SerializeField] private Transform shootPoint; // Where bullets originate from
+    [SerializeField] private WeaponInformation equippedWeapon; //weapon data (Scriptable Object)
+    [SerializeField] private Transform gunTransform;           //where the gun is attached
+    [SerializeField] private Transform shootPoint;             //where bullets originate from
 
     private GameObject player;
 
     void Start()
     {
-        player = GameManager.instance.Player; // Assume GameManager handles player reference
+        player = GameManager.instance.Player;
 
         if (equippedWeapon == null)
         {
@@ -30,10 +30,10 @@ public class RangedEnemy : EnemyBase
     {
         if (player == null) return;
 
-        // Aim at the player
+        //aim at the player
         AimAtPlayer();
 
-        // Check if the enemy can shoot
+        //check if the enemy can shoot
         if (CanShootPlayer())
         {
             ShootAtPlayer();
@@ -42,31 +42,34 @@ public class RangedEnemy : EnemyBase
 
     private void AimAtPlayer()
     {
-        // Calculate direction to the player
+        //calculate direction to the player
         Vector3 direction = (player.transform.position - transform.position).normalized;
 
-        // Rotate the gun to face the player
+        //rotate the gun to face the player
         Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
         gunTransform.rotation = Quaternion.Slerp(gunTransform.rotation, lookRotation, Time.deltaTime * 5f);
     }
 
     private bool CanShootPlayer()
     {
-        // Check if the player is within shooting distance
+        //check if the player is within shooting distance
         float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
         return distanceToPlayer <= equippedWeapon.shootDistance;
     }
 
     private void ShootAtPlayer()
     {
-        // Check if the weapon has ammo
+        //check if the weapon has ammo
         if (equippedWeapon.currentAmmo > 0)
         {
             // Call the gun's shooting script or logic
             Debug.Log("RangedEnemy: Shooting at the player.");
+
+            //call shoot
+
             equippedWeapon.currentAmmo--;
 
-            // TODO: Implement actual shooting logic in the gun script (e.g., instantiate bullets or deal damage)
+            //deal damage here
         }
         else
         {
