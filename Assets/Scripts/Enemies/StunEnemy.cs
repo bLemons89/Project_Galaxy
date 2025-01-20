@@ -8,31 +8,37 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class StunEnemy : EnemyBase
 {
     [Header("     Stun Enemy Stats     ")]
-    [SerializeField] float stunDuration;
-    [SerializeField] int distanceFromPlayer;    //how close to get to the player to take the item
-    [SerializeField] float enemySpeedMult;      //Speed multiplier
-    [SerializeField] int fleeDistance = 2;      //distance to keep from player (might not need)
+    [SerializeField] float stunDuration = 4;
+    [SerializeField] int distanceFromPlayer = 4;    //how close to get to the player to take the item
+    [SerializeField] float enemySpeedMult = 2;      //Speed multiplier
+    [SerializeField] int fleeDistance = 40;      //distance to keep from player (might not need)
+    [SerializeField] int roamRadius = 20;
 
     //for interactions with the player
     GameObject player;
+    GameObject itemModel;       //to attach model to enemy
     playerScript playerSettings;
     enum EnemyState { Roaming, Chasing, Fleeing }            //Behavior changes when taking item
-    EnemyState currentState = EnemyState.Chasing;   //Starts by chasing the player
+    EnemyState currentState = EnemyState.Roaming;   //Starts by roaming
 
-    bool isFleeing = false;     //Used to set speed once
-    bool enemyHasItem;
+    Vector3 roamPosition;
+
+    bool isRoaming;
+    bool isFleeing;     //Used to set speed once
+    bool isInventoryEmpty;
 
     // Start is called before the first frame update
     void Start()
     {
         //Initializing stats
-        //currentHealth = enemyHP;
         agent.speed *= speed;
         agent.stoppingDistance = distanceFromPlayer;
+        roamPosition = agent.destination;
 
         if (GameManager.instance != null)
         {
@@ -52,7 +58,13 @@ public class StunEnemy : EnemyBase
         //drop item right before dying
         if (currentHealth - amount <= 0)
         {
-            //drop item logic
+            if (itemModel != null)
+            {
+                //drop item logic
+                itemModel.transform.SetParent(null);     //Detach item from carrier
+                gameObject.transform.position = transform.position; //Drop item at enemy's death location
+                gameObject.GetComponent<Collider>().enabled = true;   //Enable item collider for pickup
+            }
         }
         //call damage method (handles death)
         Debug.Log($"Stun Enemy: Took {amount} damage");
@@ -64,7 +76,8 @@ public class StunEnemy : EnemyBase
         switch (currentState)
         {
             case EnemyState.Roaming:
-                //Roam();s
+                if (!isRoaming)
+                    StartCoroutine(RoamRoutine()); ;
                 break;
             case EnemyState.Chasing:
                 ChasePlayer();
@@ -75,35 +88,53 @@ public class StunEnemy : EnemyBase
         }
     }
 
+    void Roam()
+    {
+        isRoaming = true;
+        //find a random location within the roam radius
+        Vector3 randomLocation = Random.insideUnitSphere * roamRadius;
+        randomLocation += transform.position;
+
+        //find a valid point on the NavMesh to go to
+        NavMeshHit hit;
+        if(NavMesh.SamplePosition(randomLocation, out hit, 50, NavMesh.AllAreas))      //maybe higher max distance if there's issues
+        {
+            if (Vector3.Distance(hit.position, transform.position) > 10)
+            {
+                roamPosition = hit.position;
+                agent.SetDestination(roamPosition);
+            }
+        }
+
+        CheckPlayerInventory();
+        if (!isInventoryEmpty)        //will only go after player if inventory is not empty
+            currentState = EnemyState.Chasing;
+    }
+
+    IEnumerator RoamRoutine()
+    {
+        if(!isRoaming)
+            Roam();
+
+        if (agent.destination == roamPosition)
+        {
+            isRoaming = false;
+            yield return new WaitForSeconds(2);
+        }
+    }
+
     void ChasePlayer()
     {
-        bool isInventoryEmpty = true;
+        Debug.Log("Stun Enemy: Chasing after player");
 
-        //checks if the player's inventory is empty
-        if (InventoryManager.instance != null)
+        //move to player location anywhere on the scene when the player is within range
+        agent.SetDestination(player.transform.position);
+        //stun and take item from player
+        if (Vector3.Distance(transform.position, player.transform.position) < agent.stoppingDistance)
         {
-            if (InventoryManager.instance.InventorySlotsList.Count > 0)
-                isInventoryEmpty = false;
-            else
-                Debug.Log("Stun Enemy: Player Inventory Empty");
-        }
-        else
-            Debug.Log("Stun Enemy: No Inventory Manager Instance");
 
-        //will only go after player if inventory is not empty
-        if (!isInventoryEmpty)
-        {
-            Debug.Log("Stun Enemy: Chasing after player");
-
-            //move to player location anywhere on the scene when the player is within range
-            agent.SetDestination(player.transform.position);
-            //stun and take item from player
-            if (Vector3.Distance(transform.position, player.transform.position) < agent.stoppingDistance)
-            {
-
-                StunPlayer();               //stuns the player
-                TakeItemFromPlayer();        //takes item and flees
-            }
+            StunPlayer();               //stuns the player
+            TakeItemFromPlayer();        //takes item and flees
         }
     }
 
@@ -123,39 +154,110 @@ public class StunEnemy : EnemyBase
         Vector3 playerPosition = player.transform.position;
         Vector3 fleeDirection = (transform.position - playerPosition).normalized;
 
+        //adding randomness to flee direction
+        fleeDirection += new Vector3(Random.Range(-0.2f, 0.2f), 0, Random.Range(-0.2f, 0.2f));
+        fleeDirection.Normalize();
+
         //destination to run to
-        Vector3 fleeDestination = transform.position + fleeDirection * agent.stoppingDistance * fleeDistance;       //don't need agent.stoppingDistance??
+        Vector3 fleeDestination = (transform.position + fleeDirection) * fleeDistance;
+
+        //making sure a valid destination is posHit to prevent running into walls or side of the map
+        NavMeshHit posHit;
+        NavMeshHit edgeHit;
+        if (NavMesh.SamplePosition(fleeDestination, out posHit, 100, NavMesh.AllAreas))
+        {
+            //move to valid point
+            if (Vector3.Distance(posHit.position, transform.position) > 0)
+                agent.SetDestination(posHit.position);
+            else
+                Debug.Log($"Stun Enemy: Destination found but not set at {posHit.position}. Player Position: {player.transform.position}");
+
+            if (Vector3.Distance(posHit.position, transform.position) > 10)
+            {
+                if (agent.FindClosestEdge(out edgeHit))
+                {
+                    if (Vector3.Distance(edgeHit.position, transform.position) < 5)
+                    {
+                        //calculate a direction away from the edge
+                        Vector3 awayFromEdge = (transform.position - edgeHit.position).normalized;
+
+                        //adjust the roam position to move away from the edge
+                        Vector3 adjustedPosition = transform.position + awayFromEdge * 5; //move farther??
+                        NavMeshHit adjustedHit;
+
+                        //validate the new position on the NavMesh
+                        if (NavMesh.SamplePosition(adjustedPosition, out adjustedHit, 10, NavMesh.AllAreas))
+                        {
+                            roamPosition = adjustedHit.position;
+                            agent.SetDestination(roamPosition);
+                            Debug.Log("Avoiding edge by moving to: " + roamPosition);
+                        }
+                    }
+                    roamPosition = posHit.position;
+                    agent.SetDestination(roamPosition);
+                }
+            }
+        }
+        else
+            Debug.Log("Stun Enemy: Invalid flee destination");
 
         //move to that destination
-        agent.SetDestination(fleeDestination);
+        //agent.SetDestination(fleeDestination);
     }
 
-    private void StunPlayer()
+    void StunPlayer()
     {
         Debug.Log("Stun Enemy: Stunning player");
 
-        CharacterController player = playerSettings.GetComponent<CharacterController>();
+        playerSettings.Stun(stunDuration);
+
+        //CharacterController player = playerSettings.GetComponent<CharacterController>();
         //stun player for set duration
         //player.stun(stunDuration);        //stun status effect method here
     }
 
-    private void TakeItemFromPlayer()
+    void TakeItemFromPlayer()
     {
         Debug.Log("Taking item from player");
-        //accessing inventory manager
-        foreach (var item in InventoryManager.instance.InventorySlotsList)
-        {
-            //taking a random item from player
-            //generate random index to take item from slot
+        
+        //creating random index to choose item
+        int randomIndex = Random.Range(0, InventoryManager.instance.InventorySlotsList.Count);
+        InventorySlot itemSlot = InventoryManager.instance.InventorySlotsList[randomIndex];
 
-            //takes item and attaches to the enemy
-            Debug.Log($"Stun Enemy: {item.Item} taken from player");
-            //item.takeItem(transform);    //have a way for the enemy to hold the inventory item (remove item from inventory too)
-            currentState = EnemyState.Fleeing;  //Change enemy state when taking the item
-            enemyHasItem = true;
-            //UI changes?
-            //GameManager.instance.toggleImage(false);
-            break;
+        //attach item model to enemy
+        if (itemSlot.Item.ItemModel != null)
+        {
+            itemModel = Instantiate(itemSlot.Item.ItemModel, transform);
+            itemModel.transform.localPosition = new Vector3(0, 1, 0);                   //location of item model on enemy (adjust as needed)
+            itemModel.transform.localRotation = Quaternion.identity;
+            itemModel.GetComponent<Collider>().enabled = false;     //disable collider so player has to defeat to take item back
+
+            Debug.Log($"Stun Enemy: {itemSlot.Item} taken and model attached");
         }
+        else
+            Debug.Log("Stun Enemy: No Model found for stolen item");
+
+        //remove item from player inventory
+        InventoryManager.instance.OnDrop(randomIndex);
+        
+        currentState = EnemyState.Fleeing;  //Change enemy state when taking the item
+
+        //UI changes?
+    }
+
+    void CheckPlayerInventory()
+    {
+        isInventoryEmpty = true;
+
+        //checks if the player's inventory is empty
+        if (InventoryManager.instance != null)
+        {
+            if (InventoryManager.instance.InventorySlotsList.Count > 0)
+                isInventoryEmpty = false;
+            else
+                Debug.Log("Stun Enemy: Player Inventory Empty");
+        }
+        else
+            Debug.Log("Stun Enemy: No Inventory Manager Instance");
     }
 }

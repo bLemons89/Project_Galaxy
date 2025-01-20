@@ -6,7 +6,16 @@ using UnityEngine.Events;
 public class TakingPlayerDamage : MonoBehaviour
 {
     public UnityEvent<float> OnTakingDamage;
- 
+
+    private void Start()
+    {
+        RangedEnemy.OnShootingPlayer += RangedEnemy_OnShootingPlayer;
+    }
+
+    private void RangedEnemy_OnShootingPlayer()
+    {
+        OnTakingDamage?.Invoke(1);
+    }
 
     public void OnTriggerEnter(Collider other)
     {

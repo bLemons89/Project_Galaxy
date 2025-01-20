@@ -1,7 +1,8 @@
 /*
     Author: Juan Contreras
+    Edited By
     Date Created: 01/16/2025
-    Date Updated: 01/18/2025
+    Date Updated: 01/19/2025
     Description: Everything related to the player's inventory starts here
 
     Possible Edits: 
@@ -78,6 +79,15 @@ public class InventoryManager : MonoBehaviour
 
         //notifies that inventory was updated
         OnInventoryUpdated?.Invoke();   //Unity event (for other managers to listen for)
+    }
+
+    public void OnDrop(int itemIndex)
+    {
+        //logic to remove/drop item
+
+
+        //notify inventory was changed
+        OnInventoryUpdated?.Invoke();
     }
 
     //called to update UI (for possible future use)
