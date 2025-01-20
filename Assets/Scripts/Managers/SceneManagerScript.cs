@@ -82,6 +82,6 @@ public class SceneManagerScript : MonoBehaviour
 
     private void RestingData()
     {
-        InventoryManager.Instance.InventorySlotsList.Clear(); 
+        InventoryManager.instance.InventorySlotsList.Clear(); 
     }
 }
