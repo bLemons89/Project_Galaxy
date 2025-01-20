@@ -10,10 +10,7 @@ public class RangedEnemy : EnemyBase
     [Header("     Ranged Enemy Stats     ")]
     [SerializeField] private WeaponInformation equippedWeapon; //weapon data (Scriptable Object)
     [SerializeField] private Transform gunTransform; //where the gun is attached
-    [SerializeField] private Transform shootPoint; //where bullets originate from
-    [SerializeField] private WeaponInformation equippedWeapon;
-    [SerializeField] private Transform gunTransform; //where the gun is attached
-    [SerializeField] private Transform shootPoint; //where bullets originate from    
+    [SerializeField] private Transform shootPoint; //where bullets originate from  
     [SerializeField] int faceTargetSpeed;
     [SerializeField] int FOV;
     [SerializeField] int roamDist;  //sphere distance of roaming
