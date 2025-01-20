@@ -16,11 +16,18 @@ public class EnemyAiMovement : MonoBehaviour
     [SerializeField] Transform shootPos;
     [SerializeField] GameObject bullet;
     [SerializeField] Animator animator;
+    [SerializeField] Transform headPos;
+    [SerializeField] int facePlayerSpeed;
+    int stoppingDistanceOrg;
+   
     bool isRoaming = false;
     bool isShooting;
+    bool playerInRange;
     Coroutine cO;
     Vector3 startPos;
+    Vector3 playerDir;
     Color colorOrig;
+    float angleToPlayer;
 
 
     // Start is called before the first frame update
@@ -59,24 +66,102 @@ public class EnemyAiMovement : MonoBehaviour
         model.material.color = colorOrig;
     }
 
-    // Enemy Shoot //
+    
     IEnumerator shoot()
     {
-        // turn on
+       
         isShooting = true;
 
-        // animation
+       
         animator.SetTrigger("Shoot");
 
-        // create bullet
+        
         Instantiate(bullet, shootPos.position, transform.rotation);
 
-        // enemySpeedMult
+       
         yield return new WaitForSeconds(shootRate);
 
-        // turn off
+        
         isShooting = false;
     }
+
+    
+    bool canSeePlayer()
+    {
+        
+        playerDir = GameManager.instance.Player.transform.position - headPos.position;
+        angleToPlayer = Vector3.Angle(playerDir, transform.forward);
+
+        
+        RaycastHit hit;
+        
+        if (Physics.Raycast(headPos.position, playerDir, out hit))
+        {
+            
+            agent.stoppingDistance = stoppingDistanceOrg;
+
+            
+            if (hit.collider.CompareTag("Player"))
+            {
+                
+                agent.SetDestination(GameManager.instance.Player.transform.position);
+
+                
+                if (agent.remainingDistance < agent.stoppingDistance)
+                {
+                    faceTarget();
+                }
+
+                
+                if (!isShooting)
+                {
+                    StartCoroutine(shoot());
+                }
+                
+                return true;
+            }
+        }
+        
+        agent.stoppingDistance = 0;
+
+        
+        return false;
+    }
+
+
+   
+    private void OnTriggerEnter(Collider other)
+    {
+
+        if (other.CompareTag("Player"))
+        {
+            playerInRange = true;
+        }
+
+    }
+    
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            playerInRange = false;
+            agent.stoppingDistance = 0; 
+        }
+
+    }
+
+    
+    void faceTarget()
+    {
+        
+        Quaternion rot = Quaternion.LookRotation(new Vector3(playerDir.x, 0, playerDir.z));
+
+       
+        transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * facePlayerSpeed);
+    }
+
+    
+    
 
 }
 
