@@ -81,7 +81,7 @@ public class InventoryManager : MonoBehaviour
         OnInventoryUpdated?.Invoke();   //Unity event (for other managers to listen for)
     }
 
-    public void OnDrop()
+    public void OnDrop(int itemIndex)
     {
         //logic to remove/drop item
 

@@ -17,3 +17,4 @@ MonoBehaviour:
   itemType: 2
   maxStackSize: 64
   value: 1
+  itemModel: {fileID: 1116121932276693872, guid: c4354e58fa1d3aa4da17faf6baa6433c, type: 3}
