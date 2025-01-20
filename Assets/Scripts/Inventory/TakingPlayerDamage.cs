@@ -6,7 +6,7 @@ using UnityEngine.Events;
 public class TakingPlayerDamage : MonoBehaviour
 {
     public UnityEvent<float> OnTakingDamage;
-
+    
     private void Start()
     {
         RangedEnemy.OnShootingPlayer += RangedEnemy_OnShootingPlayer;

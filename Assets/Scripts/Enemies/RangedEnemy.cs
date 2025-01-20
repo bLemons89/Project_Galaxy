@@ -15,7 +15,7 @@ public class RangedEnemy : EnemyBase
     [SerializeField] int roamDist;  //sphere distance of roaming
     [SerializeField] int roamTimer; //how long to wait before move again
 
-    public static event Action OnShootingPlayer;    
+    public static event Action OnShootingPlayer;
 
     private GameObject player;
     private bool isRoaming = false;
@@ -26,6 +26,8 @@ public class RangedEnemy : EnemyBase
     private int reloadRate;
     Vector3 startingPos;
     private bool isShooting = false;
+
+    float HPOrig;
 
     void Start()
     {
@@ -41,12 +43,14 @@ public class RangedEnemy : EnemyBase
         {
             Debug.LogError("RangedEnemy: No weapon equipped");
         }
-
+        
         StartCoroutine(roam());
     }
 
     void Update()
     {
+        EnemyHPBar.fillAmount = (float)currentHealth / maxHealth;
+
         Behavior();
     }
 
@@ -80,6 +84,13 @@ public class RangedEnemy : EnemyBase
         //check if the player is within shooting distance
         float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
         return distanceToPlayer <= shootDistance;
+    }
+
+    public override void takeDamage(float amount)      //All enemies take damage
+    {
+        currentHealth -= amount;
+        if (currentHealth <= 0)
+            Destroy(gameObject);        //Dead
     }
 
     private void ShootAtPlayer()

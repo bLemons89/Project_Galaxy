@@ -27,6 +27,8 @@ public class WeaponInAction : MonoBehaviour
     [SerializeField] GameObject relaodMessage;
     [SerializeField] TMP_Text reloadText;
 
+    private RangedEnemy localRangeEnemy;
+
     public static event Action OnBulletProjectile;
     public static event Action OnGettingHit;
 
@@ -101,7 +103,9 @@ public class WeaponInAction : MonoBehaviour
 
                 Debug.Log(hitInfo.transform.name + $" Got Hit");
 
-                OnGettingHit?.Invoke();
+                // we need to get enemy damage here
+                // OnGettingHit?.Invoke();
+                
 
                 isShot = true; // got shot
 
