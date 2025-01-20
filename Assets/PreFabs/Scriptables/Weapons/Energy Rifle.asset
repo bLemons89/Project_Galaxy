@@ -17,6 +17,7 @@ MonoBehaviour:
   itemType: 0
   maxStackSize: 1
   value: 0
+  itemModel: {fileID: 0}
   weaponName: Energy Rifle
   shootDamage: 2
   shootRate: 1

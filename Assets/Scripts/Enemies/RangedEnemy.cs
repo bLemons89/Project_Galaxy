@@ -49,7 +49,7 @@ public class RangedEnemy : EnemyBase
 
     void Update()
     {
-        EnemyHPBar.fillAmount = (float)currentHealth / maxHealth;
+        //EnemyHPBar.fillAmount = (float)currentHealth / maxHealth;
 
         Behavior();
     }

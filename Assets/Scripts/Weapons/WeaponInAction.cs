@@ -29,8 +29,8 @@ public class WeaponInAction : MonoBehaviour
 
     private RangedEnemy localRangeEnemy;
 
-    public static event Action OnBulletProjectile;
-    public static event Action OnGettingHit;
+   // public static event Action OnBulletProjectile;
+   // public static event Action OnGettingHit;
 
     private WeaponInformation gunInfo;
     // Is the object getting shot? 
@@ -41,10 +41,10 @@ public class WeaponInAction : MonoBehaviour
     private bool hasAssaultRifle = false;
     private bool hasEnergyRifle = false;
     private bool hasShotgunRifle = false;
-    private bool isSwitchWeapon = false;
     private int inventoryIndex = 0;
     private int numberOfWeapon = 0;
     private int numberOfAmmo = 0;
+    public int currentAmmo = 0;
 
     private void Awake()
     {
@@ -54,8 +54,7 @@ public class WeaponInAction : MonoBehaviour
             return;
         }
 
-        Instance = this;
-        DontDestroyOnLoad(gameObject); // Make this GameObject persistent.
+        Instance = this;        
     }
 
     private void Start()
@@ -76,10 +75,10 @@ public class WeaponInAction : MonoBehaviour
         Vector3 forward = transform.TransformDirection(Vector3.forward) * 10;
         Debug.DrawRay(transform.position, forward, Color.green);
 
-        if (InventoryManager.instance.InventorySlotsList.Count > 0)
-        {
-            CheckWeaponInventory();
-        }
+        //if (InventoryManager.instance.InventorySlotsList.Count > 0)
+        //{
+        //    CheckWeaponInventory();
+        //}
         
         SwitchWeapon();
 
@@ -93,7 +92,9 @@ public class WeaponInAction : MonoBehaviour
 
     private void PlayerShoot_shootInput()
     {
-        if (gunInfo != null && gunInfo.currentAmmo > 0)
+        currentAmmo--;
+
+        if (currentAmmo > 0)
         {
             // check if the raycast hit object
             if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hitInfo, gunInfo.shootDistance))
@@ -105,16 +106,11 @@ public class WeaponInAction : MonoBehaviour
 
                 // we need to get enemy damage here
                 // OnGettingHit?.Invoke();
+                HealthSystem enemyHealthSystem = hitInfo.transform.GetComponent<HealthSystem>();
+                enemyHealthSystem.Damage(1);
+
+                isShot = true; // got shot                        
                 
-
-                isShot = true; // got shot
-
-                gunInfo.currentAmmo--;
-
-                if (gunInfo.currentAmmo < 2)
-                {
-                    relaodMessage.SetActive(true);
-                }                             
             }
             else
             {
@@ -123,23 +119,29 @@ public class WeaponInAction : MonoBehaviour
 
         }
 
+        // setting message realod weapon
+        if (currentAmmo < 2)
+        {
+            relaodMessage.SetActive(true);
+        }
+
     }
 
     public int GetAmmo()
     {
-        return gunInfo.currentAmmo;
+        return currentAmmo;
     }
 
     public void SetAmmo(int newAmmo)
     {
-        gunInfo.currentAmmo = newAmmo;
+        currentAmmo = newAmmo;
     }
 
     public void Reload()
     {
         if (numberOfAmmo > 0)
         {
-            gunInfo.currentAmmo = gunInfo.maxAmmo;
+            currentAmmo = gunInfo.maxAmmo;
             --numberOfAmmo;
             relaodMessage.SetActive(false);
         }
@@ -165,19 +167,19 @@ public class WeaponInAction : MonoBehaviour
             myInventorySlot = InventoryManager.instance.InventorySlotsList[inventoryIndex];
 
             if (myInventorySlot.Item.ItemName == "AR")
-            {                
+            {              
                 hasAssaultRifle = true;
                 CurrentWeapon(assaultRifleModel, assaultRifleScriptableObject);
                 numberOfWeapon++;
             }                  
             else if (myInventorySlot.Item.ItemName == "SG")
-            {
+            {             
                 hasShotgunRifle = true;
                 CurrentWeapon(shotgunModel, shotgunScriptableObject);
                 numberOfWeapon++;
             }
             else if (myInventorySlot.Item.ItemName == "ER")
-            {
+            {             
                 hasEnergyRifle = true;
                 CurrentWeapon(energyRifleModel, energyRifleScriptableObject);
                 numberOfWeapon++;
@@ -192,23 +194,17 @@ public class WeaponInAction : MonoBehaviour
     {
         if (Input.GetButtonDown("Number One") && hasAssaultRifle)
         {
-            isSwitchWeapon = true;
             CurrentWeapon(assaultRifleModel, assaultRifleScriptableObject);         
         }
         else if (Input.GetButtonDown("Number Two") && hasShotgunRifle)
         {
-            isSwitchWeapon = true;
             CurrentWeapon(shotgunModel, shotgunScriptableObject);
         }
         else if (Input.GetButtonDown("Number Three") && hasEnergyRifle)
-        {
-            isSwitchWeapon = true;
+        {           
             CurrentWeapon(energyRifleModel, energyRifleScriptableObject);
         }
-        else
-        {
-            isSwitchWeapon = false;
-        }
+       
     }
 
     private void CurrentWeapon(GameObject weaponModel, WeaponInformation weaponInfo)
@@ -216,13 +212,14 @@ public class WeaponInAction : MonoBehaviour
         gunModelPlaceHolder.GetComponent<MeshFilter>().sharedMesh = weaponModel.GetComponent<MeshFilter>().sharedMesh;
         gunModelPlaceHolder.GetComponent<MeshRenderer>().sharedMaterial = weaponModel.GetComponent<MeshRenderer>().sharedMaterial;
         gunInfo = weaponInfo;
+        currentAmmo = gunInfo.currentAmmo;
     }
 
     public void ResetWeaponData()
     {
         assaultRifleScriptableObject.currentAmmo = assaultRifleScriptableObject.maxAmmo;
         shotgunScriptableObject.currentAmmo = shotgunScriptableObject.maxAmmo;
-        energyRifleScriptableObject.currentAmmo = energyRifleScriptableObject.maxAmmo;
+        energyRifleScriptableObject.currentAmmo = energyRifleScriptableObject.maxAmmo;        
     }
 
 }
