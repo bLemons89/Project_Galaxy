@@ -24,7 +24,7 @@ public class SceneManagerScript : MonoBehaviour
 
     private void Awake()
     {
-        Instance = this;
+        instance = this;
     }
 
     private void Start()

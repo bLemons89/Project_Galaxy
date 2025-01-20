@@ -56,7 +56,7 @@ public class ButtonFunctions : MonoBehaviour
     [SerializeField] GameObject loseScreen;
 
     // Flags //
-    private bool settingsButton;
+    //private bool settingsButton;
 
     // For Settings //
     [SerializeField] private bool enableFlickering;
@@ -105,7 +105,7 @@ public class ButtonFunctions : MonoBehaviour
         backgroundScreen.transform.localScale = Vector3.zero;
 
         enableFlickering = true;
-        settingsButton = false;
+        //settingsButton = false;
 
     }
 
