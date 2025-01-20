@@ -8,27 +8,52 @@ using Unity.VisualScripting;
 using UnityEngine.UIElements;
 using UnityEditor;
 using TMPro;
+using JetBrains.Annotations;
 
 public class ButtonFunctions : MonoBehaviour
 {
     SceneManagerScript sceneManager;
 
     [Header("===== MENUS =====")]
+    // Background Screen //
     [SerializeField] GameObject backgroundScreen;
     private CanvasGroup backgroundGroup;
 
+    // Pause Menu //
     [SerializeField] GameObject pauseMenu;
     private CanvasGroup pauseGroup;
+    // title
     [SerializeField] GameObject pauseTitle;
     private TextMeshProUGUI titleText;
+    // buttons
     [SerializeField] GameObject pauseButtons;
     private CanvasGroup pauseButtonsGroup;
 
+    // Settings Menu //
     [SerializeField] GameObject settingsMenu;
     private CanvasGroup settingsGroup;
 
+    // Controls Menu //
     [SerializeField] GameObject controlsMenu;
     private CanvasGroup controlsGroup;
+
+    // Inventory Menu //
+    [SerializeField] GameObject inventoryMenu;
+    private CanvasGroup inventoryGroup;
+
+    // Save Menu //
+    [SerializeField] GameObject saveMenu;
+    private CanvasGroup saveGroup;
+
+    // Credit Menu //
+    [SerializeField] GameObject creditScreen;
+    private CanvasGroup creditGroup;
+
+    // For Win //
+    [SerializeField] GameObject winScreen;
+
+    // For Lose //
+    [SerializeField] GameObject loseScreen;
 
     // Flags //
     private bool settingsButton;
@@ -47,15 +72,33 @@ public class ButtonFunctions : MonoBehaviour
     { get => pauseButtons; set => pauseButtons = value; }
     public GameObject SettingsMenu
     { get => settingsMenu; set => settingsMenu = value; }
+    public GameObject ControlsMenu
+    { get => controlsMenu; set => controlsMenu = value; }
+    public GameObject InventoryMenu
+    { get => inventoryMenu; set => inventoryMenu = value; }
+    public GameObject SaveMenu
+    { get => saveMenu; set => saveMenu = value; }
+    public GameObject CreditScreen
+    { get => creditScreen; set => creditScreen = value; }
 
     public void ButtonsInitialize()
     {
         //find and set UI canvas groups
         backgroundGroup = backgroundScreen.GetComponent<CanvasGroup>();
+
         pauseGroup = pauseMenu.GetComponent<CanvasGroup>();
         titleText = pauseTitle.GetComponent<TextMeshProUGUI>();
         pauseButtonsGroup = pauseButtons.GetComponent<CanvasGroup>();
+
         settingsGroup = settingsMenu.GetComponent<CanvasGroup>();
+
+        controlsGroup = controlsMenu.GetComponent<CanvasGroup>();
+
+        inventoryGroup = inventoryMenu.GetComponent<CanvasGroup>();
+
+        saveGroup = saveMenu.GetComponent<CanvasGroup>();
+
+        creditGroup = creditScreen.GetComponent<CanvasGroup>();
 
         // for animate in
         backgroundGroup.alpha = 0f;
@@ -81,6 +124,9 @@ public class ButtonFunctions : MonoBehaviour
     public void SaveGame()
     {
         //Navigate to Save/Load Screen
+        GameManager.instance.MenuActive.SetActive(false);
+        GameManager.instance.MenuActive = saveMenu;
+        GameManager.instance.MenuActive.SetActive(true);
     }
 
     public void MainMenu()
@@ -99,24 +145,25 @@ public class ButtonFunctions : MonoBehaviour
 
     public void SettingsButton()
     {
-        //if (controlsMenu.activeSelf)
-        //{
-        //    controlsPos.DOAnchorPos(new Vector2(0, 2024), 0.25f)
-        //               .SetEase(Ease.OutQuad)
-        //               .SetUpdate(true);
-        //}
+        GameManager.instance.MenuActive = SettingsMenu;
+        SettingsMenu.SetActive(true);
+        PauseMenu.SetActive(false);
+        backgroundGroup.alpha = 1f;
+        RectTransform settingsTransform = SettingsMenu.GetComponent<RectTransform>();
 
-        //pauseMenu.SetActive(false);
-        //settingsMenu.SetActive(true);
-
-        //settingsPos.DOAnchorPos(new Vector2(0, 0), 0.25f)
-        //           .SetEase(Ease.InQuad)
-        //           .SetUpdate(true);
+        settingsTransform.DOAnchorPos(new Vector3(0, 0, 0), 0.25f)
+                         .SetEase(Ease.InOutQuad)
+                         .SetUpdate(true);
+        
     }
 
     // Settings Buttons //
     public void ControlsButton()
     {
+        GameManager.instance.MenuActive.SetActive(false);
+        GameManager.instance.MenuActive = controlsMenu;
+        GameManager.instance.MenuActive.SetActive(true);
+
         //controlsMenu.SetActive(true);
         //controlsPos.DOAnchorPos(new Vector2(0, 0), 0.25f)
         //           .SetEase(Ease.OutQuad)
@@ -124,6 +171,9 @@ public class ButtonFunctions : MonoBehaviour
     }
     public void BackButton()
     {
+        GameManager.instance.MenuActive.SetActive(false);
+        BackgroundGroupOpen();
+
         //settingsPos.DOAnchorPos(new Vector2(0, -1100), 0.25f)
         //           .SetEase(Ease.OutQuad)
         //           .SetUpdate(true)
@@ -135,8 +185,13 @@ public class ButtonFunctions : MonoBehaviour
     }
 
     // Screens //
+
+   
+
     public void BackgroundGroupOpen()
     {
+        GameManager.instance.MenuActive = PauseMenu;
+
         DOTween.KillAll();
         //Turn on
         backgroundScreen.SetActive(true);

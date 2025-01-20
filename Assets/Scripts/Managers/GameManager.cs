@@ -24,8 +24,8 @@ public class GameManager : MonoBehaviour
 
     [Header("===== TEMP VARIABLES =====")]
     [SerializeField] GameObject menuActive;
-    [SerializeField] GameObject menuWin;
-    [SerializeField] GameObject menuLose;
+    //[SerializeField] GameObject menuWin;
+    //SerializeField] GameObject menuLose;
 
     [Header("===== MUSIC =====")]
     //[SerializeField] private AudioClip playMusic;
@@ -110,22 +110,31 @@ public class GameManager : MonoBehaviour
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         
-        //if(buttonFunctions.BackgroundScreen.activeSelf)
+        if(menuActive == buttonFunctions.SettingsMenu)
+        {
+            RectTransform settingsTransform = buttonFunctions.SettingsMenu.GetComponent<RectTransform>();
+
+            settingsTransform.DOAnchorPos(new Vector3(-1983, 0, 0), 0.25f)
+                             .SetEase(Ease.InOutQuad)
+                             .SetUpdate(true);
+            buttonFunctions.SettingsMenu.SetActive(false);
+            menuActive = null;
+        }
         buttonFunctions.BackgroundGroupClose();
     }
-    public void WinGame()
-    {
-        StatePause();
-        menuActive = menuWin;
-        menuActive.SetActive(true);
+    //public void WinGame()
+    //{
+    //    StatePause();
+    //    menuActive = menuWin;
+    //    menuActive.SetActive(true);
 
-    }
+    //}
 
-    public void LoseGame()
-    {
-        StatePause();
-        menuActive = menuLose;
-        menuActive.SetActive(true);
-    }
+    //public void LoseGame()
+    //{
+    //    StatePause();
+    //    menuActive = menuLose;
+    //    menuActive.SetActive(true);
+    //}
 
 }

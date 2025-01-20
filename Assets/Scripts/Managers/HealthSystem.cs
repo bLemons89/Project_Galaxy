@@ -58,8 +58,6 @@ public class HealthSystem : MonoBehaviour
         {
             currentHealth = maxHealth;
         }
-        //most conditions
-        
         
         UpdateHealthBar();
 
