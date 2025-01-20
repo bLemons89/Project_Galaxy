@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEditor;
 using DG.Tweening;
+using UnityEngine.Events;
 
 public class HealthSystem : MonoBehaviour
 {
@@ -39,6 +40,9 @@ public class HealthSystem : MonoBehaviour
 
     public bool IsDead { get {  return isDead; } }
     //public bool IsInvincible { get; set; }  
+
+    //===== EVENTS =====
+    public UnityEvent OnDeath;
 
     void Start()
     {
@@ -82,6 +86,7 @@ public class HealthSystem : MonoBehaviour
         {
             isDead = true;
             //Handle Death - message, respawn
+            OnDeath?.Invoke();
         }
     }
     public void Heal(float healAmt)

@@ -12,16 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bbf9ed18411f7f4f88b45acb94ce75a, type: 3}
   m_Name: Assault Rifle
   m_EditorClassIdentifier: 
-  itemName: Assault  Rifle
+  itemName: AR
   icon: {fileID: 0}
   itemType: 0
   maxStackSize: 1
   value: 0
+  itemModel: {fileID: 0}
   weaponName: Assault Rifle
   shootDamage: 1
   shootRate: 0.5
   shootDistance: 100
-  currentAmmo: 30
+  currentAmmo: 0
   maxAmmo: 30
   ammoTypeName: Long Range Calibre
   reloadRate: 1

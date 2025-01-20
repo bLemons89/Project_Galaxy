@@ -18,15 +18,19 @@ public abstract class ItemBase : ScriptableObject
     [SerializeField] protected ItemType itemType;
     [SerializeField] protected int maxStackSize = 1;
     [SerializeField] protected int value;   //how much that single pick up is worth
+    [Header("MODEL PREFAB NEEDED HERE TO INSTANTIATE")]
+    [SerializeField] protected GameObject itemModel;
 
     public string ItemName => itemName;
     public int MaxStackSize => maxStackSize;
-
+    public GameObject ItemModel => itemModel;
+    public ItemType GetItemType => itemType;
     public enum ItemType
     {
         Weapon,
         Ammo,
         Collectible,
+        Health,
     }
 
     public abstract void IntendedUse();

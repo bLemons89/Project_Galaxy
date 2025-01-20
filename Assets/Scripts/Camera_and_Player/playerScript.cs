@@ -29,6 +29,7 @@ public class playerScript : MonoBehaviour
     //bool isShooting;
     bool isPlayingStep;
     //bool isReloading
+    bool isStunned;
 
     // Cache //
 
@@ -39,6 +40,8 @@ public class playerScript : MonoBehaviour
 
 
     // Getters and Setters //
+    public int Speed => speed;  //stun enemy uses this
+    public int SprintMod => sprintMod; //stun enemy
 
     void Start()
     {
@@ -47,6 +50,10 @@ public class playerScript : MonoBehaviour
 
     void Update()
     {
+        //no movement input sent out while stunned
+        if (isStunned)
+            return;
+
         if(!GameManager.instance.IsPaused)
         {
             //always checking for
@@ -67,7 +74,7 @@ public class playerScript : MonoBehaviour
             // player movement detected
             if (moveDirection.magnitude > 0.3f && !isPlayingStep)
             {
-                //AudioManager.Instance.PlaySFX(playerWalk);
+                //AudioManager.instance.PlaySFX(playerWalk);
                 StartCoroutine(playStep());
             }
 
@@ -140,6 +147,27 @@ public class playerScript : MonoBehaviour
         {
             Debug.Log("No CheckpointManager, unable to respawn");
         }
+    }
+
+    public void Stun(float duration)        //called from stun enemy
+    {
+        //add stun effect logic
+        Debug.Log($"Player stunned for {duration} seconds");
+
+        if(!isStunned)
+            StartCoroutine(StunRoutine(duration));
+    }
+
+    IEnumerator StunRoutine(float duration)
+    {
+        //disable movement/actions
+        isStunned = true;
+
+        //stun duration
+        yield return new WaitForSeconds(duration);
+
+        //enable movement/actions
+        isStunned = false;
     }
 
     IEnumerator playStep()

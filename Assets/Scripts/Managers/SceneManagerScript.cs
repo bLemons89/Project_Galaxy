@@ -3,6 +3,7 @@ using UnityEngine;
 using System;
 using System.Collections;
 using TMPro;
+using UnityEditor;
 
 
 // Put this script on the object to trigger which scene to enter
@@ -23,12 +24,12 @@ public class SceneManagerScript : MonoBehaviour
 
     private void Awake()
     {
-        instance = this;
+        Instance = this;
     }
 
     private void Start()
     {
-        restartSceneTimer = 15;
+        restartSceneTimer = 15;        
         
         // This Coroutine for testing rest the scene
         // StartCoroutine(DelayLoading());
@@ -64,16 +65,23 @@ public class SceneManagerScript : MonoBehaviour
 
     public void ResetScene()
     {
+        RestingData();
         // reset the location of the enemy position, reset part location, etc. 
-        Scene thisScene = SceneManager.GetActiveScene();
-        Debug.Log("Active Scene is '" + thisScene.name + "'.");
-
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        //Scene thisScene = SceneManager.GetActiveScene();
+        //Debug.Log("Active Scene is '" + thisScene.name + "'.");
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     IEnumerator DelayLoading()
     {
         yield return new WaitForSeconds(restartSceneTimer);
         ResetScene();
+    }
+
+    private void RestingData()
+    {
+        InventoryManager.instance.InventorySlotsList.Clear(); 
     }
 }

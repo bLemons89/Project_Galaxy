@@ -25,7 +25,8 @@ public class GameManager : MonoBehaviour
     [Header("===== TEMP VARIABLES =====")]
     [SerializeField] GameObject menuActive;
     //[SerializeField] GameObject menuWin;
-    //SerializeField] GameObject menuLose;
+    //[SerializeField] GameObject menuLose;
+
 
     [Header("===== MUSIC =====")]
     //[SerializeField] private AudioClip playMusic;
@@ -70,7 +71,7 @@ public class GameManager : MonoBehaviour
         buttonFunctions.ButtonsInitialize();
         
         // Music for game
-        //AudioManager.Instance.PlayMusic(playMusic);
+        //AudioManager.instance.PlayMusic(playMusic);
         
     }
 
@@ -122,6 +123,7 @@ public class GameManager : MonoBehaviour
         }
         buttonFunctions.BackgroundGroupClose();
     }
+
     //public void WinGame()
     //{
     //    StatePause();
@@ -136,5 +138,4 @@ public class GameManager : MonoBehaviour
     //    menuActive = menuLose;
     //    menuActive.SetActive(true);
     //}
-
 }
