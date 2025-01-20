@@ -47,7 +47,7 @@ public class Bullet : MonoBehaviour
 
         //if (dmg != null)
         //{
-        //    dmg.takeDamage(bulletDamageAmount);
+        //    dmg.TakeDamage(bulletDamageAmount);
         //}
 
         //#if UNITY_EDITOR

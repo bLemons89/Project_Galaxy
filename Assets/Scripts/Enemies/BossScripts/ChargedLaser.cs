@@ -18,7 +18,7 @@ public class ChargedLaser : MonoBehaviour, IBossAbility
     - charge effect
     - laser effect
     - charge sound
-    - shoot sound
+    - ShootRoutine sound
     - laser beam asset
     */
     public UnityEvent<float> OnDamage;
@@ -26,7 +26,7 @@ public class ChargedLaser : MonoBehaviour, IBossAbility
 
     [Header("LASER INTERACTION SETTINGS")]
     [SerializeField] [Range(0.5f, 5f)] float chargeTime = 2.0f;             //time to charge the laser
-    [SerializeField] [Range(0.3f, 3f)] float lockOnShootDelay = 1.0f;       //delay to shoot once boss locks on
+    [SerializeField] [Range(0.3f, 3f)] float lockOnShootDelay = 1.0f;       //delay to ShootRoutine once boss locks on
     [SerializeField][Range(1f, 10f)] float aimRotationSpeed = 5.0f;         //how fast to turn and look at the player when aiming the laser
 
     [Header("MORE LASER SETTINGS")]
@@ -72,7 +72,7 @@ public class ChargedLaser : MonoBehaviour, IBossAbility
             yield return null;
         }
 
-        //after laser is charged, lock position to shoot
+        //after laser is charged, lock position to ShootRoutine
         lockedShootPos = boss.Player.position;
 
         //create warning indicator before shooting
@@ -88,7 +88,7 @@ public class ChargedLaser : MonoBehaviour, IBossAbility
         //destroy indicator right before firing
         if(warningIndicatorInstance != null) { UnityEngine.Object.Destroy(warningIndicatorInstance); }
 
-        //shoot
+        //ShootRoutine
         ShootLaser(lockedShootPos);
     }
 
@@ -110,7 +110,7 @@ public class ChargedLaser : MonoBehaviour, IBossAbility
     void ShootLaser(Vector3 targetPosition)
     {
         Debug.Log($"Boss: Firing laser at {targetPosition}");
-        //shoot laser logic
+        //ShootRoutine laser logic
         if(laserBeam != null)
         {
             //start and end of laser
@@ -132,7 +132,7 @@ public class ChargedLaser : MonoBehaviour, IBossAbility
             Debug.Log("Player hit by laser");
 
             //damage the player
-            //call takeDamage(damageAmount) on player
+            //call TakeDamage(damageAmount) on player
             OnDamage?.Invoke(damageAmount);     //Health System
         }
     }

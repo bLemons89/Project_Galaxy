@@ -17,11 +17,11 @@ MonoBehaviour:
   itemType: 0
   maxStackSize: 1
   value: 0
-  itemModel: {fileID: 0}
+  itemModel: {fileID: 168825195215875818, guid: 77d2e92d2365b4e45836bb4581b6cc97, type: 3}
   weaponName: Assault Rifle
   shootDamage: 1
   shootRate: 0.5
-  shootDistance: 100
+  shootDistance: 20
   currentAmmo: 30
   maxAmmo: 30
   ammoTypeName: Long Range Calibre

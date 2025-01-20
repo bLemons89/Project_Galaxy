@@ -43,7 +43,7 @@ public class GroundAttack : MonoBehaviour, IBossAbility
     {
         //spawn position for the wave effect
         Vector3 spawnPos = boss.transform.position;
-        spawnPos.y = 0f;
+        spawnPos.y = 0f + boss.Agent.baseOffset;
 
         //start wave effect
         GameObject waveInstance = GameObject.Instantiate(wavePrefab, spawnPos, Quaternion.identity);

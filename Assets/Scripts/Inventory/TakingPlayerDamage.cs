@@ -9,7 +9,7 @@ public class TakingPlayerDamage : MonoBehaviour
     
     private void Start()
     {
-        RangedEnemy.OnShootingPlayer += RangedEnemy_OnShootingPlayer;
+        //RangedEnemy.OnShootingPlayer += RangedEnemy_OnShootingPlayer;
     }
 
     private void RangedEnemy_OnShootingPlayer()

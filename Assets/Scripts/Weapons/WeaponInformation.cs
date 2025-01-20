@@ -6,18 +6,18 @@ using UnityEngine;
 
 public class WeaponInformation : ItemBase
 {
-    [Header ("Info")]
-    public string weaponName;    
+    [Header("Info")]
+    public string weaponName;
 
     [Header("Shooting")]
     public int shootDamage;
-    public float shootRate;    
+    public float shootRate;
     public int shootDistance;
     public int currentAmmo;
     public int maxAmmo;
     public string ammoTypeName;
     public int reloadRate;
-    
+
 
     [Header("Area Damage")]
     public float areaOfEffectRadius;
@@ -29,8 +29,8 @@ public class WeaponInformation : ItemBase
     public override void IntendedUse()
     {
         throw new System.NotImplementedException();
-    }   
-
+    }
+}
     // Anything below are from the class PP2, I am not sure if you would like to use these:
     //[Header("Audio Info")]
     //public ParticleSystem hitEffect;
@@ -40,6 +40,3 @@ public class WeaponInformation : ItemBase
     //public float reloadSoundVol;
     //public AudioClip emptySound;
     //public float emptySoundVol;
-
-
-}
