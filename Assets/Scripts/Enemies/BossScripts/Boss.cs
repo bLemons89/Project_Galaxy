@@ -26,6 +26,7 @@ public class Boss : MonoBehaviour
     [SerializeField] [Range(5, 20)] int keepDistance = 10;     //distance to keep from the player       (use stopping distance?)
     [SerializeField] [Range(1, 30)] int chargeCooldown = 10;   //time between charges
     [SerializeField] [Range(1, 5)] int chargeStopDistance = 2; //distance for the boss to stop at when charging
+    [SerializeField] GameObject bossHealthBar;
 
     bool isCharging;
     Coroutine movementRoutine;
@@ -135,24 +136,32 @@ public class Boss : MonoBehaviour
     {
         while (true)
         {
-            if(!isCharging)
+            if ((Vector3.Distance(player.transform.position, this.transform.position) < 40))
             {
-                MaintainDistance();
+                if (bossHealthBar != null && !bossHealthBar.activeSelf)
+                    bossHealthBar.SetActive(true);
+                
+                    Debug.Log("Boss: HP bar not found");
 
-                //charge after cooldown
-                //yield return new WaitForSeconds(chargeCooldown);
-
-                //another check in case bool changes while on cooldown from other coroutine (might not need)
-                if (!isGroundAttacking)
+                if (!isCharging)
                 {
-                    //StartCoroutine(ChargeAtPlayer());
-                    StartGroundAttack();
-                }
-                else
-                {
-                    ActivateSpecificAbility<ChargedLaser>();
+                    MaintainDistance();
 
-                    yield return new WaitForSeconds(2);
+                    //charge after cooldown
+                    //yield return new WaitForSeconds(chargeCooldown);
+
+                    //another check in case bool changes while on cooldown from other coroutine (might not need)
+                    if (!isGroundAttacking)
+                    {
+                        //StartCoroutine(ChargeAtPlayer());
+                        StartGroundAttack();
+                    }
+                    else
+                    {
+                        ActivateSpecificAbility<ChargedLaser>();
+
+                        yield return new WaitForSeconds(2);
+                    }
                 }
             }
 

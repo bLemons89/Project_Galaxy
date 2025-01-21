@@ -21,7 +21,7 @@ public class playerScript : MonoBehaviour
     [SerializeField][Range(10,60)] int gravity;
 
     // Flags //
-    bool isSprinting;
+    //bool isSprinting;
     //bool isShooting;
     bool isPlayingStep;
     //bool isReloading
@@ -100,12 +100,12 @@ public class playerScript : MonoBehaviour
         if (Input.GetButtonDown("Sprint"))
         {
             speed *= sprintMod;
-            isSprinting = true;
+            //isSprinting = true;
         }
         else if(Input.GetButtonUp("Sprint"))
         {
             speed /= sprintMod;
-            isSprinting = false;
+            //isSprinting = false;
         }
     }
 
