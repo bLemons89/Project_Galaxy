@@ -70,7 +70,7 @@ public class playerScript : MonoBehaviour
 
             if (moveDirection.magnitude > 0.3f && !isPlayingStep)
             {
-                //isPlayingStep = true;
+                isPlayingStep = true;
                 AudioManager2.PlaySound(AudioManager2.Sound.PlayerMove);
             }
 

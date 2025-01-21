@@ -28,7 +28,7 @@ public class GameManager : MonoBehaviour
     //[SerializeField] GameObject menuLose;
 
 
-    [Header("===== MUSIC =====")]
+    [Header("===== SFX =====")]
     [SerializeField] public SoundAudioClip[] soundAudioClipArray;
 
     [System.Serializable]

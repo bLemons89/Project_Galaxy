@@ -112,6 +112,11 @@ public class WeaponInAction : MonoBehaviour
 
     private void PlayerShoot_shootInput()
     {
+        //couldn't get this to go off with just the weapon
+        //if (PlayerShoot.OnShootInput() != null && !isShot)
+        AudioManager2.PlaySound(AudioManager2.Sound.Weapon1Shoot);
+
+
         if (currentAmmo > 0)
         {
             if(relaodMessage.activeSelf)
@@ -135,6 +140,8 @@ public class WeaponInAction : MonoBehaviour
                 }
 
                 isShot = true; // got shot
+                // Hit Effect for the weaopons on enemies
+                WeaponInformation.Instantiate(gunInfo.hitEffect, hitInfo.point, Quaternion.identity);
 
 
                 //exits if statement when used
