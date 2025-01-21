@@ -243,6 +243,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnWeaponPickup:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &28195822
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1142,6 +1145,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnWeaponPickup:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &403919143
 GameObject:
   m_ObjectHideFlags: 0
@@ -1275,6 +1281,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnWeaponPickup:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &403919149
 Transform:
   m_ObjectHideFlags: 0
@@ -1665,6 +1674,67 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 469002398}
   m_CullTransparentMesh: 1
+--- !u!1001 &517571365
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 8050409024001276447, guid: 4d8038ad4bc603e459c4635bd6feb3be, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8050409024001276447, guid: 4d8038ad4bc603e459c4635bd6feb3be, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8050409024001276447, guid: 4d8038ad4bc603e459c4635bd6feb3be, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8050409024001276447, guid: 4d8038ad4bc603e459c4635bd6feb3be, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8050409024001276447, guid: 4d8038ad4bc603e459c4635bd6feb3be, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8050409024001276447, guid: 4d8038ad4bc603e459c4635bd6feb3be, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8050409024001276447, guid: 4d8038ad4bc603e459c4635bd6feb3be, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8050409024001276447, guid: 4d8038ad4bc603e459c4635bd6feb3be, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8050409024001276447, guid: 4d8038ad4bc603e459c4635bd6feb3be, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8050409024001276447, guid: 4d8038ad4bc603e459c4635bd6feb3be, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8372623425591706036, guid: 4d8038ad4bc603e459c4635bd6feb3be, type: 3}
+      propertyPath: m_Name
+      value: GameManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 8557756964128993115, guid: 4d8038ad4bc603e459c4635bd6feb3be, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4d8038ad4bc603e459c4635bd6feb3be, type: 3}
 --- !u!1 &523302300
 GameObject:
   m_ObjectHideFlags: 0
@@ -1901,6 +1971,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnWeaponPickup:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &638653779
 Transform:
   m_ObjectHideFlags: 0
@@ -3079,6 +3152,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnWeaponPickup:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &825686883
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3756,6 +3832,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnWeaponPickup:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &1034099168
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3919,6 +3998,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnWeaponPickup:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &1046850810
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4094,6 +4176,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnWeaponPickup:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &1058033346
 Transform:
   m_ObjectHideFlags: 0
@@ -4204,7 +4289,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1066935540
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4900,6 +4985,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnWeaponPickup:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &1234453074
 Transform:
   m_ObjectHideFlags: 0
@@ -5171,6 +5259,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnWeaponPickup:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &1289835494
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5480,6 +5571,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnWeaponPickup:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &1436038215
 Transform:
   m_ObjectHideFlags: 0
@@ -5855,6 +5949,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnWeaponPickup:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &1528032551
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6164,6 +6261,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnWeaponPickup:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &1582061123
 Transform:
   m_ObjectHideFlags: 0
@@ -6313,6 +6413,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnWeaponPickup:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &1583435575
 Transform:
   m_ObjectHideFlags: 0
@@ -7258,6 +7361,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnWeaponPickup:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &1845715297
 Transform:
   m_ObjectHideFlags: 0
@@ -7407,6 +7513,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnWeaponPickup:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &1846072771
 Transform:
   m_ObjectHideFlags: 0
@@ -8136,6 +8245,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnWeaponPickup:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &1968194605
 Transform:
   m_ObjectHideFlags: 0
@@ -8273,6 +8385,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnWeaponPickup:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &1975551352
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8436,6 +8551,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnWeaponPickup:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &1977526119
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9080,6 +9198,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnWeaponPickup:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &2010926986
 Transform:
   m_ObjectHideFlags: 0
@@ -9229,6 +9350,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnWeaponPickup:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &2029345607
 Transform:
   m_ObjectHideFlags: 0
@@ -9830,6 +9954,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnWeaponPickup:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &2117994329
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9993,6 +10120,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnWeaponPickup:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &2128304735
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10156,6 +10286,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnWeaponPickup:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &2131706675
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10319,6 +10452,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnWeaponPickup:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &2136512702
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10482,6 +10618,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnWeaponPickup:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &2146259705
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10710,6 +10849,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnWeaponPickup:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &976312341459982062
 GameObject:
   m_ObjectHideFlags: 0
@@ -10747,40 +10889,8 @@ MonoBehaviour:
   ignoreMask:
     serializedVersion: 2
     m_Bits: 0
-  enemyHPBar: {fileID: 0}
   maxHealth: 100
   currentHealth: 100
-  fillSpeed: 0
-  colorGradient:
-    serializedVersion: 2
-    key0: {r: 1, g: 1, b: 1, a: 1}
-    key1: {r: 1, g: 1, b: 1, a: 1}
-    key2: {r: 0, g: 0, b: 0, a: 0}
-    key3: {r: 0, g: 0, b: 0, a: 0}
-    key4: {r: 0, g: 0, b: 0, a: 0}
-    key5: {r: 0, g: 0, b: 0, a: 0}
-    key6: {r: 0, g: 0, b: 0, a: 0}
-    key7: {r: 0, g: 0, b: 0, a: 0}
-    ctime0: 0
-    ctime1: 65535
-    ctime2: 0
-    ctime3: 0
-    ctime4: 0
-    ctime5: 0
-    ctime6: 0
-    ctime7: 0
-    atime0: 0
-    atime1: 65535
-    atime2: 0
-    atime3: 0
-    atime4: 0
-    atime5: 0
-    atime6: 0
-    atime7: 0
-    m_Mode: 0
-    m_ColorSpace: -1
-    m_NumColorKeys: 2
-    m_NumAlphaKeys: 2
   equippedWeapon: {fileID: 11400000, guid: a26bf364d3604e24ab9eccb02ff35d9f, type: 2}
   gunTransform: {fileID: 8164044465832657640}
   shootPoint: {fileID: 2399306613474340412}
@@ -10788,6 +10898,9 @@ MonoBehaviour:
   FOV: 60
   roamDist: 20
   roamTimer: 2
+  OnShootPlayer:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &1115520901771505936
 Transform:
   m_ObjectHideFlags: 0
@@ -12372,6 +12485,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnWeaponPickup:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &8339309233709475094
 GameObject:
   m_ObjectHideFlags: 0
@@ -12477,6 +12593,7 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 2037694810}
+  - {fileID: 517571365}
   - {fileID: 1066935543}
   - {fileID: 1647932456}
   - {fileID: 2147168901}

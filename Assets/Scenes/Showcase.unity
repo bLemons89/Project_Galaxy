@@ -8506,7 +8506,7 @@ MonoBehaviour:
   jumpSpeed: 5
   gravity: 10
   playerWalk: {fileID: 8300000, guid: 994009fe1e4b98d43acf3cd45fcbf95d, type: 3}
-  playMusic: {fileID: 0}
+  playMusic: {fileID: 8300000, guid: 8bc5c4cb1dbdae0479df8fade6007c99, type: 3}
 --- !u!136 &1662112947
 CapsuleCollider:
   m_ObjectHideFlags: 0
