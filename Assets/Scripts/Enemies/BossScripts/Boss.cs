@@ -34,6 +34,7 @@ public class Boss : MonoBehaviour
     bool isGroundAttacking;
 
     public Transform Player => player;
+    public NavMeshAgent Agent => agent;
 
     //Unity Events to notify when each ability is activated for animation and sound
 

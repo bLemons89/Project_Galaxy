@@ -91,7 +91,7 @@ public class StunEnemy : EnemyBase
     void Roam()
     {
         isRoaming = true;
-        //find a random location within the roam radius
+        //find a random location within the RoamRoutine radius
         Vector3 randomLocation = Random.insideUnitSphere * roamRadius;
         randomLocation += transform.position;
 
@@ -181,7 +181,7 @@ public class StunEnemy : EnemyBase
                         //calculate a direction away from the edge
                         Vector3 awayFromEdge = (transform.position - edgeHit.position).normalized;
 
-                        //adjust the roam position to move away from the edge
+                        //adjust the RoamRoutine position to move away from the edge
                         Vector3 adjustedPosition = transform.position + awayFromEdge * 5; //move farther??
                         NavMeshHit adjustedHit;
 
@@ -224,11 +224,13 @@ public class StunEnemy : EnemyBase
         int randomIndex = Random.Range(0, InventoryManager.instance.InventorySlotsList.Count);
         InventorySlot itemSlot = InventoryManager.instance.InventorySlotsList[randomIndex];
 
+        GameObject currentHeldItem = GameObject.FindWithTag("CarryingSlot").GetComponent<WeaponInAction>().GunModelPlaceHolder;    //TEMPORARY
+
         //attach item model to enemy
         if (itemSlot.Item.ItemModel != null)
         {
             itemModel = Instantiate(itemSlot.Item.ItemModel, transform);
-            itemModel.transform.localPosition = new Vector3(0, 1, 0);                   //location of item model on enemy (adjust as needed)
+            itemModel.transform.localPosition = new Vector3(0, 1.5f, 0);                   //location of item model on enemy (adjust as needed)
             itemModel.transform.localRotation = Quaternion.identity;
             itemModel.GetComponent<Collider>().enabled = false;     //disable collider so player has to defeat to take item back
 
@@ -236,6 +238,15 @@ public class StunEnemy : EnemyBase
         }
         else
             Debug.Log("Stun Enemy: No Model found for stolen item");
+
+
+        if(itemSlot.Item.ItemModel.GetComponent<MeshFilter>().sharedMesh == currentHeldItem.GetComponent<MeshFilter>().sharedMesh)
+        {
+            currentHeldItem.GetComponent <MeshFilter>().sharedMesh = null;
+            //GunModelPlaceHolder.GetComponent<MeshFilter>().sharedMesh
+
+            currentHeldItem.GetComponent<WeaponInAction>().GunInfo = null;
+        }
 
         //remove item from player inventory
         InventoryManager.instance.OnDrop(randomIndex);

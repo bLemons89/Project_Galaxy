@@ -19,6 +19,7 @@ public class PickUp : MonoBehaviour
 
     //unity event to notify InventoryManager
     public UnityEvent<ItemBase, int> OnPickup;
+    public UnityEvent OnWeaponPickup;
 
     void OnTriggerEnter(Collider other)         //add key press input check in if statement
     {
@@ -31,7 +32,12 @@ public class PickUp : MonoBehaviour
             {
                 //trigger unity event to notify inventory manager
                 OnPickup?.Invoke(item, quantity);
+                
+                if (item.GetItemType == ItemBase.ItemType.Weapon)
+                    OnWeaponPickup?.Invoke();
+
             }
+
             //destroy item in the world
             Destroy(gameObject);
         }

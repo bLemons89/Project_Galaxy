@@ -20,12 +20,12 @@ public abstract class EnemyBase : MonoBehaviour
     [SerializeField] protected Animator animator;
 
     [SerializeField] LayerMask ignoreMask;          //prevents from damaging each other
-    [SerializeField] protected Image enemyHPBar;
+    //[SerializeField] protected Image enemyHPBar;
     [SerializeField] protected float maxHealth;
     [SerializeField] protected float currentHealth;
 
-    [SerializeField] protected float fillSpeed;
-    [SerializeField] protected Gradient colorGradient;
+    //[SerializeField] protected float fillSpeed;
+    //[SerializeField] protected Gradient colorGradient;
 
 
     protected Vector3 playerDirection;
@@ -40,7 +40,7 @@ public abstract class EnemyBase : MonoBehaviour
         get { return maxHealth; }
         set { maxHealth = value; }
     }
-    public Image EnemyHPBar
+    /*public Image EnemyHPBar
     {
         get { return enemyHPBar; }
         set { enemyHPBar = value; }
@@ -54,9 +54,9 @@ public abstract class EnemyBase : MonoBehaviour
     {
         get { return colorGradient; }
         set { colorGradient = value; }
-    }
+    }*/
 
-    public virtual void takeDamage(float amount)      //All enemies take damage
+    public virtual void TakeDamage(float amount)      //All enemies take damage
     {
         currentHealth -= amount;
         if (currentHealth <= 0)

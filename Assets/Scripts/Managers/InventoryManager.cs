@@ -11,6 +11,7 @@
  */
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -21,6 +22,9 @@ public class InventoryManager : MonoBehaviour
 
     //Unity Event notifies Inventory was updated
     public UnityEvent OnInventoryUpdated;
+
+    //InventorySlot currentHeldItem;
+    
 
     // Start is called before the first frame update
     void Awake()

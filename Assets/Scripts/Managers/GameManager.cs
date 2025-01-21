@@ -77,10 +77,6 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        //delete this when done testing health buttons
-        Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.None;
-
         // Pause Input
         if (Input.GetButtonDown("Cancel") || Input.GetButtonDown("Pause"))
         {
