@@ -29,8 +29,8 @@ public class WeaponInAction : MonoBehaviour
 
     private RangedEnemy localRangeEnemy;
 
-    public static event Action OnBulletProjectile;
-    public static event Action OnGettingHit;
+    //public static event Action OnBulletProjectile;
+    //public static event Action OnGettingHit;
 
     private WeaponInformation gunInfo;
 
@@ -48,7 +48,7 @@ public class WeaponInAction : MonoBehaviour
     private bool hasAssaultRifle = false;
     private bool hasEnergyRifle = false;
     private bool hasShotgunRifle = false;
-    private bool isSwitchWeapon = false;
+    //private bool isSwitchWeapon = false;
     private int inventoryIndex = 0;
     private int numberOfWeapon = 0;
     private int numberOfAmmo = 0;
@@ -227,22 +227,22 @@ public class WeaponInAction : MonoBehaviour
     {
         if (Input.GetButtonDown("Number One") && hasAssaultRifle)
         {
-            isSwitchWeapon = true;
+            //isSwitchWeapon = true;
             CurrentWeapon(assaultRifleModel, assaultRifleScriptableObject);         
         }
         else if (Input.GetButtonDown("Number Two") && hasShotgunRifle)
         {
-            isSwitchWeapon = true;
+            //isSwitchWeapon = true;
             CurrentWeapon(shotgunModel, shotgunScriptableObject);
         }
         else if (Input.GetButtonDown("Number Three") && hasEnergyRifle)
         {
-            isSwitchWeapon = true;
+            //isSwitchWeapon = true;
             CurrentWeapon(energyRifleModel, energyRifleScriptableObject);
         }
         else
         {
-            isSwitchWeapon = false;
+            //isSwitchWeapon = false;
         }
     }
 

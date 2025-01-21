@@ -15,7 +15,7 @@ public class StunEnemy : EnemyBase
     [Header("     Stun Enemy Stats     ")]
     [SerializeField] float stunDuration = 4;
     [SerializeField] int distanceFromPlayer = 4;    //how close to get to the player to take the item
-    [SerializeField] float enemySpeedMult = 2;      //Speed multiplier
+    //[SerializeField] float enemySpeedMult = 2;      //Speed multiplier
     [SerializeField] int fleeDistance = 40;      //distance to keep from player (might not need)
     [SerializeField] int roamRadius = 20;
 
