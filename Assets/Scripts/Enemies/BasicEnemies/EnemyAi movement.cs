@@ -22,7 +22,7 @@ public class EnemyAiMovement : MonoBehaviour
    
     bool isRoaming = false;
     bool isShooting;
-    bool playerInRange;
+    //bool playerInRange;
     Coroutine cO;
     Vector3 startPos;
     Vector3 playerDir;
@@ -135,7 +135,7 @@ public class EnemyAiMovement : MonoBehaviour
 
         if (other.CompareTag("Player"))
         {
-            playerInRange = true;
+            //playerInRange = true;
         }
 
     }
@@ -144,7 +144,7 @@ public class EnemyAiMovement : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            playerInRange = false;
+            //playerInRange = false;
             agent.stoppingDistance = 0; 
         }
 

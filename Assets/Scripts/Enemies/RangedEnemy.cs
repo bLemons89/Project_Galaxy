@@ -19,7 +19,7 @@ public class RangedEnemy : EnemyBase
     public UnityEvent<float> OnShootPlayer;
 
     private GameObject player;
-    private bool isRoaming = false;
+    //private bool isRoaming = false;
     private float shootRate;
     private int currentAmmo;
     private int maxAmmo;
@@ -127,7 +127,7 @@ public class RangedEnemy : EnemyBase
     IEnumerator RoamRoutine()
     {
         // turn on 
-        isRoaming = true;
+        //isRoaming = true;
 
         // IEnums must have yield
         yield return new WaitForSeconds(roamTimer); // wait for second before continuing. 
@@ -145,7 +145,7 @@ public class RangedEnemy : EnemyBase
         agent.SetDestination(hit.position); // player last known position
 
         // turn off
-        isRoaming = false;
+        //isRoaming = false;
     }
 
     IEnumerator ShootRoutine()

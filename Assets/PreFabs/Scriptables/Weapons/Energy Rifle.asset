@@ -26,6 +26,7 @@ MonoBehaviour:
   maxAmmo: 20
   ammoTypeName: Energy Shells
   reloadRate: 1
+  hitEffect: {fileID: 5396372950321188654, guid: fcb74f28d107e284e80af037bfec14ca, type: 3}
   areaOfEffectRadius: 0
   splashDamage: 0
   weaponSprite: {fileID: 0}
