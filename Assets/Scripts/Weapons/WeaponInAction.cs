@@ -131,6 +131,7 @@ public class WeaponInAction : MonoBehaviour
                 {
                     HealthSystem enemyHealthSystem = hitInfo.transform.GetComponent<HealthSystem>();
                     enemyHealthSystem.Damage(1);
+                    AudioManager2.PlaySound(AudioManager2.Sound.EnemyDamage);
                 }
 
                 isShot = true; // got shot
