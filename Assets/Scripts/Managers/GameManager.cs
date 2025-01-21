@@ -29,7 +29,14 @@ public class GameManager : MonoBehaviour
 
 
     [Header("===== MUSIC =====")]
-    //[SerializeField] private AudioClip playMusic;
+    [SerializeField] public SoundAudioClip[] soundAudioClipArray;
+
+    [System.Serializable]
+    public class SoundAudioClip
+    {
+        public AudioManager2.Sound sound;
+        public AudioClip audioClip;
+    }
 
     // Flags //
     private bool isPaused;
@@ -69,9 +76,9 @@ public class GameManager : MonoBehaviour
         playerScript = player.GetComponent<playerScript>();
 
         buttonFunctions.ButtonsInitialize();
-        
+
         // Music for game
-        //AudioManager.instance.PlayMusic(playMusic);
+        //AudioManager2.PlaySound();
         
     }
 

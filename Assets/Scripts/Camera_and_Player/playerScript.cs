@@ -20,10 +20,6 @@ public class playerScript : MonoBehaviour
     [SerializeField][Range(5, 30)] int jumpSpeed;
     [SerializeField][Range(10,60)] int gravity;
 
-    [Header("===== SFX =====")]
-    [SerializeField] private AudioClip playerWalk;
-    [SerializeField] private AudioClip playMusic;
-
     // Flags //
     bool isSprinting;
     //bool isShooting;
@@ -45,7 +41,7 @@ public class playerScript : MonoBehaviour
 
     void Start()
     {
-        AudioManager.Instance.PlayMusicWithCrossFade(playMusic);
+        
     }
 
     void Update()
@@ -69,13 +65,13 @@ public class playerScript : MonoBehaviour
     {
 
         //resets jumps once player is on the ground
-        if(playerController.isGrounded)
+        if (playerController.isGrounded)
         {
-            // player movement detected
+
             if (moveDirection.magnitude > 0.3f && !isPlayingStep)
             {
-                //AudioManager.instance.PlaySFX(playerWalk);
-                StartCoroutine(playStep());
+                //isPlayingStep = true;
+                AudioManager2.PlaySound(AudioManager2.Sound.PlayerMove);
             }
 
             jumpCount = 0;
@@ -119,6 +115,8 @@ public class playerScript : MonoBehaviour
         {
             jumpCount++;
             horizontalVelocity.y = jumpSpeed;
+            // Audio Play from manager 2
+            AudioManager2.PlaySound(AudioManager2.Sound.PlayerJump);
         }
 
         playerController.Move(horizontalVelocity * Time.deltaTime);
@@ -168,18 +166,6 @@ public class playerScript : MonoBehaviour
 
         //enable movement/actions
         isStunned = false;
-    }
-
-    IEnumerator playStep()
-    {
-        isPlayingStep = true;
-        AudioManager.Instance.PlaySFX(playerWalk, 0.5f);
-
-        if (!isSprinting)
-            yield return new WaitForSeconds(0.5f);
-        else
-            yield return new WaitForSeconds(0.3f);
-        isPlayingStep = false;
     }
 
 }
