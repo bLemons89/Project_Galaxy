@@ -26,6 +26,7 @@ MonoBehaviour:
   maxAmmo: 30
   ammoTypeName: Long Range Calibre
   reloadRate: 1
+  hitEffect: {fileID: 970440554703164915, guid: 47096eff328e11a418ace7db2d72aa97, type: 3}
   areaOfEffectRadius: 0
   splashDamage: 0
   weaponSprite: {fileID: 0}
