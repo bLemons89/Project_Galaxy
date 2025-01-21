@@ -78,7 +78,7 @@ public class GameManager : MonoBehaviour
         buttonFunctions.ButtonsInitialize();
 
         // Music for game
-        //AudioManager2.PlaySound();
+        AudioManager2.PlaySound(AudioManager2.Sound.BackGroundMusic);
         
     }
 

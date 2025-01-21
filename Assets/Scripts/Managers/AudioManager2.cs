@@ -16,6 +16,9 @@ public class AudioManager2 : MonoBehaviour
         Weapon3Shoot,
         HealthPickup,
         AmmoPickup,
+        BackGroundMusic,
+        BossBattleMusic
+
     }
     public static void PlaySound(Sound sound)
     {
