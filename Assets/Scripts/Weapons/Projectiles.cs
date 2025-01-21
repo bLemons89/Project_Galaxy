@@ -13,7 +13,7 @@ public class Projectiles : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {        
-        WeaponInAction.OnBulletProjectile += OnBulletProjectile_Moving;
+        //WeaponInAction.OnBulletProjectile += OnBulletProjectile_Moving;
     }
 
     private void OnBulletProjectile_Moving()

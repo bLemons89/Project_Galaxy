@@ -13,9 +13,7 @@ public class TakingEnemyDamage : MonoBehaviour
     void Start()
     {
         // subscription
-        WeaponInAction.OnGettingHit += WeaponInAction_OnGettingHit;
-
-
+        // WeaponInAction.OnGettingHit += WeaponInAction_OnGettingHit;
     }
 
     private void WeaponInAction_OnGettingHit()
