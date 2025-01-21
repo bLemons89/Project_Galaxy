@@ -1163,7 +1163,7 @@ GameObject:
   - component: {fileID: 403919145}
   - component: {fileID: 403919144}
   m_Layer: 0
-  m_Name: AmmoDepotStation (1)
+  m_Name: Ammo Box 10
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4392,6 +4392,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerDamageScreen: {fileID: 6330103401759866124}
   menuActive: {fileID: 999581200}
+  soundAudioClipArray: []
 --- !u!1 &1092744490
 GameObject:
   m_ObjectHideFlags: 0
@@ -5642,6 +5643,50 @@ Transform:
   - {fileID: 1859540596}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1498905501
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1498905503}
+  - component: {fileID: 1498905502}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1498905502
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1498905501}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5e684734cbbe1c4cab6789e536d9a46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1498905503
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1498905501}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1504908471
 GameObject:
   m_ObjectHideFlags: 0
@@ -6347,7 +6392,7 @@ GameObject:
   - component: {fileID: 1583435571}
   - component: {fileID: 1583435570}
   m_Layer: 0
-  m_Name: AmmoDepotStation (2)
+  m_Name: Ammo Box 11
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9048,8 +9093,6 @@ MonoBehaviour:
   jumpMax: 1
   jumpSpeed: 5
   gravity: 10
-  playerWalk: {fileID: 0}
-  playMusic: {fileID: 0}
 --- !u!114 &1997385113
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12646,6 +12689,7 @@ SceneRoots:
   m_Roots:
   - {fileID: 2037694810}
   - {fileID: 517571365}
+  - {fileID: 1498905503}
   - {fileID: 1066935543}
   - {fileID: 1647932456}
   - {fileID: 2147168901}
