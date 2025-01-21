@@ -4844,9 +4844,61 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8491404596508314466, guid: 77d2e92d2365b4e45836bb4581b6cc97, type: 3}
+      propertyPath: OnPickup.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8491404596508314466, guid: 77d2e92d2365b4e45836bb4581b6cc97, type: 3}
+      propertyPath: OnWeaponPickup.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8491404596508314466, guid: 77d2e92d2365b4e45836bb4581b6cc97, type: 3}
       propertyPath: OnPickup.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 2037694811}
+    - target: {fileID: 8491404596508314466, guid: 77d2e92d2365b4e45836bb4581b6cc97, type: 3}
+      propertyPath: OnPickup.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 2037694811}
+    - target: {fileID: 8491404596508314466, guid: 77d2e92d2365b4e45836bb4581b6cc97, type: 3}
+      propertyPath: OnPickup.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8491404596508314466, guid: 77d2e92d2365b4e45836bb4581b6cc97, type: 3}
+      propertyPath: OnPickup.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: OnPickup
+      objectReference: {fileID: 0}
+    - target: {fileID: 8491404596508314466, guid: 77d2e92d2365b4e45836bb4581b6cc97, type: 3}
+      propertyPath: OnWeaponPickup.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8491404596508314466, guid: 77d2e92d2365b4e45836bb4581b6cc97, type: 3}
+      propertyPath: OnWeaponPickup.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 8088237583218786021}
+    - target: {fileID: 8491404596508314466, guid: 77d2e92d2365b4e45836bb4581b6cc97, type: 3}
+      propertyPath: OnWeaponPickup.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8491404596508314466, guid: 77d2e92d2365b4e45836bb4581b6cc97, type: 3}
+      propertyPath: OnWeaponPickup.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: CheckWeaponInventory
+      objectReference: {fileID: 0}
+    - target: {fileID: 8491404596508314466, guid: 77d2e92d2365b4e45836bb4581b6cc97, type: 3}
+      propertyPath: OnPickup.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: InventoryManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8491404596508314466, guid: 77d2e92d2365b4e45836bb4581b6cc97, type: 3}
+      propertyPath: OnWeaponPickup.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: WeaponInAction, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8491404596508314466, guid: 77d2e92d2365b4e45836bb4581b6cc97, type: 3}
+      propertyPath: OnPickup.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 8491404596508314466, guid: 77d2e92d2365b4e45836bb4581b6cc97, type: 3}
+      propertyPath: OnWeaponPickup.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -11911,8 +11963,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1115520901771505936}
   - {fileID: 3492935699010643147}
+  - {fileID: 1115520901771505936}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1 &6330103401759866124
