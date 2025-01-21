@@ -17,6 +17,8 @@ public class WeaponInformation : ItemBase
     public int maxAmmo;
     public string ammoTypeName;
     public int reloadRate;
+    public ParticleSystem hitEffect;
+
 
 
     [Header("Area Damage")]
