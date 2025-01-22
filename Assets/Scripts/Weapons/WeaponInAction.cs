@@ -107,7 +107,7 @@ public class WeaponInAction : MonoBehaviour
     {
         //couldn't get this to go off with just the weapon
         //if (PlayerShoot.OnShootInput() != null && !isShot)
-        AudioManager2.PlaySound(AudioManager2.Sound.Weapon1Shoot);
+        //AudioManager2.PlaySound(AudioManager2.Sound.Weapon1Shoot);
 
 
         if (currentAmmo > 0)
@@ -129,7 +129,7 @@ public class WeaponInAction : MonoBehaviour
                 {
                     HealthSystem enemyHealthSystem = hitInfo.transform.GetComponent<HealthSystem>();
                     enemyHealthSystem.Damage(1);
-                    AudioManager2.PlaySound(AudioManager2.Sound.EnemyDamage);
+                    //AudioManager2.PlaySound(AudioManager2.Sound.EnemyDamage);
                 }
 
                 isShot = true; // got shot
