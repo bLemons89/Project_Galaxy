@@ -93,14 +93,7 @@ public class WeaponInAction : MonoBehaviour
         }
         */
 
-
         SwitchWeapon();
-
-        // press P to Restart Scene
-        if (Input.GetButtonDown("Restart Scene"))
-        {
-            SceneManagerScript.instance.ResetScene();
-        }
        
     }
 

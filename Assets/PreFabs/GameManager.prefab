@@ -470,6 +470,7 @@ GameObject:
   - component: {fileID: 8050409024001276447}
   - component: {fileID: 4917149712833974030}
   - component: {fileID: 4400540016892391275}
+  - component: {fileID: 2103310751629704479}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: GameManager
@@ -525,7 +526,7 @@ MonoBehaviour:
   - sound: 7
     audioClip: {fileID: 0}
   - sound: 9
-    audioClip: {fileID: 8300000, guid: 8bc5c4cb1dbdae0479df8fade6007c99, type: 3}
+    audioClip: {fileID: 0}
   - sound: 10
     audioClip: {fileID: 8300000, guid: f694d8c7e5d065344b2d43b97d43b35b, type: 3}
   - sound: 8
@@ -554,6 +555,20 @@ MonoBehaviour:
   winScreen: {fileID: 406699735228623120}
   loseScreen: {fileID: 8382272335107264236}
   enableFlickering: 1
+--- !u!114 &2103310751629704479
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8372623425591706036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d4ccf752f6253141aa8445d6ebf95e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneToLoad: 
+  TimerCountDown: {fileID: 0}
 --- !u!1001 &1864006752232938641
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1109,6 +1124,38 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 4400540016892391275}
+    - target: {fileID: 1974397465205433014, guid: 64ad7a7c6058f3443b3c5f08cd99e941, type: 3}
+      propertyPath: m_Interactable
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1974397465205433014, guid: 64ad7a7c6058f3443b3c5f08cd99e941, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1974397465205433014, guid: 64ad7a7c6058f3443b3c5f08cd99e941, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1974397465205433014, guid: 64ad7a7c6058f3443b3c5f08cd99e941, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 4400540016892391275}
+    - target: {fileID: 1974397465205433014, guid: 64ad7a7c6058f3443b3c5f08cd99e941, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1974397465205433014, guid: 64ad7a7c6058f3443b3c5f08cd99e941, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Restart
+      objectReference: {fileID: 0}
+    - target: {fileID: 1974397465205433014, guid: 64ad7a7c6058f3443b3c5f08cd99e941, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: ButtonFunctions, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1974397465205433014, guid: 64ad7a7c6058f3443b3c5f08cd99e941, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 2660182869986148846, guid: 64ad7a7c6058f3443b3c5f08cd99e941, type: 3}
       propertyPath: m_Name
       value: backgroundScreen
@@ -1201,6 +1248,38 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 4400540016892391275}
+    - target: {fileID: 7940488496350764650, guid: 64ad7a7c6058f3443b3c5f08cd99e941, type: 3}
+      propertyPath: m_Interactable
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7940488496350764650, guid: 64ad7a7c6058f3443b3c5f08cd99e941, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7940488496350764650, guid: 64ad7a7c6058f3443b3c5f08cd99e941, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7940488496350764650, guid: 64ad7a7c6058f3443b3c5f08cd99e941, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2103310751629704479}
+    - target: {fileID: 7940488496350764650, guid: 64ad7a7c6058f3443b3c5f08cd99e941, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7940488496350764650, guid: 64ad7a7c6058f3443b3c5f08cd99e941, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: LoadMainMenuScene
+      objectReference: {fileID: 0}
+    - target: {fileID: 7940488496350764650, guid: 64ad7a7c6058f3443b3c5f08cd99e941, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: SceneManagerScript, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 7940488496350764650, guid: 64ad7a7c6058f3443b3c5f08cd99e941, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

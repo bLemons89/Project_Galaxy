@@ -18,28 +18,11 @@ public class SceneManagerScript : MonoBehaviour
 
     private string playerTag = "Player";
 
-    // this variable is use to reset the scene testing
-    private int restartSceneTimer;
     private float counter;
 
     private void Awake()
     {
         instance = this;
-    }
-
-    private void Start()
-    {
-        restartSceneTimer = 15;        
-        
-        // This Coroutine for testing rest the scene
-        // StartCoroutine(DelayLoading());
-    }
-
-    private void Update()
-    {
-        TimerCountDown.text = counter.ToString("F0");
-        counter += Time.deltaTime;
-
     }
 
     private void OnTriggerEnter(Collider other)
@@ -60,25 +43,13 @@ public class SceneManagerScript : MonoBehaviour
         }
     }
 
-    // if player died the ScreenManagerScript needs to reset the scene, trigger the loadingScreen
-    // respawn the player to the latest checked point
-
-    public void ResetScene()
+    // Load Menu Scene (or scene index 0)
+    // TODO: 
+    public void LoadMainMenuScene()
     {
-        RestingData();
-        // reset the location of the enemy position, reset part location, etc. 
-        //Scene thisScene = SceneManager.GetActiveScene();
-        //Debug.Log("Active Scene is '" + thisScene.name + "'.");
-        //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        SceneManager.LoadScene(0);
     }
 
-    IEnumerator DelayLoading()
-    {
-        yield return new WaitForSeconds(restartSceneTimer);
-        ResetScene();
-    }
 
     private void RestingData()
     {

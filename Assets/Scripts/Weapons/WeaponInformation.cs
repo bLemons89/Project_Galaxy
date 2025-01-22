@@ -19,8 +19,6 @@ public class WeaponInformation : ItemBase
     public int reloadRate;
     public ParticleSystem hitEffect;
 
-
-
     [Header("Area Damage")]
     public float areaOfEffectRadius;
     public int splashDamage;
@@ -32,13 +30,14 @@ public class WeaponInformation : ItemBase
     {
         throw new System.NotImplementedException();
     }
-}
+
     // Anything below are from the class PP2, I am not sure if you would like to use these:
-    //[Header("Audio Info")]
-    //public ParticleSystem hitEffect;
-    //public AudioClip[] shootSound;
-    //public float shootSoundVol;
-    //public AudioClip reloadSound;
-    //public float reloadSoundVol;
-    //public AudioClip emptySound;
-    //public float emptySoundVol;
+    [Header("Audio Info")]        
+    public AudioClip[] shootSound;
+    public float shootSoundVol;
+    public AudioClip reloadSound;
+    public float reloadSoundVol;
+    public AudioClip emptySound;
+    public float emptySoundVol;
+
+}

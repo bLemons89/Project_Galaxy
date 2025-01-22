@@ -116,9 +116,10 @@ public class ButtonFunctions : MonoBehaviour
     }
 
     public void Restart()
-    {
-        //sceneManager.ResetScene();
-        //GameManager.instance.PlayerScript.Respawn();
+    {       
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        GameManager.instance.PlayerScript.Respawn();
+        GameManager.instance.StateUnPause();        
     }
 
     public void SaveGame()
