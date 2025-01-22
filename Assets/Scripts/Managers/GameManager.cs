@@ -14,7 +14,6 @@ public class GameManager : MonoBehaviour
     [Header("===== MANAGERS =====")]
     private GameObject gameManager;
     private SceneManagerScript sceneManager;
-    private AudioManager audioManager;
 
     [Header("===== PLAYER =====")]
     private GameObject player;
@@ -69,7 +68,6 @@ public class GameManager : MonoBehaviour
 
         gameManager = GameObject.FindWithTag("GameManager");
         sceneManager = gameManager.GetComponent<SceneManagerScript>();
-        audioManager = gameManager.GetComponent<AudioManager>();
 
         // find and set player reference
         player = GameObject.FindWithTag("Player");
