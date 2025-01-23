@@ -2545,7 +2545,7 @@ CharacterController:
   m_Height: 2
   m_Radius: 0.5
   m_SlopeLimit: 45
-  m_StepOffset: 0.03
+  m_StepOffset: 0.5
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.02, z: 0}
@@ -2566,11 +2566,11 @@ MonoBehaviour:
   ignoreMask:
     serializedVersion: 2
     m_Bits: 8
-  speed: 7
-  sprintMod: 3
+  speed: 6
+  sprintMod: 2
   jumpMax: 1
   jumpSpeed: 10
-  gravity: 21
+  gravity: 20
 --- !u!114 &1000599277
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5100,6 +5100,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 366678703}
+    - target: {fileID: 6629833058395558006, guid: 4de3c3e80a72c6248a1d04e516af19b7, type: 3}
+      propertyPath: m_Convex
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7041535400471874271, guid: 4de3c3e80a72c6248a1d04e516af19b7, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.5
