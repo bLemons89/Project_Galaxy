@@ -32,9 +32,9 @@ public class RangedEnemy : EnemyBase
 
     void Start()
     {
-        currentAmmo = equippedWeapon.maxAmmo;
+        currentAmmo = equippedWeapon.maxClipAmmo;
         shootDistance = equippedWeapon.shootDistance;
-        maxAmmo = equippedWeapon.maxAmmo;
+        maxAmmo = equippedWeapon.maxClipAmmo;
         shootRate = equippedWeapon.shootRate + 1;
 
         player = GameManager.instance.Player; //assume GameManager handles player reference

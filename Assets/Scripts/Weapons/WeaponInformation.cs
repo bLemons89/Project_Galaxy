@@ -14,10 +14,12 @@ public class WeaponInformation : ItemBase
     public float shootRate;
     public int shootDistance;
     public int currentAmmo;
-    public int maxAmmo;
+    public int maxClipAmmo;
+    public int ammoStored;
     public string ammoTypeName;
     public int reloadRate;
     public ParticleSystem hitEffect;
+    public GameObject muzzleFlash;
 
     [Header("Area Damage")]
     public float areaOfEffectRadius;
