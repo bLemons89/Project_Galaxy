@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
 {
     //singleton
     public static GameManager instance;
+
     ButtonFunctions buttonFunctions;
     //RadialMenu radialMenu;
 
@@ -28,14 +29,14 @@ public class GameManager : MonoBehaviour
 
 
     [Header("===== SFX =====")]
-    [SerializeField] public SoundAudioClip[] soundAudioClipArray;
+    // [SerializeField] public SoundAudioClip[] soundAudioClipArray;
 
-    [System.Serializable]
-    public class SoundAudioClip
-    {
-        public AudioManager2.Sound sound;
-        public AudioClip audioClip;
-    }
+    // [System.Serializable]
+    //public class SoundAudioClip
+    //{
+    //    public AudioManager2.Sound sound;
+    //    public AudioClip audioClip;
+    //}
 
     // Flags //
     private bool isPaused;
@@ -58,7 +59,16 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
-        instance = this;
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else 
+        { 
+            Destroy(gameObject);
+        }
+        
         buttonFunctions = FindObjectOfType<ButtonFunctions>();
         //radialMenu = FindObjectOfType<RadialMenu>();
 
@@ -76,7 +86,7 @@ public class GameManager : MonoBehaviour
         buttonFunctions.ButtonsInitialize();
 
         // Music for game
-        AudioManager2.PlaySound(AudioManager2.Sound.BackGroundMusic);
+        //AudioManager2.PlaySound(AudioManager2.Sound.BackGroundMusic);
         
     }
 

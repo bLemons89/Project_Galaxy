@@ -21,7 +21,7 @@ public class playerScript : MonoBehaviour
     [SerializeField][Range(10,60)] int gravity;
 
     // Flags //
-    //bool isSprinting;
+    bool isSprinting;
     //bool isShooting;
     bool isPlayingStep;
     //bool isReloading
@@ -67,11 +67,10 @@ public class playerScript : MonoBehaviour
         //resets jumps once player is on the ground
         if (playerController.isGrounded)
         {
-
             if (moveDirection.magnitude > 0.3f && !isPlayingStep)
             {
-                isPlayingStep = true;
-                AudioManager2.PlaySound(AudioManager2.Sound.PlayerMove);
+                StartCoroutine(PlayStep());
+                //AudioManager2.PlaySound(AudioManager2.Sound.PlayerMove);
             }
 
             jumpCount = 0;
@@ -100,12 +99,12 @@ public class playerScript : MonoBehaviour
         if (Input.GetButtonDown("Sprint"))
         {
             speed *= sprintMod;
-            //isSprinting = true;
+            isSprinting = true;
         }
         else if(Input.GetButtonUp("Sprint"))
         {
             speed /= sprintMod;
-            //isSprinting = false;
+            isSprinting = false;
         }
     }
 
@@ -116,7 +115,8 @@ public class playerScript : MonoBehaviour
             jumpCount++;
             horizontalVelocity.y = jumpSpeed;
             // Audio Play from manager 2
-            AudioManager2.PlaySound(AudioManager2.Sound.PlayerJump);
+            //AudioManager2.PlaySound(AudioManager2.Sound.PlayerJump);
+            AudioManager.instance.PlaySFX("Jump", AudioManager.instance.playerSFX);
         }
 
         playerController.Move(horizontalVelocity * Time.deltaTime);
@@ -166,6 +166,24 @@ public class playerScript : MonoBehaviour
 
         //enable movement/actions
         isStunned = false;
+    }
+    IEnumerator PlayStep()
+    {
+        isPlayingStep = true;
+
+        AudioManager.instance.PlaySFX("Steps", AudioManager.instance.playerSFX);
+        //playerAudio.PlayOneShot(audStep[Random.Range(0, audStep.Length)], audStepVol);
+
+        if (!isSprinting)
+        {
+            yield return new WaitForSeconds(0.5f);
+        }
+        else
+        {
+            yield return new WaitForSeconds(0.3f);
+        }
+
+        isPlayingStep = false;
     }
 
 }

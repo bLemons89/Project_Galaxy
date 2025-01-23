@@ -124,6 +124,8 @@ public class ChargedLaser : MonoBehaviour, IBossAbility
             //show laser for the set duration
             laserBeam.enabled = true;
             boss.StartCoroutine(DisableLaserBeam());
+
+            //call shoot sound?
         }
 
         //check if player is in laser damage range

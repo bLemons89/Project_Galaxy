@@ -81,7 +81,7 @@ public class EnemyAiMovement : MonoBehaviour
        
         yield return new WaitForSeconds(shootRate);
 
-        
+        //call shoot sound
         isShooting = false;
     }
 

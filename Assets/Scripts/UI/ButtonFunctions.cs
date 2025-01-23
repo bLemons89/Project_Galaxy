@@ -60,6 +60,10 @@ public class ButtonFunctions : MonoBehaviour
 
     // For Settings //
     [SerializeField] private bool enableFlickering;
+    [SerializeField] TextMeshProUGUI musicVolumeText;
+    [SerializeField] TextMeshProUGUI sfxVolumeText;
+    public UnityEngine.UI.Slider _musicSlider, _sfxSlider, _playerSFXSlider;
+
 
     // Getters and Setters //
     public GameObject BackgroundScreen
@@ -99,6 +103,9 @@ public class ButtonFunctions : MonoBehaviour
         saveGroup = saveMenu.GetComponent<CanvasGroup>();
 
         creditGroup = creditScreen.GetComponent<CanvasGroup>();
+
+        _musicSlider = _musicSlider.GetComponent<UnityEngine.UI.Slider>();
+        _sfxSlider = _musicSlider.GetComponent<UnityEngine.UI.Slider>();
 
         // for animate in
         backgroundGroup.alpha = 0f;
@@ -320,4 +327,41 @@ public class ButtonFunctions : MonoBehaviour
                            backgroundScreen.SetActive(false);
                        });
     }
+
+
+    // Settings //
+    public void ToggleFlicker()
+    {
+        enableFlickering = !enableFlickering;
+    }
+    public void ToggleMusic()
+    {
+        AudioManager.instance.ToggleMusic();
+    }
+    public void TogglePlayerSFX()
+    {
+        AudioManager.instance.TogglePlayerSFX();
+    }
+    public void MuteAllSFX()
+    {
+        AudioManager.instance.MuteAllSFX();
+    }
+    public void UnMuteAllSFX()
+    {
+        AudioManager.instance.UnMuteAllSFX();
+    }
+
+    public void MusicVolume()
+    {
+        AudioManager.instance.MusicVolume(_musicSlider.value);
+
+        musicVolumeText.text = (_musicSlider.value * 100).ToString("F0");
+    }
+    public void SFXAllVolume()
+    {
+        AudioManager.instance.SFXAllVolume(_sfxSlider.value);
+
+        sfxVolumeText.text = (_sfxSlider.value * 100).ToString("F0");
+    }
+
 }
