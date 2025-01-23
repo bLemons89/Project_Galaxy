@@ -11479,7 +11479,7 @@ GameObject:
   - component: {fileID: 7967703194292960604}
   m_Layer: 0
   m_Name: RangedEnemy23
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 8
@@ -11896,7 +11896,7 @@ GameObject:
   - component: {fileID: 1199457928218513060}
   m_Layer: 0
   m_Name: RangedEnemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 8

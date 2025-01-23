@@ -100,6 +100,7 @@ public class WeaponInAction : MonoBehaviour
     public void UpdateAmmo()
     {
         if(gunInfo != null)
+            //currentAmmo = gunInfo.currentAmmo;
             currentAmmo = gunInfo.currentAmmo;
     }
 
@@ -112,8 +113,8 @@ public class WeaponInAction : MonoBehaviour
 
         if (currentAmmo > 0)
         {
-            if(relaodMessage.activeSelf)
-                relaodMessage.SetActive(false);
+            //if(relaodMessage.activeSelf)
+            //    relaodMessage.SetActive(false);
 
             // check if the raycast hit object
             if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hitInfo, gunInfo.shootDistance))
@@ -121,14 +122,20 @@ public class WeaponInAction : MonoBehaviour
                 // Bullet need to start moving here
                 // OnBulletProjectile?.Invoke();
 
-                Debug.Log(hitInfo.transform.name + $" Got Hit");
+                Debug.Log($"Player hit {hitInfo.transform.name}");
 
                 // we need to get enemy damage here
                 // OnGettingHit?.Invoke();
                 if (gunInfo != null)
-                {
-                    HealthSystem enemyHealthSystem = hitInfo.transform.GetComponent<HealthSystem>();
-                    enemyHealthSystem.Damage(1);
+                {                      
+                    // Additional logic for the hit
+                    if (hitInfo.collider.CompareTag("Enemy"))
+                    {
+                        Debug.Log("Enemy hit! ");
+                        HealthSystem enemyHealthSystem = hitInfo.transform.GetComponent<HealthSystem>();
+                        enemyHealthSystem.Damage(1);                        
+                    }
+
                     AudioManager2.PlaySound(AudioManager2.Sound.EnemyDamage);
                 }
 
@@ -145,17 +152,19 @@ public class WeaponInAction : MonoBehaviour
             }
             else
             {
+                Debug.Log(transform.name + "did not hit target");
                 isShot = false; // did not get shot
             }
 
             currentAmmo--;
 
             Debug.Log($"Current Ammo: {currentAmmo}");
-        }
-        else if (gunInfo)
+        }        
+        else 
         {
-            if(!relaodMessage.activeSelf)
-                relaodMessage.SetActive(true);
+            
+            //if(!relaodMessage.activeSelf)
+            //    relaodMessage.SetActive(true);
 
         }
     }
