@@ -72,64 +72,9 @@ public class WeaponInAction : MonoBehaviour
 
     private void OnSwitchWeapon()
     {
-<<<<<<< HEAD
         if (Input.GetKeyDown(KeyCode.Alpha1) && availableWeapons.Count > 0)        //press 1 for primary
         {
             EquipWeapon(0);
-=======
-        if(gunInfo != null)
-            currentAmmo = gunInfo.currentAmmo;
-    }
-
-    private void PlayerShoot_shootInput()
-    {
-        //couldn't get this to go off with just the weapon
-        //if (PlayerShoot.OnShootInput() != null && !isShot)
-        //AudioManager2.PlaySound(AudioManager2.Sound.Weapon1Shoot);
-
-
-        if (currentAmmo > 0)
-        {
-            if(relaodMessage.activeSelf)
-                relaodMessage.SetActive(false);
-
-            // check if the raycast hit object
-            if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hitInfo, gunInfo.shootDistance))
-            {
-                // Bullet need to start moving here
-                // OnBulletProjectile?.Invoke();
-
-                Debug.Log(hitInfo.transform.name + $" Got Hit");
-
-                // we need to get enemy damage here
-                // OnGettingHit?.Invoke();
-                if (gunInfo != null)
-                {
-                    HealthSystem enemyHealthSystem = hitInfo.transform.GetComponent<HealthSystem>();
-                    enemyHealthSystem.Damage(1);
-                    //AudioManager2.PlaySound(AudioManager2.Sound.EnemyDamage);
-                }
-
-                isShot = true; // got shot
-                // Hit Effect for the weaopons on enemies
-                WeaponInformation.Instantiate(gunInfo.hitEffect, hitInfo.point, Quaternion.identity);
-
-
-                //exits if statement when used
-                /*if (currentAmmo < 2)
-                {
-                    
-                }*/
-            }
-            else
-            {
-                isShot = false; // did not get shot
-            }
-
-            currentAmmo--;
-
-            Debug.Log($"Current Ammo: {currentAmmo}");
->>>>>>> Development
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2) && availableWeapons.Count > 0)
         {
