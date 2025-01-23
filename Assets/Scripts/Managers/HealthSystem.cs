@@ -12,7 +12,7 @@ public class HealthSystem : MonoBehaviour
     [Header("===== STATS =====")]
     [SerializeField] float maxHealth;
     float currentHealth;
-    float previousHealth;
+    //float previousHealth;                 //unused
 
     [Header("===== VISUAL =====")]
     [SerializeField] Image healthBarBack;
@@ -65,7 +65,8 @@ public class HealthSystem : MonoBehaviour
         
         UpdateHealthBar();
 
-        CheckForCriticalHealth();
+        if(this.CompareTag("Player"))       //applies to player only
+            CheckForCriticalHealth();
     }
 
     // Damage/Heal //
@@ -76,7 +77,7 @@ public class HealthSystem : MonoBehaviour
             currentHealth -= damageAmt;
             isHeal = false;
 
-            if(CompareTag("Player"))
+            if(this.CompareTag("Player"))
             {
                 Invoke("FlashDamageScreen", 0f);
                 //AudioManager2.PlaySound(AudioManager2.Sound.PlayerDamage);
@@ -116,15 +117,26 @@ public class HealthSystem : MonoBehaviour
 
         if (isHeal)
         {
-            easeBar.color = Color.green;
+
             healthBarFill.DOFillAmount(fillAmount, topFillSpeed);
-            easeBar.DOFillAmount(fillAmount, bottomFillSpeed);
+
+            if (easeBar != null)                                            //leave ease bar empty for enemies
+            {
+                easeBar.color = Color.green;
+                easeBar.DOFillAmount(fillAmount, bottomFillSpeed);
+            }
+
         }
-        else if (easeBar != null)
+        else
         {
-            easeBar.color = Color.red;
+
             healthBarFill.DOFillAmount(fillAmount, bottomFillSpeed);
-            easeBar.DOFillAmount(fillAmount, topFillSpeed);
+
+            if (easeBar != null)
+            {
+                easeBar.color = Color.red;
+                easeBar.DOFillAmount(fillAmount, topFillSpeed);
+            }
         }
 
         if(healthBarFill != null)

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
@@ -18,34 +19,32 @@ public class RangedEnemy : EnemyBase
 
     public UnityEvent<float> OnShootPlayer;
 
-    private GameObject player;
-    //private bool isRoaming = false;
-    private float shootRate;
-    private int currentAmmo;
-    private int maxAmmo;
-    private int shootDistance;
-    private int reloadRate;
+    GameObject player;
+    bool isRoaming;
+    float shootRate;
+    int currentAmmo;
+    int maxAmmo;
+    int shootDistance;
+    int reloadRate;
     Vector3 startingPos;
-    private bool isShooting = false;
+    bool isShooting = false;
+
+    bool playerInSight;
 
     float HPOrig;
 
-    void Start()
+    void Start()                                            //MOVE TO BASE???
     {
-        currentAmmo = equippedWeapon.maxClipAmmo;
-        shootDistance = equippedWeapon.shootDistance;
-        maxAmmo = equippedWeapon.maxClipAmmo;
-        shootRate = equippedWeapon.shootRate + 1;
+        //currentAmmo = equippedWeapon.maxClipAmmo;
+        //shootDistance = equippedWeapon.shootDistance;
+        //maxAmmo = equippedWeapon.maxClipAmmo;
+        //shootRate = equippedWeapon.shootRate + 1;
+        currentHealth = maxHealth;
 
-        player = GameManager.instance.Player; //assume GameManager handles player reference
+        player = GameManager.instance.Player;
         startingPos = transform.position; //to remember the starting position for roaming
 
-        if (equippedWeapon == null)
-        {
-            Debug.LogError("RangedEnemy: No weapon equipped");
-        }
-        
-        StartCoroutine(RoamRoutine());
+        weaponInAction.EquipWeapon(0);
     }
 
     void Update()
@@ -59,13 +58,44 @@ public class RangedEnemy : EnemyBase
     {
         if (player == null || this == null) return;
 
+        if(playerInSight)
+        {   
+            base.HandleWeapon();
+        }
+        else if (!isRoaming && !playerInSight)
+        {
+            StartCoroutine(RoamRoutine());
+        }
+
+
+
         //aim at the player
-        AimAtPlayer();
+        //AimAtPlayer();
 
         //check if the enemy can ShootRoutine
-        if (CanShootPlayer())
+        /*if (CanShootPlayer())
         {
             ShootAtPlayer();
+        }*/
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other == null) return;
+
+        if (other.gameObject.CompareTag("Player"))
+        {
+            playerInSight = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other == null) return;
+
+        if(other.gameObject.CompareTag("Player"))
+        {
+            playerInSight = false;
         }
     }
 
@@ -127,30 +157,30 @@ public class RangedEnemy : EnemyBase
     IEnumerator RoamRoutine()
     {
         // turn on 
-        //isRoaming = true;
+        isRoaming = true;
 
-        // IEnums must have yield
-        yield return new WaitForSeconds(roamTimer); // wait for second before continuing. 
-
-        // only for roaming to make sure the AI reaches destination
+        //only for roaming to make sure the AI reaches destination
         agent.stoppingDistance = 0;
 
-        // how big is our roaming distance 
+        //how big is our roaming distance 
         Vector3 randomPos = UnityEngine.Random.insideUnitSphere * roamDist;
         randomPos += startingPos;
 
-        // Enemy is Hit by Player //
-        NavMeshHit hit; // get info using similar like raycast
-        NavMesh.SamplePosition(randomPos, out hit, roamDist, 1); // remember where the hit is at. 
-        agent.SetDestination(hit.position); // player last known position
+        //enemy is Hit by Player
+        NavMeshHit hit; //get info using similar like raycast
+        NavMesh.SamplePosition(randomPos, out hit, roamDist, 1); //remember where the hit is at. 
+        agent.SetDestination(hit.position); //player last known position
 
-        // turn off
-        //isRoaming = false;
+        //IEnums must have yield
+        yield return new WaitForSeconds(roamTimer); // wait for second before continuing. 
+
+        //turn off
+        isRoaming = false;
     }
 
     IEnumerator ShootRoutine()
     {
-        // turn on
+        //turn on
         isShooting = true;
                
         if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hitInfo, shootDistance))
@@ -160,10 +190,10 @@ public class RangedEnemy : EnemyBase
             --currentAmmo;
         }
         
-        // enemySpeedMult
+        //enemySpeedMult
         yield return new WaitForSeconds(shootRate);
 
-        // turn off
+        //turn off
         isShooting = false;
     }
 }

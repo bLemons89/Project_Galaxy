@@ -34,22 +34,28 @@ public class WeaponInAction : MonoBehaviour
     int currentAmmo = 0;
     int ammoStored = 0;
 
+    bool isReloading;
+    bool isShooting;
     //===========GETTERS===========
     public int CurrentAmmo => currentAmmo;
 
     public GameObject GunModelPlaceHolder => gunModelPlaceHolder;
     public WeaponInformation GunInfo { get; set; }
 
-    private void Start()
+    void Start()
     {
         //subscribed events
         //PlayerShoot.OnWeaponReload += Reload;
         //TakingAmmo.OnTakingAmmo += TakingAmmo_OnTakingAmmo;
-        if(gunInfo != null)
+
+
+        /*if(this.gameObject.layer == 6)      //enemy is on layer 6
         {
+            EquipWeapon(0);
+
             currentAmmo = gunInfo.maxClipAmmo;
             ammoStored = gunInfo.ammoStored;
-        }
+        }*/
 
     }
 
@@ -70,7 +76,7 @@ public class WeaponInAction : MonoBehaviour
 
     }
 
-    private void OnSwitchWeapon()
+    public void OnSwitchWeapon()
     {
         if (Input.GetKeyDown(KeyCode.Alpha1) && availableWeapons.Count > 0)        //press 1 for primary
         {
@@ -92,12 +98,15 @@ public class WeaponInAction : MonoBehaviour
     }
 
     //equips the weapon based on the index
-    void EquipWeapon(int index)
+    public void EquipWeapon(int index)
     {
         if (index >= 0 && index < availableWeapons.Count)
         {
             //currentWeaponIndex = index;
             gunInfo = availableWeapons[index];
+
+            currentAmmo = gunInfo.maxClipAmmo;
+            ammoStored = gunInfo.ammoStored;
 
             UpdateWeaponModel(gunInfo);
         }
@@ -109,15 +118,19 @@ public class WeaponInAction : MonoBehaviour
         gunModelPlaceHolder.GetComponent<MeshFilter>().sharedMesh =
             _gunInfo.ItemModel.GetComponent<MeshFilter>().sharedMesh;
 
+        //gunModelPlaceHolder.GetComponent<MeshFilter>().sharedMesh.
+
         gunModelPlaceHolder.GetComponent<MeshRenderer>().sharedMaterial =
             _gunInfo.ItemModel.GetComponent<MeshRenderer>().sharedMaterial;
     }
 
     public void Reload()
     {
-        if (ammoStored > 0 && currentAmmo < gunInfo.maxClipAmmo)
+        if ((ammoStored > 0 && currentAmmo < gunInfo.maxClipAmmo) || 
+            (this.GetComponentInParent<EnemyBase>()))
         {
-            StartCoroutine(ReloadRoutine());
+            if(!isReloading)
+                StartCoroutine(ReloadRoutine());
         }
         else if (ammoStored <= 0)
         {
@@ -128,6 +141,7 @@ public class WeaponInAction : MonoBehaviour
     //coroutine for delaying reload
     IEnumerator ReloadRoutine()
     {
+        isReloading = true;     //so enemy does not infinite reload
         //sounds/animations
         Debug.Log("Reloading...");
         yield return new WaitForSeconds(gunInfo.reloadRate);
@@ -136,13 +150,18 @@ public class WeaponInAction : MonoBehaviour
         int ammoToRefill = Mathf.Min(gunInfo.maxClipAmmo - currentAmmo, ammoStored);     //makes sure to not use more bullets than stored
         currentAmmo += ammoToRefill;
         ammoStored -= ammoToRefill;
+
+        isReloading = false;
     }
 
     public void FireGun()
     {
         //fire only if there is ammo in the gun
-        if (currentAmmo > 0)
+        if (currentAmmo > 0 && !isShooting)         //isShooting always false for player
         {
+            if (!this.gameObject.CompareTag("Player"))          //only enemy calls coroutine
+                StartCoroutine(EnemyShootRate(this.gameObject.GetComponent<EnemyBase>().EnemyShootRate));
+
             //adjust ammo
             currentAmmo--;
 
@@ -170,7 +189,7 @@ public class WeaponInAction : MonoBehaviour
             //muzzle flash method
             PlayMuzzleFlash();
         }
-        else
+        else if (this.gameObject.CompareTag("Player"))
         {
             Debug.Log("WeaponInAction: Gun out of ammo");
             reloadMessage.SetActive(true);
@@ -188,6 +207,14 @@ public class WeaponInAction : MonoBehaviour
         }
     }
 
+    IEnumerator EnemyShootRate(int shootRate)
+    {
+        isShooting = true;
+
+        yield return new WaitForSeconds(shootRate);     //to slow down enemy shoot rate
+
+        isShooting = false;
+    }
     /*
         private void TakingAmmo_OnTakingAmmo()
         {

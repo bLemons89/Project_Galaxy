@@ -24,6 +24,7 @@ public abstract class EnemyBase : MonoBehaviour
     [Header("WEAPON AND TARGETING")]
     [SerializeField] protected WeaponInAction weaponInAction;     //weapon system for weapon in use
     [SerializeField] protected TargetingSystem targetingSystem;   //targeting system for enemies
+    [SerializeField] int enemyShootRate;
 
     //[SerializeField] LayerMask ignoreMask;          //prevents from damaging each other
     //[SerializeField] protected Image enemyHPBar;
@@ -45,6 +46,8 @@ public abstract class EnemyBase : MonoBehaviour
         get { return maxHealth; }
         set { maxHealth = value; }
     }
+
+    public int EnemyShootRate => enemyShootRate;
     /*public Image EnemyHPBar
     {
         get { return enemyHPBar; }
@@ -67,6 +70,11 @@ public abstract class EnemyBase : MonoBehaviour
     //handle weapon logic for the enemy holding the weapon (AI)
     protected void HandleWeapon()
     {
+        //if(weaponInAction.GunInfo == null)
+                //weaponInAction.EquipWeapon(0);
+
+        targetingSystem.AimAtTarget();
+
         if (targetingSystem.CurrentTarget != null)
         {
             //look at target
