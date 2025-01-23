@@ -8,38 +8,19 @@ using UnityEngine.Events;
 
 public class RangedEnemy : EnemyBase
 {
-    [Header("     Ranged Enemy Stats     ")]
-    [SerializeField] private WeaponInformation equippedWeapon; //weapon data (Scriptable Object)
-    [SerializeField] private Transform gunTransform; //where the gun is attached
-    [SerializeField] private Transform shootPoint; //where bullets originate from  
-    [SerializeField] int faceTargetSpeed;
-    [SerializeField] int FOV;
+    [Header("     Ranged Enemy Variables     ")]
     [SerializeField] int roamDist;  //sphere distance of roaming
     [SerializeField] int roamTimer; //how long to wait before move again
 
-    public UnityEvent<float> OnShootPlayer;
-
     GameObject player;
-    bool isRoaming;
-    float shootRate;
-    int currentAmmo;
-    int maxAmmo;
-    int shootDistance;
-    int reloadRate;
     Vector3 startingPos;
-    bool isShooting = false;
 
     bool playerInSight;
-
-    float HPOrig;
+    bool isRoaming;
 
     void Start()                                            //MOVE TO BASE???
     {
-        //currentAmmo = equippedWeapon.maxClipAmmo;
-        //shootDistance = equippedWeapon.shootDistance;
-        //maxAmmo = equippedWeapon.maxClipAmmo;
-        //shootRate = equippedWeapon.shootRate + 1;
-        currentHealth = maxHealth;
+        //currentHealth = maxHealth;
 
         player = GameManager.instance.Player;
         startingPos = transform.position; //to remember the starting position for roaming
@@ -66,20 +47,9 @@ public class RangedEnemy : EnemyBase
         {
             StartCoroutine(RoamRoutine());
         }
-
-
-
-        //aim at the player
-        //AimAtPlayer();
-
-        //check if the enemy can ShootRoutine
-        /*if (CanShootPlayer())
-        {
-            ShootAtPlayer();
-        }*/
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)     //player entering line of sight
     {
         if (other == null) return;
 
@@ -89,7 +59,7 @@ public class RangedEnemy : EnemyBase
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    private void OnTriggerExit(Collider other)      //player exiting line of sight
     {
         if (other == null) return;
 
@@ -101,57 +71,8 @@ public class RangedEnemy : EnemyBase
 
     public override void TakeDamage(float amount)      //All enemies take damage
     {
-        currentHealth -= amount;
-        if (currentHealth <= 0)
-            Destroy(gameObject);        //Dead
+        base.TakeDamage(amount);
     }
-
-    void AimAtPlayer()
-    {
-        //calculate direction to the player
-        Vector3 direction = (player.transform.position - transform.position).normalized;
-
-        //rotate the gun to face the player
-        Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
-        transform.rotation = Quaternion.Slerp(gunTransform.rotation, lookRotation, Time.deltaTime * 5f);
-        
-    }
-
-    bool CanShootPlayer()
-    {
-        //check if the player is within shooting distance
-        float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
-        return distanceToPlayer <= shootDistance;
-    }
-
-    void ShootAtPlayer()
-    {      
-
-        //check if the weapon has ammo
-        if (currentAmmo > 0)
-        {
-
-            //if not shooting, begin shooting
-            if (!isShooting)
-            {
-                StartCoroutine(ShootRoutine());
-            }
-            
-        }
-        else
-        {
-            Debug.Log("RangedEnemy: Out of ammo, reloading...");
-            StartCoroutine(ReloadRoutine());
-        }
-    }
-
-    IEnumerator ReloadRoutine()
-    {
-        yield return new WaitForSeconds(reloadRate);
-        currentAmmo = maxAmmo;
-        Debug.Log("RangedEnemy: Reload complete");
-    }
-
 
     // Enemy Roaming //
     IEnumerator RoamRoutine()
@@ -176,24 +97,5 @@ public class RangedEnemy : EnemyBase
 
         //turn off
         isRoaming = false;
-    }
-
-    IEnumerator ShootRoutine()
-    {
-        //turn on
-        isShooting = true;
-               
-        if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hitInfo, shootDistance))
-        {
-            OnShootPlayer?.Invoke(1);                                   //adjust damage
-            Debug.Log(hitInfo.transform.name + $" Got Hit");
-            --currentAmmo;
-        }
-        
-        //enemySpeedMult
-        yield return new WaitForSeconds(shootRate);
-
-        //turn off
-        isShooting = false;
     }
 }

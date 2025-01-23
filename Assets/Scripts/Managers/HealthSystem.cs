@@ -9,12 +9,13 @@ using UnityEngine.Events;
 
 public class HealthSystem : MonoBehaviour
 {
-    [Header("===== STATS =====")]
+    [Header("===== PLAYER STATS =====")]
     [SerializeField] float maxHealth;
     float currentHealth;
     //float previousHealth;                 //unused
 
     [Header("===== VISUAL =====")]
+    [Header("NOTE: Enemies only need Health Bar Fill")]
     [SerializeField] Image healthBarBack;
     [SerializeField] Image healthBarFill;
     [SerializeField] Gradient healthGradient;
@@ -38,10 +39,14 @@ public class HealthSystem : MonoBehaviour
     bool isDead;
     //bool isInvincible;
 
+    //getters
     public bool IsDead { get {  return isDead; } }
+    public float MaxHealth { get; set; }
+    public float CurrentHealth { get; set; }
     //public bool IsInvincible { get; set; }  
 
     //===== EVENTS =====
+    [Header("If attached to player: Call Respawn() in playerScript")]
     public UnityEvent OnDeath;
 
     void Start()
@@ -58,15 +63,15 @@ public class HealthSystem : MonoBehaviour
     void Update()
     {
         //make sure health cannot go above max
+
         if (currentHealth > maxHealth)
-        {
             currentHealth = maxHealth;
-        }
-        
+
         UpdateHealthBar();
 
-        if(this.CompareTag("Player"))       //applies to player only
+        if (this.CompareTag("Player"))       //applies to player only
             CheckForCriticalHealth();
+
     }
 
     // Damage/Heal //
@@ -110,7 +115,7 @@ public class HealthSystem : MonoBehaviour
     // Health Bar //
     void UpdateHealthBar()
     {
-        float fillAmount = currentHealth / maxHealth;
+        float fillAmount = (float)currentHealth / maxHealth;
 
         DOTween.Kill(healthBarFill);
         DOTween.Kill(easeBar);
@@ -140,7 +145,7 @@ public class HealthSystem : MonoBehaviour
         }
 
         if(healthBarFill != null)
-            healthBarFill.color = healthGradient.Evaluate(currentHealth / maxHealth);        
+            healthBarFill.color = healthGradient.Evaluate((float)currentHealth / maxHealth);
     }
 
     // Critical Health //

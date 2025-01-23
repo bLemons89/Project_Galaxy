@@ -56,7 +56,7 @@ public class StunEnemy : EnemyBase
     void StunEnemyTakeDamage(float amount)
     {
         //drop item right before dying
-        if (currentHealth - amount <= 0)
+        if (healthSystem.CurrentHealth - amount <= 0)
         {
             if (itemModel != null)
             {

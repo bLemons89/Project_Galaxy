@@ -2,7 +2,7 @@
     Author: Juan Contreras
     Edited by:
     Date Created: 01/19/2025
-    Date Updated: 01/22/2025
+    Date Updated: 01/23/2025
     Description: Abstract class for all enemies
  */
 using System.Collections;
@@ -18,51 +18,30 @@ public abstract class EnemyBase : MonoBehaviour
     [SerializeField] protected int speed;
     [SerializeField] protected Renderer model;
     [SerializeField] protected Animator animator;
-    [SerializeField] protected float maxHealth;
-    [SerializeField] protected float currentHealth;
+    //[SerializeField] protected float maxHealth;
 
     [Header("WEAPON AND TARGETING")]
     [SerializeField] protected WeaponInAction weaponInAction;     //weapon system for weapon in use
     [SerializeField] protected TargetingSystem targetingSystem;   //targeting system for enemies
+    [SerializeField] protected HealthSystem healthSystem;   //targeting system for enemies
     [SerializeField] int enemyShootRate;
 
-    //[SerializeField] LayerMask ignoreMask;          //prevents from damaging each other
-    //[SerializeField] protected Image enemyHPBar;
-
-
-    //[SerializeField] protected float fillSpeed;
-    //[SerializeField] protected Gradient colorGradient;
-
-
     protected Vector3 playerDirection;
+    //protected float currentHealth;
 
-    public float CurrentHealth
-    {
-        get { return currentHealth; }
-        set { currentHealth = value; }
-    }
-    public float MaxHealth
-    {
-        get { return maxHealth; }
-        set { maxHealth = value; }
-    }
+    //getters and setters
+    //public float CurrentHealth
+    //{
+    //    get { return currentHealth; }
+    //    set { currentHealth = value; }
+    //}
 
     public int EnemyShootRate => enemyShootRate;
-    /*public Image EnemyHPBar
+
+    private void Start()
     {
-        get { return enemyHPBar; }
-        set { enemyHPBar = value; }
+
     }
-    public float FillSpeed
-    {
-        get { return fillSpeed; }
-        set { fillSpeed = value; }
-    }
-    public Gradient ColorGradient
-    {
-        get { return colorGradient; }
-        set { colorGradient = value; }
-    }*/
 
     //To be defined in each enemy class
     protected abstract void Behavior();     //For consistency and clarity           //in update with HandleWeapon
@@ -70,9 +49,6 @@ public abstract class EnemyBase : MonoBehaviour
     //handle weapon logic for the enemy holding the weapon (AI)
     protected void HandleWeapon()
     {
-        //if(weaponInAction.GunInfo == null)
-                //weaponInAction.EquipWeapon(0);
-
         targetingSystem.AimAtTarget();
 
         if (targetingSystem.CurrentTarget != null)
@@ -96,8 +72,8 @@ public abstract class EnemyBase : MonoBehaviour
 
     public virtual void TakeDamage(float amount)      //All enemies take damage
     {
-        currentHealth -= amount;
-        if (currentHealth <= 0)
+        healthSystem.CurrentHealth -= amount;
+        if (healthSystem.CurrentHealth <= 0)
             Destroy(gameObject);        //Dead
     }
 }
