@@ -85,13 +85,33 @@ public class InventoryManager : MonoBehaviour
         OnInventoryUpdated?.Invoke();   //Unity event (for other managers to listen for)
     }
 
-    public void OnDrop(int itemIndex)
+    public void OnDrop(ItemBase item, int quantity)
     {
-        //logic to remove/drop item
+        //find the item slot
+        InventorySlot slot = inventorySlots.Find(s => s.Item == item);  //lambda expression
 
+        if (slot != null)
+        {
+            //logic for stackable items
+            if (item.MaxStackSize > 1)
+            {
+                //adjust stack quantity
+                slot.Quantity -= quantity;
 
-        //notify inventory was changed
-        OnInventoryUpdated?.Invoke();
+                //remove slot if no more items in it
+                if (slot.Quantity <= 0)
+                {
+                    inventorySlots.Remove(slot);
+                }
+            }
+            else
+                inventorySlots.Remove(slot);    //go straight to removing slot if not stackable
+
+            //notify other systems that the inventory has been updated
+            OnInventoryUpdated?.Invoke();   //Unity event (for other managers to listen for)
+        }
+        else
+            Debug.Log($"Item: {item.ItemName} not found in inventory");
     }
 
     //called to update UI (for possible future use)

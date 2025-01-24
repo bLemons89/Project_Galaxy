@@ -2,7 +2,7 @@
     Author: Harry Tanama
     Edited by: Juan Contreras
     Date Created: 01/18/2025
-    Date Updated: 01/22/2025
+    Date Updated: 01/23/2025
     Description: Script to handle all gun functionalities and store gun info from scriptables
                  **GUN CONTROLS, DOES NOT UPDATE**
 
@@ -45,6 +45,8 @@ public class WeaponInAction : MonoBehaviour
     {
         if (this.gameObject.CompareTag("Player"))
         {
+            CheckAvailableWeapons();
+
             EquipWeapon(0);
         }
     }
@@ -88,6 +90,23 @@ public class WeaponInAction : MonoBehaviour
                 EquipWeapon(i);
                 break;
             }*/
+    }
+
+    //PLAYER ONLY: updates weapons based on weapons in the inventory
+    void CheckAvailableWeapons()
+    {
+        if (InventoryManager.instance)
+        {
+            foreach (InventorySlot slot in InventoryManager.instance.InventorySlotsList)
+            {
+                if (slot.Item is WeaponInformation weapon)       //if they match, casts to WeaponInformation to add to list of weapons
+                {
+                    availableWeapons.Add(weapon);
+                }
+            }
+        }
+        else
+            Debug.Log("No Inventory Manager for weapons");
     }
 
     //equips the weapon based on the index
