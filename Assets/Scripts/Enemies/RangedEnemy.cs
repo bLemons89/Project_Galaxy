@@ -17,7 +17,7 @@ public class RangedEnemy : EnemyBase
     [SerializeField] int roamTimer; //how long to wait before move again
 
     public UnityEvent<float> OnShootPlayer;
-
+    playerScript PlayerScript;
     private GameObject player;
     //private bool isRoaming = false;
     private float shootRate;
@@ -36,8 +36,8 @@ public class RangedEnemy : EnemyBase
         shootDistance = equippedWeapon.shootDistance;
         maxAmmo = equippedWeapon.maxAmmo;
         shootRate = equippedWeapon.shootRate + 1;
-
-        player = GameManager.instance.Player; //assume GameManager handles player reference
+        PlayerScript = FindObjectOfType<playerScript>();
+        player = PlayerScript.Player; //assume GameManager handles player reference
         startingPos = transform.position; //to remember the starting position for roaming
 
         if (equippedWeapon == null)

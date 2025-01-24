@@ -28,11 +28,12 @@ public class EnemyAiMovement : MonoBehaviour
     Vector3 playerDir;
     Color colorOrig;
     float angleToPlayer;
-
+    playerScript PlayerScript;
 
     // Start is called before the first frame update
     void Start()
     {
+        PlayerScript = FindObjectOfType<playerScript>();
         startPos = transform.position;
         colorOrig = model.material.color;
     }
@@ -89,7 +90,7 @@ public class EnemyAiMovement : MonoBehaviour
     bool canSeePlayer()
     {
         
-        playerDir = GameManager.instance.Player.transform.position - headPos.position;
+        playerDir = PlayerScript.Player.transform.position - headPos.position;
         angleToPlayer = Vector3.Angle(playerDir, transform.forward);
 
         
@@ -104,7 +105,7 @@ public class EnemyAiMovement : MonoBehaviour
             if (hit.collider.CompareTag("Player"))
             {
                 
-                agent.SetDestination(GameManager.instance.Player.transform.position);
+                agent.SetDestination(PlayerScript.Player.transform.position);
 
                 
                 if (agent.remainingDistance < agent.stoppingDistance)
