@@ -252,7 +252,7 @@ public class StunEnemy : EnemyBase
         }
 
         //remove item from player inventory
-        InventoryManager.instance.OnDrop(randomIndex);
+        //InventoryManager.instance.OnDrop(randomIndex);
         
         currentState = EnemyState.Fleeing;  //Change enemy state when taking the item
 

@@ -93,7 +93,7 @@ public class WeaponInAction : MonoBehaviour
     }
 
     //PLAYER ONLY: updates weapons based on weapons in the inventory
-    void CheckAvailableWeapons()
+    public void CheckAvailableWeapons()
     {
         if (InventoryManager.instance)
         {

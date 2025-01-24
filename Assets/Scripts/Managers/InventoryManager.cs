@@ -21,7 +21,7 @@ public class InventoryManager : MonoBehaviour
     public static InventoryManager instance;
 
     //Unity Event notifies Inventory was updated
-    public UnityEvent OnInventoryUpdated;
+    public UnityEvent OnInventoryUpdated;   //connect to CheckAvailable weapons in WeaponInAction
 
     //InventorySlot currentHeldItem;
     
