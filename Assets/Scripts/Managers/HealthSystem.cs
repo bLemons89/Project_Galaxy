@@ -18,17 +18,18 @@ public class HealthSystem : MonoBehaviour
     [Header("NOTE: Enemies only need Health Bar Fill")]
     [SerializeField] Image healthBarBack;
     [SerializeField] Image healthBarFill;
+    [SerializeField] Image easeBar;
     [SerializeField] Gradient healthGradient;
     [SerializeField] float topFillSpeed;
     [SerializeField] float bottomFillSpeed;
-    [SerializeField] Image easeBar;
     [SerializeField] float dmgFlashDuration;
 
     [Header("===== CRITICAL HEALTH =====")]
     [SerializeField] TextMeshProUGUI critWarningText;
     [SerializeField] float critHealth = 0.2f;
     [SerializeField] float flashSpeed = 0.5f;
-    
+
+    private playerScript PlayerScript;
     //[Header("===== STATUS EFFECT =====")]
 
     //[Header("===== DAMAGE TYPE =====")]
@@ -52,6 +53,7 @@ public class HealthSystem : MonoBehaviour
     void Start()
     {
         currentHealth = maxHealth;
+        PlayerScript = FindObjectOfType<playerScript>();
 
         //set flags
         isHeal = false;
@@ -196,11 +198,11 @@ public class HealthSystem : MonoBehaviour
     // Player Damage Screen //
     private void FlashDamageScreen()
     {
-        GameManager.instance.PlayerDamageScreen.SetActive(true);
+        PlayerScript.PlayerDamageScreen.SetActive(true);
         Invoke("HideDamageScreen", dmgFlashDuration);
     }
     private void HideDamageScreen()
     {
-        GameManager.instance.PlayerDamageScreen.SetActive(false);
+       PlayerScript.PlayerDamageScreen.SetActive(false);
     }
 }

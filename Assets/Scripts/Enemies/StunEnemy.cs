@@ -23,6 +23,7 @@ public class StunEnemy : EnemyBase
     GameObject player;
     GameObject itemModel;       //to attach model to enemy
     playerScript playerSettings;
+    playerScript PlayerScript;
     enum EnemyState { Roaming, Chasing, Fleeing }            //Behavior changes when taking item
     EnemyState currentState = EnemyState.Roaming;   //Starts by roaming
 
@@ -40,10 +41,12 @@ public class StunEnemy : EnemyBase
         agent.stoppingDistance = distanceFromPlayer;
         roamPosition = agent.destination;
 
-        if (GameManager.instance != null)
+        
+        if (PlayerScript != null)
         {
-            player = GameManager.instance.Player;
-            playerSettings = GameManager.instance.PlayerScript;
+            PlayerScript = FindObjectOfType<playerScript>();
+            player = PlayerScript.Player;
+            playerSettings = PlayerScript;
         }
     }
 
