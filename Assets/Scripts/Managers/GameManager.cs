@@ -27,16 +27,8 @@ public class GameManager : MonoBehaviour
     //[SerializeField] GameObject menuWin;
     //[SerializeField] GameObject menuLose;
 
-
     [Header("===== SFX =====")]
-    // [SerializeField] public SoundAudioClip[] soundAudioClipArray;
 
-    // [System.Serializable]
-    //public class SoundAudioClip
-    //{
-    //    public AudioManager2.Sound sound;
-    //    public AudioClip audioClip;
-    //}
 
     // Flags //
     private bool isPaused;
@@ -85,8 +77,6 @@ public class GameManager : MonoBehaviour
 
         buttonFunctions.ButtonsInitialize();
 
-        // Music for game
-        //AudioManager2.PlaySound(AudioManager2.Sound.BackGroundMusic);
         
     }
 

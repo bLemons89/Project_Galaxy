@@ -7,6 +7,7 @@ public class playerScript : MonoBehaviour
     [Header("===== PLAYER COMPONENTS =====")]
     [SerializeField] Renderer playerModel;
     [SerializeField] CharacterController playerController;
+    [SerializeField] Animator animator;
 
     [SerializeField] LayerMask ignoreMask;
     int jumpCount;
@@ -70,7 +71,6 @@ public class playerScript : MonoBehaviour
             if (moveDirection.magnitude > 0.3f && !isPlayingStep)
             {
                 StartCoroutine(PlayStep());
-                //AudioManager2.PlaySound(AudioManager2.Sound.PlayerMove);
             }
 
             jumpCount = 0;
@@ -114,8 +114,6 @@ public class playerScript : MonoBehaviour
         {
             jumpCount++;
             horizontalVelocity.y = jumpSpeed;
-            // Audio Play from manager 2
-            //AudioManager2.PlaySound(AudioManager2.Sound.PlayerJump);
             AudioManager.instance.PlaySFX("Jump", AudioManager.instance.playerSFX);
         }
 
@@ -185,5 +183,4 @@ public class playerScript : MonoBehaviour
 
         isPlayingStep = false;
     }
-
 }
