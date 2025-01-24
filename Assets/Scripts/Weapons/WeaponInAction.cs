@@ -19,11 +19,9 @@ using Unity.VisualScripting;
 
 public class WeaponInAction : MonoBehaviour
 {
-    //public static event Action OnBulletProjectile;
-    //public static event Action OnGettingHit;
-
     [Header("WEAPON INFO")]
-    [SerializeField] List<WeaponInformation> availableWeapons = new List<WeaponInformation>();   //player and enemy can use
+    [Header("Weapon Scriptable List")]
+    [SerializeField] List<WeaponInformation> availableWeapons = new List<WeaponInformation>();   //player and enemy can use    (connect to player inventory)
     [SerializeField] GameObject gunModelPlaceHolder;
     [SerializeField] TMP_Text reloadText;
     [SerializeField] GameObject reloadMessage;
@@ -34,6 +32,8 @@ public class WeaponInAction : MonoBehaviour
     int currentAmmo = 0;
     int ammoStored = 0;
 
+    bool isReloading;
+    bool isShooting;
     //===========GETTERS===========
     public int CurrentAmmo => currentAmmo;
 
@@ -42,43 +42,41 @@ public class WeaponInAction : MonoBehaviour
 
     private void Start()
     {
-        //subscribed events
-        //PlayerShoot.OnWeaponReload += Reload;
-        //TakingAmmo.OnTakingAmmo += TakingAmmo_OnTakingAmmo;
-        if(gunInfo != null)
+        if (this.gameObject.CompareTag("Player"))
         {
-            currentAmmo = gunInfo.maxClipAmmo;
-            ammoStored = gunInfo.ammoStored;
+            EquipWeapon(0);
         }
-
     }
 
-    // Example from Unity: Draws a 10 meter long green line from the position for 1 frame.
-    void Update()
+    private void Update()
     {
-        //Vector3 forward = transform.TransformDirection(Vector3.forward) * 10;
-        //Debug.DrawRay(transform.position, forward, Color.green);
-
-        /*
-        if (InventoryManager.instance.InventorySlotsList.Count > 0)
+        if (this.gameObject.CompareTag("Player"))
         {
-            CheckWeaponInventory();
+            OnSwitchWeapon();
+
+            if (Input.GetKeyDown(KeyCode.Mouse0))
+                FireGun();
+
+            if (Input.GetKeyDown(KeyCode.R))
+                Reload();
         }
-        */
-
-        //OnSwitchWeapon();
-
     }
-
-    private void OnSwitchWeapon()
+    public void OnSwitchWeapon()
     {
         if (Input.GetKeyDown(KeyCode.Alpha1) && availableWeapons.Count > 0)        //press 1 for primary
         {
             EquipWeapon(0);
+
+            if(reloadMessage.activeSelf)
+                reloadMessage.SetActive(false);
+
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2) && availableWeapons.Count > 0)
         {
             EquipWeapon(1);
+
+            if (reloadMessage.activeSelf)
+                reloadMessage.SetActive(false);
         }
 
         /* USE IF ADDING MORE EQUIPABLE WEAPONS
@@ -92,12 +90,15 @@ public class WeaponInAction : MonoBehaviour
     }
 
     //equips the weapon based on the index
-    void EquipWeapon(int index)
+    public void EquipWeapon(int index)
     {
         if (index >= 0 && index < availableWeapons.Count)
         {
             //currentWeaponIndex = index;
             gunInfo = availableWeapons[index];
+
+            currentAmmo = gunInfo.maxClipAmmo;
+            ammoStored = gunInfo.ammoStored;
 
             UpdateWeaponModel(gunInfo);
         }
@@ -109,15 +110,19 @@ public class WeaponInAction : MonoBehaviour
         gunModelPlaceHolder.GetComponent<MeshFilter>().sharedMesh =
             _gunInfo.ItemModel.GetComponent<MeshFilter>().sharedMesh;
 
+        //gunModelPlaceHolder.GetComponent<MeshFilter>().sharedMesh.
+
         gunModelPlaceHolder.GetComponent<MeshRenderer>().sharedMaterial =
             _gunInfo.ItemModel.GetComponent<MeshRenderer>().sharedMaterial;
     }
 
     public void Reload()
     {
-        if (ammoStored > 0 && currentAmmo < gunInfo.maxClipAmmo)
+        if ((ammoStored > 0 && currentAmmo < gunInfo.maxClipAmmo) || 
+            (this.GetComponentInParent<EnemyBase>()))
         {
-            StartCoroutine(ReloadRoutine());
+            if(!isReloading)
+                StartCoroutine(ReloadRoutine());
         }
         else if (ammoStored <= 0)
         {
@@ -128,6 +133,7 @@ public class WeaponInAction : MonoBehaviour
     //coroutine for delaying reload
     IEnumerator ReloadRoutine()
     {
+        isReloading = true;     //so enemy does not infinite reload
         //sounds/animations
         Debug.Log("Reloading...");
         yield return new WaitForSeconds(gunInfo.reloadRate);
@@ -136,13 +142,20 @@ public class WeaponInAction : MonoBehaviour
         int ammoToRefill = Mathf.Min(gunInfo.maxClipAmmo - currentAmmo, ammoStored);     //makes sure to not use more bullets than stored
         currentAmmo += ammoToRefill;
         ammoStored -= ammoToRefill;
+
+        reloadMessage.SetActive(false);
+
+        isReloading = false;
     }
 
     public void FireGun()
     {
         //fire only if there is ammo in the gun
-        if (currentAmmo > 0)
+        if (currentAmmo > 0 && !isShooting)         //isShooting always false for player
         {
+            if (!this.gameObject.CompareTag("Player"))          //only enemy calls coroutine
+                StartCoroutine(EnemyShootRate(this.gameObject.GetComponent<EnemyBase>().EnemyShootRate));
+
             //adjust ammo
             currentAmmo--;
 
@@ -170,7 +183,7 @@ public class WeaponInAction : MonoBehaviour
             //muzzle flash method
             PlayMuzzleFlash();
         }
-        else
+        else if (this.gameObject.CompareTag("Player"))
         {
             Debug.Log("WeaponInAction: Gun out of ammo");
             reloadMessage.SetActive(true);
@@ -188,72 +201,12 @@ public class WeaponInAction : MonoBehaviour
         }
     }
 
-    /*
-        private void TakingAmmo_OnTakingAmmo()
-        {
-            ammoStored++;        
-        }
+    IEnumerator EnemyShootRate(int shootRate)
+    {
+        isShooting = true;
 
-        public void UpdateAmmo()
-        {
-            if(gunInfo != null)
-                currentAmmo = gunInfo.currentAmmo;
-        }
+        yield return new WaitForSeconds(shootRate);     //to slow down enemy shoot rate
 
-        private void PlayerShoot_shootInput()
-        {
-            //couldn't get this to go off with just the weapon
-            //if (PlayerShoot.OnShootInput() != null && !isShot)
-            AudioManager2.PlaySound(AudioManager2.Sound.Weapon1Shoot);
-
-
-            if (currentAmmo > 0)
-            {
-                if(reloadMessage.activeSelf)
-                    reloadMessage.SetActive(false);
-
-                // check if the raycast hit object
-                if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hitInfo, gunInfo.shootDistance))
-                {
-                    // Bullet need to start moving here
-                    // OnBulletProjectile?.Invoke();
-
-                    Debug.Log(hitInfo.transform.name + $" Got Hit");
-
-                    // we need to get enemy damage here
-                    // OnGettingHit?.Invoke();
-                    if (gunInfo != null)
-                    {
-                        HealthSystem enemyHealthSystem = hitInfo.transform.GetComponent<HealthSystem>();
-                        enemyHealthSystem.Damage(1);
-                        AudioManager2.PlaySound(AudioManager2.Sound.EnemyDamage);
-                    }
-
-                    isShot = true; // got shot
-                    // Hit Effect for the weaopons on enemies
-                    WeaponInformation.Instantiate(gunInfo.hitEffect, hitInfo.point, Quaternion.identity);
-
-
-                    //exits if statement when used
-                    /*if (currentAmmo < 2)
-                    {
-
-                    }
-                }
-                else
-                {
-                    isShot = false; // did not get shot
-                }
-
-                currentAmmo--;
-
-                Debug.Log($"Current Ammo: {currentAmmo}");
-            }
-            else if (gunInfo)
-            {
-                if(!reloadMessage.activeSelf)
-                    reloadMessage.SetActive(true);
-
-            }
-        }*/
+        isShooting = false;
+    }
 }

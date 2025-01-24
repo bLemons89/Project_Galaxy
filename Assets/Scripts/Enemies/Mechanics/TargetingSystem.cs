@@ -22,11 +22,11 @@ public class TargetingSystem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        AimAtTarget();
+        //AimAtTarget();
     }
 
-    //aim at targets in the detection radius
-    void AimAtTarget()
+    //aim at targets in the detection radius            CALL IN UPDATE
+    public void AimAtTarget()
     {
         //finds targets matching the layer mask and in the radius   (future proof for multiplayer)
         Collider[] targets = Physics.OverlapSphere(transform.position, detectionRadius, targetMask);
@@ -52,7 +52,7 @@ public class TargetingSystem : MonoBehaviour
         foreach (Collider target in targets)
         {
             float distance = Vector3.Distance(transform.position, target.transform.position);
-            if(distance > closestDistance)
+            if(distance < closestDistance)
             {
                 closestDistance = distance;
                 closestTarget = target.transform;
