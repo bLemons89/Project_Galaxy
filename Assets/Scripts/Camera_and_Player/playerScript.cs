@@ -132,7 +132,7 @@ public class playerScript : MonoBehaviour
         horizontalVelocity.y -= gravity * Time.deltaTime;
     }
 
-    public void Respawn()
+    public void Respawn()                   //called using Unity event
     {
         if (CheckpointManager.instance)
         {
