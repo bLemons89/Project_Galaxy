@@ -5,8 +5,12 @@ using UnityEngine;
 public class playerScript : MonoBehaviour
 {
     [Header("===== PLAYER COMPONENTS =====")]
+    private GameObject player;
+    private playerScript _playerScript;
+    [SerializeField] GameObject playerDamageScreen;
     [SerializeField] Renderer playerModel;
     [SerializeField] CharacterController playerController;
+    [SerializeField] Animator animator;
 
     [SerializeField] LayerMask ignoreMask;
     int jumpCount;
@@ -21,27 +25,36 @@ public class playerScript : MonoBehaviour
     [SerializeField][Range(10,60)] int gravity;
 
     // Flags //
-    bool isSprinting;
-    //bool isShooting;
+    bool isSprinting;    
     bool isPlayingStep;
+    //bool isShooting;
     //bool isReloading
     bool isStunned;
-
-    // Cache //
 
     // Vectors //
     Vector3 moveDirection;
     Vector3 horizontalVelocity;
     //vector to store checkpoint
 
-
     // Getters and Setters //
     public int Speed => speed;  //stun enemy uses this
     public int SprintMod => sprintMod; //stun enemy
 
+    public GameObject Player => player;
+    public GameObject PlayerDamageScreen
+    { get => playerDamageScreen; set => playerDamageScreen = value; }
+    public playerScript PlayerScript
+    { get => _playerScript; set => _playerScript = value; }
+  
+
     void Start()
     {
+        // Subscribe to the State Changes
+        GameManager.instance.OnGameStateChange += OnGameStateChange;
         
+        // find and set player reference
+        player = GameObject.FindWithTag("Player");
+        _playerScript = player.GetComponent<playerScript>();
     }
 
     void Update()
@@ -50,7 +63,7 @@ public class playerScript : MonoBehaviour
         if (isStunned)
             return;
 
-        if(!GameManager.instance.IsPaused)
+        if(GameManager.instance.CurrentGameState != GameState.Pause)
         {
             //always checking for
             Movement();
@@ -63,14 +76,12 @@ public class playerScript : MonoBehaviour
     // Player Movement //
     void Movement()
     {
-
         //resets jumps once player is on the ground
         if (playerController.isGrounded)
         {
             if (moveDirection.magnitude > 0.3f && !isPlayingStep)
             {
                 StartCoroutine(PlayStep());
-                //AudioManager2.PlaySound(AudioManager2.Sound.PlayerMove);
             }
 
             jumpCount = 0;
@@ -114,8 +125,6 @@ public class playerScript : MonoBehaviour
         {
             jumpCount++;
             horizontalVelocity.y = jumpSpeed;
-            // Audio Play from manager 2
-            //AudioManager2.PlaySound(AudioManager2.Sound.PlayerJump);
             AudioManager.instance.PlaySFX("Jump", AudioManager.instance.playerSFX);
         }
 
@@ -185,5 +194,20 @@ public class playerScript : MonoBehaviour
 
         isPlayingStep = false;
     }
-
+    private void OnGameStateChange(GameState newGameState)
+    {
+        if(newGameState == GameState.Pause)
+        {
+            this.enabled = false;
+        }
+        else if(newGameState == GameState.Gameplay)
+        {
+            this.enabled = true;
+        }
+    }
+    private void OnDestroy()
+    {
+        // Unsubscribe
+        GameManager.instance.OnGameStateChange -= OnGameStateChange;
+    }
 }
