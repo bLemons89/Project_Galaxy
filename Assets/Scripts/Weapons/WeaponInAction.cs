@@ -34,6 +34,7 @@ public class WeaponInAction : MonoBehaviour
 
     bool isReloading;
     bool isShooting;
+    bool isFlashing;
     //===========GETTERS===========
     public int CurrentAmmo => currentAmmo;
 
@@ -110,8 +111,6 @@ public class WeaponInAction : MonoBehaviour
         gunModelPlaceHolder.GetComponent<MeshFilter>().sharedMesh =
             _gunInfo.ItemModel.GetComponent<MeshFilter>().sharedMesh;
 
-        //gunModelPlaceHolder.GetComponent<MeshFilter>().sharedMesh.
-
         gunModelPlaceHolder.GetComponent<MeshRenderer>().sharedMaterial =
             _gunInfo.ItemModel.GetComponent<MeshRenderer>().sharedMaterial;
     }
@@ -181,7 +180,7 @@ public class WeaponInAction : MonoBehaviour
                 Debug.Log("WeaponInAction: Missed");
 
             //muzzle flash method
-            PlayMuzzleFlash();
+            //PlayMuzzleFlash();                                                                //UNDER MAINTAINANCE
         }
         else if (this.gameObject.CompareTag("Player"))
         {
@@ -195,7 +194,15 @@ public class WeaponInAction : MonoBehaviour
     {
         if(gunInfo.muzzleFlash != null)
         {
-            Instantiate(gunInfo.muzzleFlash, gunModelPlaceHolder.transform.position, gunModelPlaceHolder.transform.rotation);
+            if (!isFlashing)
+            {
+
+                //gunInfo.muzzleFlash.SetActive(true);
+                Instantiate(gunInfo.muzzleFlash, gunInfo.muzzleFlashPos.position, gunModelPlaceHolder.transform.rotation);
+                StartCoroutine(MuzzleFlashRoutine());
+            }
+            else
+
 
             Debug.Log("WeaponInAction: Muzzle Flash Instantiated");
         }
@@ -208,5 +215,18 @@ public class WeaponInAction : MonoBehaviour
         yield return new WaitForSeconds(shootRate);     //to slow down enemy shoot rate
 
         isShooting = false;
+    }
+
+    IEnumerator MuzzleFlashRoutine()
+    {
+        isFlashing = true;
+
+        yield return new WaitForSeconds(1f);
+
+        //gunInfo.muzzleFlash.SetActive(false);
+
+        Destroy(gunInfo.muzzleFlash);
+
+        isFlashing = false;
     }
 }
