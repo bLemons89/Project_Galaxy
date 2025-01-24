@@ -39,9 +39,10 @@ public class playerScript : MonoBehaviour
     public int Speed => speed;  //stun enemy uses this
     public int SprintMod => sprintMod; //stun enemy
 
+    
     void Start()
     {
-        
+     
     }
 
     void Update()

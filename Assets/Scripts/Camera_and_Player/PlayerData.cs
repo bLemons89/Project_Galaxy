@@ -10,6 +10,8 @@ public class PlayerData
     public float x;
     public float y;
     public float z;
+    public float playTimer;
+    public float CurrentHealth;
 
     public PlayerData(Vector3 position)
     {
@@ -17,4 +19,6 @@ public class PlayerData
         y = position.y;
         z = position.z;
     }
+
+    
 }
