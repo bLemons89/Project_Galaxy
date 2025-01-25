@@ -12,7 +12,15 @@ public class RangedEnemy : EnemyBase
     [SerializeField] int roamDist;  //sphere distance of roaming
     [SerializeField] int roamTimer; //how long to wait before move again
 
-    GameObject player;
+    public UnityEvent<float> OnShootPlayer;
+    playerScript PlayerScript;
+    private GameObject player;
+    private float shootRate;
+    private int currentAmmo;
+    private int maxAmmo;
+    private int shootDistance;
+    private int reloadRate;
+
     Vector3 startingPos;
 
     bool playerInSight;
@@ -20,9 +28,13 @@ public class RangedEnemy : EnemyBase
 
     void Start()                                            //MOVE TO BASE???
     {
-        //currentHealth = maxHealth;
-
-        player = GameManager.instance.Player;
+        //currentAmmo = equippedWeapon.maxAmmo;
+        //shootDistance = equippedWeapon.shootDistance;
+        //maxAmmo = equippedWeapon.maxAmmo;
+        //shootRate = equippedWeapon.shootRate + 1;
+        
+        PlayerScript = FindObjectOfType<playerScript>();
+        player = PlayerScript.Player;
         startingPos = transform.position; //to remember the starting position for roaming
 
         weaponInAction.EquipWeapon(0);
