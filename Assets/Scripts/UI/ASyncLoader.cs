@@ -8,10 +8,15 @@ public class ASyncLoader : MonoBehaviour
 {
     [Header("Menu Screens")]
     [SerializeField] private GameObject loadingScreen;
-    [SerializeField] private GameObject menuActive;
+    ParticleUI loadingParticle;
 
     [Header("Progress Bar")]
     [SerializeField] private Image loadingBar;
+
+    public GameObject LoadingScene
+    { get; private set; }
+    public Image LoadingBar
+    { get => loadingBar; set => loadingBar = value; }
 
     /// <summary>
     /// Get from scene manager...?
@@ -19,15 +24,25 @@ public class ASyncLoader : MonoBehaviour
 
     public void LoadLevelBtn(string sceneToLoad)
     {
-        menuActive.SetActive(false);
+        GameManager.instance.MenuActive.SetActive(false);
         loadingScreen.SetActive(true);
-
+        
         StartCoroutine(LoadLevelASync(sceneToLoad));
-
     }
 
     IEnumerator LoadLevelASync(string sceneToLoad)
     {
+        if (!loadingScreen.activeSelf)
+        {
+            loadingScreen.SetActive(true);
+        }
+        
+        if (loadingParticle == null)
+        {
+            loadingParticle = GetComponentInChildren<ParticleUI>();
+        }
+        loadingParticle.PlayParticles();
+
         AsyncOperation loadOperation = SceneManager.LoadSceneAsync(sceneToLoad);
         
         while(!loadOperation.isDone)
@@ -36,6 +51,12 @@ public class ASyncLoader : MonoBehaviour
             loadingBar.fillAmount = progressValue;
             yield return null;
         }
-    }
 
+        loadingParticle.StopParticles();        
+        if (loadingScreen.activeSelf)
+        { 
+            loadingScreen.SetActive(false); 
+        }
+        Debug.Log("Loading Complete!");
+    }
 }

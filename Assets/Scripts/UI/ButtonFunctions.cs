@@ -100,9 +100,6 @@ public class ButtonFunctions : MonoBehaviour
 
     public void Start()
     {
-        // Damage Screen
-        //PlayerScript = FindObjectOfType<playerScript>();
-
         //radialMenu = FindObjectOfType<RadialMenu>();
         // Background Screen
         backgroundGroup = backgroundScreen.GetComponent<CanvasGroup>();
@@ -134,6 +131,10 @@ public class ButtonFunctions : MonoBehaviour
      */
     public void SettingsButton()
     {
+        if (GameManager.instance.MenuActive != null)
+        {
+            GameManager.instance.MenuActive.SetActive(false);
+        }
         GameManager.instance.MenuActive = SettingsMenu;
         SettingsMenu.SetActive(true);
         PauseMenu.SetActive(false);
@@ -150,7 +151,10 @@ public class ButtonFunctions : MonoBehaviour
     {
         if(GameManager.instance.MenuActive != settingsMenu)
         {
-            GameManager.instance.MenuActive.SetActive(false);
+            if (GameManager.instance.MenuActive != null)
+            {
+                GameManager.instance.MenuActive.SetActive(false);
+            }
             GameManager.instance.MenuActive = settingsMenu;
             GameManager.instance.MenuActive.SetActive(true);
         }
@@ -181,19 +185,42 @@ public class ButtonFunctions : MonoBehaviour
     {
         if (GameManager.instance.MenuActive != saveMenu)
         {
-            GameManager.instance.MenuActive.SetActive(false);
+            if(GameManager.instance.MenuActive != null)
+            { 
+                GameManager.instance.MenuActive.SetActive(false); 
+            }
             GameManager.instance.MenuActive = saveMenu;
             GameManager.instance.MenuActive.SetActive(true);
         }
+
+        backgroundGroup.alpha = 1f;
+        RectTransform saveTransform = saveMenu.GetComponent<RectTransform>();
+
+        saveTransform.DOAnchorPos(new Vector3(0, 0, 0), 0.25f)
+                     .SetEase(Ease.InOutQuad);
+
+
+    }
+    public void CloseButton()
+    {
+        CloseAllMenus();
     }
     public void CreditsButton()
     {
         if (GameManager.instance.MenuActive != creditScreen)
         {
-            GameManager.instance.MenuActive.SetActive(false);
+            if (GameManager.instance.MenuActive != null)
+            {
+                GameManager.instance.MenuActive.SetActive(false);
+            }
             GameManager.instance.MenuActive = creditScreen;
             GameManager.instance.MenuActive.SetActive(true);
         }
+        backgroundGroup.alpha = 1f;
+        RectTransform creditsTransform = creditScreen.GetComponent<RectTransform>();
+
+        creditsTransform.DOAnchorPos(new Vector3(0, 0, 0), 0.25f)
+                         .SetEase(Ease.InOutQuad);
     }
     
    
@@ -363,16 +390,36 @@ public class ButtonFunctions : MonoBehaviour
     }
     public void SettingsMenuReset()
     {
-        RectTransform settingsTransform = SettingsMenu.GetComponent<RectTransform>();
+        RectTransform settingsTransform = settingsMenu.GetComponent<RectTransform>();
         settingsTransform.DOAnchorPos(new Vector3(-1983, 0, 0), 0.25f).SetEase(Ease.InOutQuad);
-        SettingsMenu.SetActive(false);
+        settingsMenu.SetActive(false);
+    }
+    public void SaveMenuReset()
+    {
+        RectTransform saveTransform = saveMenu.GetComponent<RectTransform>();
+        saveTransform.DOAnchorPos(new Vector3(-1983, 0, 0), 0.25f).SetEase(Ease.InOutQuad);
+        saveMenu.SetActive(false);
+    }
+    public void CreditsReset()
+    {
+        RectTransform creditsTransform = creditScreen.GetComponent<RectTransform>();
+        creditsTransform.DOAnchorPos(new Vector3(-1983, 0, 0), 0.25f).SetEase(Ease.InOutQuad);
+        creditScreen.SetActive(false);
     }
     public void CloseAllMenus()
     {
         DOTween.KillAll();
-        if (SettingsMenu.activeSelf)
-        { 
+        if (settingsMenu.activeSelf)
+        {
             SettingsMenuReset();
+        }
+        else if(saveMenu.activeSelf)
+        {
+            SaveMenuReset();
+        }
+        else if(creditScreen.activeSelf)
+        {
+            CreditsReset();
         }
         
         if(GameManager.instance.MenuActive == pauseMenu || PauseMenu.activeSelf)
@@ -384,11 +431,14 @@ public class ButtonFunctions : MonoBehaviour
         {
             CloseBackgroundScreen();
         }
+
+        //reset variable
+        GameManager.instance.MenuActive = null;
     }
 
     // Settings //
-    // Toggle //
-    public void ToggleFlicker()
+        // Toggle //
+        public void ToggleFlicker()
         {
             enableFlickering = !enableFlickering;
         }

@@ -19,6 +19,11 @@ public class GameManager : MonoBehaviour
     
     [Header("===== TEMP VARIABLES =====")]
     [SerializeField] GameObject menuActive;
+    
+    [Header("Cameras")]
+    [SerializeField] private Camera gameCamera; 
+    [SerializeField] private Camera loadingCamera;
+    private Camera currentCamera;
 
     // Pause Events //
     public delegate void GameStateChangeHandler(GameState newGameState);
@@ -29,6 +34,12 @@ public class GameManager : MonoBehaviour
 
     public GameObject MenuActive
     { get => menuActive; set => menuActive = value; }
+    public Camera CurrentCamera
+    { get => currentCamera; set => currentCamera = value; }
+    public Camera GameCamera
+    { get => gameCamera; set => gameCamera = value; }
+    public Camera LoadingCamera
+    { get => loadingCamera; set => loadingCamera = value; }
 
     void Awake()
     {
@@ -52,12 +63,14 @@ public class GameManager : MonoBehaviour
         _playerScript = FindObjectOfType<playerScript>();
         
     }
-
+    
+    // Input //
     void Update()
     {
         // Pause Input
         if (Input.GetButtonDown("Cancel") || Input.GetButtonDown("Pause"))
         {
+            ///disable for main menu
             if (currentGameState == GameState.Gameplay)
             {
                 HandleGameStateChange(GameState.Pause);
@@ -114,7 +127,7 @@ public class GameManager : MonoBehaviour
     }
     public void SaveGame()
     {
-        //Navigate to Save/Load Screen
+        //Navigate to Save/Load Screen?
         //GameManager.instance.MenuActive.SetActive(false);
         //GameManager.instance.MenuActive = saveMenu;
         //GameManager.instance.MenuActive.SetActive(true);
@@ -123,6 +136,7 @@ public class GameManager : MonoBehaviour
     public void MainMenu()
     {
         //Navigate to Main Menu Scene
+        //remember to disable input?
     }
 
     public void Quit()
