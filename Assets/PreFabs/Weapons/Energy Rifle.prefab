@@ -84,7 +84,7 @@ MonoBehaviour:
   OnPickup:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 2365855606204651079, guid: fa2c388f07d2e1e499b0be80b6494713, type: 3}
         m_TargetAssemblyTypeName: InventoryManager, Assembly-CSharp
         m_MethodName: OnPickup
         m_Mode: 0
@@ -96,6 +96,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnWeaponPickup:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!33 &8936607638303998298
 MeshFilter:
   m_ObjectHideFlags: 0

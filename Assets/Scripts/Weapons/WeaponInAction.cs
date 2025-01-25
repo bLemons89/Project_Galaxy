@@ -45,6 +45,11 @@ public class WeaponInAction : MonoBehaviour
     {
         if (this.gameObject.CompareTag("Player"))
         {
+            if(InventoryManager.instance)
+            {
+                InventoryManager.instance.OnInventoryUpdated.AddListener(CheckAvailableWeapons);
+            }
+
             CheckAvailableWeapons();
 
             EquipWeapon(0);
@@ -227,10 +232,10 @@ public class WeaponInAction : MonoBehaviour
         {
             if (!isFlashing)
             {
-
+                GameObject gunFlash = Instantiate(gunInfo.muzzleFlash, gunInfo.muzzleFlashPos.position, gunModelPlaceHolder.transform.rotation);
                 //gunInfo.muzzleFlash.SetActive(true);
-                Instantiate(gunInfo.muzzleFlash, gunInfo.muzzleFlashPos.position, gunModelPlaceHolder.transform.rotation);
-                StartCoroutine(MuzzleFlashRoutine());
+
+                StartCoroutine(MuzzleFlashRoutine(gunFlash));
             }
             else
 
@@ -248,7 +253,7 @@ public class WeaponInAction : MonoBehaviour
         isShooting = false;
     }
 
-    IEnumerator MuzzleFlashRoutine()
+    IEnumerator MuzzleFlashRoutine(GameObject _gunFlash)
     {
         isFlashing = true;
 
@@ -256,7 +261,7 @@ public class WeaponInAction : MonoBehaviour
 
         //gunInfo.muzzleFlash.SetActive(false);
 
-        Destroy(gunInfo.muzzleFlash);
+        Destroy(_gunFlash);
 
         isFlashing = false;
     }

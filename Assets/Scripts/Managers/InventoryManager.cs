@@ -20,6 +20,8 @@ public class InventoryManager : MonoBehaviour
     //singleton
     public static InventoryManager instance;
 
+    GameObject player;
+
     //Unity Event notifies Inventory was updated
     public UnityEvent OnInventoryUpdated;   //connect to CheckAvailable weapons in WeaponInAction
 
@@ -36,6 +38,12 @@ public class InventoryManager : MonoBehaviour
         }
         else
             Destroy(gameObject);
+    }
+
+    private void Start()
+    {
+        if(player == null)
+            player = GameObject.FindWithTag("Player");
     }
 
     //inventory storage
@@ -79,8 +87,16 @@ public class InventoryManager : MonoBehaviour
 
         //Debug.Log($"Added {quantity} of {item.ItemName} to inventory.");
 
-        //update ui??
+        if (item.GetItemType == ItemBase.ItemType.Weapon)
+        {
+            WeaponInAction weaponsToUpdate = player.GetComponent<WeaponInAction>();
 
+            if (weaponsToUpdate != null)
+            {
+                weaponsToUpdate.CheckAvailableWeapons();
+            }
+        }
+        //update ui??
         //notifies that inventory was updated
         OnInventoryUpdated?.Invoke();   //Unity event (for other managers to listen for)
     }

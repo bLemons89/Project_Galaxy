@@ -23,7 +23,6 @@ public class StunEnemy : EnemyBase
     GameObject player;
     GameObject itemModel;       //to attach model to enemy
     playerScript playerSettings;
-    playerScript PlayerScript;
     enum EnemyState { Roaming, Chasing, Fleeing }            //Behavior changes when taking item
     EnemyState currentState = EnemyState.Roaming;   //Starts by roaming
 
@@ -63,8 +62,8 @@ public class StunEnemy : EnemyBase
             {
                 //drop item logic
                 itemModel.transform.SetParent(null);     //Detach item from carrier
-                gameObject.transform.position = transform.position; //Drop item at enemy's death location
-                gameObject.GetComponent<Collider>().enabled = true;   //Enable item collider for pickup
+                itemModel.transform.position = transform.position; //Drop item at enemy's death location
+                itemModel.GetComponent<Collider>().enabled = true;   //Enable item collider for pickup
             }
         }
         //call damage method (handles death)
