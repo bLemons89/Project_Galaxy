@@ -16,6 +16,7 @@ public class AudioManager : MonoBehaviour
     }
     private void Start()
     {
+        musicSource.loop = true;
         PlayMusic("LostSignal");
     }
     public void PlayMusic(string name)
