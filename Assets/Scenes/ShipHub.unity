@@ -3323,8 +3323,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49519f3a695def34e9af241276c214d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerDamageScreen: {fileID: 0}
   playerModel: {fileID: 1000599273}
   playerController: {fileID: 1000599275}
+  animator: {fileID: 0}
   ignoreMask:
     serializedVersion: 2
     m_Bits: 8
@@ -3348,6 +3350,7 @@ MonoBehaviour:
   maxHealth: 200
   healthBarBack: {fileID: 0}
   healthBarFill: {fileID: 0}
+  easeBar: {fileID: 0}
   healthGradient:
     serializedVersion: 2
     key0: {r: 0.5568628, g: 0, b: 0.5597484, a: 1}
@@ -3380,7 +3383,6 @@ MonoBehaviour:
     m_NumAlphaKeys: 2
   topFillSpeed: 1
   bottomFillSpeed: 0.5
-  easeBar: {fileID: 0}
   dmgFlashDuration: 0.3
   critWarningText: {fileID: 0}
   critHealth: 0.2
@@ -3468,6 +3470,22 @@ PrefabInstance:
       propertyPath: m_WholeNumbers
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7129291247331537444, guid: 4d8038ad4bc603e459c4635bd6feb3be, type: 3}
+      propertyPath: musicSounds.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7129291247331537444, guid: 4d8038ad4bc603e459c4635bd6feb3be, type: 3}
+      propertyPath: musicSounds.Array.data[1].name
+      value: OrbitalColossus
+      objectReference: {fileID: 0}
+    - target: {fileID: 7129291247331537444, guid: 4d8038ad4bc603e459c4635bd6feb3be, type: 3}
+      propertyPath: musicSounds.Array.data[1].clips.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7129291247331537444, guid: 4d8038ad4bc603e459c4635bd6feb3be, type: 3}
+      propertyPath: musicSounds.Array.data[1].clips.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: f694d8c7e5d065344b2d43b97d43b35b, type: 3}
     - target: {fileID: 8004111521982060682, guid: 4d8038ad4bc603e459c4635bd6feb3be, type: 3}
       propertyPath: m_IsActive
       value: 0
