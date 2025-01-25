@@ -9,10 +9,16 @@ public class cameraController : MonoBehaviour
     [SerializeField] float verticalMax;
 
     private float verticalRotation;
+    float origSensitivity;
+
+    public float Sensitivity { get; set; }
+    public float OrigSensitivity => origSensitivity;
+
     void Start()
     {
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+        origSensitivity = sensitivity;
     }
 
     

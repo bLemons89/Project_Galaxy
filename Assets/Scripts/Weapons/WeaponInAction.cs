@@ -93,7 +93,7 @@ public class WeaponInAction : MonoBehaviour
     }
 
     //PLAYER ONLY: updates weapons based on weapons in the inventory
-    public void CheckAvailableWeapons()
+    public void CheckAvailableWeapons()                 //called with Unity Event when updated
     {
         if (InventoryManager.instance)
         {
@@ -101,7 +101,9 @@ public class WeaponInAction : MonoBehaviour
             {
                 if (slot.Item is WeaponInformation weapon)       //if they match, casts to WeaponInformation to add to list of weapons
                 {
-                    availableWeapons.Add(weapon);
+                    //avoids adding dupes
+                    if(!availableWeapons.Contains(weapon))
+                        availableWeapons.Add(weapon);
                 }
             }
         }
@@ -178,7 +180,7 @@ public class WeaponInAction : MonoBehaviour
             currentAmmo--;
 
             //raycast to where the gun is aimed at
-            if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hitInfo, gunInfo.shootDistance))
+            if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out RaycastHit hitInfo, gunInfo.shootDistance))
             {
                 Debug.Log($"WeaponInAction: Hit {hitInfo.transform.name}");
 

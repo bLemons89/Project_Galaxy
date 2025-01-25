@@ -81,7 +81,7 @@ public class RangedEnemy : EnemyBase
         }
     }
 
-    public override void TakeDamage(float amount)      //All enemies take damage
+    protected override void TakeDamage(float amount)      //All enemies take damage
     {
         base.TakeDamage(amount);
     }

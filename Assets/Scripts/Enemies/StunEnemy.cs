@@ -2,7 +2,7 @@
     Author: Juan Contreras
     Edited by:
     Date Created: 01/19/2025
-    Date Updated: 01/19/2025
+    Date Updated: 01/24/2025
     Description: Core functionality of the stun enemy, takes an inventory item and runs away
  */
 using System.Collections;
@@ -15,7 +15,7 @@ public class StunEnemy : EnemyBase
     [Header("     Stun Enemy Stats     ")]
     [SerializeField] float stunDuration = 4;
     [SerializeField] int distanceFromPlayer = 4;    //how close to get to the player to take the item
-    //[SerializeField] float enemySpeedMult = 2;      //Speed multiplier
+    [SerializeField] float stunSensitivity = 100;      //Speed multiplier
     [SerializeField] int fleeDistance = 40;      //distance to keep from player (might not need)
     [SerializeField] int roamRadius = 20;
 
@@ -41,12 +41,10 @@ public class StunEnemy : EnemyBase
         agent.stoppingDistance = distanceFromPlayer;
         roamPosition = agent.destination;
 
-        
-        if (PlayerScript != null)
+        if (GameManager.instance)
         {
-            PlayerScript = FindObjectOfType<playerScript>();
-            player = PlayerScript.Player;
-            playerSettings = PlayerScript;
+            player = GameObject.FindWithTag("Player");
+            playerSettings = player.GetComponent<playerScript>();
         }
     }
 
@@ -56,7 +54,7 @@ public class StunEnemy : EnemyBase
         Behavior();     //the way the enemy acts around the player
     }
 
-    void StunEnemyTakeDamage(float amount)
+    protected override void TakeDamage(float amount)
     {
         //drop item right before dying
         if (healthSystem.CurrentHealth - amount <= 0)
@@ -70,6 +68,7 @@ public class StunEnemy : EnemyBase
             }
         }
         //call damage method (handles death)
+        base.TakeDamage(amount);
         Debug.Log($"Stun Enemy: Took {amount} damage");
         //use unity event here
     }
@@ -164,7 +163,7 @@ public class StunEnemy : EnemyBase
         //destination to run to
         Vector3 fleeDestination = (transform.position + fleeDirection) * fleeDistance;
 
-        //making sure a valid destination is posHit to prevent running into walls or side of the map
+        //making sure a valid destination is posHit to prevent running into walls or side of the map(NEEDS FIX)
         NavMeshHit posHit;
         NavMeshHit edgeHit;
         if (NavMesh.SamplePosition(fleeDestination, out posHit, 100, NavMesh.AllAreas))
@@ -212,7 +211,7 @@ public class StunEnemy : EnemyBase
     {
         Debug.Log("Stun Enemy: Stunning player");
 
-        playerSettings.Stun(stunDuration);
+        playerSettings.Stun(stunDuration, stunSensitivity);
 
         //CharacterController player = playerSettings.GetComponent<CharacterController>();
         //stun player for set duration
@@ -227,7 +226,7 @@ public class StunEnemy : EnemyBase
         int randomIndex = Random.Range(0, InventoryManager.instance.InventorySlotsList.Count);
         InventorySlot itemSlot = InventoryManager.instance.InventorySlotsList[randomIndex];
 
-        GameObject currentHeldItem = GameObject.FindWithTag("CarryingSlot").GetComponent<WeaponInAction>().GunModelPlaceHolder;    //TEMPORARY
+        GameObject currentHeldItem = GameObject.FindWithTag("CarryingSlot");    //TEMPORARY
 
         //attach item model to enemy
         if (itemSlot.Item.ItemModel != null)
