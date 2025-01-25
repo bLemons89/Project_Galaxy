@@ -11,7 +11,7 @@ public class cameraController : MonoBehaviour
     private float verticalRotation;
     float origSensitivity;
 
-    public float Sensitivity { get; set; }
+    public float Sensitivity { get { return sensitivity; } set { sensitivity = value; } }
     public float OrigSensitivity => origSensitivity;
 
     void Start()

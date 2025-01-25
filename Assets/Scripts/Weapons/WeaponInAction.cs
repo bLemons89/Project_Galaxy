@@ -62,6 +62,10 @@ public class WeaponInAction : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.R))
                 Reload();
+
+            if ((gunModelPlaceHolder.GetComponent<MeshFilter>().sharedMesh == null) && (reloadMessage.activeSelf))
+                reloadMessage.SetActive(false);
+
         }
     }
     public void OnSwitchWeapon()
@@ -70,7 +74,7 @@ public class WeaponInAction : MonoBehaviour
         {
             EquipWeapon(0);
 
-            if(reloadMessage.activeSelf)
+            if (reloadMessage.activeSelf)
                 reloadMessage.SetActive(false);
 
         }
@@ -81,6 +85,8 @@ public class WeaponInAction : MonoBehaviour
             if (reloadMessage.activeSelf)
                 reloadMessage.SetActive(false);
         }
+        else if (availableWeapons.Count <= 0 && gunInfo != null)
+            gunInfo = null;
 
         /* USE IF ADDING MORE EQUIPABLE WEAPONS
         for (int i = 0; i < availableWeapons.Count; i++)
@@ -106,6 +112,10 @@ public class WeaponInAction : MonoBehaviour
                         availableWeapons.Add(weapon);
                 }
             }
+
+            //remove guns that are no longer in the player's inventory
+            availableWeapons.RemoveAll(weapon =>
+                !InventoryManager.instance.InventorySlotsList.Exists(slot => slot.Item == weapon));
         }
         else
             Debug.Log("No Inventory Manager for weapons");

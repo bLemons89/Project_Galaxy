@@ -99,10 +99,16 @@ public class HealthSystem : MonoBehaviour
             {
                 OnDeath?.Invoke();
 
-                currentHealth = maxHealth;
+                currentHealth = maxHealth;                      //Change where this is done i.e. Respawn?
             }
-            else
+            else if (this.CompareTag("Boss"))
+            {
                 Destroy(this.gameObject);
+            }
+            else if (this.GetComponent<EnemyBase>() != null)
+            {
+                this.GetComponent<EnemyBase>().TakeDamage(damageAmt);
+            }
         }
     }
     public void Heal(float healAmt)

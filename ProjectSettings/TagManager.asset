@@ -9,6 +9,7 @@ TagManager:
   - CarryingSlot
   - CinemachineTarget
   - Particle
+  - Boss
   layers:
   - Default
   - TransparentFX

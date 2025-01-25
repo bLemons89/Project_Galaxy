@@ -15,7 +15,7 @@ public class StunEnemy : EnemyBase
     [Header("     Stun Enemy Stats     ")]
     [SerializeField] float stunDuration = 4;
     [SerializeField] int distanceFromPlayer = 4;    //how close to get to the player to take the item
-    [SerializeField] float stunSensitivity = 100;      //Speed multiplier
+    [SerializeField] float stunSensitivity = 10;      //how much to slow the camera down during the stun
     [SerializeField] int fleeDistance = 40;      //distance to keep from player (might not need)
     [SerializeField] int roamRadius = 20;
 
@@ -54,7 +54,7 @@ public class StunEnemy : EnemyBase
         Behavior();     //the way the enemy acts around the player
     }
 
-    protected override void TakeDamage(float amount)
+    public override void TakeDamage(float amount)
     {
         //drop item right before dying
         if (healthSystem.CurrentHealth - amount <= 0)
@@ -209,13 +209,10 @@ public class StunEnemy : EnemyBase
 
     void StunPlayer()
     {
-        Debug.Log("Stun Enemy: Stunning player");
+        Debug.Log($"Stun Enemy: Stunning player for {stunDuration} seconds");
 
+        //stun player for set duration and change sensitivity during stun
         playerSettings.Stun(stunDuration, stunSensitivity);
-
-        //CharacterController player = playerSettings.GetComponent<CharacterController>();
-        //stun player for set duration
-        //player.stun(stunDuration);        //stun status effect method here
     }
 
     void TakeItemFromPlayer()
@@ -226,7 +223,7 @@ public class StunEnemy : EnemyBase
         int randomIndex = Random.Range(0, InventoryManager.instance.InventorySlotsList.Count);
         InventorySlot itemSlot = InventoryManager.instance.InventorySlotsList[randomIndex];
 
-        GameObject currentHeldItem = GameObject.FindWithTag("CarryingSlot");    //TEMPORARY
+        GameObject currentHeldItem = GameObject.FindWithTag("CarryingSlot");    //TEMPORARY (Maybe)
 
         //attach item model to enemy
         if (itemSlot.Item.ItemModel != null)
@@ -237,25 +234,26 @@ public class StunEnemy : EnemyBase
             itemModel.GetComponent<Collider>().enabled = false;     //disable collider so player has to defeat to take item back
 
             Debug.Log($"Stun Enemy: {itemSlot.Item} taken and model attached");
+
+            if (itemSlot.Item.ItemModel.GetComponent<MeshFilter>().sharedMesh == currentHeldItem.GetComponent<MeshFilter>().sharedMesh)
+            {
+                currentHeldItem.GetComponent<MeshFilter>().sharedMesh = null;           //removing physical gun in hand
+                currentHeldItem.GetComponent<MeshRenderer>().sharedMaterial = null;
+
+                //currentHeldItem.GetComponent<WeaponInAction>().GunInfo = null;          //clearing info of currently held gun (Now taken care of by WeaponInAction)
+
+                player.GetComponent<WeaponInAction>().CheckAvailableWeapons();          //update weapon inventory
+            }
+
+            //remove item from player inventory
+            InventoryManager.instance.OnDrop(itemSlot.Item, 1);
+
+            currentState = EnemyState.Fleeing;  //Change enemy state when taking the item
         }
         else
             Debug.Log("Stun Enemy: No Model found for stolen item");
 
-
-        if(itemSlot.Item.ItemModel.GetComponent<MeshFilter>().sharedMesh == currentHeldItem.GetComponent<MeshFilter>().sharedMesh)
-        {
-            currentHeldItem.GetComponent <MeshFilter>().sharedMesh = null;
-            //GunModelPlaceHolder.GetComponent<MeshFilter>().sharedMesh
-
-            currentHeldItem.GetComponent<WeaponInAction>().GunInfo = null;
-        }
-
-        //remove item from player inventory
-        //InventoryManager.instance.OnDrop(randomIndex);
-        
-        currentState = EnemyState.Fleeing;  //Change enemy state when taking the item
-
-        //UI changes?
+        //UI changes?   Taken care of by InventoryManager
     }
 
     void CheckPlayerInventory()
