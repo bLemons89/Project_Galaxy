@@ -10218,8 +10218,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49519f3a695def34e9af241276c214d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerDamageScreen: {fileID: 0}
   playerModel: {fileID: 0}
   playerController: {fileID: 1491492625}
+  animator: {fileID: 0}
   ignoreMask:
     serializedVersion: 2
     m_Bits: 0
@@ -13501,6 +13503,7 @@ MonoBehaviour:
   creditScreen: {fileID: 0}
   winScreen: {fileID: 0}
   loseScreen: {fileID: 0}
+  loadingScreen: {fileID: 0}
   enableFlickering: 0
   musicVolumeText: {fileID: 0}
   sfxVolumeText: {fileID: 0}
@@ -13519,8 +13522,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbff7b02849cf6341925774cbe78a1ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerDamageScreen: {fileID: 0}
   menuActive: {fileID: 0}
+  gameCamera: {fileID: 0}
+  loadingCamera: {fileID: 0}
 --- !u!4 &2064914431
 Transform:
   m_ObjectHideFlags: 0
@@ -14108,6 +14112,10 @@ PrefabInstance:
       propertyPath: m_VersionIndex
       value: 21
       objectReference: {fileID: 0}
+    - target: {fileID: 5465442421486997477, guid: 4041b6b25389ac34cada75520dcdaa9a, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: a0f3b42cacb5346a4a0f4d6764ef9e0f, type: 3}
     - target: {fileID: 6489847193660382049, guid: 4041b6b25389ac34cada75520dcdaa9a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 73.32
