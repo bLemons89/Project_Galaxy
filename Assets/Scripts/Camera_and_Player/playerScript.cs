@@ -35,6 +35,7 @@ public class playerScript : MonoBehaviour
     Vector3 moveDirection;
     Vector3 horizontalVelocity;
     //vector to store checkpoint
+    cameraController playerCamera;
 
     // Getters and Setters //
     public int Speed => speed;  //stun enemy uses this
@@ -55,6 +56,7 @@ public class playerScript : MonoBehaviour
         // find and set player reference
         player = GameObject.FindWithTag("Player");
         _playerScript = player.GetComponent<playerScript>();
+        playerCamera = Camera.main.GetComponent<cameraController>();
     }
 
     void Update()
@@ -156,22 +158,28 @@ public class playerScript : MonoBehaviour
         }
     }
 
-    public void Stun(float duration)        //called from stun enemy
+    public void Stun(float duration, float stunSensitivity)        //called from stun enemy
     {
         //add stun effect logic
         Debug.Log($"Player stunned for {duration} seconds");
 
         if(!isStunned)
-            StartCoroutine(StunRoutine(duration));
+            StartCoroutine(StunRoutine(duration, stunSensitivity));
     }
 
-    IEnumerator StunRoutine(float duration)
+    IEnumerator StunRoutine(float duration, float stunSensitivity)
     {
         //disable movement/actions
         isStunned = true;
 
+        //adjust camera sensitivity
+        playerCamera.Sensitivity = stunSensitivity;
+
         //stun duration
         yield return new WaitForSeconds(duration);
+
+        //restore camera sensitivity
+        playerCamera.Sensitivity = playerCamera.OrigSensitivity;
 
         //enable movement/actions
         isStunned = false;

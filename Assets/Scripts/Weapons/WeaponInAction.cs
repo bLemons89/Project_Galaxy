@@ -2,7 +2,7 @@
     Author: Harry Tanama
     Edited by: Juan Contreras
     Date Created: 01/18/2025
-    Date Updated: 01/22/2025
+    Date Updated: 01/23/2025
     Description: Script to handle all gun functionalities and store gun info from scriptables
                  **GUN CONTROLS, DOES NOT UPDATE**
 
@@ -34,6 +34,7 @@ public class WeaponInAction : MonoBehaviour
 
     bool isReloading;
     bool isShooting;
+    bool isFlashing;
     //===========GETTERS===========
     public int CurrentAmmo => currentAmmo;
 
@@ -44,6 +45,8 @@ public class WeaponInAction : MonoBehaviour
     {
         if (this.gameObject.CompareTag("Player"))
         {
+            CheckAvailableWeapons();
+
             EquipWeapon(0);
         }
     }
@@ -89,6 +92,25 @@ public class WeaponInAction : MonoBehaviour
             }*/
     }
 
+    //PLAYER ONLY: updates weapons based on weapons in the inventory
+    public void CheckAvailableWeapons()                 //called with Unity Event when updated
+    {
+        if (InventoryManager.instance)
+        {
+            foreach (InventorySlot slot in InventoryManager.instance.InventorySlotsList)
+            {
+                if (slot.Item is WeaponInformation weapon)       //if they match, casts to WeaponInformation to add to list of weapons
+                {
+                    //avoids adding dupes
+                    if(!availableWeapons.Contains(weapon))
+                        availableWeapons.Add(weapon);
+                }
+            }
+        }
+        else
+            Debug.Log("No Inventory Manager for weapons");
+    }
+
     //equips the weapon based on the index
     public void EquipWeapon(int index)
     {
@@ -109,8 +131,6 @@ public class WeaponInAction : MonoBehaviour
     {
         gunModelPlaceHolder.GetComponent<MeshFilter>().sharedMesh =
             _gunInfo.ItemModel.GetComponent<MeshFilter>().sharedMesh;
-
-        //gunModelPlaceHolder.GetComponent<MeshFilter>().sharedMesh.
 
         gunModelPlaceHolder.GetComponent<MeshRenderer>().sharedMaterial =
             _gunInfo.ItemModel.GetComponent<MeshRenderer>().sharedMaterial;
@@ -160,7 +180,7 @@ public class WeaponInAction : MonoBehaviour
             currentAmmo--;
 
             //raycast to where the gun is aimed at
-            if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hitInfo, gunInfo.shootDistance))
+            if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out RaycastHit hitInfo, gunInfo.shootDistance))
             {
                 Debug.Log($"WeaponInAction: Hit {hitInfo.transform.name}");
 
@@ -181,7 +201,7 @@ public class WeaponInAction : MonoBehaviour
                 Debug.Log("WeaponInAction: Missed");
 
             //muzzle flash method
-            PlayMuzzleFlash();
+            //PlayMuzzleFlash();                                                                //UNDER MAINTAINANCE
         }
         else if (this.gameObject.CompareTag("Player"))
         {
@@ -195,7 +215,15 @@ public class WeaponInAction : MonoBehaviour
     {
         if(gunInfo.muzzleFlash != null)
         {
-            Instantiate(gunInfo.muzzleFlash, gunModelPlaceHolder.transform.position, gunModelPlaceHolder.transform.rotation);
+            if (!isFlashing)
+            {
+
+                //gunInfo.muzzleFlash.SetActive(true);
+                Instantiate(gunInfo.muzzleFlash, gunInfo.muzzleFlashPos.position, gunModelPlaceHolder.transform.rotation);
+                StartCoroutine(MuzzleFlashRoutine());
+            }
+            else
+
 
             Debug.Log("WeaponInAction: Muzzle Flash Instantiated");
         }
@@ -208,5 +236,18 @@ public class WeaponInAction : MonoBehaviour
         yield return new WaitForSeconds(shootRate);     //to slow down enemy shoot rate
 
         isShooting = false;
+    }
+
+    IEnumerator MuzzleFlashRoutine()
+    {
+        isFlashing = true;
+
+        yield return new WaitForSeconds(1f);
+
+        //gunInfo.muzzleFlash.SetActive(false);
+
+        Destroy(gunInfo.muzzleFlash);
+
+        isFlashing = false;
     }
 }

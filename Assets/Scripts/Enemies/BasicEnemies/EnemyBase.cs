@@ -70,7 +70,7 @@ public abstract class EnemyBase : MonoBehaviour
         }
     }
 
-    public virtual void TakeDamage(float amount)      //All enemies take damage
+    protected virtual void TakeDamage(float amount)      //All enemies take damage
     {
         healthSystem.CurrentHealth -= amount;
         if (healthSystem.CurrentHealth <= 0)
