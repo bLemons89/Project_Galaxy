@@ -8,6 +8,7 @@ using System.IO;
 using System.Xml;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
+using Unity.VisualScripting;
 
 
 // Put this script on the object to trigger which scene to enter
@@ -23,9 +24,12 @@ public class SceneManagerScript : MonoBehaviour
     private string playerTag = "Player";
 
     private float playTimer;
-    
+
     // The location to save the data
+    private string saveFolderPath;
+    
     private string saveFilePath = Path.Combine("SaveGame/Save.json");
+    
 
     private void Awake()
     {
@@ -50,6 +54,7 @@ public class SceneManagerScript : MonoBehaviour
         {
             GameObject player = GameObject.FindWithTag("Player");
             SavePlayerData(player.transform.position, playTimer);
+            //string saveTimeStamp = System.DateTime.Now.ToString();            
         }
 
         if (Input.GetKeyDown(KeyCode.L))
@@ -58,6 +63,10 @@ public class SceneManagerScript : MonoBehaviour
         }
     }
 
+    private void CreateSaveGameFolder()
+    {
+        if(!Directory)
+    }
     private void OnTriggerEnter(Collider other)
     {
         // Check if the object entering the trigger has the specified tag

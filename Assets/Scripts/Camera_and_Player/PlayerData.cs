@@ -6,7 +6,7 @@ using UnityEngine;
 // https://dev.to/arkilis/systemserializable-in-unity-25hm
 [System.Serializable]
 public class PlayerData
-{
+{   
     public float x;
     public float y;
     public float z;
