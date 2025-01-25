@@ -5399,8 +5399,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbff7b02849cf6341925774cbe78a1ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerDamageScreen: {fileID: 3137362242851927587}
   menuActive: {fileID: 0}
+  gameCamera: {fileID: 0}
+  loadingCamera: {fileID: 0}
 --- !u!1 &4442250428622192724
 GameObject:
   m_ObjectHideFlags: 0
@@ -6170,6 +6171,7 @@ MonoBehaviour:
   creditScreen: {fileID: 213839247579049017}
   winScreen: {fileID: 8998719865640529261}
   loseScreen: {fileID: 943173221831281297}
+  loadingScreen: {fileID: 0}
   enableFlickering: 1
   musicVolumeText: {fileID: 0}
   sfxVolumeText: {fileID: 0}
@@ -8516,7 +8518,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneToLoad: 
-  TimerCountDown: {fileID: 0}
+  playTimerText: {fileID: 0}
+  data:
+    x: 0
+    y: 0
+    z: 0
+    playTimer: 0
+    CurrentHealth: 0
 --- !u!1 &7318125441310152855
 GameObject:
   m_ObjectHideFlags: 0
