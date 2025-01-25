@@ -26,10 +26,8 @@ public class SceneManagerScript : MonoBehaviour
     private float playTimer;
 
     // The location to save the data
-    private string saveFolderPath;
-    
-    private string saveFilePath = Path.Combine("SaveGame/Save.json");
-    
+    private string saveFolderPath = "SaveGame";
+    private string saveFilePath;
 
     private void Awake()
     {
@@ -52,6 +50,8 @@ public class SceneManagerScript : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.O))
         {
+            CreateSaveGameFolder(); 
+            saveFilePath = Path.Combine("SaveGame/Save.json");
             GameObject player = GameObject.FindWithTag("Player");
             SavePlayerData(player.transform.position, playTimer);
             //string saveTimeStamp = System.DateTime.Now.ToString();            
@@ -65,7 +65,10 @@ public class SceneManagerScript : MonoBehaviour
 
     private void CreateSaveGameFolder()
     {
-        if(!Directory)
+        if (!Directory.Exists(saveFolderPath))
+        {
+            Directory.CreateDirectory(saveFolderPath);
+        }
     }
     private void OnTriggerEnter(Collider other)
     {
