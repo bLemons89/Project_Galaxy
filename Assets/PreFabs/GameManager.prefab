@@ -2945,7 +2945,7 @@ MonoBehaviour:
   m_Direction: 0
   m_MinValue: 0
   m_MaxValue: 1
-  m_WholeNumbers: 1
+  m_WholeNumbers: 0
   m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
@@ -39752,7 +39752,7 @@ MonoBehaviour:
   m_Direction: 0
   m_MinValue: 0
   m_MaxValue: 1
-  m_WholeNumbers: 1
+  m_WholeNumbers: 0
   m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
@@ -40848,6 +40848,9 @@ MonoBehaviour:
   - name: LostSignal
     clips:
     - {fileID: 8300000, guid: 8bc5c4cb1dbdae0479df8fade6007c99, type: 3}
+  - name: OrbitalColossus
+    clips:
+    - {fileID: 8300000, guid: f694d8c7e5d065344b2d43b97d43b35b, type: 3}
   sfxSounds:
   - name: Jump
     clips:
