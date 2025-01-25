@@ -28,10 +28,10 @@ MonoBehaviour:
   ammoTypeName: Long Range Calibre
   reloadRate: 3
   hitEffect: {fileID: 970440554703164915, guid: 47096eff328e11a418ace7db2d72aa97, type: 3}
-  muzzleFlash: {fileID: 0}
+  muzzleFlash: {fileID: 7433993551206873933, guid: c33e3c927b54e8743b8948e3f8ae02d1, type: 3}
+  muzzleFlashPos: {fileID: 3210265144486865614, guid: caad128cba153cb40a44e18ee2df7d57, type: 3}
   areaOfEffectRadius: 0
   splashDamage: 0
-  weaponSprite: {fileID: 0}
   shootSound: []
   shootSoundVol: 0
   reloadSound: {fileID: 0}

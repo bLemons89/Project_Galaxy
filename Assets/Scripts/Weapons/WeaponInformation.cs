@@ -18,15 +18,18 @@ public class WeaponInformation : ItemBase
     public int ammoStored;
     public string ammoTypeName;
     public int reloadRate;
+
+    [Header("VISUAL FX")]
     public ParticleSystem hitEffect;
     public GameObject muzzleFlash;
+    public Transform muzzleFlashPos;
 
     [Header("Area Damage")]
     public float areaOfEffectRadius;
     public int splashDamage;
 
-    [Header("Sprite Info for UI")]
-    public Sprite weaponSprite; // sprite to show UI weapon changes, if needed.
+    //[Header("Sprite Info for UI")]
+    //public Sprite weaponSprite; // sprite to show UI weapon changes, if needed.
 
     public override void IntendedUse()
     {
