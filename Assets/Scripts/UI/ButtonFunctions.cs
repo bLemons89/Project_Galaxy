@@ -62,8 +62,11 @@ public class ButtonFunctions : MonoBehaviour
     // Save Menu //
         [SerializeField] GameObject saveMenu;
         private CanvasGroup saveGroup;
+        private TextMeshProUGUI timeDateStamp;
         public GameObject SaveMenu
         { get => saveMenu; set => saveMenu = value; }
+        public TextMeshProUGUI TimeDateStamp
+        { get => timeDateStamp; set => timeDateStamp = value; }
 
     // Radial Menu //
     //RadialMenu radialMenu;

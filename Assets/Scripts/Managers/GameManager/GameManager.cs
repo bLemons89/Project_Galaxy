@@ -131,6 +131,12 @@ public class GameManager : MonoBehaviour
         //GameManager.instance.MenuActive.SetActive(false);
         //GameManager.instance.MenuActive = saveMenu;
         //GameManager.instance.MenuActive.SetActive(true);
+
+        //prompt for overwrite, or confirm 
+        // call save method
+        // Stamp
+        string timeStamp = System.DateTime.Now.ToString();
+        buttonFunctions.TimeDateStamp.text = timeStamp;
     }
 
     public void MainMenu()
