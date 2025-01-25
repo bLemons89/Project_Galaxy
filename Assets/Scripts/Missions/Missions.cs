@@ -1,4 +1,3 @@
-
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,26 +19,28 @@ public class Mission
 
 public class MissionsManager : MonoBehaviour
 {
-    private List<Mission> missions;
+    public List<Mission> missions; 
 
-    private void Start()
+    private NotificationManager notificationManager;
+
+    void Start()
     {
-        missions = new List<Mission>
-        {
-            new Mission("Collect 3 items", "Collect 3 items to complete the mission."),
-            new Mission("Defeat the boss", "Defeat the boss to complete the mission.")
-        };
+        // Initialize the missions list
+        missions = new List<Mission>();
+        missions.Add(new Mission("Mission 1", "Description of Mission 1"));
+        missions.Add(new Mission("Mission 2", "Description of Mission 2"));
 
-        // Example: Mark the first mission as completed after 5 seconds
-        StartCoroutine(CompleteMissionAfterTime(5f, 0));
+        
+        notificationManager = NotificationManager.Instance;
     }
 
     public void CompleteMission(int missionIndex)
     {
         if (missionIndex >= 0 && missionIndex < missions.Count)
         {
-            missions[missionIndex].isCompleted = true;
-            NotificationManager.Instance.ShowNotification(missions[missionIndex].missionName + " Completed!");
+            missions[missionIndex].isCompleted = true; 
+           
+            notificationManager.ShowNotification(missions[missionIndex].missionName + " Completed!");
         }
     }
 
@@ -48,4 +49,30 @@ public class MissionsManager : MonoBehaviour
         yield return new WaitForSeconds(delay);
         CompleteMission(missionIndex);
     }
+
+    public class NotificationManager : MonoBehaviour
+    {
+        public static NotificationManager Instance { get; private set; }
+
+        void Awake()
+        {
+            
+            if (Instance == null)
+            {
+                Instance = this;
+                DontDestroyOnLoad(gameObject);
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+        }
+
+        public void ShowNotification(string message)
+        {
+            Debug.Log(message); 
+        }
+    }
+
 }
+
