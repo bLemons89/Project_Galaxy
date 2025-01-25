@@ -70,32 +70,42 @@ public class WeaponInAction : MonoBehaviour
     }
     public void OnSwitchWeapon()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1) && availableWeapons.Count > 0)        //press 1 for primary
-        {
-            EquipWeapon(0);
+        //if (Input.GetKeyDown(KeyCode.Alpha1) && availableWeapons.Count > 0)        //press 1 for primary
+        //{
+        //    EquipWeapon(0);
 
-            if (reloadMessage.activeSelf)
-                reloadMessage.SetActive(false);
+        //    if (reloadMessage.activeSelf)
+        //        reloadMessage.SetActive(false);
 
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha2) && availableWeapons.Count > 0)
-        {
-            EquipWeapon(1);
+        //}
+        //else if (Input.GetKeyDown(KeyCode.Alpha2) && availableWeapons.Count > 0)
+        //{
+        //    EquipWeapon(1);
 
-            if (reloadMessage.activeSelf)
-                reloadMessage.SetActive(false);
-        }
-        else if (availableWeapons.Count <= 0 && gunInfo != null)
-            gunInfo = null;
+        //    if (reloadMessage.activeSelf)
+        //        reloadMessage.SetActive(false);
+        //}
+        //else if (availableWeapons.Count <= 0 && gunInfo != null)
+        //    gunInfo = null;
 
-        /* USE IF ADDING MORE EQUIPABLE WEAPONS
+        //USE IF ADDING MORE EQUIPABLE WEAPONS
         for (int i = 0; i < availableWeapons.Count; i++)
         {
+            // Display the last weapon on the last array/list of availableWeapons.
+            // EquipWeapon(availableWeapons.Count-1);
+
             if (Input.GetKeyDown(KeyCode.Alpha1 + i))
             {
                 EquipWeapon(i);
                 break;
-            }*/
+            }
+        }
+
+        if (availableWeapons.Count <= 0 && gunInfo != null) 
+        {
+            gunInfo = null;
+        }
+
     }
 
     //PLAYER ONLY: updates weapons based on weapons in the inventory
