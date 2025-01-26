@@ -42,19 +42,18 @@ public class SceneManagerScript : MonoBehaviour
 
     private void Update()
     {
-        // Set the target frame rate to 30
-        Application.targetFrameRate = 30;
+        // bugs if there is something here Main Menu will have Null Reference!!!!
 
-        _playTimer += Time.deltaTime;
-        if (playTimerText != null)
-        {
-            playTimerText.gameObject.SetActive(true);            
-            playTimerText.text = FormatTime(_playTimer);            
-        }
+        //_playTimer += Time.deltaTime;
+        //if (playTimerText != null)
+        //{
+        //    playTimerText.gameObject.SetActive(true);            
+        //    playTimerText.text = FormatTime(_playTimer);            
+        //}
 
-        SaveLoadManager.instance.SaveDataWithKeyPress();
-        SaveLoadManager.instance.LoadDataWithKeyPress();
-       
+        //SaveLoadManager.instance.SaveDataWithKeyPress();
+        //SaveLoadManager.instance.LoadDataWithKeyPress();               
+
     }
 
     // Checking if object that trigger scene changes collided with player to change scene
@@ -77,18 +76,27 @@ public class SceneManagerScript : MonoBehaviour
     }
 
     // Load Scene (starting index 0)    
+    public void LoadLevelZeroScene()
+    {
+        // index zero Main Menu
+        SceneManager.LoadScene(0);
+    }
+
     public void LoadLevelOneScene()
     {
-        SceneManager.LoadScene(0);
+        // BETA_ShipHub
+        SceneManager.LoadScene(1);
     }
 
     public void LoadLevelTwoScene()
     {
-        SceneManager.LoadScene(1);
+        // BETA_Outer Ship Area
+        SceneManager.LoadScene(2);
     }
 
     public void LoadLevelThreeScene()
     {
+        // BETA_Area 1-Platform
         SceneManager.LoadScene(3);
     }
 
