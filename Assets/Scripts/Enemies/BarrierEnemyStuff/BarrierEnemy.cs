@@ -25,20 +25,31 @@ public class BarrierEnemy : EnemyBase
     private float distance;     //holds distance of an ally to check if closer or not
     playerScript PlayerScript;
     Transform closestAlly;      //keep track of closest enemy(ally)
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
+
         PlayerScript = FindObjectOfType<playerScript>();
+
+        weaponInAction.EquipWeapon(0);
     }
     // Update is called once per frame
     void Update()
     {
+        if(targetingSystem.CurrentTarget == null)
+            targetingSystem.AimAtTarget();
+
         Behavior();
     }
 
     //overriding from baseEnemy
     protected override void Behavior()
     {
-        stayBehindEnemies();
+        if(targetingSystem.CurrentTarget != null)
+            HandleWeapon();
+        else
+            stayBehindEnemies();
+
         manageBarriers();
     }
 

@@ -77,8 +77,15 @@ public class InventoryManager : MonoBehaviour
             quantity -= addedQuantity;
         }
 
-        //new slot if no stack or if left over
-        if(quantity > 0)
+        //adjust weapon ammo if already in inventory
+        if (existingSlot != null && item.GetItemType == ItemBase.ItemType.Weapon)
+        {
+            //add the ammo only
+            WeaponInformation weapon = (WeaponInformation)existingSlot.Item;
+
+            weapon.ammoStored += weapon.maxClipAmmo;
+        }
+        else if(quantity > 0)                                                   //new slot if no stack or if left over and not weapon type
         {
             inventorySlots.Add(new InventorySlot(item, quantity));
 
