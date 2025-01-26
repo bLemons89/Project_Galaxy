@@ -1,3 +1,10 @@
+/*
+    Author: Juan Contreras
+    Edited by:
+    Date Created: 01/19/2025
+    Date Updated: 01/25/2025
+    Description: Logic for the ranged enemy, basic behavior
+ */
 using System;
 using System.Collections;
 using System.Collections.Generic;

@@ -61,7 +61,7 @@ MonoBehaviour:
   distanceFromPlayer: 5
   stunSensitivity: 25
   fleeDistance: 2
-  roamRadius: 20
+  roamRadius: 10
 --- !u!114 &8812334459827783540
 MonoBehaviour:
   m_ObjectHideFlags: 0
