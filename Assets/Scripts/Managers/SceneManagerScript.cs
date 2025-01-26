@@ -52,8 +52,8 @@ public class SceneManagerScript : MonoBehaviour
             playTimerText.text = FormatTime(_playTimer);            
         }
 
-        SaveLoadManager.instance.SaveDataWithKeyPress();
-        SaveLoadManager.instance.LoadDataWithKeyPress();
+        //SaveLoadManager.instance.SaveDataWithKeyPress();
+        //SaveLoadManager.instance.LoadDataWithKeyPress();
        
     }
 

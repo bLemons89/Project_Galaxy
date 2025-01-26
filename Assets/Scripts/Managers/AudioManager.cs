@@ -21,7 +21,7 @@ public class AudioManager : MonoBehaviour
     public Sound[] MenuMusic;
     public Sound[] LevelMusic;
     public Sound[] AmbientNoise;
-    public Sound[] Player;
+    public Sound[] PlayerSounds;
     public Sound[] Weapons;
     public Sound[] UI;
     public Sound[] Environment;
@@ -39,7 +39,7 @@ public class AudioManager : MonoBehaviour
         AudioManager.instance.GetComponent<MixerAdapter>();
 
         source_2D.loop = true;
-        PlayMusic(source_2D, GameMusic,"LostSignal");
+        PlayMusic(source_2D, MenuMusic,"Odessey");
     }
     
     
