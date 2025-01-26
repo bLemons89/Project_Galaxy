@@ -18,8 +18,8 @@ public class PickUp : MonoBehaviour
     [SerializeField] int quantity = 1;  //number of that item this pickup will add to the inventory
 
     //unity event to notify InventoryManager
-    public UnityEvent<ItemBase, int> OnPickup;
-    public UnityEvent OnWeaponPickup;
+    //public UnityEvent<ItemBase, int> OnPickup;
+    //public UnityEvent OnWeaponPickup;
 
     void OnTriggerEnter(Collider other)         //add key press input check in if statement
     {
