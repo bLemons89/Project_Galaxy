@@ -53,16 +53,15 @@ MonoBehaviour:
   speed: 3
   model: {fileID: 2847007721592726609}
   animator: {fileID: 0}
-  ignoreMask:
-    serializedVersion: 2
-    m_Bits: 64
-  maxHealth: 3
-  currentHealth: 0
+  weaponInAction: {fileID: 0}
+  targetingSystem: {fileID: 0}
+  healthSystem: {fileID: 8812334459827783540}
+  enemyShootRate: 0
   stunDuration: 4
   distanceFromPlayer: 5
-  enemySpeedMult: 2
+  stunSensitivity: 25
   fleeDistance: 2
-  roamRadius: 10
+  roamRadius: 20
 --- !u!114 &8812334459827783540
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -78,6 +77,7 @@ MonoBehaviour:
   maxHealth: 3
   healthBarBack: {fileID: 0}
   healthBarFill: {fileID: 0}
+  easeBar: {fileID: 0}
   healthGradient:
     serializedVersion: 2
     key0: {r: 0, g: 1, b: 0.0967226, a: 1}
@@ -110,7 +110,6 @@ MonoBehaviour:
     m_NumAlphaKeys: 2
   topFillSpeed: 0
   bottomFillSpeed: 0
-  easeBar: {fileID: 0}
   dmgFlashDuration: 0
   critWarningText: {fileID: 0}
   critHealth: 0.2

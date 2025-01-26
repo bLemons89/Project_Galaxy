@@ -7,6 +7,7 @@
  */
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
@@ -26,8 +27,8 @@ public abstract class EnemyBase : MonoBehaviour
     [SerializeField] protected HealthSystem healthSystem;   //targeting system for enemies
     [SerializeField] int enemyShootRate;
 
-    protected Vector3 playerDirection;
-    //protected float currentHealth;
+    protected GameObject player;
+    protected playerScript playerSettings;
 
     //getters and setters
     //public float CurrentHealth
@@ -38,9 +39,16 @@ public abstract class EnemyBase : MonoBehaviour
 
     public int EnemyShootRate => enemyShootRate;
 
-    private void Start()
+    protected virtual void Start()
     {
+        if (GameManager.instance != null)
+        {
+            player = GameObject.FindWithTag("Player");
+            playerSettings = player.GetComponent<playerScript>();
+        }
 
+        if (this.GetComponent<TargetingSystem>() != null)
+            this.GetComponent<SphereCollider>().radius = targetingSystem.DetectionRadius;
     }
 
     //To be defined in each enemy class
@@ -61,7 +69,7 @@ public abstract class EnemyBase : MonoBehaviour
             //shoot while gun has ammo in the clip
             if (weaponInAction.CurrentAmmo > 0)
             {
-                weaponInAction.FireGun();
+                weaponInAction.EnemyFireGun(targetingSystem.CurrentTarget);
             }
             else
             {
@@ -70,10 +78,15 @@ public abstract class EnemyBase : MonoBehaviour
         }
     }
 
-    protected virtual void TakeDamage(float amount)      //All enemies take damage
+    public virtual void TakeDamage(float amount)      //All enemies take damage
     {
         healthSystem.CurrentHealth -= amount;
         if (healthSystem.CurrentHealth <= 0)
+        {
+            if(weaponInAction)
+                weaponInAction.DropEquippedGun();
+
             Destroy(gameObject);        //Dead
+        }
     }
 }

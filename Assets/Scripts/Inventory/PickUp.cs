@@ -2,7 +2,7 @@
     Author: Breanna Lemons
     Edited By: Juan Contreras
     Date Created: 01/16/2025
-    Date Updated: 01/16/2025
+    Date Updated: 01/25/2025
     Description: Class to use when picking up objects in a scene to be
                  stored in the inventory.
  */
@@ -18,8 +18,8 @@ public class PickUp : MonoBehaviour
     [SerializeField] int quantity = 1;  //number of that item this pickup will add to the inventory
 
     //unity event to notify InventoryManager
-    public UnityEvent<ItemBase, int> OnPickup;
-    public UnityEvent OnWeaponPickup;
+    //public UnityEvent<ItemBase, int> OnPickup;
+    //public UnityEvent OnWeaponPickup;
 
     void OnTriggerEnter(Collider other)         //add key press input check in if statement
     {
@@ -28,14 +28,15 @@ public class PickUp : MonoBehaviour
         //check for player collider
         if(other.CompareTag("Player"))
         {
-            if (item != null)
+            if (item != null && InventoryManager.instance)
             {
-                //trigger unity event to notify inventory manager
-                OnPickup?.Invoke(item, quantity);
+                InventoryManager.instance.OnPickup(item, quantity);
                 
-                if (item.GetItemType == ItemBase.ItemType.Weapon)
-                    OnWeaponPickup?.Invoke();
+                //if (item.GetItemType == ItemBase.ItemType.Weapon)       //not being used
+                    //OnWeaponPickup?.Invoke();
 
+                //trigger unity event to notify inventory manager   (loses reference if destroyed or instantiated)
+                //OnPickup?.Invoke(item, quantity);
             }
 
             //destroy item in the world

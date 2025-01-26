@@ -74,16 +74,15 @@ public class GameManager : MonoBehaviour
             if (currentGameState == GameState.Gameplay)
             {
                 HandleGameStateChange(GameState.Pause);
-                
-                buttonFunctions.OpenPauseMenu();
+                buttonFunctions.OpenPauseMenu();                
             }
             else if (currentGameState == GameState.Pause)
-            {
+            {                
                 HandleGameStateChange(GameState.Gameplay);
 
                 if (menuActive != null)
                 {
-                    buttonFunctions.CloseAllMenus();
+                    buttonFunctions.CloseAllMenus();                    
                 }                
             }
         }
@@ -94,16 +93,16 @@ public class GameManager : MonoBehaviour
     {
         // Pause //
         if (newState == GameState.Pause)
-        {
+        {            
             currentGameState = GameState.Pause;
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
             
-            OnGameStateChange?.Invoke(currentGameState);
+            OnGameStateChange?.Invoke(currentGameState);            
         }
         // Unpause //
         else if (newState == GameState.Gameplay)
-        {
+        {            
             currentGameState = GameState.Gameplay;
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;

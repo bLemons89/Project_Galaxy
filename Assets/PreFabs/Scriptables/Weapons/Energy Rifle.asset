@@ -21,12 +21,20 @@ MonoBehaviour:
   weaponName: Energy Rifle
   shootDamage: 2
   shootRate: 1
-  shootDistance: 80
+  shootDistance: 35
   currentAmmo: 20
-  maxAmmo: 20
+  maxClipAmmo: 20
+  ammoStored: 80
   ammoTypeName: Energy Shells
   reloadRate: 1
   hitEffect: {fileID: 5396372950321188654, guid: fcb74f28d107e284e80af037bfec14ca, type: 3}
+  muzzleFlash: {fileID: 0}
+  muzzleFlashPos: {fileID: 0}
   areaOfEffectRadius: 0
   splashDamage: 0
-  weaponSprite: {fileID: 0}
+  shootSound: []
+  shootSoundVol: 0
+  reloadSound: {fileID: 0}
+  reloadSoundVol: 0
+  emptySound: {fileID: 0}
+  emptySoundVol: 0

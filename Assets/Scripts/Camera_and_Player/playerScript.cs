@@ -49,14 +49,14 @@ public class playerScript : MonoBehaviour
   
 
     void Start()
-    {
+    {       
         // Subscribe to the State Changes
         GameManager.instance.OnGameStateChange += OnGameStateChange;
         
         // find and set player reference
         player = GameObject.FindWithTag("Player");
         _playerScript = player.GetComponent<playerScript>();
-        playerCamera = Camera.main.GetComponent<cameraController>();
+        playerCamera = GameObject.FindWithTag("MainCamera").GetComponent<cameraController>();
     }
 
     void Update()
