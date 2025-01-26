@@ -33,8 +33,9 @@ public class StunEnemy : EnemyBase
     bool isInventoryEmpty;
 
     // Start is called before the first frame update
-    void Start()
+    protected override void Start()
     {
+        base.Start();
         //Initializing stats
         agent.speed *= speed;
         agent.stoppingDistance = distanceFromPlayer;

@@ -32,8 +32,8 @@ public class PickUp : MonoBehaviour
             {
                 InventoryManager.instance.OnPickup(item, quantity);
                 
-                if (item.GetItemType == ItemBase.ItemType.Weapon)
-                    OnWeaponPickup?.Invoke();
+                //if (item.GetItemType == ItemBase.ItemType.Weapon)       //not being used
+                    //OnWeaponPickup?.Invoke();
 
                 //trigger unity event to notify inventory manager   (loses reference if destroyed or instantiated)
                 //OnPickup?.Invoke(item, quantity);
