@@ -449,25 +449,25 @@ public class ButtonFunctions : MonoBehaviour
         }
         public void ToggleMusic()
         {
-            AudioManager.instance.ToggleMusic();
+            //AudioManager.instance.ToggleMusic();
         }
         public void TogglePlayerSFX()
         {
-            AudioManager.instance.TogglePlayerSFX();
+            //AudioManager.instance.TogglePlayerSFX();
         }
         public void MuteAllSFX()
         {
-            AudioManager.instance.MuteAllSFX();
+            //AudioManager.instance.MuteAllSFX();
         }
         public void UnMuteAllSFX()
         {
-            AudioManager.instance.UnMuteAllSFX();
+            //AudioManager.instance.UnMuteAllSFX();
         }
     
         // Slider //
         public void MusicVolume()
         {
-            AudioManager.instance.MusicVolume(_musicSlider.value);
+            //AudioManager.instance.MusicVolume(_musicSlider.value);
 
             musicVolumeText.text = (_musicSlider.value * 100).ToString("F0");
         }

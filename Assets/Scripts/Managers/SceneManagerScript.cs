@@ -52,8 +52,7 @@ public class SceneManagerScript : MonoBehaviour
         //}
 
         //SaveLoadManager.instance.SaveDataWithKeyPress();
-        //SaveLoadManager.instance.LoadDataWithKeyPress();               
-
+        //SaveLoadManager.instance.LoadDataWithKeyPress();        
     }
 
     // Checking if object that trigger scene changes collided with player to change scene
