@@ -2,26 +2,87 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.Audio;
 
 public class AudioManager : MonoBehaviour
 {
-    public static AudioManager instance;    
+    public static AudioManager instance;
 
-    public Sound[] musicSounds, sfxSounds;
-    public AudioSource musicSource, playerSFX;
+    [SerializeField] public AudioMixer audioMixer;
+    [SerializeField] public AudioSettings audioSettings;
+    [SerializeField] public MixerAdapter mixerAdapter;
+
+    [Header("===== Audio Sources =====")]
+    public AudioSource source_2D;
+    public AudioSource source_Player;
+
+    [Header("===== Audio Arrays =====")]
+    public Sound[] GameMusic;
+    public Sound[] MenuMusic;
+    public Sound[] LevelMusic;
+    public Sound[] AmbientNoise;
+    public Sound[] Player;
+    public Sound[] Weapons;
+    public Sound[] UI;
+    public Sound[] Environment;
+    public Sound[] Enemy;
 
     private void Awake()
     {
-            instance = this;       
-    }
+        instance = this;
+    }       
     private void Start()
     {
-        musicSource.loop = true;
-        PlayMusic("LostSignal");
+        source_2D = GameManager.instance.GetComponent<AudioSource>();
+        source_Player = GameObject.FindWithTag("Player").GetComponent<AudioSource>();
+        AudioManager.instance.GetComponent<AudioMixer>();
+        AudioManager.instance.GetComponent<MixerAdapter>();
+
+        source_2D.loop = true;
+        PlayMusic(source_2D, GameMusic,"LostSignal");
     }
-    public void PlayMusic(string name)
+    
+    
+    public void PlayMusic(AudioSource source, Sound[] arrayName, string clipName = "")
     {
-        Sound sound = Array.Find(musicSounds, targetSound => targetSound.name == name);
+        Sound sound = null;
+
+        // if clip name is passed
+        if (!string.IsNullOrEmpty(clipName))
+        {
+            sound = Array.Find(arrayName, targetSound => targetSound.name == clipName);
+        }
+        else
+        {
+            // If no clip name is provided, pick a random sound
+            sound = arrayName[UnityEngine.Random.Range(0, arrayName.Length)];
+        }
+        
+        if (sound == null || sound.clips == null || sound.clips.Length == 0)
+        {
+            Debug.Log("Sound Not Found");
+        }
+        else
+        {
+            AudioClip clipToPlay = sound.clips[0];
+            source.clip = clipToPlay;
+            source.Play();
+        }
+    }
+
+    public void PlaySFX(Sound[] arrayName, string clipName = "")
+    {
+        Sound sound = null;
+
+        // if clip name is passed
+        if (!string.IsNullOrEmpty(clipName))
+        {
+            sound = Array.Find(arrayName, targetSound => targetSound.name == clipName);
+        }
+        else
+        {
+            sound = arrayName[UnityEngine.Random.Range(0, arrayName.Length)];
+        }
 
         if (sound == null || sound.clips == null || sound.clips.Length == 0)
         {
@@ -29,64 +90,28 @@ public class AudioManager : MonoBehaviour
         }
         else
         {
-            //choose a clip
-            AudioClip clipToPlay = sound.clips[UnityEngine.Random.Range(0, sound.clips.Length)];
-            musicSource.clip = clipToPlay;
-            musicSource.Play();
-
-        }
-    }
-
-    public void PlaySFX(string name, AudioSource sfxSource)
-    {
-        Sound sound = Array.Find(sfxSounds, targetSound => targetSound.name == name);
-
-        if (sound == null || sound.clips == null || sound.clips.Length == 0)
-        {
-            Debug.Log("Sound Not Found");
-        }
-        else
-        {
-            //sfxSource.PlayOneShot(sound.clip);
-            //choose a clip
-            AudioClip clipToPlay = sound.clips[UnityEngine.Random.Range(0, sound.clips.Length)];
-            sfxSource.PlayOneShot(clipToPlay);
-            //sfxSource.Play();
+            AudioClip clipToPlay = sound.clips[0];
+            //sfxSource.PlayOneShot(clipToPlay);
         }
     }
 
     // Toggle //
-    public void ToggleMusic()
+    //settings for mix and menu
+    public void ToggleMusicSourceVol(AudioSource source)
     {
-        musicSource.mute = !musicSource.mute;
+        source.mute = !source.mute;
     }
-    public void MuteAllSFX()
-    {
-        playerSFX.mute = true;
-    }
-    public void UnMuteAllSFX()
-    {
-        playerSFX.mute = false;
-    }
-    public void TogglePlayerSFX()
-    {
-        playerSFX.mute = !playerSFX.mute;
-    }
-
-
 
     // Volume //
-    public void MusicVolume(float volume)
+    public void MusicVolume(AudioSource source, float volume)
     {
-        musicSource.volume = volume;
+        source.volume = volume;
     }
+
+    //Check for all implemented
     public void SFXAllVolume(float volume)
     {
-        playerSFX.volume = volume;
-        //add others
+
     }
-    public void SFXPlayerVolume(float volume)
-    {
-        playerSFX.volume = volume;
-    }
+
 }
