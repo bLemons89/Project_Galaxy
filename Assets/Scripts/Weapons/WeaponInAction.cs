@@ -16,6 +16,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using Unity.VisualScripting;
+using static UnityEngine.GraphicsBuffer;
 
 public class WeaponInAction : MonoBehaviour
 {
@@ -45,6 +46,11 @@ public class WeaponInAction : MonoBehaviour
     {
         if (this.gameObject.CompareTag("Player"))
         {
+            if(InventoryManager.instance)
+            {
+                InventoryManager.instance.OnInventoryUpdated.AddListener(CheckAvailableWeapons);
+            }
+
             CheckAvailableWeapons();
 
             EquipWeapon(0);
@@ -58,7 +64,7 @@ public class WeaponInAction : MonoBehaviour
             OnSwitchWeapon();
 
             if (Input.GetKeyDown(KeyCode.Mouse0))
-                FireGun();
+                PlayerFireGun();
 
             if (Input.GetKeyDown(KeyCode.R))
                 Reload();
@@ -183,11 +189,13 @@ public class WeaponInAction : MonoBehaviour
         //fire only if there is ammo in the gun
         if (currentAmmo > 0 && !isShooting)         //isShooting always false for player
         {
-            if (!this.gameObject.CompareTag("Player"))          //only enemy calls coroutine
-                StartCoroutine(EnemyShootRate(this.gameObject.GetComponent<EnemyBase>().EnemyShootRate));
-
             //adjust ammo
             currentAmmo--;
+
+            if (!this.gameObject.CompareTag("Player"))          //only enemy calls coroutine
+            {
+                StartCoroutine(EnemyShootRate(this.gameObject.GetComponent<EnemyBase>().EnemyShootRate));
+            }
 
             //raycast to where the gun is aimed at
             if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out RaycastHit hitInfo, gunInfo.shootDistance))
@@ -220,6 +228,92 @@ public class WeaponInAction : MonoBehaviour
         }
     }
 
+    public void PlayerFireGun()
+    {
+        //fire only if the gun has ammo
+        if (currentAmmo > 0)
+        {
+            //adjust ammo
+            currentAmmo--;
+
+            //raycast to where the player is looking
+            if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out RaycastHit hitInfo, gunInfo.shootDistance))
+            {
+                Debug.Log($"Player: Hit {hitInfo.transform.name}");
+
+                //check if the hit object has a HealthSystem
+                HealthSystem targetHealth = hitInfo.transform.GetComponent<HealthSystem>();
+                if (targetHealth != null)
+                {
+                    targetHealth.Damage(gunInfo.shootDamage);
+                    Debug.Log($"Player: Dealt {gunInfo.shootDamage} damage to {hitInfo.transform.name}");
+                }
+
+                //hit effect for bullet impact
+                if (gunInfo.hitEffect != null)
+                {
+                    Instantiate(gunInfo.hitEffect, hitInfo.point, Quaternion.LookRotation(hitInfo.normal));
+                }
+            }
+            else
+            {
+                Debug.Log("Player: Missed");
+            }
+
+            //muzzle flash method
+            //PlayMuzzleFlash();
+        }
+        else
+        {
+            Debug.Log("Player: Gun out of ammo");
+            reloadMessage.SetActive(true);
+        }
+    }
+
+    public void EnemyFireGun(Transform target)
+    {
+        // Fire only if the gun has ammo
+        if (currentAmmo > 0 && !isShooting)
+        {
+            //adjust ammo
+            currentAmmo--;
+
+            //adjusted shoot rate for enemies
+            StartCoroutine(EnemyShootRate(this.gameObject.GetComponent<EnemyBase>().EnemyShootRate));
+
+            //calculate the direction to the target
+            Vector3 directionToTarget = (target.position - transform.position).normalized;              //TODO: Add randomization to have them miss once in a while
+
+            //raycast towards the target
+            if (Physics.Raycast(transform.position, directionToTarget, out RaycastHit hitInfo, gunInfo.shootDistance))
+            {
+                Debug.Log($"Enemy: Hit {hitInfo.transform.name}");
+
+                //check if the hit object has a HealthSystem
+                HealthSystem targetHealth = hitInfo.transform.GetComponent<HealthSystem>();
+                if (targetHealth != null)
+                {
+                    targetHealth.Damage(gunInfo.shootDamage);
+                    Debug.Log($"Enemy: Dealt {gunInfo.shootDamage} damage to {hitInfo.transform.name}");
+                }
+
+                //hit effect for bullet impact
+                if (gunInfo.hitEffect != null)
+                {
+                    Instantiate(gunInfo.hitEffect, hitInfo.point, Quaternion.LookRotation(hitInfo.normal));
+                }
+            }
+            else
+            {
+                Debug.Log("Enemy: Missed");
+            }
+
+            //PlayMuzzleFlash();
+        }
+    }
+
+
+
     //method to create muzzle flash when shooting the weapon
     void PlayMuzzleFlash()
     {
@@ -227,10 +321,10 @@ public class WeaponInAction : MonoBehaviour
         {
             if (!isFlashing)
             {
-
+                GameObject gunFlash = Instantiate(gunInfo.muzzleFlash, gunInfo.muzzleFlashPos.position, gunModelPlaceHolder.transform.rotation);
                 //gunInfo.muzzleFlash.SetActive(true);
-                Instantiate(gunInfo.muzzleFlash, gunInfo.muzzleFlashPos.position, gunModelPlaceHolder.transform.rotation);
-                StartCoroutine(MuzzleFlashRoutine());
+
+                StartCoroutine(MuzzleFlashRoutine(gunFlash));
             }
             else
 
@@ -248,7 +342,7 @@ public class WeaponInAction : MonoBehaviour
         isShooting = false;
     }
 
-    IEnumerator MuzzleFlashRoutine()
+    IEnumerator MuzzleFlashRoutine(GameObject _gunFlash)
     {
         isFlashing = true;
 
@@ -256,8 +350,19 @@ public class WeaponInAction : MonoBehaviour
 
         //gunInfo.muzzleFlash.SetActive(false);
 
-        Destroy(gunInfo.muzzleFlash);
+        Destroy(_gunFlash);
 
         isFlashing = false;
+    }
+
+    public void DropEquippedGun()
+    {
+        if(gunInfo != null)
+        {
+            //drop weapon logic
+            gunInfo.ItemModel.transform.SetParent(null);     //Detach item from carrier
+            gunInfo.ItemModel.transform.position = transform.position; //Drop item at enemy's death location
+            //gunInfo.ItemModel.GetComponent<Collider>().enabled = true;   //Enable item collider for pickup
+        }
     }
 }

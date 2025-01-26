@@ -20,10 +20,9 @@ public class StunEnemy : EnemyBase
     [SerializeField] int roamRadius = 20;
 
     //for interactions with the player
-    GameObject player;
+    //GameObject player;
     GameObject itemModel;       //to attach model to enemy
-    playerScript playerSettings;
-    playerScript PlayerScript;
+    //playerScript playerSettings;
     enum EnemyState { Roaming, Chasing, Fleeing }            //Behavior changes when taking item
     EnemyState currentState = EnemyState.Roaming;   //Starts by roaming
 
@@ -40,12 +39,6 @@ public class StunEnemy : EnemyBase
         agent.speed *= speed;
         agent.stoppingDistance = distanceFromPlayer;
         roamPosition = agent.destination;
-
-        if (GameManager.instance)
-        {
-            player = GameObject.FindWithTag("Player");
-            playerSettings = player.GetComponent<playerScript>();
-        }
     }
 
     // Update is called once per frame
@@ -63,8 +56,8 @@ public class StunEnemy : EnemyBase
             {
                 //drop item logic
                 itemModel.transform.SetParent(null);     //Detach item from carrier
-                gameObject.transform.position = transform.position; //Drop item at enemy's death location
-                gameObject.GetComponent<Collider>().enabled = true;   //Enable item collider for pickup
+                itemModel.transform.position = transform.position; //Drop item at enemy's death location
+                itemModel.GetComponent<Collider>().enabled = true;   //Enable item collider for pickup
             }
         }
         //call damage method (handles death)
