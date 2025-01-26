@@ -55,11 +55,11 @@ MonoBehaviour:
   animator: {fileID: 0}
   weaponInAction: {fileID: 0}
   targetingSystem: {fileID: 0}
-  healthSystem: {fileID: 0}
+  healthSystem: {fileID: 8812334459827783540}
   enemyShootRate: 0
   stunDuration: 4
   distanceFromPlayer: 5
-  stunSensitivity: 100
+  stunSensitivity: 25
   fleeDistance: 2
   roamRadius: 10
 --- !u!114 &8812334459827783540

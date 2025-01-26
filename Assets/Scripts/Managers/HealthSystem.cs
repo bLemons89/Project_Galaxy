@@ -101,13 +101,13 @@ public class HealthSystem : MonoBehaviour
 
                 currentHealth = maxHealth;                      //Change where this is done i.e. Respawn?
             }
-            else if (this.CompareTag("Boss"))
-            {
-                Destroy(this.gameObject);
-            }
             else if (this.GetComponent<EnemyBase>() != null)
             {
                 this.GetComponent<EnemyBase>().TakeDamage(damageAmt);
+            }
+            else
+            {
+                Destroy(this.gameObject);
             }
         }
     }

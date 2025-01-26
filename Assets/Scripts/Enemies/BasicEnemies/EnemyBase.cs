@@ -39,13 +39,16 @@ public abstract class EnemyBase : MonoBehaviour
 
     public int EnemyShootRate => enemyShootRate;
 
-    private void Start()
+    protected virtual void Start()
     {
-        if (GameManager.instance)
+        if (GameManager.instance != null)
         {
             player = GameObject.FindWithTag("Player");
             playerSettings = player.GetComponent<playerScript>();
         }
+
+        if (this.GetComponent<TargetingSystem>() != null)
+            this.GetComponent<SphereCollider>().radius = targetingSystem.DetectionRadius;
     }
 
     //To be defined in each enemy class

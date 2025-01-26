@@ -18,6 +18,7 @@ public class TargetingSystem : MonoBehaviour
     Transform currentTarget;                            //reference to current target
 
     public Transform CurrentTarget => currentTarget;    //public getter
+    public float DetectionRadius => detectionRadius;    //public getter
 
     // Update is called once per frame
     void Update()

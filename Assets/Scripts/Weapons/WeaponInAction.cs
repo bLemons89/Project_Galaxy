@@ -2,7 +2,7 @@
     Author: Harry Tanama
     Edited by: Juan Contreras
     Date Created: 01/18/2025
-    Date Updated: 01/23/2025
+    Date Updated: 01/25/2025
     Description: Script to handle all gun functionalities and store gun info from scriptables
                  **GUN CONTROLS, DOES NOT UPDATE**
 
@@ -370,9 +370,8 @@ public class WeaponInAction : MonoBehaviour
         if(gunInfo != null)
         {
             //drop weapon logic
-            gunInfo.ItemModel.transform.SetParent(null);     //Detach item from carrier
-            gunInfo.ItemModel.transform.position = transform.position; //Drop item at enemy's death location
-            //gunInfo.ItemModel.GetComponent<Collider>().enabled = true;   //Enable item collider for pickup
+            GameObject droppedGun = Instantiate(gunInfo.ItemModel, transform.position, transform.rotation);
+            droppedGun.transform.SetParent(null);
         }
     }
 }
