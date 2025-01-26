@@ -21,7 +21,7 @@ MonoBehaviour:
   weaponName: Assault Rifle
   shootDamage: 1
   shootRate: 0.5
-  shootDistance: 20
+  shootDistance: 50
   currentAmmo: 30
   maxClipAmmo: 30
   ammoStored: 120

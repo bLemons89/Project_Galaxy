@@ -7,6 +7,7 @@
  */
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -45,6 +46,10 @@ public class StunEnemy : EnemyBase
     // Update is called once per frame
     void Update()
     {
+        CheckPlayerInventory();
+        if (!isInventoryEmpty)        //will only go after player if inventory is not empty
+            currentState = EnemyState.Chasing;
+
         Behavior();     //the way the enemy acts around the player
     }
 
@@ -101,10 +106,6 @@ public class StunEnemy : EnemyBase
                 agent.SetDestination(roamPosition);
             }
         }
-
-        CheckPlayerInventory();
-        if (!isInventoryEmpty)        //will only go after player if inventory is not empty
-            currentState = EnemyState.Chasing;
     }
 
     IEnumerator RoamRoutine()
@@ -121,6 +122,13 @@ public class StunEnemy : EnemyBase
 
     void ChasePlayer()
     {
+        if(isInventoryEmpty)
+        {
+            isRoaming = false;                      //early exit if player inventory becomes empty when chasing
+            currentState = EnemyState.Roaming;
+            //StopCoroutine(RoamRoutine());
+        }
+
         Debug.Log("Stun Enemy: Chasing after player");
 
         //move to player location anywhere on the scene when the player is within range
@@ -128,9 +136,11 @@ public class StunEnemy : EnemyBase
         //stun and take item from player
         if (Vector3.Distance(transform.position, player.transform.position) < agent.stoppingDistance)
         {
-
-            StunPlayer();               //stuns the player
-            TakeItemFromPlayer();        //takes item and flees
+            if (!isInventoryEmpty)
+            {
+                StunPlayer();               //stuns the player
+                TakeItemFromPlayer();        //takes item and flees
+            }
         }
     }
 
