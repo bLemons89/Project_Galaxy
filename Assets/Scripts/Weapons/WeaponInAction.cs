@@ -189,7 +189,7 @@ public class WeaponInAction : MonoBehaviour
         currentAmmo += ammoToRefill;
         ammoStored -= ammoToRefill;
 
-        reloadMessage.SetActive(false);
+        if(CompareTag("Player")) reloadMessage.SetActive(false);
 
         isReloading = false;
     }

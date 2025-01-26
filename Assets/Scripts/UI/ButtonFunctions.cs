@@ -89,8 +89,9 @@ public class ButtonFunctions : MonoBehaviour
         [SerializeField] GameObject loadingScreen;
 
     // Flags //
-   
+
     
+
     [Header("===== Settings =====")]
     [SerializeField] private bool enableFlickering;
 
@@ -102,7 +103,7 @@ public class ButtonFunctions : MonoBehaviour
     
 
     public void Start()
-    {
+    {        
         //radialMenu = FindObjectOfType<RadialMenu>();
         // Background Screen
         backgroundGroup = backgroundScreen.GetComponent<CanvasGroup>();
@@ -231,7 +232,7 @@ public class ButtonFunctions : MonoBehaviour
     public void OpenPauseMenu()
     {
         GameManager.instance.MenuActive = PauseMenu;
-
+        
         DOTween.KillAll();
         if (!backgroundScreen.activeSelf)
         {
@@ -239,12 +240,12 @@ public class ButtonFunctions : MonoBehaviour
             backgroundScreen.SetActive(true);
             backgroundGroup.alpha = 0f;
             backgroundScreen.transform.localScale = Vector3.zero;
-            
+                
             //Scale/Fade
             backgroundScreen.transform.DOScale(Vector3.one, 0.25f)
                             .SetEase(Ease.InOutQuad);
             backgroundGroup.DOFade(0.98f, 0.25f);
-
+            
         }
         else
         {
@@ -281,9 +282,9 @@ public class ButtonFunctions : MonoBehaviour
         titleText.DOFade(1f, Random.Range(0.1f, 0.5f))
                  .SetEase(Ease.InOutElastic)
                  .SetDelay(randomDelay);
-
+        
         ButtonGroupOpen(pauseButtons);
-
+        
     }
     public void ClosePauseMenu()
     {
@@ -313,7 +314,7 @@ public class ButtonFunctions : MonoBehaviour
         {
             CloseBackgroundScreen();
         }
-
+       
     }
     public void CloseBackgroundScreen()
     {
@@ -349,7 +350,7 @@ public class ButtonFunctions : MonoBehaviour
                             .SetDelay(totalDelay);
 
             TextMeshProUGUI buttonText = button.GetComponentInChildren<TextMeshProUGUI>();
-
+            
             // Toggle Setting //
             if (enableFlickering)
             {
@@ -364,6 +365,7 @@ public class ButtonFunctions : MonoBehaviour
             }
             totalDelay += delayBetween;
         }
+        
     }
     public void ButtonGroupClose(GameObject buttonParent)
     {
