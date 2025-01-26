@@ -21,7 +21,7 @@ MonoBehaviour:
   weaponName: Energy Rifle
   shootDamage: 2
   shootRate: 1
-  shootDistance: 80
+  shootDistance: 35
   currentAmmo: 20
   maxClipAmmo: 20
   ammoStored: 80

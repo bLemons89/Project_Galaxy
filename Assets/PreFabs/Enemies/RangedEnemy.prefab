@@ -479,7 +479,7 @@ MonoBehaviour:
   targetingSystem: {fileID: 1416805799473722882}
   healthSystem: {fileID: 4586584669256866548}
   enemyShootRate: 1
-  roamDist: 10
+  roamDist: 20
   roamTimer: 3
 --- !u!114 &2416614343077973073
 MonoBehaviour:
@@ -510,7 +510,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c25b9e07e7a3df2428eed5221bf3c57a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detectionRadius: 12
+  detectionRadius: 20
   targetMask:
     serializedVersion: 2
     m_Bits: 8
@@ -628,7 +628,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 10
+  m_Radius: 20
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!95 &6085487691159798859
 Animator:

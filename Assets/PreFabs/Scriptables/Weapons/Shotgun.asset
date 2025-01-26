@@ -21,7 +21,7 @@ MonoBehaviour:
   weaponName: Shotgun
   shootDamage: 3
   shootRate: 1
-  shootDistance: 60
+  shootDistance: 15
   currentAmmo: 10
   maxClipAmmo: 10
   ammoStored: 48
