@@ -19,6 +19,8 @@ public class cameraController : MonoBehaviour
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         origSensitivity = sensitivity;
+
+        GameManager.instance.OnGameStateChange += OnGameStateChange;
     }
 
     
@@ -38,4 +40,31 @@ public class cameraController : MonoBehaviour
         //rotate player on y-axis
         transform.parent.Rotate(Vector3.up * mouseX);
     }
+
+
+    private void OnGameStateChange(GameState newGameState)
+    {
+        if (newGameState == GameState.Pause)
+        {
+            this.enabled = false;
+        }
+        else if (newGameState == GameState.Gameplay)
+        {
+            this.enabled = true;
+        }
+    }
+    private void OnDestroy()
+    {
+        if (GameManager.instance == null)
+        {
+            Debug.Log("GameManager is null");
+        }
+        if (Camera.main == null)
+        {
+            Debug.Log("cameraController is null");
+        }
+        // Unsubscribe
+        GameManager.instance.OnGameStateChange -= OnGameStateChange;
+    }
+
 }
