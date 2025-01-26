@@ -49,7 +49,7 @@ public class playerScript : MonoBehaviour
   
 
     void Start()
-    {
+    {       
         // Subscribe to the State Changes
         GameManager.instance.OnGameStateChange += OnGameStateChange;
         
