@@ -391,7 +391,7 @@ public class ButtonFunctions : MonoBehaviour
     // Maybe not needed...
     public void LoadingScreen()
     {
-     
+        
     }
     public void SettingsMenuReset()
     {
