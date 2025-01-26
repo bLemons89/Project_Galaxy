@@ -13,7 +13,7 @@ using Unity.VisualScripting;
 
 // Put this script on the object to trigger which scene to enter
 public class SceneManagerScript : MonoBehaviour
-{
+{    
     public static SceneManagerScript instance;
 
     [SerializeField] private string sceneToLoad;
@@ -23,7 +23,10 @@ public class SceneManagerScript : MonoBehaviour
 
     private string playerTag = "Player";
 
-    private float playTimer;
+    private float _playTimer = 0f;
+    
+    // Getter-only for gameplay time
+    public float gameplayTime => _playTimer;
 
     // The location to save the data
     private string saveFolderPath;
@@ -36,17 +39,17 @@ public class SceneManagerScript : MonoBehaviour
     }
 
     private void Start()
-    {        
-        playTimer = 0f;        
+    {
+        _playTimer = 0f;        
     } 
 
     private void Update()
     {
-        playTimer += Time.deltaTime;
+        _playTimer += Time.deltaTime;
         if (playTimerText != null)
         {
             playTimerText.gameObject.SetActive(true);            
-            playTimerText.text = FormatTime(playTimer);            
+            playTimerText.text = FormatTime(_playTimer);            
         }
 
         //if (Input.GetKeyDown(KeyCode.O))
@@ -66,13 +69,11 @@ public class SceneManagerScript : MonoBehaviour
         //    //string saveTimeStamp = System.DateTime.Now.ToString();            
         //}
 
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            LoadGame();
-        }
+        SaveLoadManager.instance.SaveDataWithKeyPress();
+        SaveLoadManager.instance.LoadDataWithKeyPress();
     }
 
-  
+    // Checking if object collide with player to change scene
     private void OnTriggerEnter(Collider other)
     {
         // Check if the object entering the trigger has the specified tag
@@ -165,7 +166,7 @@ public class SceneManagerScript : MonoBehaviour
         Debug.Log("Saving");
 
         GameObject player = GameObject.FindWithTag("Player");
-        SavePlayerData(player.transform.position, playTimer);
+        SavePlayerData(player.transform.position, _playTimer);
     }
 
     public void LoadGame()
