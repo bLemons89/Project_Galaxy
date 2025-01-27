@@ -28,8 +28,7 @@ public class TestingFunctions : MonoBehaviour
     private System.Collections.IEnumerator SimulateLoading()
     {
         float elapsedTime = 0f;
-        loadProgress = 0f;
-
+        loadProgress = 0f;        
 
        // StartCoroutine(loaderScript.LoadLevelASync("Loading Screen"));
 
