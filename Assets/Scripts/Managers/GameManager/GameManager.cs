@@ -68,6 +68,7 @@ public class GameManager : MonoBehaviour
     // Input //
     void Update()
     {
+        
         // Pause Input
         if (Input.GetButtonDown("Cancel") || Input.GetButtonDown("Pause"))
         {

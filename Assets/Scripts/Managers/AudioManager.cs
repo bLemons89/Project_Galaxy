@@ -9,8 +9,8 @@ public class AudioManager : MonoBehaviour
     public static AudioManager instance;
 
     [SerializeField] public AudioMixer audioMixer;
-    [SerializeField] public AudioSettings audioSettings;
-    [SerializeField] public MixerAdapter mixerAdapter;
+    //[SerializeField] public AudioSettings audioSettings;
+    //[SerializeField] public MixerAdapter mixerAdapter;
 
     [Header("===== Audio Sources =====")]
     public AudioSource source_2D;
@@ -34,12 +34,11 @@ public class AudioManager : MonoBehaviour
     private void Start()
     {
         source_2D = GameManager.instance.GetComponent<AudioSource>();
-        //source_Player = GameObject.FindWithTag("Player").GetComponent<AudioSource>();
+        source_Player = GameObject.FindWithTag("Player").GetComponent<AudioSource>();
         AudioManager.instance.GetComponent<AudioMixer>();
-        AudioManager.instance.GetComponent<MixerAdapter>();
 
         source_2D.loop = true;
-        PlayMusic(source_2D, MenuMusic,"Odessey");
+        PlayMusic(source_2D, LevelMusic,"LVL1");
     }
     
     
