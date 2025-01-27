@@ -30,6 +30,7 @@ public abstract class ItemBase : ScriptableObject
         Weapon,
         Ammo,
         Collectible,
+        MissionItem,
         Health,
     }
 
