@@ -50,6 +50,10 @@ public class Boss : MonoBehaviour
             Debug.LogError("Boss: Player not found.");
         }
 
+        // Subscribe to the State Changes
+        if(GameManager.instance != null)
+            GameManager.instance.OnGameStateChange += OnGameStateChange;
+
         if (agent != null)
         {
             agent.speed = moveSpeed;
@@ -292,5 +296,24 @@ public class Boss : MonoBehaviour
         //stop whatever he is doing
         agent.isStopped = true;
         Debug.Log("Boss: Stopping all abilities for GroundAttack");
+    }
+
+
+    //FOR PAUSE
+    private void OnGameStateChange(GameState newGameState)
+    {
+        if (newGameState == GameState.Pause)
+        {
+            this.enabled = false;
+        }
+        else if (newGameState == GameState.Gameplay)
+        {
+            this.enabled = true;
+        }
+    }
+    private void OnDestroy()
+    {
+        // Unsubscribe
+        GameManager.instance.OnGameStateChange -= OnGameStateChange;
     }
 }
