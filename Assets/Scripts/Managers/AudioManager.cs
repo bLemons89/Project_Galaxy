@@ -9,6 +9,7 @@ public class AudioManager : MonoBehaviour
     public static AudioManager instance;
 
     [SerializeField] public AudioMixer audioMixer;
+    [SerializeField] public AudioMixerGroup sfxMaster;
     //[SerializeField] public AudioSettings audioSettings;
     //[SerializeField] public MixerAdapter mixerAdapter;
 
