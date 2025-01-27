@@ -26,10 +26,13 @@ public class InventoryManager : MonoBehaviour
     public UnityEvent OnInventoryUpdated;   //connect to CheckAvailable weapons in WeaponInAction
 
     int missionItemsCollected = 0;
+    int shardsCollected = 0;
 
     public int MissionItemsCollected
     { get => missionItemsCollected; set => missionItemsCollected = value; }             //to be changed by triggers on the mission items
 
+    public int ShardsCollected
+    { get => shardsCollected; set => shardsCollected = value; }             //to be changed by triggers on the shards
 
     // Start is called before the first frame update
     void Awake()

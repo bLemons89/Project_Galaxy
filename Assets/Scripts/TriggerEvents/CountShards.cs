@@ -1,15 +1,15 @@
 /*
     Author: Juan Contreras
     Edited by:
-    Date Created: 01/26/2025
-    Date Updated: 01/26/2025
-    Description: Class to keep a world counter of mission items collected (prevent double count if dropped)
+    Date Created: 01/27/2025
+    Date Updated: 01/27/2025
+    Description: Class to keep a world counter of shards collected (prevent double count if dropped)
  */
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CountNDestroy : MonoBehaviour
+public class CountShards : MonoBehaviour
 {
     bool playerInRange;
 
@@ -17,9 +17,9 @@ public class CountNDestroy : MonoBehaviour
     {
         if (playerInRange && Input.GetKeyDown(KeyCode.Q))
         {
-            if(InventoryManager.instance != null)
+            if (InventoryManager.instance != null)
             {
-                InventoryManager.instance.MissionItemsCollected++;
+                InventoryManager.instance.ShardsCollected++;
 
                 Destroy(gameObject);
             }
