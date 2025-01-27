@@ -9,48 +9,53 @@ using UnityEngine.Events;
 
 public class HealthSystem : MonoBehaviour
 {
-    [Header("===== STATS =====")]
+    [Header("===== PLAYER STATS =====")]
     [SerializeField] float maxHealth;
     float currentHealth;
-    float previousHealth;
+    //float previousHealth;                 //unused
 
     [Header("===== VISUAL =====")]
+    [Header("NOTE: Enemies only need Health Bar Fill")]
     [SerializeField] Image healthBarBack;
     [SerializeField] Image healthBarFill;
+    [SerializeField] Image easeBar;
     [SerializeField] Gradient healthGradient;
     [SerializeField] float topFillSpeed;
     [SerializeField] float bottomFillSpeed;
-    [SerializeField] Image easeBar;
     [SerializeField] float dmgFlashDuration;
 
     [Header("===== CRITICAL HEALTH =====")]
     [SerializeField] TextMeshProUGUI critWarningText;
     [SerializeField] float critHealth = 0.2f;
     [SerializeField] float flashSpeed = 0.5f;
-    
+
+    private playerScript PlayerScript;
     //[Header("===== STATUS EFFECT =====")]
 
     //[Header("===== DAMAGE TYPE =====")]
 
     // Flags //
-    bool isMax;
     bool isHeal;
     bool isCrit;
     bool isDead;
     //bool isInvincible;
 
+    //getters
     public bool IsDead { get {  return isDead; } }
+    public float MaxHealth { get; set; }
+    public float CurrentHealth { get; set; }
     //public bool IsInvincible { get; set; }  
 
     //===== EVENTS =====
+    [Header("If attached to player: Call Respawn() in playerScript")]
     public UnityEvent OnDeath;
 
     void Start()
     {
         currentHealth = maxHealth;
+        PlayerScript = FindObjectOfType<playerScript>();
 
         //set flags
-        isMax = true;
         isHeal = false;
         isCrit = false;
         isDead = false;
@@ -60,20 +65,15 @@ public class HealthSystem : MonoBehaviour
     void Update()
     {
         //make sure health cannot go above max
+
         if (currentHealth > maxHealth)
-        {
             currentHealth = maxHealth;
-            isMax = true;
-        }
-        //most conditions
-        else if (currentHealth < maxHealth)
-        {
-            isMax = false;
-        }
-        
+
         UpdateHealthBar();
 
-        CheckForCriticalHealth();
+        if (this.CompareTag("Player"))       //applies to player only
+            CheckForCriticalHealth();
+
     }
 
     // Damage/Heal //
@@ -84,17 +84,31 @@ public class HealthSystem : MonoBehaviour
             currentHealth -= damageAmt;
             isHeal = false;
 
-            if(CompareTag("Player"))
+            if(this.CompareTag("Player"))
             {
                 Invoke("FlashDamageScreen", 0f);
+                //AudioManager2.PlaySound(AudioManager2.Sound.PlayerDamage);
             }
         }
         //check for death
-        if (currentHealth <= 0 && !isDead)
+        if (currentHealth <= 0)
         {
-            isDead = true;
+            //isDead = true;
             //Handle Death - message, respawn
-            OnDeath?.Invoke();
+            if (this.CompareTag("Player"))
+            {
+                OnDeath?.Invoke();
+
+                currentHealth = maxHealth;                      //Change where this is done i.e. Respawn?
+            }
+            else if (this.GetComponent<EnemyBase>() != null)
+            {
+                this.GetComponent<EnemyBase>().TakeDamage(damageAmt);
+            }
+            else
+            {
+                Destroy(this.gameObject);
+            }
         }
     }
     public void Heal(float healAmt)
@@ -109,20 +123,37 @@ public class HealthSystem : MonoBehaviour
     // Health Bar //
     void UpdateHealthBar()
     {
-        float fillAmount = currentHealth / maxHealth;
+        float fillAmount = (float)currentHealth / maxHealth;
+
+        DOTween.Kill(healthBarFill);
+        DOTween.Kill(easeBar);
 
         if (isHeal)
-        { 
+        {
+
             healthBarFill.DOFillAmount(fillAmount, topFillSpeed);
-            easeBar.DOFillAmount(fillAmount, bottomFillSpeed);
+
+            if (easeBar != null)                                            //leave ease bar empty for enemies
+            {
+                easeBar.color = Color.green;
+                easeBar.DOFillAmount(fillAmount, bottomFillSpeed);
+            }
+
         }
         else
         {
+
             healthBarFill.DOFillAmount(fillAmount, bottomFillSpeed);
-            easeBar.DOFillAmount(fillAmount, topFillSpeed);
+
+            if (easeBar != null)
+            {
+                easeBar.color = Color.red;
+                easeBar.DOFillAmount(fillAmount, topFillSpeed);
+            }
         }
 
-        //healthBarFill.color = healthGradient.Evaluate(currentHealth / maxHealth);
+        if(healthBarFill != null)
+            healthBarFill.color = healthGradient.Evaluate((float)currentHealth / maxHealth);
     }
 
     // Critical Health //
@@ -155,25 +186,29 @@ public class HealthSystem : MonoBehaviour
     void StopFlashing()
     {
         CancelInvoke("FlashCritWarning");
-        // Hide the warning text
-        critWarningText.gameObject.SetActive(false);
+
+        if(critWarningText != null)
+        { 
+            // Hide the warning text
+            critWarningText.gameObject.SetActive(false);
+        }
     }
     void FlashCritWarning()
     {
-        critWarningText.gameObject.SetActive(!critWarningText.gameObject.activeSelf);
+        if(critWarningText != null) 
+        { 
+            critWarningText.gameObject.SetActive(!critWarningText.gameObject.activeSelf);
+        }
     }
     
     // Player Damage Screen //
     private void FlashDamageScreen()
     {
-        GameManager.instance.PlayerDamageScreen.SetActive(true);
+        PlayerScript.PlayerDamageScreen.SetActive(true);
         Invoke("HideDamageScreen", dmgFlashDuration);
     }
     private void HideDamageScreen()
     {
-        GameManager.instance.PlayerDamageScreen.SetActive(false);
+       PlayerScript.PlayerDamageScreen.SetActive(false);
     }
-
-
-
 }

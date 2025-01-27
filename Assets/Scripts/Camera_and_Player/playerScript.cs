@@ -5,8 +5,12 @@ using UnityEngine;
 public class playerScript : MonoBehaviour
 {
     [Header("===== PLAYER COMPONENTS =====")]
+    private GameObject player;
+    private playerScript _playerScript;
+    [SerializeField] GameObject playerDamageScreen;
     [SerializeField] Renderer playerModel;
     [SerializeField] CharacterController playerController;
+    [SerializeField] Animator animator;
 
     [SerializeField] LayerMask ignoreMask;
     int jumpCount;
@@ -20,32 +24,39 @@ public class playerScript : MonoBehaviour
     [SerializeField][Range(5, 30)] int jumpSpeed;
     [SerializeField][Range(10,60)] int gravity;
 
-    [Header("===== SFX =====")]
-    [SerializeField] private AudioClip playerWalk;
-    [SerializeField] private AudioClip playMusic;
-
     // Flags //
-    bool isSprinting;
-    //bool isShooting;
+    bool isSprinting;    
     bool isPlayingStep;
+    //bool isShooting;
     //bool isReloading
     bool isStunned;
-
-    // Cache //
 
     // Vectors //
     Vector3 moveDirection;
     Vector3 horizontalVelocity;
     //vector to store checkpoint
-
+    cameraController playerCamera;
 
     // Getters and Setters //
     public int Speed => speed;  //stun enemy uses this
     public int SprintMod => sprintMod; //stun enemy
 
+    public GameObject Player => player;
+    public GameObject PlayerDamageScreen
+    { get => playerDamageScreen; set => playerDamageScreen = value; }
+    public playerScript PlayerScript
+    { get => _playerScript; set => _playerScript = value; }
+  
+
     void Start()
-    {
-        AudioManager.Instance.PlayMusicWithCrossFade(playMusic);
+    {       
+        // Subscribe to the State Changes
+        GameManager.instance.OnGameStateChange += OnGameStateChange;
+        
+        // find and set player reference
+        player = GameObject.FindWithTag("Player");
+        _playerScript = player.GetComponent<playerScript>();
+        playerCamera = GameObject.FindWithTag("MainCamera").GetComponent<cameraController>();
     }
 
     void Update()
@@ -54,7 +65,7 @@ public class playerScript : MonoBehaviour
         if (isStunned)
             return;
 
-        if(!GameManager.instance.IsPaused)
+        if(GameManager.instance.CurrentGameState != GameState.Pause)
         {
             //always checking for
             Movement();
@@ -67,15 +78,12 @@ public class playerScript : MonoBehaviour
     // Player Movement //
     void Movement()
     {
-
         //resets jumps once player is on the ground
-        if(playerController.isGrounded)
+        if (playerController.isGrounded)
         {
-            // player movement detected
             if (moveDirection.magnitude > 0.3f && !isPlayingStep)
             {
-                //AudioManager.instance.PlaySFX(playerWalk);
-                StartCoroutine(playStep());
+                StartCoroutine(PlayStep());
             }
 
             jumpCount = 0;
@@ -119,13 +127,14 @@ public class playerScript : MonoBehaviour
         {
             jumpCount++;
             horizontalVelocity.y = jumpSpeed;
+            AudioManager.instance.PlaySFX(AudioManager.instance.PlayerSounds, "Jump");
         }
 
         playerController.Move(horizontalVelocity * Time.deltaTime);
         horizontalVelocity.y -= gravity * Time.deltaTime;
     }
 
-    public void Respawn()
+    public void Respawn()                   //called using Unity event
     {
         if (CheckpointManager.instance)
         {
@@ -149,37 +158,64 @@ public class playerScript : MonoBehaviour
         }
     }
 
-    public void Stun(float duration)        //called from stun enemy
+    public void Stun(float duration, float stunSensitivity)        //called from stun enemy
     {
         //add stun effect logic
         Debug.Log($"Player stunned for {duration} seconds");
 
         if(!isStunned)
-            StartCoroutine(StunRoutine(duration));
+            StartCoroutine(StunRoutine(duration, stunSensitivity));
     }
 
-    IEnumerator StunRoutine(float duration)
+    IEnumerator StunRoutine(float duration, float stunSensitivity)
     {
         //disable movement/actions
         isStunned = true;
 
+        //adjust camera sensitivity
+        playerCamera.Sensitivity = stunSensitivity;
+
         //stun duration
         yield return new WaitForSeconds(duration);
+
+        //restore camera sensitivity
+        playerCamera.Sensitivity = playerCamera.OrigSensitivity;
 
         //enable movement/actions
         isStunned = false;
     }
-
-    IEnumerator playStep()
+    IEnumerator PlayStep()
     {
         isPlayingStep = true;
-        AudioManager.Instance.PlaySFX(playerWalk, 0.5f);
+
+        AudioManager.instance.PlaySFX(AudioManager.instance.PlayerSounds, "Steps");
+        //playerAudio.PlayOneShot(audStep[Random.Range(0, audStep.Length)], audStepVol);
 
         if (!isSprinting)
+        {
             yield return new WaitForSeconds(0.5f);
+        }
         else
+        {
             yield return new WaitForSeconds(0.3f);
+        }
+
         isPlayingStep = false;
     }
-
+    private void OnGameStateChange(GameState newGameState)
+    {
+        if(newGameState == GameState.Pause)
+        {
+            this.enabled = false;
+        }
+        else if(newGameState == GameState.Gameplay)
+        {
+            this.enabled = true;
+        }
+    }
+    private void OnDestroy()
+    {
+        // Unsubscribe
+        GameManager.instance.OnGameStateChange -= OnGameStateChange;
+    }
 }

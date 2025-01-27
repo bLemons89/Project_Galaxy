@@ -11,6 +11,7 @@
  */
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -19,8 +20,16 @@ public class InventoryManager : MonoBehaviour
     //singleton
     public static InventoryManager instance;
 
+    GameObject player;
+
     //Unity Event notifies Inventory was updated
-    public UnityEvent OnInventoryUpdated;
+    public UnityEvent OnInventoryUpdated;   //connect to CheckAvailable weapons in WeaponInAction
+
+    int missionItemsCollected = 0;
+
+    public int MissionItemsCollected
+    { get => missionItemsCollected; set => missionItemsCollected = value; }             //to be changed by triggers on the mission items
+
 
     // Start is called before the first frame update
     void Awake()
@@ -32,6 +41,12 @@ public class InventoryManager : MonoBehaviour
         }
         else
             Destroy(gameObject);
+    }
+
+    private void Start()
+    {
+        if(player == null)
+            player = GameObject.FindWithTag("Player");
     }
 
     //inventory storage
@@ -65,8 +80,15 @@ public class InventoryManager : MonoBehaviour
             quantity -= addedQuantity;
         }
 
-        //new slot if no stack or if left over
-        if(quantity > 0)
+        //adjust weapon ammo if already in inventory
+        if (existingSlot != null && item.GetItemType == ItemBase.ItemType.Weapon)
+        {
+            //add the ammo only
+            WeaponInformation weapon = (WeaponInformation)existingSlot.Item;
+
+            weapon.ammoStored += weapon.maxClipAmmo;
+        }
+        else if(quantity > 0)                                                   //new slot if no stack or if left over and not weapon type
         {
             inventorySlots.Add(new InventorySlot(item, quantity));
 
@@ -75,19 +97,48 @@ public class InventoryManager : MonoBehaviour
 
         //Debug.Log($"Added {quantity} of {item.ItemName} to inventory.");
 
-        //update ui??
+        if (item.GetItemType == ItemBase.ItemType.Weapon)
+        {
+            WeaponInAction weaponsToUpdate = player.GetComponent<WeaponInAction>();
 
+            if (weaponsToUpdate != null)
+            {
+                weaponsToUpdate.CheckAvailableWeapons();
+            }
+        }
+
+        //update ui??
         //notifies that inventory was updated
         OnInventoryUpdated?.Invoke();   //Unity event (for other managers to listen for)
     }
 
-    public void OnDrop(int itemIndex)
+    public void OnDrop(ItemBase item, int quantity)
     {
-        //logic to remove/drop item
+        //find the item slot
+        InventorySlot slot = inventorySlots.Find(s => s.Item == item);  //lambda expression
 
+        if (slot != null)
+        {
+            //logic for stackable items
+            if (item.MaxStackSize > 1)
+            {
+                //adjust stack quantity
+                slot.Quantity -= quantity;
 
-        //notify inventory was changed
-        OnInventoryUpdated?.Invoke();
+                //remove slot if no more items in it
+                if (slot.Quantity <= 0)
+                {
+                    inventorySlots.Remove(slot);
+                }
+            }
+            else
+                inventorySlots.Remove(slot);    //go straight to removing slot if not stackable
+
+            //notify other systems that the inventory has been updated
+            OnInventoryUpdated?.Invoke();   //Unity event (for other managers to listen for)
+        }
+        else
+            Debug.Log($"Item: {item.ItemName} not found in inventory");
     }
 
     //called to update UI (for possible future use)

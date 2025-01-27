@@ -1,3 +1,13 @@
+/*
+    Author: Harry Tanama
+    Edited by: Juan Contreras
+    Date Created: 01/18/2025
+    Date Updated: 01/25/2025
+    Description: Script to handle all gun functionalities and store gun info from scriptables
+                 **GUN CONTROLS, DOES NOT UPDATE**
+
+    Dev Notes: Keep eye on ammo retention
+ */
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -5,220 +15,366 @@ using System.Reflection;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using Unity.VisualScripting;
+using static UnityEngine.GraphicsBuffer;
 
 public class WeaponInAction : MonoBehaviour
 {
-    private static WeaponInAction Instance;
-
-    [Header("PUT YOUR WEAPON PREFABS MODELS SAMPLES HERE")]
-    [SerializeField] GameObject assaultRifleModel;
-    [SerializeField] GameObject shotgunModel;
-    [SerializeField] GameObject energyRifleModel;
-
-    [Header("PUT THE WEAPON SCRIPTABLE OBJECT INFO HERE")]
-    [SerializeField] WeaponInformation assaultRifleScriptableObject;
-    [SerializeField] WeaponInformation shotgunScriptableObject;
-    [SerializeField] WeaponInformation energyRifleScriptableObject;
-
-    [Header("Gun Model Place Holder")]
+    [Header("WEAPON INFO")]
+    [Header("Weapon Scriptable List")]
+    [SerializeField] List<WeaponInformation> availableWeapons = new List<WeaponInformation>();   //player and enemy can use    (connect to player inventory)
     [SerializeField] GameObject gunModelPlaceHolder;
-
-    [Header("Reload UI Message")]
-    [SerializeField] GameObject relaodMessage;
     [SerializeField] TMP_Text reloadText;
+    [SerializeField] GameObject reloadMessage;
 
-    public static event Action OnBulletProjectile;
-    public static event Action OnGettingHit;
+    //===========VARIABLES===========
+    WeaponInformation gunInfo;
+    //int currentWeaponIndex = 0;
+    int currentAmmo = 0;
+    int ammoStored = 0;
 
-    private WeaponInformation gunInfo;
-    // Is the object getting shot? 
-    private bool isShot = false;
+    bool isReloading;
+    bool isShooting;
+    bool isFlashing;
+    //===========GETTERS===========
+    public int CurrentAmmo => currentAmmo;
 
-    private string weaponKeyMap = string.Empty;
-    // checks weapon on the inventory
-    private bool hasAssaultRifle = false;
-    private bool hasEnergyRifle = false;
-    private bool hasShotgunRifle = false;
-    private bool isSwitchWeapon = false;
-    private int inventoryIndex = 0;
-    private int numberOfWeapon = 0;
-    private int numberOfAmmo = 0;
-
-    private void Awake()
-    {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject); // Destroy duplicate instance.
-            return;
-        }
-
-        Instance = this;
-        DontDestroyOnLoad(gameObject); // Make this GameObject persistent.
-    }
+    public GameObject GunModelPlaceHolder => gunModelPlaceHolder;
+    public WeaponInformation GunInfo { get; set; }
 
     private void Start()
     {
-        PlayerShoot.OnShootInput += PlayerShoot_shootInput;
-        PlayerShoot.OnWeaponReload += Reload;
-        TakingAmmo.OnTakingAmmo += TakingAmmo_OnTakingAmmo;
-    }
-
-    private void TakingAmmo_OnTakingAmmo()
-    {
-        numberOfAmmo++;        
-    }
-
-    // Example from Unity: Draws a 10 meter long green line from the position for 1 frame.
-    void Update()
-    {
-        Vector3 forward = transform.TransformDirection(Vector3.forward) * 10;
-        Debug.DrawRay(transform.position, forward, Color.green);
-
-        if (InventoryManager.instance.InventorySlotsList.Count > 0)
+        if (this.gameObject.CompareTag("Player"))
         {
-            CheckWeaponInventory();
-        }
-        
-        SwitchWeapon();
-
-        // press P to Restart Scene
-        if (Input.GetButtonDown("Restart Scene"))
-        {
-            SceneManagerScript.Instance.ResetScene();
-        }
-       
-    }
-
-    private void PlayerShoot_shootInput()
-    {
-        if (gunInfo != null && gunInfo.currentAmmo > 0)
-        {
-            // check if the raycast hit object
-            if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hitInfo, gunInfo.shootDistance))
+            if(InventoryManager.instance)
             {
-                // Bullet need to start moving here
-                // OnBulletProjectile?.Invoke();
+                InventoryManager.instance.OnInventoryUpdated.AddListener(CheckAvailableWeapons);
+            }
 
-                Debug.Log(hitInfo.transform.name + $" Got Hit");
+            CheckAvailableWeapons();
 
-                OnGettingHit?.Invoke();
+            EquipWeapon(0);
+        }
+    }
 
-                isShot = true; // got shot
+    private void Update()
+    {
+        if (this.gameObject.CompareTag("Player"))
+        {
+            OnSwitchWeapon();
 
-                gunInfo.currentAmmo--;
+            if (Input.GetKeyDown(KeyCode.Mouse0))
+                PlayerFireGun();
 
-                if (gunInfo.currentAmmo < 2)
+            if (Input.GetKeyDown(KeyCode.R))
+                Reload();
+
+            if (gunModelPlaceHolder != null && reloadMessage != null)
+            {
+                if ((gunModelPlaceHolder.GetComponent<MeshFilter>().sharedMesh == null) && (reloadMessage.activeSelf))
+                    reloadMessage.SetActive(false);
+            }
+
+        }
+    }
+    public void OnSwitchWeapon()
+    {
+        //if (Input.GetKeyDown(KeyCode.Alpha1) && availableWeapons.Count > 0)        //press 1 for primary
+        //{
+        //    EquipWeapon(0);
+
+        //    if (reloadMessage.activeSelf)
+        //        reloadMessage.SetActive(false);
+
+        //}
+        //else if (Input.GetKeyDown(KeyCode.Alpha2) && availableWeapons.Count > 0)
+        //{
+        //    EquipWeapon(1);
+
+        //    if (reloadMessage.activeSelf)
+        //        reloadMessage.SetActive(false);
+        //}
+        //else if (availableWeapons.Count <= 0 && gunInfo != null)
+        //    gunInfo = null;
+
+        //USE IF ADDING MORE EQUIPABLE WEAPONS
+        for (int i = 0; i < availableWeapons.Count; i++)
+        {
+            // Display the last weapon on the last array/list of availableWeapons.
+            // EquipWeapon(availableWeapons.Count-1);
+
+            if (Input.GetKeyDown(KeyCode.Alpha1 + i))
+            {
+                EquipWeapon(i);
+                break;
+            }
+        }
+
+        if (availableWeapons.Count <= 0 && gunInfo != null) 
+        {
+            gunInfo = null;
+        }
+
+    }
+
+    //PLAYER ONLY: updates weapons based on weapons in the inventory
+    public void CheckAvailableWeapons()                 //called with Unity Event when updated
+    {
+        if (InventoryManager.instance)
+        {
+            foreach (InventorySlot slot in InventoryManager.instance.InventorySlotsList)
+            {
+                if (slot.Item is WeaponInformation weapon)       //if they match, casts to WeaponInformation to add to list of weapons
                 {
-                    relaodMessage.SetActive(true);
-                }                             
-            }
-            else
-            {
-                isShot = false; // did not get shot
+                    //avoids adding dupes
+                    if(!availableWeapons.Contains(weapon))
+                        availableWeapons.Add(weapon);
+                }
             }
 
+            //remove guns that are no longer in the player's inventory
+            availableWeapons.RemoveAll(weapon =>
+                !InventoryManager.instance.InventorySlotsList.Exists(slot => slot.Item == weapon));
         }
-
+        else
+            Debug.Log("No Inventory Manager for weapons");
     }
 
-    public int GetAmmo()
+    //equips the weapon based on the index
+    public void EquipWeapon(int index)
     {
-        return gunInfo.currentAmmo;
+        if (index >= 0 && index < availableWeapons.Count)
+        {
+            //currentWeaponIndex = index;
+            gunInfo = availableWeapons[index];
+
+            currentAmmo = gunInfo.maxClipAmmo;
+            ammoStored = gunInfo.ammoStored;
+
+            UpdateWeaponModel(gunInfo);
+        }
     }
 
-    public void SetAmmo(int newAmmo)
+    //update gun model based on the equipped gun
+    void UpdateWeaponModel(WeaponInformation _gunInfo)
     {
-        gunInfo.currentAmmo = newAmmo;
+        gunModelPlaceHolder.GetComponent<MeshFilter>().sharedMesh =
+            _gunInfo.ItemModel.GetComponent<MeshFilter>().sharedMesh;
+
+        gunModelPlaceHolder.GetComponent<MeshRenderer>().sharedMaterial =
+            _gunInfo.ItemModel.GetComponent<MeshRenderer>().sharedMaterial;
     }
 
     public void Reload()
     {
-        if (numberOfAmmo > 0)
+        if ((ammoStored > 0 && currentAmmo < gunInfo.maxClipAmmo) || 
+            (this.GetComponentInParent<EnemyBase>()))
         {
-            gunInfo.currentAmmo = gunInfo.maxAmmo;
-            --numberOfAmmo;
-            relaodMessage.SetActive(false);
+            if(!isReloading)
+                StartCoroutine(ReloadRoutine());
+        }
+        else if (ammoStored <= 0)
+        {
+            Debug.Log("Out of Ammo");
         }
     }
 
-    public int GetShootDamage()
+    //coroutine for delaying reload
+    IEnumerator ReloadRoutine()
     {
-        return gunInfo.shootDamage;
+        isReloading = true;     //so enemy does not infinite reload
+        //sounds/animations
+        Debug.Log("Reloading...");
+        yield return new WaitForSeconds(gunInfo.reloadRate);
+
+        //refill ammo
+        int ammoToRefill = Mathf.Min(gunInfo.maxClipAmmo - currentAmmo, ammoStored);     //makes sure to not use more bullets than stored
+        currentAmmo += ammoToRefill;
+        ammoStored -= ammoToRefill;
+
+        if(CompareTag("Player")) reloadMessage.SetActive(false);
+
+        isReloading = false;
     }
 
-    public bool IsShot()
+    public void FireGun()
     {
-        return isShot;
-    }
-
-    private void CheckWeaponInventory()
-    {       
-        InventorySlot myInventorySlot;
-
-
-        while (inventoryIndex < InventoryManager.instance.InventorySlotsList.Count && numberOfWeapon < 3)
+        //fire only if there is ammo in the gun
+        if (currentAmmo > 0 && !isShooting)         //isShooting always false for player
         {
-            myInventorySlot = InventoryManager.instance.InventorySlotsList[inventoryIndex];
+            //adjust ammo
+            currentAmmo--;
 
-            if (myInventorySlot.Item.ItemName == "AR")
-            {                
-                hasAssaultRifle = true;
-                CurrentWeapon(assaultRifleModel, assaultRifleScriptableObject);
-                numberOfWeapon++;
-            }                  
-            else if (myInventorySlot.Item.ItemName == "SG")
+            if (!this.gameObject.CompareTag("Player"))          //only enemy calls coroutine
             {
-                hasShotgunRifle = true;
-                CurrentWeapon(shotgunModel, shotgunScriptableObject);
-                numberOfWeapon++;
-            }
-            else if (myInventorySlot.Item.ItemName == "ER")
-            {
-                hasEnergyRifle = true;
-                CurrentWeapon(energyRifleModel, energyRifleScriptableObject);
-                numberOfWeapon++;
+                StartCoroutine(EnemyShootRate(this.gameObject.GetComponent<EnemyBase>().EnemyShootRate));
             }
 
-            inventoryIndex++;
+            //raycast to where the gun is aimed at
+            if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out RaycastHit hitInfo, gunInfo.shootDistance))
+            {
+                Debug.Log($"WeaponInAction: Hit {hitInfo.transform.name}");
+
+                //check if it has health to it                                                                                  //APPLY HEALTH/DAMAGE COMPONENT HERE
+                HealthSystem targetHealth = hitInfo.transform.GetComponent<HealthSystem>();
+                if (targetHealth != null)
+                {
+                    targetHealth.Damage(gunInfo.shootDamage);
+                    Debug.Log($"WeaponInAction: Hit {hitInfo.transform.name} for {gunInfo.shootDamage} damage");
+                }
+
+                if (gunInfo.hitEffect != null)
+                {
+                    Instantiate(gunInfo.hitEffect, hitInfo.point, Quaternion.LookRotation(hitInfo.normal));
+                }
+            }
+            else
+                Debug.Log("WeaponInAction: Missed");
+
+            //muzzle flash method
+            //PlayMuzzleFlash();                                                                //UNDER MAINTAINANCE
         }
-        
+        else if (this.gameObject.CompareTag("Player"))
+        {
+            Debug.Log("WeaponInAction: Gun out of ammo");
+            reloadMessage.SetActive(true);
+        }
     }
 
-    private void SwitchWeapon()
+    public void PlayerFireGun()
     {
-        if (Input.GetButtonDown("Number One") && hasAssaultRifle)
+        //fire only if the gun has ammo
+        if (currentAmmo > 0)
         {
-            isSwitchWeapon = true;
-            CurrentWeapon(assaultRifleModel, assaultRifleScriptableObject);         
-        }
-        else if (Input.GetButtonDown("Number Two") && hasShotgunRifle)
-        {
-            isSwitchWeapon = true;
-            CurrentWeapon(shotgunModel, shotgunScriptableObject);
-        }
-        else if (Input.GetButtonDown("Number Three") && hasEnergyRifle)
-        {
-            isSwitchWeapon = true;
-            CurrentWeapon(energyRifleModel, energyRifleScriptableObject);
+            //adjust ammo
+            currentAmmo--;
+
+            //raycast to where the player is looking
+            if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out RaycastHit hitInfo, gunInfo.shootDistance))
+            {
+                Debug.Log($"Player: Hit {hitInfo.transform.name}");
+
+                //check if the hit object has a HealthSystem
+                HealthSystem targetHealth = hitInfo.transform.GetComponent<HealthSystem>();
+                if (targetHealth != null)
+                {
+                    targetHealth.Damage(gunInfo.shootDamage);
+                    Debug.Log($"Player: Dealt {gunInfo.shootDamage} damage to {hitInfo.transform.name}");
+                }
+
+                //hit effect for bullet impact
+                if (gunInfo.hitEffect != null)
+                {
+                    Instantiate(gunInfo.hitEffect, hitInfo.point, Quaternion.LookRotation(hitInfo.normal));
+                }
+            }
+            else
+            {
+                Debug.Log("Player: Missed");
+            }
+
+            //muzzle flash method
+            //PlayMuzzleFlash();
         }
         else
         {
-            isSwitchWeapon = false;
+            Debug.Log("Player: Gun out of ammo");
+            reloadMessage.SetActive(true);
         }
     }
 
-    private void CurrentWeapon(GameObject weaponModel, WeaponInformation weaponInfo)
+    public void EnemyFireGun(Transform target)
     {
-        gunModelPlaceHolder.GetComponent<MeshFilter>().sharedMesh = weaponModel.GetComponent<MeshFilter>().sharedMesh;
-        gunModelPlaceHolder.GetComponent<MeshRenderer>().sharedMaterial = weaponModel.GetComponent<MeshRenderer>().sharedMaterial;
-        gunInfo = weaponInfo;
+        // Fire only if the gun has ammo
+        if (currentAmmo > 0 && !isShooting)
+        {
+            //adjust ammo
+            currentAmmo--;
+
+            //adjusted shoot rate for enemies
+            StartCoroutine(EnemyShootRate(this.gameObject.GetComponent<EnemyBase>().EnemyShootRate));
+
+            //calculate the direction to the target
+            Vector3 directionToTarget = (target.position - transform.position).normalized;              //TODO: Add randomization to have them miss once in a while
+
+            //raycast towards the target
+            if (Physics.Raycast(transform.position, directionToTarget, out RaycastHit hitInfo, gunInfo.shootDistance))
+            {
+                Debug.Log($"Enemy: Hit {hitInfo.transform.name}");
+
+                //check if the hit object has a HealthSystem
+                HealthSystem targetHealth = hitInfo.transform.GetComponent<HealthSystem>();
+                if (targetHealth != null)
+                {
+                    targetHealth.Damage(gunInfo.shootDamage);
+                    Debug.Log($"Enemy: Dealt {gunInfo.shootDamage} damage to {hitInfo.transform.name}");
+                }
+
+                //hit effect for bullet impact
+                if (gunInfo.hitEffect != null)
+                {
+                    Instantiate(gunInfo.hitEffect, hitInfo.point, Quaternion.LookRotation(hitInfo.normal));
+                }
+            }
+            else
+            {
+                Debug.Log("Enemy: Missed");
+            }
+
+            //PlayMuzzleFlash();
+        }
     }
 
-    public void ResetWeaponData()
+
+
+    //method to create muzzle flash when shooting the weapon
+    void PlayMuzzleFlash()
     {
-        assaultRifleScriptableObject.currentAmmo = assaultRifleScriptableObject.maxAmmo;
-        shotgunScriptableObject.currentAmmo = shotgunScriptableObject.maxAmmo;
-        energyRifleScriptableObject.currentAmmo = energyRifleScriptableObject.maxAmmo;
+        if(gunInfo.muzzleFlash != null)
+        {
+            if (!isFlashing)
+            {
+                GameObject gunFlash = Instantiate(gunInfo.muzzleFlash, gunInfo.muzzleFlashPos.position, gunModelPlaceHolder.transform.rotation);
+                //gunInfo.muzzleFlash.SetActive(true);
+
+                StartCoroutine(MuzzleFlashRoutine(gunFlash));
+            }
+            else
+
+
+            Debug.Log("WeaponInAction: Muzzle Flash Instantiated");
+        }
     }
 
+    IEnumerator EnemyShootRate(int shootRate)
+    {
+        isShooting = true;
+
+        yield return new WaitForSeconds(shootRate);     //to slow down enemy shoot rate
+
+        isShooting = false;
+    }
+
+    IEnumerator MuzzleFlashRoutine(GameObject _gunFlash)
+    {
+        isFlashing = true;
+
+        yield return new WaitForSeconds(1f);
+
+        //gunInfo.muzzleFlash.SetActive(false);
+
+        Destroy(_gunFlash);
+
+        isFlashing = false;
+    }
+
+    public void DropEquippedGun()
+    {
+        if(gunInfo != null)
+        {
+            //drop weapon logic
+            GameObject droppedGun = Instantiate(gunInfo.ItemModel, transform.position, transform.rotation);
+            droppedGun.transform.SetParent(null);
+        }
+    }
 }

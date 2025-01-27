@@ -14,7 +14,7 @@ using UnityEngine.Events;
 public class Checkpoint : MonoBehaviour
 {
     public UnityEvent<Vector3> OnCheckpointSetPos;      //event to pass the checkpoint position to the manager
-    public UnityEvent OnCheckpointActivated;       //to notify other systems a checkpoint has been activated
+    //public UnityEvent OnCheckpointActivated;       //to notify other systems a checkpoint has been activated
 
     [SerializeField] bool isSingleUse = true;   //when active checkpoint can only be used once
 

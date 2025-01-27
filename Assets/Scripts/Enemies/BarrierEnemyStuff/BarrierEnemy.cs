@@ -23,19 +23,33 @@ public class BarrierEnemy : EnemyBase
     //set to infinity to guarantee first iteration of the condition is met
     private float closestDistance = Mathf.Infinity; //to temporarily hold distance of closest ally
     private float distance;     //holds distance of an ally to check if closer or not
-
+    playerScript PlayerScript;
     Transform closestAlly;      //keep track of closest enemy(ally)
+    protected override void Start()
+    {
+        base.Start();
 
+        PlayerScript = FindObjectOfType<playerScript>();
+
+        weaponInAction.EquipWeapon(0);
+    }
     // Update is called once per frame
     void Update()
     {
+        if(targetingSystem.CurrentTarget == null)
+            targetingSystem.AimAtTarget();
+
         Behavior();
     }
 
     //overriding from baseEnemy
     protected override void Behavior()
     {
-        stayBehindEnemies();
+        if(targetingSystem.CurrentTarget != null)
+            HandleWeapon();
+        else
+            stayBehindEnemies();
+
         manageBarriers();
     }
 
@@ -63,7 +77,7 @@ public class BarrierEnemy : EnemyBase
         if (closestAlly != null)
         {
             //find direction of the player
-            Vector3 dirToPlayer = (GameManager.instance.Player.transform.position - closestAlly.position).normalized;
+            Vector3 dirToPlayer = (PlayerScript.Player.transform.position - closestAlly.position).normalized;
 
             //find a position to stay behind the ally
             Vector3 posBehindAlly = closestAlly.position - dirToPlayer * followDistance;

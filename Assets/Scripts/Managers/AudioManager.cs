@@ -1,151 +1,117 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-
-#region Static Instance
+using System;
+using UnityEngine.Audio;
 
 public class AudioManager : MonoBehaviour
 {
-    private static AudioManager instance;
+    public static AudioManager instance;
 
-    public static AudioManager Instance
-    {
-        get
-        {
-            if (instance == null)
-            {
-                instance = FindObjectOfType<AudioManager>();
-                if (instance == null)
-                {
-                    instance = new GameObject("Spawned AudioManager", typeof(AudioManager)).GetComponent<AudioManager>();
-                }
-            }
-            return instance;
-        }
-        private set
-        {
-            instance = value;
-        }
-    }
-    #endregion
+    [SerializeField] public AudioMixer audioMixer;
+    [SerializeField] public AudioSettings audioSettings;
+    [SerializeField] public MixerAdapter mixerAdapter;
 
-    #region Fields
+    [Header("===== Audio Sources =====")]
+    public AudioSource source_2D;
+    public AudioSource source_Player;
 
-    private AudioSource musicSource;
-    private AudioSource musicSource2;
-    private AudioSource sfxSource;
-
-    private bool IsPlaying;
-
-    // there are two sources to crossfade easily
-
-    #endregion
+    [Header("===== Audio Arrays =====")]
+    public Sound[] GameMusic;
+    public Sound[] MenuMusic;
+    public Sound[] LevelMusic;
+    public Sound[] AmbientNoise;
+    public Sound[] PlayerSounds;
+    public Sound[] Weapons;
+    public Sound[] UI;
+    public Sound[] Environment;
+    public Sound[] Enemy;
 
     private void Awake()
     {
-        // make sure we don't destroy this instance
-        DontDestroyOnLoad(this.gameObject);
-
-        musicSource = this.gameObject.AddComponent<AudioSource>();
-        musicSource2 = this.gameObject.AddComponent<AudioSource>();
-        sfxSource = this.gameObject.AddComponent<AudioSource>();
-
-        // Music Sorce loops, just keep them going
-        musicSource.loop = true;
-        musicSource2.loop = true;
-    }
-
-    public void PlayMusic(AudioClip musicClip)
+        instance = this;
+    }       
+    private void Start()
     {
-        //Determine which source is playing
-        AudioSource activeSource = (IsPlaying) ? musicSource : musicSource2;
+        source_2D = GameManager.instance.GetComponent<AudioSource>();
+        //source_Player = GameObject.FindWithTag("Player").GetComponent<AudioSource>();
+        AudioManager.instance.GetComponent<AudioMixer>();
+        AudioManager.instance.GetComponent<MixerAdapter>();
 
-        activeSource.clip = musicClip;
-        activeSource.volume = 1;
-        activeSource.Play();
+        source_2D.loop = true;
+        PlayMusic(source_2D, MenuMusic,"Odessey");
     }
-
-    public void PlayMusicwithFade(AudioClip newClip, float transitionTime = 1.0f)
+    
+    
+    public void PlayMusic(AudioSource source, Sound[] arrayName, string clipName = "")
     {
-        AudioSource activeSource = (IsPlaying) ? musicSource : musicSource2;
+        Sound sound = null;
 
-        StartCoroutine(UpdateMusicWithFade(activeSource, newClip, transitionTime));
-    }
-
-    public void PlayMusicWithCrossFade(AudioClip musicClip, float transitionTime = 1.0f)
-    {
-        AudioSource activeSource = (IsPlaying) ? musicSource : musicSource2;
-        AudioSource newSource = (IsPlaying) ? musicSource2 : musicSource;
-
-        // Swap source audio playing
-        IsPlaying = !IsPlaying;
-
-        // set the fields of the audio source, then start the coroutine
-        newSource.clip = musicClip;
-        newSource.Play();
-        StartCoroutine(UpdateMusicWithCrossFade(activeSource, newSource, transitionTime));
-    }
-
-    private IEnumerator UpdateMusicWithFade(AudioSource activeSource, AudioClip newClip, float transitionTime)
-    {
-        // Make Sure the source is active and playing
-        if (!activeSource.isPlaying)
+        // if clip name is passed
+        if (!string.IsNullOrEmpty(clipName))
         {
-            activeSource.Play();
-
-            float t = 0.0f;
-
-            //fade out music
-            for (t = 0.0f; t < transitionTime; t += Time.deltaTime)
-            {
-                activeSource.volume = (1 - (t / transitionTime));
-                yield return null;
-            }
-            activeSource.Stop();
-            activeSource.clip = newClip;
-            activeSource.Play();
-
-            // fade in music
-            for(t = 0.0f; t < transitionTime; t += Time.deltaTime)
-            {
-                activeSource.volume = (t / transitionTime);
-                yield return null;
-            }
+            sound = Array.Find(arrayName, targetSound => targetSound.name == clipName);
+        }
+        else
+        {
+            // If no clip name is provided, pick a random sound
+            sound = arrayName[UnityEngine.Random.Range(0, arrayName.Length)];
+        }
+        
+        if (sound == null || sound.clips == null || sound.clips.Length == 0)
+        {
+            Debug.Log("Sound Not Found");
+        }
+        else
+        {
+            AudioClip clipToPlay = sound.clips[0];
+            source.clip = clipToPlay;
+            source.Play();
         }
     }
 
-    private IEnumerator UpdateMusicWithCrossFade(AudioSource original, AudioSource newSource, float transitionTime)
+    public void PlaySFX(Sound[] arrayName, string clipName = "")
     {
-        float t = 0.0f;
+        Sound sound = null;
 
-        for(t = 0.0f; t < transitionTime; t += Time.deltaTime)
+        // if clip name is passed
+        if (!string.IsNullOrEmpty(clipName))
         {
-            original.volume = (1 - (t / transitionTime));
-            newSource.volume = (t / transitionTime);
-            yield return null;
+            sound = Array.Find(arrayName, targetSound => targetSound.name == clipName);
         }
-        original.Stop();
+        else
+        {
+            sound = arrayName[UnityEngine.Random.Range(0, arrayName.Length)];
+        }
+
+        if (sound == null || sound.clips == null || sound.clips.Length == 0)
+        {
+            Debug.Log("Sound Not Found");
+        }
+        else
+        {
+            AudioClip clipToPlay = sound.clips[0];
+            //sfxSource.PlayOneShot(clipToPlay);
+        }
     }
 
-    public void PlaySFX(AudioClip clip)
+    // Toggle //
+    //settings for mix and menu
+    public void ToggleMusicSourceVol(AudioSource source)
     {
-        sfxSource.PlayOneShot(clip);
+        source.mute = !source.mute;
     }
 
-    public void PlaySFX(AudioClip clip, float volume)
+    // Volume //
+    public void MusicVolume(AudioSource source, float volume)
     {
-        sfxSource.PlayOneShot(clip, volume);
+        source.volume = volume;
     }
 
-    public void SetMusicVolume(float volume)
+    //Check for all implemented
+    public void SFXAllVolume(float volume)
     {
-        musicSource.volume = volume;
-        musicSource2.volume = volume;
+
     }
 
-    public void SetSFXVolume(float volume)
-    {
-        sfxSource.volume = volume;
-    }
 }

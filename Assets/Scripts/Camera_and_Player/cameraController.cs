@@ -9,10 +9,18 @@ public class cameraController : MonoBehaviour
     [SerializeField] float verticalMax;
 
     private float verticalRotation;
+    float origSensitivity;
+
+    public float Sensitivity { get { return sensitivity; } set { sensitivity = value; } }
+    public float OrigSensitivity => origSensitivity;
+
     void Start()
     {
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+        origSensitivity = sensitivity;
+
+        GameManager.instance.OnGameStateChange += OnGameStateChange;
     }
 
     
@@ -32,4 +40,31 @@ public class cameraController : MonoBehaviour
         //rotate player on y-axis
         transform.parent.Rotate(Vector3.up * mouseX);
     }
+
+
+    private void OnGameStateChange(GameState newGameState)
+    {
+        if (newGameState == GameState.Pause)
+        {
+            this.enabled = false;
+        }
+        else if (newGameState == GameState.Gameplay)
+        {
+            this.enabled = true;
+        }
+    }
+    private void OnDestroy()
+    {
+        if (GameManager.instance == null)
+        {
+            Debug.Log("GameManager is null");
+        }
+        if (Camera.main == null)
+        {
+            Debug.Log("cameraController is null");
+        }
+        // Unsubscribe
+        GameManager.instance.OnGameStateChange -= OnGameStateChange;
+    }
+
 }
