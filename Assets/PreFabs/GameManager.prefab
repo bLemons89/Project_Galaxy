@@ -40910,7 +40910,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8372623425591706036}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4d4ccf752f6253141aa8445d6ebf95e4, type: 3}
   m_Name: 
@@ -40937,19 +40937,61 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioMixer: {fileID: 24100000, guid: 4f426bb281debb64394b130587d59837, type: 2}
-  audioSettings: {fileID: 0}
-  mixerAdapter: {fileID: 0}
   source_2D: {fileID: 8664675781185621932}
   source_Player: {fileID: 0}
   GameMusic: []
-  MenuMusic: []
-  LevelMusic: []
+  MenuMusic:
+  - name: LostSignal
+    clips:
+    - {fileID: 8300000, guid: 8bc5c4cb1dbdae0479df8fade6007c99, type: 3}
+  LevelMusic:
+  - name: LVL1
+    clips:
+    - {fileID: 8300000, guid: e42765bd556216b4590a7a617b96611b, type: 3}
   AmbientNoise: []
-  PlayerSounds: []
-  Weapons: []
+  PlayerSounds:
+  - name: PlayerStep
+    clips:
+    - {fileID: 8300000, guid: 6bdecf3ae5a31ce4d9db7c3bfd370a72, type: 3}
+    - {fileID: 8300000, guid: b80756031d561724f9b94e7c0e9839f2, type: 3}
+    - {fileID: 8300000, guid: b549845c1689b574b9626eafe92eb47a, type: 3}
+    - {fileID: 8300000, guid: bf7bb981625d5954985871981103b0a8, type: 3}
+    - {fileID: 8300000, guid: 994009fe1e4b98d43acf3cd45fcbf95d, type: 3}
+    - {fileID: 8300000, guid: f9e46df698e38a240a82d32df7925c15, type: 3}
+  - name: PlayerDMG
+    clips:
+    - {fileID: 8300000, guid: dd41e6ceade043249b0b19b474247935, type: 3}
+    - {fileID: 8300000, guid: d1fc1513b4aea304abd558493856b1b0, type: 3}
+    - {fileID: 8300000, guid: c3b42bccc410cc54fa834b9d22f7225b, type: 3}
+    - {fileID: 8300000, guid: 1539360d71235684dab36db32df29769, type: 3}
+  - name: PlayerLand
+    clips:
+    - {fileID: 8300000, guid: d1fc1513b4aea304abd558493856b1b0, type: 3}
+  Weapons:
+  - name: AR_Sound
+    clips:
+    - {fileID: 8300000, guid: ea64bdac87088fd4cbefe3def2d8307d, type: 3}
+  - name: ER_Sound
+    clips:
+    - {fileID: 8300000, guid: 1c57a6c485fba404aac4a62970a6f89c, type: 3}
+    - {fileID: 8300000, guid: 373bece032e0632429bc22c595592258, type: 3}
+    - {fileID: 8300000, guid: bbbeb99f50cda9c44a81088b932c2f8b, type: 3}
+  - name: Shotty_Sound
+    clips:
+    - {fileID: 8300000, guid: 6d2f053f42537a6418f9eab25ee77ada, type: 3}
+    - {fileID: 8300000, guid: ab6e0cd2a7206cb479ea9197fd81abc1, type: 3}
+    - {fileID: 8300000, guid: f3017a2c5a388cf42b91f3ad5495d53e, type: 3}
   UI: []
   Environment: []
-  Enemy: []
+  Enemy:
+  - name: EnemyDTH
+    clips:
+    - {fileID: 8300000, guid: 6fa8c41b7b0632240bfe22cd6fcb7826, type: 3}
+  - name: EnemyDMG
+    clips:
+    - {fileID: 8300000, guid: 1539360d71235684dab36db32df29769, type: 3}
+    - {fileID: 8300000, guid: c3b42bccc410cc54fa834b9d22f7225b, type: 3}
+    - {fileID: 8300000, guid: dd41e6ceade043249b0b19b474247935, type: 3}
 --- !u!82 &8664675781185621932
 AudioSource:
   m_ObjectHideFlags: 0

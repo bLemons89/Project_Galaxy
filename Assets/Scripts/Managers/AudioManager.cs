@@ -38,7 +38,7 @@ public class AudioManager : MonoBehaviour
         AudioManager.instance.GetComponent<AudioMixer>();
 
         source_2D.loop = true;
-        PlayMusic(source_2D, GameMusic,"LVL1");
+        PlayMusic(source_2D, LevelMusic,"LVL1");
     }
     
     
