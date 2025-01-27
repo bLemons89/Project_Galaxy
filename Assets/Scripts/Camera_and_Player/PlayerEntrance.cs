@@ -19,20 +19,22 @@ public class PlayerEntrance : MonoBehaviour
 
     void Start()
     {
-        // In the begining of the game we need to put the player in the center of the ship   
+        // In the begining of the game we need to put the player in the center of the ship                  
         
         // else player coming from outside the ship, will use the PlayerEntrance object transform position
         CharacterController playerEntranceLocation = GameObject.FindWithTag("Player").GetComponent<CharacterController>();
-
-        // assigning the PlayerEntrance object position to the Player.transform.position
-        playerEntranceLocation.transform.position = transform.position;
 
         switch (currentLocation)
         {
             case Location.BETA_ShipHub:
                 ExitFromBETA_Area2Industrial();
                 break;
-
+            case Location.BETA_Outer_Ship_Area:
+                break;
+            default:                             
+                // assigning the PlayerEntrance object position to the Player.transform.position
+                playerEntranceLocation.transform.position = transform.position;
+                break;
 
         }
     }
