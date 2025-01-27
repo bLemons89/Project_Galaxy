@@ -69,8 +69,11 @@ public class WeaponInAction : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.R))
                 Reload();
 
-            if ((gunModelPlaceHolder.GetComponent<MeshFilter>().sharedMesh == null) && (reloadMessage.activeSelf))
-                reloadMessage.SetActive(false);
+            if (gunModelPlaceHolder != null && reloadMessage != null)
+            {
+                if ((gunModelPlaceHolder.GetComponent<MeshFilter>().sharedMesh == null) && (reloadMessage.activeSelf))
+                    reloadMessage.SetActive(false);
+            }
 
         }
     }

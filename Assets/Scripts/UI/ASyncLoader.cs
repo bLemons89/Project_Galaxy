@@ -20,7 +20,8 @@ public class ASyncLoader : MonoBehaviour
 
     /// <summary>
     /// Get from scene manager...?
-    /// </summary>
+    /// </summary>   
+
 
     public void LoadLevelBtn(string sceneToLoad)
     {
@@ -33,7 +34,7 @@ public class ASyncLoader : MonoBehaviour
     IEnumerator LoadLevelASync(string sceneToLoad)
     {
         if (!loadingScreen.activeSelf)
-        {
+        {            
             loadingScreen.SetActive(true);
         }
         
@@ -42,7 +43,7 @@ public class ASyncLoader : MonoBehaviour
             loadingParticle = GetComponentInChildren<ParticleUI>();
         }
         loadingParticle.PlayParticles();
-
+        Debug.Log("Particle active ? " + loadingScreen.activeSelf);
         AsyncOperation loadOperation = SceneManager.LoadSceneAsync(sceneToLoad);
         
         while(!loadOperation.isDone)

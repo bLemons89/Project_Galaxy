@@ -74,29 +74,34 @@ public class SceneManagerScript : MonoBehaviour
         }
     }
 
-    // Load Scene (starting index 0)    
-    public void LoadLevelZeroScene()
-    {
-        // index zero Main Menu
-        SceneManager.LoadScene(0);
-    }
-
-    public void LoadLevelOneScene()
-    {
-        // BETA_ShipHub
+    // Load Scene (starting index 0)   This is for Menu 
+    public void LoadBETA_MainMenu()
+    {        
         SceneManager.LoadScene(1);
     }
 
-    public void LoadLevelTwoScene()
+    public void LoadBETA_ShipHub()
     {
-        // BETA_Outer Ship Area
+        // BETA_ShipHub
         SceneManager.LoadScene(2);
     }
 
-    public void LoadLevelThreeScene()
+    public void LoadBETA_OuterShipArea()
+    {
+        // BETA_Outer Ship Area
+        SceneManager.LoadScene(3);
+    }
+
+    public void LoadBETA_Area1Platforms()
     {
         // BETA_Area 1-Platform
-        SceneManager.LoadScene(3);
+        SceneManager.LoadScene(4);
+    }
+
+    public void LoadBETA_Area2Platforms()
+    {
+        // BETA_Area 1-Platform
+        SceneManager.LoadScene(5);
     }
 
     private string FormatTime(float time)
