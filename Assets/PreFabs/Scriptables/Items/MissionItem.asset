@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: ShipPart
   icon: {fileID: 0}
-  itemType: 2
+  itemType: 3
   maxStackSize: 3
   value: 1
-  itemModel: {fileID: 0}
+  itemModel: {fileID: 5184705959604071546, guid: 8116dfd29c78d014c9b1dd39c69ac4d8, type: 3}

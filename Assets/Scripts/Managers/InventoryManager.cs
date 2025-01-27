@@ -25,8 +25,11 @@ public class InventoryManager : MonoBehaviour
     //Unity Event notifies Inventory was updated
     public UnityEvent OnInventoryUpdated;   //connect to CheckAvailable weapons in WeaponInAction
 
-    //InventorySlot currentHeldItem;
-    
+    int missionItemsCollected = 0;
+
+    public int MissionItemsCollected
+    { get => missionItemsCollected; set => missionItemsCollected = value; }             //to be changed by triggers on the mission items
+
 
     // Start is called before the first frame update
     void Awake()
@@ -103,6 +106,7 @@ public class InventoryManager : MonoBehaviour
                 weaponsToUpdate.CheckAvailableWeapons();
             }
         }
+
         //update ui??
         //notifies that inventory was updated
         OnInventoryUpdated?.Invoke();   //Unity event (for other managers to listen for)
