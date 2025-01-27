@@ -1,5 +1,7 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.ProBuilder.MeshOperations;
 
@@ -7,43 +9,51 @@ using UnityEngine.ProBuilder.MeshOperations;
 
 public class PlayerEntrance : MonoBehaviour
 {
-    public enum Location
+    public enum LocationSpawnID
     {
-        BETA_ShipHub,
-        BETA_Outer_Ship_Area,
-        BETA_Area1Platforms,
-        BETA_Area2Industrial,
+        BETA_ShipHubInsideEntrance,
+        BETA_Outer_Ship_AreaEntranceExitFromShipHub,
+        BETA_Outer_Ship_AreaEntranceExitFromArea1PlatformsEntrance,
+        BETA_Outer_Ship_AreaEntranceExitFromArea2IndustrialEntrance,
     }
 
-    public Location currentLocation;
+    [SerializeField] private string sceneToLoad;
+    [SerializeField] private LocationSpawnID currentLocationID;
 
+    // Keep track of the last exit/entrance
+    public string LastPositionExitEntrance;
+    CharacterController playerController;
     void Start()
     {
-        // In the begining of the game we need to put the player in the center of the ship                  
-        
-        // else player coming from outside the ship, will use the PlayerEntrance object transform position
-        CharacterController playerEntranceLocation = GameObject.FindWithTag("Player").GetComponent<CharacterController>();
-
-        switch (currentLocation)
+        switch (currentLocationID)
         {
-            case Location.BETA_ShipHub:
-                ExitFromBETA_Area2Industrial();
+            case LocationSpawnID.BETA_ShipHubInsideEntrance:
+                
                 break;
-            case Location.BETA_Outer_Ship_Area:
+            case LocationSpawnID.BETA_Outer_Ship_AreaEntranceExitFromShipHub:
+                playerController = GameObject.FindWithTag("Player").GetComponent<CharacterController>();
+                playerController.transform.position = new Vector3(31, 99, 81);
                 break;
-            default:                             
-                // assigning the PlayerEntrance object position to the Player.transform.position
-                playerEntranceLocation.transform.position = transform.position;
+            case LocationSpawnID.BETA_Outer_Ship_AreaEntranceExitFromArea1PlatformsEntrance:
+                playerController = GameObject.FindWithTag("Player").GetComponent<CharacterController>();
+                playerController.transform.position = new Vector3(89, 100, -94);
                 break;
-
+            case LocationSpawnID.BETA_Outer_Ship_AreaEntranceExitFromArea2IndustrialEntrance:
+                playerController = GameObject.FindWithTag("Player").GetComponent<CharacterController>();
+                playerController.transform.position = new Vector3(177, 100, 56);
+                break;
         }
     }
 
-    public void ExitFromBETA_Area2Industrial()
-    {        
-        CharacterController playerEntranceLocation = GameObject.FindWithTag("Player").GetComponent<CharacterController>();
-        // assigning the PlayerEntrance object position to the Player.transform.position
-        playerEntranceLocation.transform.position = transform.position;
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            LastPositionExitEntrance = currentLocationID.ToString();
+        }
+
     }
+
+
 
 }
