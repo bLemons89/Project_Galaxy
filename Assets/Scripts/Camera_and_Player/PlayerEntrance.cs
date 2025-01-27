@@ -21,7 +21,7 @@ public class PlayerEntrance : MonoBehaviour
     [SerializeField] private LocationSpawnID currentLocationID;
 
     // Keep track of the last exit/entrance
-    public string LastPositionExitEntrance;
+    public static string LastPositionExitEntrance;
     CharacterController playerController;
     void Start()
     {

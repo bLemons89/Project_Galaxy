@@ -10772,6 +10772,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7891126947897881408, guid: 4d8038ad4bc603e459c4635bd6feb3be, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8050409024001276447, guid: 4d8038ad4bc603e459c4635bd6feb3be, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -12588,7 +12592,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f945cfc31dd197f4d840bad078c1a8ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentLocation: 0
+  sceneToLoad: 
+  currentLocationID: 0
+  LastPositionExitEntrance: 
 --- !u!1 &1922802073
 GameObject:
   m_ObjectHideFlags: 0
