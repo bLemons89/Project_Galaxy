@@ -3375,10 +3375,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 710502774285007634, guid: 02d3af163ccbb804abf4f66a5bc5673c, type: 3}
+      propertyPath: playerDamageScreen
+      value: 
+      objectReference: {fileID: 1306090375}
     - target: {fileID: 7010182104101950758, guid: 02d3af163ccbb804abf4f66a5bc5673c, type: 3}
       propertyPath: m_Name
       value: Player_Skinned
       objectReference: {fileID: 0}
+    - target: {fileID: 7609799776086432043, guid: 02d3af163ccbb804abf4f66a5bc5673c, type: 3}
+      propertyPath: reloadText
+      value: 
+      objectReference: {fileID: 1306090373}
+    - target: {fileID: 7609799776086432043, guid: 02d3af163ccbb804abf4f66a5bc5673c, type: 3}
+      propertyPath: reloadMessage
+      value: 
+      objectReference: {fileID: 1306090374}
     - target: {fileID: 9210108602130023588, guid: 02d3af163ccbb804abf4f66a5bc5673c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 55.72
@@ -8187,6 +8199,10 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2530766762077710308, guid: 4d8038ad4bc603e459c4635bd6feb3be, type: 3}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7891126947897881408, guid: 4d8038ad4bc603e459c4635bd6feb3be, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8050409024001276447, guid: 4d8038ad4bc603e459c4635bd6feb3be, type: 3}
@@ -8238,6 +8254,27 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4d8038ad4bc603e459c4635bd6feb3be, type: 3}
+--- !u!114 &1306090373 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 342423214826203249, guid: 4d8038ad4bc603e459c4635bd6feb3be, type: 3}
+  m_PrefabInstance: {fileID: 1306090372}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &1306090374 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4146534392396319877, guid: 4d8038ad4bc603e459c4635bd6feb3be, type: 3}
+  m_PrefabInstance: {fileID: 1306090372}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1306090375 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5967028838321123934, guid: 4d8038ad4bc603e459c4635bd6feb3be, type: 3}
+  m_PrefabInstance: {fileID: 1306090372}
+  m_PrefabAsset: {fileID: 0}
 --- !u!43 &1312768434
 Mesh:
   m_ObjectHideFlags: 0
@@ -8602,10 +8639,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0114f83322a1ba94ca43510d247f195c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  musicSounds: []
-  sfxSounds: []
-  musicSource: {fileID: 0}
-  playerSFX: {fileID: 0}
+  audioMixer: {fileID: 0}
+  audioSettings: {fileID: 0}
+  mixerAdapter: {fileID: 0}
+  source_2D: {fileID: 0}
+  source_Player: {fileID: 0}
+  GameMusic: []
+  MenuMusic: []
+  LevelMusic: []
+  AmbientNoise: []
+  PlayerSounds: []
+  Weapons: []
+  UI: []
+  Environment: []
+  Enemy: []
 --- !u!4 &1352186386
 Transform:
   m_ObjectHideFlags: 0
