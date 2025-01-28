@@ -125,8 +125,7 @@ public class HealthSystem : MonoBehaviour
     {
         float fillAmount = (float)currentHealth / maxHealth;
 
-        DOTween.Kill(healthBarFill);
-        DOTween.Kill(easeBar);
+        DOTween.KillAll(true);
 
         if (isHeal)
         {

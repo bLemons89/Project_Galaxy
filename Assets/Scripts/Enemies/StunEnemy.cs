@@ -58,6 +58,7 @@ public class StunEnemy : EnemyBase
         //drop item right before dying
         if (healthSystem.CurrentHealth - amount <= 0)
         {
+
             if (itemModel != null)
             {
                 //drop item logic

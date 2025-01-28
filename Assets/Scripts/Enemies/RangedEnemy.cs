@@ -42,8 +42,8 @@ public class RangedEnemy : EnemyBase
     void Update()
     {
         //EnemyHPBar.fillAmount = (float)currentHealth / maxHealth;
-
         Behavior();
+        animator.SetFloat("Speed", agent.velocity.magnitude);
     }
 
     protected override void Behavior()
