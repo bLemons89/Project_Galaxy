@@ -5,8 +5,9 @@ using System.Collections;
 
 // Put this script on the object to trigger which scene to enter
 public class SceneManagerScript : MonoBehaviour
-{    
-    public static SceneManagerScript instance;    
+{
+    public static SceneManagerScript instance;
+     
 
     // write the exact name of the scene
     [Header("===== Write The Exact Name of the Scene =====")]
@@ -114,7 +115,6 @@ public class SceneManagerScript : MonoBehaviour
         // BETA_Area 1-Platform
         SceneManager.LoadScene(5);
     }
-
 
     private string FormatTime(float time)
     {
