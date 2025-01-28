@@ -135,7 +135,9 @@ public class ChargedLaser : MonoBehaviour, IBossAbility
 
             //damage the player
             //call TakeDamage(damageAmount) on player
-            OnDamage?.Invoke(damageAmount);     //Health System
+            //OnDamage?.Invoke(damageAmount);     //Health System
+
+            boss.Player.GetComponent<HealthSystem>().Damage(damageAmount);
         }
     }
 
