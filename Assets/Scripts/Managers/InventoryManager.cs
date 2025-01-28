@@ -46,7 +46,7 @@ public class InventoryManager : MonoBehaviour
             Destroy(gameObject);
     }
 
-    private void Start()
+    private void Update()
     {
         if(player == null)
             player = GameObject.FindWithTag("Player");

@@ -50,7 +50,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item: {fileID: 11400000, guid: a26bf364d3604e24ab9eccb02ff35d9f, type: 2}
   quantity: 1
-  textToToggle: {fileID: 0}
+  textToToggle: {fileID: 623162914023047308}
 --- !u!33 &4518168873719380981
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -120,7 +120,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.71699107
+  m_Radius: 1.1
   m_Center: {x: -0.00014794618, y: -0.015272446, z: 0.31202772}
 --- !u!1 &623162914023047308
 GameObject:
@@ -141,7 +141,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3169488951913178900
 Transform:
   m_ObjectHideFlags: 0

@@ -279,7 +279,7 @@ public class WeaponInAction : MonoBehaviour
         else
         {
             //Debug.Log("Player: Gun out of ammo");
-            reloadMessage.SetActive(true);
+            //reloadMessage.SetActive(true);
         }
     }
 

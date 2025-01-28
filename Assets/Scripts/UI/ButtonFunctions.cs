@@ -9,10 +9,11 @@ using UnityEngine.UIElements;
 using UnityEditor;
 using TMPro;
 using JetBrains.Annotations;
+using UnityEditor.ProBuilder;
 
-    /* 
-     * Tried to split the menus and the buttons into separate classes, but unity is being hard-headed     
-     */
+/* 
+ * Tried to split the menus and the buttons into separate classes, but unity is being hard-headed     
+ */
 public class ButtonFunctions : MonoBehaviour
 {
     //SceneManagerScript sceneManager;
@@ -381,8 +382,9 @@ public class ButtonFunctions : MonoBehaviour
         }
     }
     public void WinScreen()
-    {
-     
+    { 
+        GameManager.instance.MenuActive = winScreen;
+        winScreen.SetActive(true);
     }
     public void LoseScreen()
     {
