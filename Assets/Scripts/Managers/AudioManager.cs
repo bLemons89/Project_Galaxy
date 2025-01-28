@@ -8,6 +8,7 @@ public class AudioManager : MonoBehaviour
 {
     public static AudioManager instance;
 
+    [Header("===== Audio Mixers =====")]
     [SerializeField] public AudioMixer audioMixer;
     [SerializeField] public AudioMixerGroup sfxMaster;
     //[SerializeField] public AudioSettings audioSettings;
@@ -37,6 +38,8 @@ public class AudioManager : MonoBehaviour
         source_2D = GameManager.instance.GetComponent<AudioSource>();
         source_Player = GameObject.FindWithTag("Player").GetComponent<AudioSource>();
         AudioManager.instance.GetComponent<AudioMixer>();
+
+        if (sfxMaster != null) source_Player.outputAudioMixerGroup = sfxMaster;
 
         source_2D.loop = true;
         PlayMusic(source_2D, LevelMusic,"LVL1");
@@ -87,12 +90,12 @@ public class AudioManager : MonoBehaviour
         if (sound == null || sound.clips == null || sound.clips.Length == 0)
         {
             Debug.Log("Sound Not Found");
+            return;
         }
-        else
-        {
             AudioClip clipToPlay = sound.clips[0];
-            //sfxSource.PlayOneShot(clipToPlay);
-        }
+        
+        // play the sound on the player audio source
+        source_Player.PlayOneShot(clipToPlay);
     }
 
     // Toggle //

@@ -10041,6 +10041,10 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5568170004108611672, guid: 02d3af163ccbb804abf4f66a5bc5673c, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5568170004108611672, guid: 02d3af163ccbb804abf4f66a5bc5673c, type: 3}
       propertyPath: m_PlayOnAwake
       value: 0
       objectReference: {fileID: 0}
@@ -10784,10 +10788,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 7891126947897881408, guid: 4d8038ad4bc603e459c4635bd6feb3be, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8050409024001276447, guid: 4d8038ad4bc603e459c4635bd6feb3be, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -10832,10 +10832,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
-    - target: {fileID: 8664675781185621932, guid: 4d8038ad4bc603e459c4635bd6feb3be, type: 3}
-      propertyPath: OutputAudioMixerGroup
-      value: 
-      objectReference: {fileID: -8787776267923989852, guid: 4f426bb281debb64394b130587d59837, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -12507,37 +12503,6 @@ Mesh:
     offset: 0
     size: 0
     path: 
---- !u!1 &1865159929
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1865159930}
-  m_Layer: 0
-  m_Name: Audio_Settings
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1865159930
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1865159929}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 921.9182, y: 421.3682, z: -540.14404}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1867784339
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12641,7 +12606,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sceneToLoad: 
   currentLocationID: 0
-  LastPositionExitEntrance: 
 --- !u!1 &1922802073
 GameObject:
   m_ObjectHideFlags: 0
@@ -15896,4 +15860,3 @@ SceneRoots:
   - {fileID: 769294712}
   - {fileID: 2395549035558198722}
   - {fileID: 973950951}
-  - {fileID: 1865159930}
