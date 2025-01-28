@@ -26,7 +26,7 @@ public class SaveLoadManager : MonoBehaviour
 
     private void Start()
     {
-        _playTimer = SceneManagerScript.instance.gameplayTime;
+        //_playTimer = SceneManagerScript.instance.gameplayTime;
     }
 
     // Update is called once per frame

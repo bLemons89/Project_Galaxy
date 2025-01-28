@@ -19,11 +19,11 @@ public class RangedEnemy : EnemyBase
     [SerializeField] int roamDist;  //sphere distance of roaming
     [SerializeField] int roamTimer; //how long to wait before move again
 
-    private float shootRate;
+    /*private float shootRate;
     private int currentAmmo;
     private int maxAmmo;
     private int shootDistance;
-    private int reloadRate;
+    private int reloadRate;*/
 
     Vector3 startingPos;
 
