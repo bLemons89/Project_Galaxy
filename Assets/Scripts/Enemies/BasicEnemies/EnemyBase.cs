@@ -69,10 +69,12 @@ public abstract class EnemyBase : MonoBehaviour
             //shoot while gun has ammo in the clip
             if (weaponInAction.CurrentAmmo > 0)
             {
+                ///shoot
                 weaponInAction.EnemyFireGun(targetingSystem.CurrentTarget);
             }
             else
             {
+                ///reload
                 weaponInAction.Reload();
             }
         }
@@ -80,10 +82,14 @@ public abstract class EnemyBase : MonoBehaviour
 
     public virtual void TakeDamage(float amount)      //All enemies take damage
     {
+        animator.SetTrigger("isHit");
         healthSystem.CurrentHealth -= amount;
+
         if (healthSystem.CurrentHealth <= 0)
         {
-            if(weaponInAction)
+            animator.SetTrigger("isDead");
+
+            if (weaponInAction)
                 weaponInAction.DropEquippedGun();
 
             Destroy(gameObject);        //Dead

@@ -45,11 +45,14 @@ public class EnemyAiMovement : MonoBehaviour
         {
             cO = StartCoroutine(roam());
         }
+
+        animator.SetFloat("Speed", agent.velocity.magnitude);
     }
 
     IEnumerator roam()
     {
         isRoaming = true;
+        animator.SetBool("isRoaming", isRoaming);
         yield return new WaitForSeconds(roamTime);
         Vector3 randPos = Random.insideUnitSphere * roamDist;
         randPos += startPos;
@@ -57,11 +60,13 @@ public class EnemyAiMovement : MonoBehaviour
         NavMesh.SamplePosition(randPos, out hit, roamDist, 1);
         agent.SetDestination(hit.position);
         isRoaming = false;
+        animator.SetBool("isRoaming", !isRoaming);
 
     }
 
     IEnumerator flashRed()
     {
+        animator.SetTrigger("isHit");
         model.material.color = Color.red;
         yield return new WaitForSeconds(0.1f);
         model.material.color = colorOrig;
@@ -72,18 +77,17 @@ public class EnemyAiMovement : MonoBehaviour
     {
        
         isShooting = true;
+        animator.SetBool("isShooting",true);
 
-       
         animator.SetTrigger("Shoot");
 
-        
         Instantiate(bullet, shootPos.position, transform.rotation);
 
-       
         yield return new WaitForSeconds(shootRate);
 
         //call shoot sound
         isShooting = false;
+        animator.SetBool("isShooting", false);
     }
 
     
@@ -160,9 +164,6 @@ public class EnemyAiMovement : MonoBehaviour
        
         transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * facePlayerSpeed);
     }
-
-    
-    
 
 }
 
