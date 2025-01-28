@@ -7447,6 +7447,50 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4d8038ad4bc603e459c4635bd6feb3be, type: 3}
+--- !u!114 &287420065 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1588071769185874677, guid: 4d8038ad4bc603e459c4635bd6feb3be, type: 3}
+  m_PrefabInstance: {fileID: 287420064}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &287420066 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4164260657622544982, guid: 4d8038ad4bc603e459c4635bd6feb3be, type: 3}
+  m_PrefabInstance: {fileID: 287420064}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &287420067 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4652515973426023276, guid: 4d8038ad4bc603e459c4635bd6feb3be, type: 3}
+  m_PrefabInstance: {fileID: 287420064}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &287420068 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 614274847099208004, guid: 4d8038ad4bc603e459c4635bd6feb3be, type: 3}
+  m_PrefabInstance: {fileID: 287420064}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &292060144
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8632,6 +8676,10 @@ PrefabInstance:
       propertyPath: isSingleUse
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1034822385930386654, guid: 7931407e10ccf5a449c5c7aeaa700e3d, type: 3}
+      propertyPath: OnCheckpointSetPos.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 8587895589560993422, guid: 339a2127526aca84fa3c1389ad50618f, type: 3}
     - target: {fileID: 1383904869501522889, guid: 7931407e10ccf5a449c5c7aeaa700e3d, type: 3}
       propertyPath: m_Name
       value: SceneStart
@@ -26288,6 +26336,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1025664623}
     m_Modifications:
+    - target: {fileID: 1034822385930386654, guid: 7931407e10ccf5a449c5c7aeaa700e3d, type: 3}
+      propertyPath: OnCheckpointSetPos.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 8587895589560993422, guid: 339a2127526aca84fa3c1389ad50618f, type: 3}
     - target: {fileID: 1383904869501522889, guid: 7931407e10ccf5a449c5c7aeaa700e3d, type: 3}
       propertyPath: m_Name
       value: AlmostThere
@@ -27177,6 +27229,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1025664623}
     m_Modifications:
+    - target: {fileID: 1034822385930386654, guid: 7931407e10ccf5a449c5c7aeaa700e3d, type: 3}
+      propertyPath: OnCheckpointSetPos.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 8587895589560993422, guid: 339a2127526aca84fa3c1389ad50618f, type: 3}
     - target: {fileID: 1383904869501522889, guid: 7931407e10ccf5a449c5c7aeaa700e3d, type: 3}
       propertyPath: m_Name
       value: InTheThickOfIt
@@ -45697,6 +45753,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5907970288892933557, guid: 02d3af163ccbb804abf4f66a5bc5673c, type: 3}
+      propertyPath: easeBar
+      value: 
+      objectReference: {fileID: 287420066}
+    - target: {fileID: 5907970288892933557, guid: 02d3af163ccbb804abf4f66a5bc5673c, type: 3}
+      propertyPath: healthBarBack
+      value: 
+      objectReference: {fileID: 287420068}
+    - target: {fileID: 5907970288892933557, guid: 02d3af163ccbb804abf4f66a5bc5673c, type: 3}
+      propertyPath: healthBarFill
+      value: 
+      objectReference: {fileID: 287420065}
+    - target: {fileID: 5907970288892933557, guid: 02d3af163ccbb804abf4f66a5bc5673c, type: 3}
+      propertyPath: critWarningText
+      value: 
+      objectReference: {fileID: 287420067}
     - target: {fileID: 7010182104101950758, guid: 02d3af163ccbb804abf4f66a5bc5673c, type: 3}
       propertyPath: m_Name
       value: Player_Skinned

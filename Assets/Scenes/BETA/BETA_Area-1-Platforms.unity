@@ -6503,6 +6503,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 607648762}
     m_Modifications:
+    - target: {fileID: 1034822385930386654, guid: 7931407e10ccf5a449c5c7aeaa700e3d, type: 3}
+      propertyPath: OnCheckpointSetPos.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 8587895589560993422, guid: 339a2127526aca84fa3c1389ad50618f, type: 3}
     - target: {fileID: 1383904869501522889, guid: 7931407e10ccf5a449c5c7aeaa700e3d, type: 3}
       propertyPath: m_Name
       value: HalfwayThere
@@ -10790,6 +10794,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 607648762}
     m_Modifications:
+    - target: {fileID: 1034822385930386654, guid: 7931407e10ccf5a449c5c7aeaa700e3d, type: 3}
+      propertyPath: OnCheckpointSetPos.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 8587895589560993422, guid: 339a2127526aca84fa3c1389ad50618f, type: 3}
     - target: {fileID: 1383904869501522889, guid: 7931407e10ccf5a449c5c7aeaa700e3d, type: 3}
       propertyPath: m_Name
       value: ReadyForBattle
@@ -13681,6 +13689,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 607648762}
     m_Modifications:
+    - target: {fileID: 1034822385930386654, guid: 7931407e10ccf5a449c5c7aeaa700e3d, type: 3}
+      propertyPath: OnCheckpointSetPos.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 8587895589560993422, guid: 339a2127526aca84fa3c1389ad50618f, type: 3}
     - target: {fileID: 1383904869501522889, guid: 7931407e10ccf5a449c5c7aeaa700e3d, type: 3}
       propertyPath: m_Name
       value: SceneStart

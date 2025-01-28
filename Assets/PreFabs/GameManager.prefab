@@ -8419,7 +8419,7 @@ GameObject:
   - component: {fileID: 4689574399511382491}
   - component: {fileID: 3260487782645128415}
   - component: {fileID: 7771187740979673122}
-  - component: {fileID: 9131695848047055185}
+  - component: {fileID: 8655688921059050471}
   m_Layer: 5
   m_Name: Loading Particles
   m_TagString: UI
@@ -8524,7 +8524,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &9131695848047055185
+--- !u!114 &8655688921059050471
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8533,10 +8533,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3421996564046647485}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1df787993a1c00f4a94372c27a1f9312, type: 3}
+  m_Script: {fileID: 11500000, guid: cc8da814dcc174d4daf865955f58f45f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadDuration: 5
+  ps: {fileID: 7646557710180245329}
 --- !u!1 &3428430209816228702
 GameObject:
   m_ObjectHideFlags: 0
@@ -8792,16 +8792,16 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4400540016892391275}
-        m_TargetAssemblyTypeName: ButtonFunctions, Assembly-CSharp
-        m_MethodName: SaveMenuButton
-        m_Mode: 1
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: SceneManagerScript, Assembly-CSharp
+        m_MethodName: ChangeScene
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: BETA_ShipHub
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!1 &3748276777050735030
@@ -39724,7 +39724,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7596440848413854227
 RectTransform:
   m_ObjectHideFlags: 0
@@ -40415,11 +40415,11 @@ GameObject:
   - component: {fileID: 5621287962370738783}
   m_Layer: 5
   m_Name: Main Menu Primary
-  m_TagString: Untagged
+  m_TagString: MainMenu
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &5621287962370738783
 RectTransform:
   m_ObjectHideFlags: 0
@@ -41002,7 +41002,6 @@ GameObject:
   - component: {fileID: 4917149712833974030}
   - component: {fileID: 6342620689346083119}
   - component: {fileID: 4400540016892391275}
-  - component: {fileID: 2103310751629704479}
   - component: {fileID: 7129291247331537444}
   - component: {fileID: 8664675781185621932}
   - component: {fileID: 7643303237177001918}
@@ -41088,27 +41087,6 @@ MonoBehaviour:
   _musicSlider: {fileID: 2570301391531961172}
   _sfxSlider: {fileID: 5612226920205787815}
   _playerSFXSlider: {fileID: 5612226920205787815}
---- !u!114 &2103310751629704479
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8372623425591706036}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d4ccf752f6253141aa8445d6ebf95e4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  loadNextScene: 
-  gunModelPlaceHolder: {fileID: 0}
-  playTimerText: {fileID: 4292129242228781187}
-  data:
-    x: 0
-    y: 0
-    z: 0
-    playTimer: 0
-    CurrentHealth: 0
 --- !u!114 &7129291247331537444
 MonoBehaviour:
   m_ObjectHideFlags: 0

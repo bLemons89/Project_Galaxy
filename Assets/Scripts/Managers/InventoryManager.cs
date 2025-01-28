@@ -25,7 +25,7 @@ public class InventoryManager : MonoBehaviour
     //Unity Event notifies Inventory was updated
     public UnityEvent OnInventoryUpdated;   //connect to CheckAvailable weapons in WeaponInAction
 
-    int missionItemsCollected = 0;
+    int missionItemsCollected = 1;
     int shardsCollected = 0;
 
     public int MissionItemsCollected

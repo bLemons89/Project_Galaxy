@@ -14,7 +14,7 @@ public class CheckpointManager : MonoBehaviour
 {
     public static CheckpointManager instance;
 
-    Vector3 lastCheckpointPosition;
+    Vector3 lastCheckpointPosition = new Vector3(36.05f, 100f, 80.95f);
 
     public Vector3 LastCheckpointPosition => lastCheckpointPosition;
 
