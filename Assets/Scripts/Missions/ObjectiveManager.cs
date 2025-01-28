@@ -19,12 +19,12 @@ public class ObjectiveManager : MonoBehaviour
         { 0, "Arm yourself" },
         { 1, "Exit the ship" },
         { 2, "Defend yourself" },
-        { 4, "Pick up the Energy Cell" },
-        { 5, "Explore the planet for more cells" },
-        { 6, "Search the areas for a cell" },
-        { 7, "Cells collected 2/3" },
-        { 8, "All cells collected. Return to the ship." },
-        { 9, "Survive." }
+        { 3, "Pick up the Energy Cell" },
+        { 4, "Explore the planet for more cells" },
+        { 5, "Search the areas for a cell" },
+        { 6, "Cells collected 2/3" },
+        { 7, "All cells collected. Return to the ship." },
+        { 8, "Survive." }
     };
 
     private Queue<int> objectivesQueue = new Queue<int>(); //queue to store the IDs of objectives

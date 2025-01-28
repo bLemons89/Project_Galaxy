@@ -4,30 +4,23 @@
     Date Created: 01/28/2025
     Date Updated: 01/28/2025
     Description: Triggers the next mission in the queue if the criteria is met
-                 (place in area: Destroy both when 1 is triggered)   
  */
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Objective4 : MonoBehaviour
+public class Objective8 : MonoBehaviour
 {
     bool playerInRange;
 
     private void Update()
     {
-        if (playerInRange)
+        if (playerInRange && 
+            GameObject.FindWithTag("Boss").GetComponent<HealthSystem>().CurrentHealth <= 0)
         {
             GameManager.instance.GetComponent<ObjectiveManager>().CompleteObjective();
 
-            //find all objects with the Objective4 script
-            Objective4[] objectives = FindObjectsOfType<Objective4>();
-
-            //loop through each object and destroy its GameObject
-            foreach (Objective4 objective in objectives)
-            {
-                Destroy(objective.gameObject);
-            }
+            Destroy(gameObject);
         }
     }
     private void OnTriggerEnter(Collider other)
