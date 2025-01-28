@@ -13,6 +13,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] public AudioMixerGroup sfxMaster;
     //[SerializeField] public AudioSettings audioSettings;
     //[SerializeField] public MixerAdapter mixerAdapter;
+
     [Header("===== Audio Sources =====")]
     public AudioSource source_2D;
     public AudioSource source_Player;
@@ -35,14 +36,14 @@ public class AudioManager : MonoBehaviour
     private void Start()
     {
         source_2D = GameManager.instance.GetComponent<AudioSource>();
-        //source_Player = GameObject.FindWithTag("Player").GetComponent<AudioSource>();
+        source_Player = GameObject.FindWithTag("Player").GetComponent<AudioSource>();
         AudioManager.instance.GetComponent<AudioMixer>();
-        AudioManager.instance.GetComponent<MixerAdapter>();
+        //AudioManager.instance.GetComponent<MixerAdapter>();
 
         if (sfxMaster != null) source_Player.outputAudioMixerGroup = sfxMaster;
 
         source_2D.loop = true;
-        PlayMusic(source_2D, MenuMusic,"Odessey");
+        PlayMusic(source_2D, MenuMusic,"LostSignal");
     }
     
     
