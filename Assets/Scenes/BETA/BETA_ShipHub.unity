@@ -7272,7 +7272,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 973950951}
-  - component: {fileID: 973950950}
+  - component: {fileID: 973950952}
   - component: {fileID: 973950949}
   - component: {fileID: 973950948}
   - component: {fileID: 973950947}
@@ -7302,7 +7302,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.5
+  m_Radius: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &973950948
 MeshRenderer:
@@ -7354,27 +7354,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 973950946}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &973950950
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 973950946}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d4ccf752f6253141aa8445d6ebf95e4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  loadNextScene: BETA_Outer Ship Area
-  gunModelPlaceHolder: {fileID: 0}
-  playTimerText: {fileID: 0}
-  data:
-    x: 0
-    y: 0
-    z: 0
-    playTimer: 0
-    CurrentHealth: 0
 --- !u!4 &973950951
 Transform:
   m_ObjectHideFlags: 0
@@ -7384,12 +7363,25 @@ Transform:
   m_GameObject: {fileID: 973950946}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10.674963, y: 1.817, z: -160.449}
+  m_LocalPosition: {x: 10.918, y: 1.817, z: -159.273}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &973950952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 973950946}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 358f1b54b17727847a706a10f5a88c93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  loadNextScene: BETA_Outer Ship Area
 --- !u!1001 &975209682
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14431,24 +14423,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8240169095854549620, guid: e2065e8f29774454889634d57ec0a96f, type: 3}
   m_PrefabInstance: {fileID: 1473565643}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1921010357 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 387029356767514980, guid: a5ce6338557f0d24f873622f985410f9, type: 3}
-  m_PrefabInstance: {fileID: 2395549035558198722}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1921010362
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1921010357}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f945cfc31dd197f4d840bad078c1a8ac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentLocation: 0
 --- !u!1 &1922802073
 GameObject:
   m_ObjectHideFlags: 0
@@ -15872,66 +15846,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2c1b071a60941b54cbd12dda86e8a12a, type: 3}
---- !u!1001 &2395549035558198722
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 387029356767514980, guid: a5ce6338557f0d24f873622f985410f9, type: 3}
-      propertyPath: m_Name
-      value: PlayerEntrance
-      objectReference: {fileID: 0}
-    - target: {fileID: 7725285453287845209, guid: a5ce6338557f0d24f873622f985410f9, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 10.100834
-      objectReference: {fileID: 0}
-    - target: {fileID: 7725285453287845209, guid: a5ce6338557f0d24f873622f985410f9, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 2.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7725285453287845209, guid: a5ce6338557f0d24f873622f985410f9, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -162.715
-      objectReference: {fileID: 0}
-    - target: {fileID: 7725285453287845209, guid: a5ce6338557f0d24f873622f985410f9, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7725285453287845209, guid: a5ce6338557f0d24f873622f985410f9, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7725285453287845209, guid: a5ce6338557f0d24f873622f985410f9, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7725285453287845209, guid: a5ce6338557f0d24f873622f985410f9, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7725285453287845209, guid: a5ce6338557f0d24f873622f985410f9, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7725285453287845209, guid: a5ce6338557f0d24f873622f985410f9, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7725285453287845209, guid: a5ce6338557f0d24f873622f985410f9, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 387029356767514980, guid: a5ce6338557f0d24f873622f985410f9, type: 3}
-      insertIndex: 1
-      addedObject: {fileID: 1921010362}
-  m_SourcePrefab: {fileID: 100100000, guid: a5ce6338557f0d24f873622f985410f9, type: 3}
 --- !u!1001 &2477135305903260494
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18117,6 +18031,5 @@ SceneRoots:
   - {fileID: 671127705}
   - {fileID: 200064718}
   - {fileID: 558349389}
-  - {fileID: 2395549035558198722}
   - {fileID: 973950951}
   - {fileID: 8701773096647977568}

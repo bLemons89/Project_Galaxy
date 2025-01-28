@@ -47,7 +47,7 @@ public class GameManager : MonoBehaviour
         {
             instance = this;
             // Commented this out The scene transition should work normally, just put all the required SerializeField on each level. 
-            //DontDestroyOnLoad(gameObject);
+            DontDestroyOnLoad(gameObject);
         }
         else 
         { 
