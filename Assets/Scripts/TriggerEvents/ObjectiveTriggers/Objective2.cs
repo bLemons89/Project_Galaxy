@@ -12,6 +12,8 @@ using UnityEngine;
 
 public class Objective2 : MonoBehaviour
 {
+    [SerializeField] GameObject firstCell;
+
     bool playerInRange;
     int enemiesAlive;
 
@@ -20,6 +22,7 @@ public class Objective2 : MonoBehaviour
         if (playerInRange && enemiesAlive == 0)
         {
             GameManager.instance.GetComponent<ObjectiveManager>().CompleteObjective();
+            firstCell.SetActive(true);
 
             Destroy(gameObject);
         }

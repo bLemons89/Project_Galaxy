@@ -7,20 +7,26 @@
  */
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
 public class Objective8 : MonoBehaviour
 {
     bool playerInRange;
+    GameObject boss;
 
     private void Update()
     {
-        if (playerInRange && 
-            GameObject.FindWithTag("Boss").GetComponent<HealthSystem>().CurrentHealth <= 0)
+        if (boss = GameObject.FindWithTag("Boss"))
         {
-            GameManager.instance.GetComponent<ObjectiveManager>().CompleteObjective();
 
-            Destroy(gameObject);
+            if (playerInRange &&
+                boss.GetComponent<HealthSystem>().CurrentHealth <= 0)
+            {
+                GameManager.instance.GetComponent<ObjectiveManager>().CompleteObjective();
+
+                Destroy(gameObject);
+            }
         }
     }
     private void OnTriggerEnter(Collider other)

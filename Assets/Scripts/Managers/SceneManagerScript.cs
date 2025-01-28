@@ -15,7 +15,7 @@ public class SceneManagerScript : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            currentSceneName = "BETA_Main Menu";
+            currentSceneName = "BETA_Main Menu";                    //change to something that checks current scene in the future
 
             DontDestroyOnLoad(gameObject);
         }
@@ -23,8 +23,6 @@ public class SceneManagerScript : MonoBehaviour
         {
             Destroy(gameObject);
         }
-
-        
     }
 
     // Change to a new scene and save the current scene's state
@@ -56,13 +54,13 @@ public class SceneManagerScript : MonoBehaviour
             GameObject player = GameObject.FindWithTag("Player");
             if (player != null)
             {
-                data.playerPosition = new Vector3 (player.transform.position.x + 10,
-                    player.transform.position.y, player.transform.position.z);
+                data.playerPosition = player.transform.position + (player.transform.up) + //up to prevent falling through ground
+                    (player.transform.forward * -5f); //5 units back to prevent from spawning on a trigger
             }
+                // Save other relevant data for the scene
+                // (e.g., inventory, enemies, objects, etc.)
+                sceneData[currentSceneName] = data;
 
-            // Save other relevant data for the scene
-            // (e.g., inventory, enemies, objects, etc.)
-            sceneData[currentSceneName] = data;
         }
     }
 

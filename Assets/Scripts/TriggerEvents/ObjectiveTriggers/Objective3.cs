@@ -19,7 +19,7 @@ public class Objective3 : MonoBehaviour
         {
             GameManager.instance.GetComponent<ObjectiveManager>().CompleteObjective();
 
-            Destroy(gameObject);
+            //Destroy(gameObject);      //parent does this
         }
     }
     private void OnTriggerEnter(Collider other)

@@ -20,7 +20,7 @@ public class ObjectiveManager : MonoBehaviour
         { 1, "Exit the ship" },
         { 2, "Defend yourself" },
         { 3, "Pick up the Energy Cell" },
-        { 4, "Explore the planet for more cells" },
+        { 4, "Explore the planet for more cells" },         //in start of Area 1 and 2
         { 5, "Search the areas for a cell" },
         { 6, "Cells collected 2/3" },
         { 7, "All cells collected. Return to the ship." },
