@@ -16,10 +16,20 @@ public class PickUp : MonoBehaviour
     [Header("Scriptable Here")]
     [SerializeField] ItemBase item;
     [SerializeField] int quantity = 1;  //number of that item this pickup will add to the inventory
+    [SerializeField] GameObject textToToggle;
 
-    //unity event to notify InventoryManager
+    bool playerInRange;
     //public UnityEvent<ItemBase, int> OnPickup;
     //public UnityEvent OnWeaponPickup;
+
+    private void Update()
+    {
+        if (playerInRange && Input.GetKeyDown(KeyCode.Q))     //check if the player presses F
+        {
+            //try to drop off the collectible item
+            PickUpItem();
+        }
+    }
 
     void OnTriggerEnter(Collider other)         //add key press input check in if statement
     {
@@ -28,20 +38,34 @@ public class PickUp : MonoBehaviour
         //check for player collider
         if(other.CompareTag("Player"))
         {
-            if (item != null && InventoryManager.instance)
-            {
-                InventoryManager.instance.OnPickup(item, quantity);
-                
-                //if (item.GetItemType == ItemBase.ItemType.Weapon)       //not being used
-                    //OnWeaponPickup?.Invoke();
+            if (textToToggle != null)
+                textToToggle.SetActive(true);
 
-                //trigger unity event to notify inventory manager   (loses reference if destroyed or instantiated)
-                //OnPickup?.Invoke(item, quantity);
-            }
+            playerInRange = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        //check for player collider
+        if (other.CompareTag("Player"))
+        {
+            if (textToToggle != null)
+                textToToggle.SetActive(false);
+
+            playerInRange = false;
+        }
+    }
+
+    void PickUpItem()
+    {
+        if (item != null && InventoryManager.instance != null)
+        {
+            InventoryManager.instance.OnPickup(item, quantity);
 
             //destroy item in the world
             Destroy(gameObject);
         }
-    }
+    }    
 
 }

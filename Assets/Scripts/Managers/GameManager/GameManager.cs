@@ -46,7 +46,8 @@ public class GameManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject);
+            // Commented this out The scene transition should work normally, just put all the required SerializeField on each level. 
+            //DontDestroyOnLoad(gameObject);
         }
         else 
         { 
@@ -67,6 +68,7 @@ public class GameManager : MonoBehaviour
     // Input //
     void Update()
     {
+        
         // Pause Input
         if (Input.GetButtonDown("Cancel") || Input.GetButtonDown("Pause"))
         {
@@ -134,8 +136,8 @@ public class GameManager : MonoBehaviour
         //prompt for overwrite, or confirm 
         // call save method
         // Stamp
-        string timeStamp = System.DateTime.Now.ToString();
-        buttonFunctions.TimeDateStamp.text = timeStamp;
+        //string timeStamp = System.DateTime.Now.ToString();
+        //buttonFunctions.TimeDateStamp.text = timeStamp;
     }
 
     public void MainMenu()

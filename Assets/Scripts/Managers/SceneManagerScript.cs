@@ -5,8 +5,9 @@ using System.Collections;
 
 // Put this script on the object to trigger which scene to enter
 public class SceneManagerScript : MonoBehaviour
-{    
+{
     public static SceneManagerScript instance;
+     
 
     // write the exact name of the scene
     [Header("===== Write The Exact Name of the Scene =====")]
@@ -32,7 +33,7 @@ public class SceneManagerScript : MonoBehaviour
 
     private void Awake()
     {
-        instance = this;            
+        instance = this;        
     }
 
     private void Start()
@@ -42,19 +43,17 @@ public class SceneManagerScript : MonoBehaviour
 
     private void Update()
     {
-        // Set the target frame rate to 30
-        Application.targetFrameRate = 30;
+        // bugs if there is something here Main Menu will have Null Reference!!!!
 
-        _playTimer += Time.deltaTime;
-        if (playTimerText != null)
-        {
-            playTimerText.gameObject.SetActive(true);            
-            playTimerText.text = FormatTime(_playTimer);            
-        }
+        //_playTimer += Time.deltaTime;
+        //if (playTimerText != null)
+        //{
+        //    playTimerText.gameObject.SetActive(true);            
+        //    playTimerText.text = FormatTime(_playTimer);            
+        //}
 
         //SaveLoadManager.instance.SaveDataWithKeyPress();
-        //SaveLoadManager.instance.LoadDataWithKeyPress();
-       
+        //SaveLoadManager.instance.LoadDataWithKeyPress();        
     }
 
     // Checking if object that trigger scene changes collided with player to change scene
@@ -76,20 +75,45 @@ public class SceneManagerScript : MonoBehaviour
         }
     }
 
-    // Load Scene (starting index 0)    
-    public void LoadLevelOneScene()
+    public void LoadingToMenuScene()
     {
         SceneManager.LoadScene(0);
     }
-
-    public void LoadLevelTwoScene()
-    {
+    
+    public void LoadBETA_MainMenu()
+    {  
         SceneManager.LoadScene(1);
     }
 
-    public void LoadLevelThreeScene()
+    public void LoadBETA_ShipHub()
     {
+        
+        // if coming from outside the player need to spawn at PlayerEntrance GameObject
+        // Find the CharacterController in the scene
+        // CharacterController playerController = GameObject.FindWithTag("Player").GetComponent<CharacterController>();
+        // Vector3 loadPlayerPosition = LoadPlayerData(); // Get saved player position
+        // playerController.transform.position = loadPlayerPosition; // Update
+
+        // BETA_ShipHub
+        SceneManager.LoadScene(2);
+    }
+
+    public void LoadBETA_OuterShipArea()
+    {       
+        // BETA_Outer Ship Area
         SceneManager.LoadScene(3);
+    }
+
+    public void LoadBETA_Area1Platforms()
+    {
+        // BETA_Area 1-Platform
+        SceneManager.LoadScene(4);
+    }
+
+    public void LoadBETA_Area2Platforms()
+    {
+        // BETA_Area 1-Platform
+        SceneManager.LoadScene(5);
     }
 
     private string FormatTime(float time)

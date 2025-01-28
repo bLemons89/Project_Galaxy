@@ -566,7 +566,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae7a067100309cc468f78107ffbcc995, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  goingToNextScene: sandboxHarry1
+  goingToNextScene: BETA_Main Menu
   delayTime: 3
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
