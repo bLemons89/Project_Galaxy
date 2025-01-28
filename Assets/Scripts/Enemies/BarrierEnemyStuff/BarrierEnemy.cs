@@ -9,6 +9,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class BarrierEnemy : EnemyBase
 {
@@ -38,6 +39,8 @@ public class BarrierEnemy : EnemyBase
     {
         if(targetingSystem.CurrentTarget == null)
             targetingSystem.AimAtTarget();
+        
+        animator.SetFloat("Speed", agent.speed);
 
         Behavior();
     }
