@@ -2,7 +2,7 @@
     Author: Juan Contreras
     Edited by:
     Date Created: 01/26/2025
-    Date Updated: 01/26/2025
+    Date Updated: 01/27/2025
     Description: Trigger logic to enable the boss once the player has collected all the cells
  */
 using System.Collections;
