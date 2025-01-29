@@ -10,6 +10,9 @@ TagManager:
   - CinemachineTarget
   - Particle
   - Boss
+  - PlayerSpawnArea
+  - MainMenu
+  - Area1Exit
   layers:
   - Default
   - TransparentFX

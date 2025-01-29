@@ -136,8 +136,8 @@ public class WeaponInAction : MonoBehaviour
             availableWeapons.RemoveAll(weapon =>
                 !InventoryManager.instance.InventorySlotsList.Exists(slot => slot.Item == weapon));
         }
-        else
-            Debug.Log("No Inventory Manager for weapons");
+        else { }
+            //Debug.Log("No Inventory Manager for weapons");
     }
 
     //equips the weapon based on the index
@@ -175,7 +175,7 @@ public class WeaponInAction : MonoBehaviour
         }
         else if (ammoStored <= 0)
         {
-            Debug.Log("Out of Ammo");
+            //Debug.Log("Out of Ammo");
         }
     }
 
@@ -184,7 +184,7 @@ public class WeaponInAction : MonoBehaviour
     {
         isReloading = true;     //so enemy does not infinite reload
         //sounds/animations
-        Debug.Log("Reloading...");
+        //Debug.Log("Reloading...");
         yield return new WaitForSeconds(gunInfo.reloadRate);
 
         //refill ammo
@@ -213,14 +213,14 @@ public class WeaponInAction : MonoBehaviour
             //raycast to where the gun is aimed at
             if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out RaycastHit hitInfo, gunInfo.shootDistance))
             {
-                Debug.Log($"WeaponInAction: Hit {hitInfo.transform.name}");
+                //Debug.Log($"WeaponInAction: Hit {hitInfo.transform.name}");
 
                 //check if it has health to it                                                                                  //APPLY HEALTH/DAMAGE COMPONENT HERE
                 HealthSystem targetHealth = hitInfo.transform.GetComponent<HealthSystem>();
                 if (targetHealth != null)
                 {
                     targetHealth.Damage(gunInfo.shootDamage);
-                    Debug.Log($"WeaponInAction: Hit {hitInfo.transform.name} for {gunInfo.shootDamage} damage");
+                    //Debug.Log($"WeaponInAction: Hit {hitInfo.transform.name} for {gunInfo.shootDamage} damage");
                 }
 
                 if (gunInfo.hitEffect != null)
@@ -228,15 +228,15 @@ public class WeaponInAction : MonoBehaviour
                     Instantiate(gunInfo.hitEffect, hitInfo.point, Quaternion.LookRotation(hitInfo.normal));
                 }
             }
-            else
-                Debug.Log("WeaponInAction: Missed");
+            else { }
+                //Debug.Log("WeaponInAction: Missed");
 
             //muzzle flash method
             //PlayMuzzleFlash();                                                                //UNDER MAINTAINANCE
         }
         else if (this.gameObject.CompareTag("Player"))
         {
-            Debug.Log("WeaponInAction: Gun out of ammo");
+            //Debug.Log("WeaponInAction: Gun out of ammo");
             reloadMessage.SetActive(true);
         }
     }
@@ -252,7 +252,7 @@ public class WeaponInAction : MonoBehaviour
             //raycast to where the player is looking
             if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out RaycastHit hitInfo, gunInfo.shootDistance))
             {
-                Debug.Log($"Player: Hit {hitInfo.transform.name}");
+                //Debug.Log($"Player: Hit {hitInfo.transform.name}");
 
                 //check if the hit object has a HealthSystem
                 HealthSystem targetHealth = hitInfo.transform.GetComponent<HealthSystem>();
@@ -270,7 +270,7 @@ public class WeaponInAction : MonoBehaviour
             }
             else
             {
-                Debug.Log("Player: Missed");
+                //Debug.Log("Player: Missed");
             }
 
             //muzzle flash method
@@ -278,7 +278,7 @@ public class WeaponInAction : MonoBehaviour
         }
         else
         {
-            Debug.Log("Player: Gun out of ammo");
+            //Debug.Log("Player: Gun out of ammo");
             reloadMessage.SetActive(true);
         }
     }
@@ -300,7 +300,7 @@ public class WeaponInAction : MonoBehaviour
             //raycast towards the target
             if (Physics.Raycast(transform.position, directionToTarget, out RaycastHit hitInfo, gunInfo.shootDistance))
             {
-                Debug.Log($"Enemy: Hit {hitInfo.transform.name}");
+                //Debug.Log($"Enemy: Hit {hitInfo.transform.name}");
 
                 //check if the hit object has a HealthSystem
                 HealthSystem targetHealth = hitInfo.transform.GetComponent<HealthSystem>();
@@ -318,7 +318,7 @@ public class WeaponInAction : MonoBehaviour
             }
             else
             {
-                Debug.Log("Enemy: Missed");
+                //Debug.Log("Enemy: Missed");
             }
 
             //PlayMuzzleFlash();
@@ -339,10 +339,10 @@ public class WeaponInAction : MonoBehaviour
 
                 StartCoroutine(MuzzleFlashRoutine(gunFlash));
             }
-            else
+            
 
 
-            Debug.Log("WeaponInAction: Muzzle Flash Instantiated");
+            //Debug.Log("WeaponInAction: Muzzle Flash Instantiated");
         }
     }
 

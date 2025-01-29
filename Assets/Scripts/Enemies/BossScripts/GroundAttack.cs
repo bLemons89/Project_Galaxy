@@ -42,8 +42,8 @@ public class GroundAttack : MonoBehaviour, IBossAbility
     IEnumerator GroundSlamRoutine()
     {
         //spawn position for the wave effect
-        Vector3 spawnPos = boss.transform.position;
-        spawnPos.y = 0f + boss.Agent.baseOffset;
+        Vector3 spawnPos = this.transform.position;
+        //spawnPos.y = 0f + boss.Agent.baseOffset;
 
         //start wave effect
         GameObject waveInstance = GameObject.Instantiate(wavePrefab, spawnPos, Quaternion.identity);
@@ -115,7 +115,8 @@ public class GroundAttack : MonoBehaviour, IBossAbility
                     {
                         Debug.Log("Player hit by ground attack");
                         //call player take damage with (damageAmount)
-                        OnDamage?.Invoke(damageAmount);
+                        //OnDamage?.Invoke(damageAmount);
+                        boss.Player.GetComponent<HealthSystem>().Damage(damageAmount);
                     }
                     else
                         Debug.Log("Player was not hit by ground attack");

@@ -1,3 +1,10 @@
+/*
+    Author: Juan Contreras
+    Edited by:
+    Date Created: 01/26/2025
+    Date Updated: 01/26/2025
+    Description: Class to keep a world counter of mission items collected (prevent double count if dropped)
+ */
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

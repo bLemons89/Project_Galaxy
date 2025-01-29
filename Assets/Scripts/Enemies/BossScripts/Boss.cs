@@ -2,7 +2,7 @@
     Author: Juan Contreras
     Edited by:
     Date Created: 01/17/2025
-    Date Updated: 01/19/2025
+    Date Updated: 01/27/2025
     Description: Logic for how the boss interacts with the player depending on the encounter.
  */
 using System.Collections;
@@ -29,6 +29,7 @@ public class Boss : MonoBehaviour
     [SerializeField] GameObject bossHealthBar;
 
     bool isCharging;
+    bool isMoving;
     Coroutine movementRoutine;
 
     //new
@@ -40,7 +41,7 @@ public class Boss : MonoBehaviour
     //Unity Events to notify when each ability is activated for animation and sound
 
     // Start is called before the first frame update
-    void Start()
+    public void Start()
     {
         player = GameObject.FindWithTag("Player")?.transform;
         agent = GetComponent<NavMeshAgent>();
@@ -64,7 +65,8 @@ public class Boss : MonoBehaviour
 
     void Update()
     {
-
+        if ((Vector3.Distance(player.transform.position, this.transform.position) < 40))
+            StartMovementBehavior();
     }
 
     public void AddAbility(IBossAbility ability)
@@ -132,12 +134,14 @@ public class Boss : MonoBehaviour
     public void StartMovementBehavior()
     {
         //calling the movement coroutine
-        if(movementRoutine == null)
+        if(movementRoutine == null && !isMoving)
             movementRoutine = StartCoroutine(MovementBehavior());
     }
 
     IEnumerator MovementBehavior()
     {
+        isMoving = true;
+
         while (true)
         {
             if ((Vector3.Distance(player.transform.position, this.transform.position) < 40))
@@ -168,6 +172,7 @@ public class Boss : MonoBehaviour
                     }
                 }
             }
+            isMoving = false;
 
             yield return null;
         }
@@ -208,33 +213,6 @@ public class Boss : MonoBehaviour
         }
     }
 
-    IEnumerator ChargeAtPlayer()
-    {
-        //set charging status and speed
-        isCharging = true;
-        agent.speed = chargeSpeed;
-        //run towards the player
-        Vector3 targetPosition = player.position;
-        agent.SetDestination(targetPosition);
-
-        while (Vector3.Distance(transform.position, player.position) > chargeStopDistance)
-        {
-            Debug.Log("Boss: Charging at player");
-            //keep updating position to chase even if player is moving
-            targetPosition = player.position;
-            agent.SetDestination(targetPosition);
-            //wait for next frame
-            yield return null;
-        }
-
-        //start ground attack once close
-        //StartGroundAttack();
-        ActivateSpecificAbility<GroundAttack>();
-
-        //reset
-        isCharging = false;
-        agent.speed = moveSpeed;
-    }
 
     //can go into GroundAttack interface
     IEnumerator ChargeThenGroundAttack()
