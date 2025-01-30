@@ -240,24 +240,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item: {fileID: 0}
   quantity: 1
-  OnPickup:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 433409342}
-        m_TargetAssemblyTypeName: InventoryManager, Assembly-CSharp
-        m_MethodName: OnPickup
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnWeaponPickup:
-    m_PersistentCalls:
-      m_Calls: []
+  textToToggle: {fileID: 0}
 --- !u!4 &5036155
 Transform:
   m_ObjectHideFlags: 0
@@ -284,6 +267,18 @@ PrefabInstance:
     - target: {fileID: 471699638388696715, guid: a42b8d78783a766488cbef64a630f33b, type: 3}
       propertyPath: m_Name
       value: BarrierEnemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 631877291097510994, guid: a42b8d78783a766488cbef64a630f33b, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 906172583225547969, guid: a42b8d78783a766488cbef64a630f33b, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1436153444205536250, guid: a42b8d78783a766488cbef64a630f33b, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1436153444205536250, guid: a42b8d78783a766488cbef64a630f33b, type: 3}
       propertyPath: barrierCooldown
@@ -331,6 +326,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2856976370708217239, guid: a42b8d78783a766488cbef64a630f33b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4674394027175753097, guid: a42b8d78783a766488cbef64a630f33b, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6576458611250678649, guid: a42b8d78783a766488cbef64a630f33b, type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -633,24 +636,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item: {fileID: 0}
   quantity: 1
-  OnPickup:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 433409342}
-        m_TargetAssemblyTypeName: InventoryManager, Assembly-CSharp
-        m_MethodName: OnPickup
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnWeaponPickup:
-    m_PersistentCalls:
-      m_Calls: []
+  textToToggle: {fileID: 0}
 --- !u!4 &25109925
 Transform:
   m_ObjectHideFlags: 0
@@ -795,24 +781,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item: {fileID: 0}
   quantity: 1
-  OnPickup:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 433409342}
-        m_TargetAssemblyTypeName: InventoryManager, Assembly-CSharp
-        m_MethodName: OnPickup
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnWeaponPickup:
-    m_PersistentCalls:
-      m_Calls: []
+  textToToggle: {fileID: 0}
 --- !u!4 &44323595
 Transform:
   m_ObjectHideFlags: 0
@@ -836,9 +805,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 616110440}
     m_Modifications:
+    - target: {fileID: 1416805799473722882, guid: 95640a3edb825ce4e978a078e05e1d93, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2416614343077973073, guid: 95640a3edb825ce4e978a078e05e1d93, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3821962294620978033, guid: 95640a3edb825ce4e978a078e05e1d93, type: 3}
       propertyPath: m_Name
       value: RangedEnemy2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4586584669256866548, guid: 95640a3edb825ce4e978a078e05e1d93, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5782277149834620206, guid: 95640a3edb825ce4e978a078e05e1d93, type: 3}
       propertyPath: m_LocalPosition.x
@@ -878,6 +859,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5782277149834620206, guid: 95640a3edb825ce4e978a078e05e1d93, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6422625552239604292, guid: 95640a3edb825ce4e978a078e05e1d93, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8331228568080617292, guid: 95640a3edb825ce4e978a078e05e1d93, type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -988,24 +977,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item: {fileID: 0}
   quantity: 1
-  OnPickup:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 433409342}
-        m_TargetAssemblyTypeName: InventoryManager, Assembly-CSharp
-        m_MethodName: OnPickup
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnWeaponPickup:
-    m_PersistentCalls:
-      m_Calls: []
+  textToToggle: {fileID: 0}
 --- !u!33 &100986163
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -2276,24 +2248,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item: {fileID: 0}
   quantity: 1
-  OnPickup:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 433409342}
-        m_TargetAssemblyTypeName: InventoryManager, Assembly-CSharp
-        m_MethodName: OnPickup
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnWeaponPickup:
-    m_PersistentCalls:
-      m_Calls: []
+  textToToggle: {fileID: 0}
 --- !u!4 &267962704
 Transform:
   m_ObjectHideFlags: 0
@@ -2309,11 +2264,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &279733600 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4146534392396319877, guid: 4d8038ad4bc603e459c4635bd6feb3be, type: 3}
-  m_PrefabInstance: {fileID: 606874766}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &327330215
 GameObject:
   m_ObjectHideFlags: 0
@@ -2412,24 +2362,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item: {fileID: 0}
   quantity: 1
-  OnPickup:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 433409342}
-        m_TargetAssemblyTypeName: InventoryManager, Assembly-CSharp
-        m_MethodName: OnPickup
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnWeaponPickup:
-    m_PersistentCalls:
-      m_Calls: []
+  textToToggle: {fileID: 0}
 --- !u!114 &327330219
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2488,6 +2421,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 616110440}
     m_Modifications:
+    - target: {fileID: 2065397921471698950, guid: d5c53ec017be53a44b6bc585ca5dfe97, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6034946134417450452, guid: d5c53ec017be53a44b6bc585ca5dfe97, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7190173908179760642, guid: d5c53ec017be53a44b6bc585ca5dfe97, type: 3}
       propertyPath: m_LocalPosition.x
       value: 126.58
@@ -2526,6 +2467,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7190173908179760642, guid: d5c53ec017be53a44b6bc585ca5dfe97, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8812334459827783540, guid: d5c53ec017be53a44b6bc585ca5dfe97, type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8997302725253808589, guid: d5c53ec017be53a44b6bc585ca5dfe97, type: 3}
@@ -3198,24 +3143,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item: {fileID: 0}
   quantity: 1
-  OnPickup:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 433409342}
-        m_TargetAssemblyTypeName: InventoryManager, Assembly-CSharp
-        m_MethodName: OnPickup
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnWeaponPickup:
-    m_PersistentCalls:
-      m_Calls: []
+  textToToggle: {fileID: 0}
 --- !u!114 &504929964
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3327,6 +3255,11 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 4435944689965943007, guid: c4354e58fa1d3aa4da17faf6baa6433c, type: 3}
   m_PrefabInstance: {fileID: 508065968}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &512346137 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5967028838321123934, guid: 4d8038ad4bc603e459c4635bd6feb3be, type: 3}
+  m_PrefabInstance: {fileID: 606874766}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &606874766
 PrefabInstance:
@@ -3483,24 +3416,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item: {fileID: 0}
   quantity: 1
-  OnPickup:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 433409342}
-        m_TargetAssemblyTypeName: InventoryManager, Assembly-CSharp
-        m_MethodName: OnPickup
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnWeaponPickup:
-    m_PersistentCalls:
-      m_Calls: []
+  textToToggle: {fileID: 0}
 --- !u!114 &612233565
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3825,9 +3741,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 616110440}
     m_Modifications:
+    - target: {fileID: 1416805799473722882, guid: 95640a3edb825ce4e978a078e05e1d93, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2416614343077973073, guid: 95640a3edb825ce4e978a078e05e1d93, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3821962294620978033, guid: 95640a3edb825ce4e978a078e05e1d93, type: 3}
       propertyPath: m_Name
       value: RangedEnemy1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4586584669256866548, guid: 95640a3edb825ce4e978a078e05e1d93, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5782277149834620206, guid: 95640a3edb825ce4e978a078e05e1d93, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3867,6 +3795,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5782277149834620206, guid: 95640a3edb825ce4e978a078e05e1d93, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6422625552239604292, guid: 95640a3edb825ce4e978a078e05e1d93, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8331228568080617292, guid: 95640a3edb825ce4e978a078e05e1d93, type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -4019,6 +3955,7 @@ MonoBehaviour:
   maxHealth: 31
   healthBarBack: {fileID: 127528653}
   healthBarFill: {fileID: 183220359}
+  easeBar: {fileID: 167038853}
   healthGradient:
     serializedVersion: 2
     key0: {r: 0.9685534, g: 0, b: 0, a: 1}
@@ -4051,7 +3988,6 @@ MonoBehaviour:
     m_NumAlphaKeys: 2
   topFillSpeed: 1
   bottomFillSpeed: 0.5
-  easeBar: {fileID: 167038853}
   dmgFlashDuration: 0
   critWarningText: {fileID: 0}
   critHealth: 0.2
@@ -4781,24 +4717,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item: {fileID: 0}
   quantity: 1
-  OnPickup:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 433409342}
-        m_TargetAssemblyTypeName: InventoryManager, Assembly-CSharp
-        m_MethodName: OnPickup
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnWeaponPickup:
-    m_PersistentCalls:
-      m_Calls: []
+  textToToggle: {fileID: 0}
 --- !u!4 &832337121
 Transform:
   m_ObjectHideFlags: 0
@@ -4932,24 +4851,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item: {fileID: 0}
   quantity: 1
-  OnPickup:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 433409342}
-        m_TargetAssemblyTypeName: InventoryManager, Assembly-CSharp
-        m_MethodName: OnPickup
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnWeaponPickup:
-    m_PersistentCalls:
-      m_Calls: []
+  textToToggle: {fileID: 0}
 --- !u!4 &862331294
 Transform:
   m_ObjectHideFlags: 0
@@ -6837,9 +6739,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: BarrierEnemy (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 631877291097510994, guid: a42b8d78783a766488cbef64a630f33b, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 906172583225547969, guid: a42b8d78783a766488cbef64a630f33b, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1436153444205536250, guid: a42b8d78783a766488cbef64a630f33b, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2856976370708217239, guid: a42b8d78783a766488cbef64a630f33b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6879,6 +6789,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2856976370708217239, guid: a42b8d78783a766488cbef64a630f33b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4674394027175753097, guid: a42b8d78783a766488cbef64a630f33b, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6576458611250678649, guid: a42b8d78783a766488cbef64a630f33b, type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -7884,8 +7802,16 @@ PrefabInstance:
     m_TransformParent: {fileID: 616110440}
     m_Modifications:
     - target: {fileID: 2065397921471698950, guid: d5c53ec017be53a44b6bc585ca5dfe97, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2065397921471698950, guid: d5c53ec017be53a44b6bc585ca5dfe97, type: 3}
       propertyPath: enemySpeedMult
       value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6034946134417450452, guid: d5c53ec017be53a44b6bc585ca5dfe97, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7190173908179760642, guid: d5c53ec017be53a44b6bc585ca5dfe97, type: 3}
       propertyPath: m_LocalPosition.x
@@ -7925,6 +7851,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7190173908179760642, guid: d5c53ec017be53a44b6bc585ca5dfe97, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8812334459827783540, guid: d5c53ec017be53a44b6bc585ca5dfe97, type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8997302725253808589, guid: d5c53ec017be53a44b6bc585ca5dfe97, type: 3}
@@ -8003,8 +7933,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49519f3a695def34e9af241276c214d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerDamageScreen: {fileID: 512346137}
   playerModel: {fileID: 1662112948}
   playerController: {fileID: 1662112945}
+  animator: {fileID: 0}
   ignoreMask:
     serializedVersion: 2
     m_Bits: 8
@@ -8156,6 +8088,7 @@ MonoBehaviour:
   maxHealth: 25
   healthBarBack: {fileID: 1018228454}
   healthBarFill: {fileID: 33310591}
+  easeBar: {fileID: 2102237524}
   healthGradient:
     serializedVersion: 2
     key0: {r: 1, g: 0.13516712, b: 0, a: 1}
@@ -8188,7 +8121,6 @@ MonoBehaviour:
     m_NumAlphaKeys: 2
   topFillSpeed: 1
   bottomFillSpeed: 0.5
-  easeBar: {fileID: 2102237524}
   dmgFlashDuration: 1
   critWarningText: {fileID: 1606236996}
   critHealth: 0.2
@@ -13517,15 +13449,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5765e45ab2d81294fa10352ccd6e5a34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  assaultRifleModel: {fileID: 168825195215875818, guid: 77d2e92d2365b4e45836bb4581b6cc97, type: 3}
-  shotgunModel: {fileID: 6536510104674936741, guid: b034a42daa6b23a459727bf741d00205, type: 3}
-  energyRifleModel: {fileID: 4675086562006422597, guid: c8d60d6e5877ec34389af201fc11acc2, type: 3}
-  assaultRifleScriptableObject: {fileID: 11400000, guid: a26bf364d3604e24ab9eccb02ff35d9f, type: 2}
-  shotgunScriptableObject: {fileID: 11400000, guid: a4b9403197ab98b498ca8f1a514aac90, type: 2}
-  energyRifleScriptableObject: {fileID: 11400000, guid: 929a28ad414901b4691ff207fa57301d, type: 2}
+  availableWeapons: []
   gunModelPlaceHolder: {fileID: 1816056395}
-  relaodMessage: {fileID: 279733600}
   reloadText: {fileID: 0}
+  reloadMessage: {fileID: 0}
 --- !u!1 &1873616438
 GameObject:
   m_ObjectHideFlags: 0
@@ -14010,24 +13937,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item: {fileID: 0}
   quantity: 1
-  OnPickup:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 433409342}
-        m_TargetAssemblyTypeName: InventoryManager, Assembly-CSharp
-        m_MethodName: OnPickup
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnWeaponPickup:
-    m_PersistentCalls:
-      m_Calls: []
+  textToToggle: {fileID: 0}
 --- !u!1 &1988529143 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1050690610163541673, guid: 4d8038ad4bc603e459c4635bd6feb3be, type: 3}
@@ -14395,24 +14305,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item: {fileID: 0}
   quantity: 1
-  OnPickup:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 433409342}
-        m_TargetAssemblyTypeName: InventoryManager, Assembly-CSharp
-        m_MethodName: OnPickup
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnWeaponPickup:
-    m_PersistentCalls:
-      m_Calls: []
+  textToToggle: {fileID: 0}
 --- !u!4 &2020038977
 Transform:
   m_ObjectHideFlags: 0
@@ -14946,9 +14839,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 616110440}
     m_Modifications:
+    - target: {fileID: 1416805799473722882, guid: 95640a3edb825ce4e978a078e05e1d93, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2416614343077973073, guid: 95640a3edb825ce4e978a078e05e1d93, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3821962294620978033, guid: 95640a3edb825ce4e978a078e05e1d93, type: 3}
       propertyPath: m_Name
       value: RangedEnemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 4586584669256866548, guid: 95640a3edb825ce4e978a078e05e1d93, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5782277149834620206, guid: 95640a3edb825ce4e978a078e05e1d93, type: 3}
       propertyPath: m_LocalPosition.x
@@ -14988,6 +14893,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5782277149834620206, guid: 95640a3edb825ce4e978a078e05e1d93, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6422625552239604292, guid: 95640a3edb825ce4e978a078e05e1d93, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8331228568080617292, guid: 95640a3edb825ce4e978a078e05e1d93, type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8331228568080617292, guid: 95640a3edb825ce4e978a078e05e1d93, type: 3}

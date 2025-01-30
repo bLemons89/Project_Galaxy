@@ -64,7 +64,10 @@ public class WeaponInAction : MonoBehaviour
             OnSwitchWeapon();
 
             if (Input.GetKeyDown(KeyCode.Mouse0))
+            {
                 PlayerFireGun();
+                AudioManager.instance.PlaySFX(AudioManager.instance.Weapons, "ER_Sound");
+            }
 
             if (Input.GetKeyDown(KeyCode.R))
                 Reload();
