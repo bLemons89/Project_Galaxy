@@ -147,11 +147,19 @@ public class GameManager : MonoBehaviour
 
     public void Quit()
     {
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#else
-                    Application.Quit();
-#endif
+        #if UNITY_EDITOR
+                // Stop play mode in the editor
+                UnityEditor.EditorApplication.isPlaying = false;
+        #endif
+
+        #if UNITY_WEBGL
+            // reload the page on quit
+            Application.OpenURL(Application.absoluteURL); // This reloads the page, effectively restarting the game
+        #endif
+
+        #if !UNITY_EDITOR && !UNITY_WEBGL
+            Application.Quit();
+        #endif
     }
 
 }
