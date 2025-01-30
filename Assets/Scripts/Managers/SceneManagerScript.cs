@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Collections;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -7,7 +8,8 @@ public class SceneManagerScript : MonoBehaviour
 {
     public static SceneManagerScript instance;
 
-    private Dictionary<string, SceneData> sceneData = new Dictionary<string, SceneData>();
+    //private Dictionary<string, SceneData> sceneData = new Dictionary<string, SceneData>();
+    private Dictionary<string, Vector3> scenePositions = new Dictionary<string, Vector3>();
     private string currentSceneName;
 
     private void Awake()
@@ -15,9 +17,12 @@ public class SceneManagerScript : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            currentSceneName = "BETA_Main Menu";                    //change to something that checks current scene in the future
-
             DontDestroyOnLoad(gameObject);
+
+            SceneManager.sceneLoaded += OnSceneLoaded;
+            currentSceneName = SceneManager.GetActiveScene().name;
+
+            LoadScenePositions();
         }
         else
         {
@@ -37,15 +42,24 @@ public class SceneManagerScript : MonoBehaviour
 
         // Load the new scene
         SceneManager.LoadScene(newSceneName);
-        currentSceneName = newSceneName;
-
-        // Restore the new scene's state (if it exists)
-        SceneManager.sceneLoaded += OnSceneLoaded;
+        //currentSceneName = newSceneName;
     }
 
     // Save the state of the current scene
     private void SaveCurrentSceneState()
     {
+        GameObject player = GameObject.FindWithTag("Player");
+        if (player != null)
+        {
+            Vector3 scenePosition = 
+                player.transform.position + player.transform.up + (player.transform.forward * -5f);
+
+            scenePositions[currentSceneName] = scenePosition;
+            SaveScenePositions();
+        }
+
+
+        /*
         if (!string.IsNullOrEmpty(currentSceneName))
         {
             SceneData data = new SceneData();
@@ -61,13 +75,23 @@ public class SceneManagerScript : MonoBehaviour
                 // (e.g., inventory, enemies, objects, etc.)
                 sceneData[currentSceneName] = data;
 
-        }
+        }*/
     }
 
     // Restore the state of a scene when it is loaded
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (sceneData.ContainsKey(scene.name))
+        currentSceneName = scene.name;
+
+        GameObject player;
+        while ((player = GameObject.FindWithTag("Player")) == null)
+        {
+            return;
+        }
+
+        LoadPlayerPosition();
+
+        /*if (sceneData.ContainsKey(scene.name))
         {
             SceneData data = sceneData[scene.name];
 
@@ -83,6 +107,72 @@ public class SceneManagerScript : MonoBehaviour
         }
 
         // Unsubscribe from the event
+        SceneManager.sceneLoaded -= OnSceneLoaded;*/
+    }
+
+    private IEnumerator RestorePlayerPosition()
+    {
+        yield return new WaitForSeconds(0.1f);
+
+        GameObject player;
+        while ((player = GameObject.FindWithTag("Player")) == null)
+        {
+            yield return null;
+        }
+
+        LoadPlayerPosition();
+    }
+
+    private void LoadPlayerPosition()
+    {
+        if (scenePositions.ContainsKey(currentSceneName))
+        {
+            Vector3 savedPosition = scenePositions[currentSceneName];
+
+            GameObject player = GameObject.FindWithTag("Player");
+            if (player != null)
+            {
+                player.GetComponent<CharacterController>().enabled = false;
+                player.transform.position = savedPosition;
+                player.GetComponent<CharacterController>().enabled = true;
+            }
+        }
+    }
+
+    private void SaveScenePositions()
+    {
+        foreach (var scene in scenePositions)
+        {
+            PlayerPrefs.SetFloat($"{scene.Key}_X", scene.Value.x);
+            PlayerPrefs.SetFloat($"{scene.Key}_Y", scene.Value.y);
+            PlayerPrefs.SetFloat($"{scene.Key}_Z", scene.Value.z);
+        }
+        PlayerPrefs.Save(); //ensure data is written to disk
+    }
+
+    private void LoadScenePositions()
+    {
+        scenePositions.Clear();
+        string[] sceneNames = { "BETA_Main Menu",
+                                "BETA_Outer Ship Area",
+                                "BETA_Area-1-Platforms",
+                                "BETA_Area-2-Industrial" }; //manually define known scene names
+
+        foreach (var scene in sceneNames)
+        {
+            if (PlayerPrefs.HasKey($"{scene}_X"))
+            {
+                float x = PlayerPrefs.GetFloat($"{scene}_X");
+                float y = PlayerPrefs.GetFloat($"{scene}_Y");
+                float z = PlayerPrefs.GetFloat($"{scene}_Z");
+                scenePositions[scene] = new Vector3(x, y, z);
+                Debug.Log($"Loaded position for {scene}: ({x}, {y}, {z})");
+            }
+        }
+    }
+
+    private void OnDestroy()
+    {
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 }

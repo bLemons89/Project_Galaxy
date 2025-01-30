@@ -42291,27 +42291,6 @@ MonoBehaviour:
   _musicSlider: {fileID: 2570301391531961172}
   _sfxSlider: {fileID: 5612226920205787815}
   _playerSFXSlider: {fileID: 5612226920205787815}
---- !u!114 &2103310751629704479
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8372623425591706036}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d4ccf752f6253141aa8445d6ebf95e4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  loadNextScene: 
-  gunModelPlaceHolder: {fileID: 0}
-  playTimerText: {fileID: 4292129242228781187}
-  data:
-    x: 0
-    y: 0
-    z: 0
-    playTimer: 0
-    CurrentHealth: 0
 --- !u!114 &7129291247331537444
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -42325,6 +42304,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioMixer: {fileID: 24100000, guid: 4f426bb281debb64394b130587d59837, type: 2}
+  sfxMaster: {fileID: 0}
   source_2D: {fileID: 8664675781185621932}
   source_Player: {fileID: 0}
   GameMusic: []

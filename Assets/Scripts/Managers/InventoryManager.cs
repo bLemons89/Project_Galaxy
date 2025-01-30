@@ -15,6 +15,19 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
+[System.Serializable]
+public class InventoryData
+{
+    public List<InventorySlotData> inventorySlots = new List<InventorySlotData>();
+}
+
+[System.Serializable]
+public class InventorySlotData
+{
+    public string itemName;
+    public int quantity;
+}
+
 public class InventoryManager : MonoBehaviour
 {
     //singleton
@@ -24,6 +37,12 @@ public class InventoryManager : MonoBehaviour
 
     //Unity Event notifies Inventory was updated
     public UnityEvent OnInventoryUpdated;   //connect to CheckAvailable weapons in WeaponInAction
+
+    //inventory storage
+    List<InventorySlot> inventorySlots = new List<InventorySlot>();
+
+    public List<InventorySlot> InventorySlotsList => inventorySlots;
+
 
     int missionItemsCollected = 1;
     int shardsCollected = 0;
@@ -41,6 +60,7 @@ public class InventoryManager : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(gameObject); //keeps inventory between scenes
+
         }
         else
             Destroy(gameObject);
@@ -51,11 +71,6 @@ public class InventoryManager : MonoBehaviour
         if(player == null)
             player = GameObject.FindWithTag("Player");
     }
-
-    //inventory storage
-    List<InventorySlot> inventorySlots = new List<InventorySlot>();
-
-    public List<InventorySlot> InventorySlotsList => inventorySlots;
 
     //handles item pickup
     public void OnPickup(ItemBase item, int quantity)
