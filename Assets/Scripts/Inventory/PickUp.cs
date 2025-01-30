@@ -18,9 +18,18 @@ public class PickUp : MonoBehaviour
     [SerializeField] int quantity = 1;  //number of that item this pickup will add to the inventory
     [SerializeField] GameObject textToToggle;
 
+    [Header("For Saving/loading")]
+    public string itemID;
+
     bool playerInRange;
     //public UnityEvent<ItemBase, int> OnPickup;
     //public UnityEvent OnWeaponPickup;
+
+    private void Start()
+    {
+        if(SceneManagerScript.instance.SaveData.sceneObjects.Exists(o => o.uniqueID == itemID))
+        { gameObject.SetActive(false); }
+    }
 
     private void Update()
     {

@@ -3,14 +3,20 @@ using System.Collections;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Xml;
 
 public class SceneManagerScript : MonoBehaviour
 {
     public static SceneManagerScript instance;
 
+    SaveData saveData;
+    int activeSaveSlot = 1; //start at first slot by default
+
+    public SaveData SaveData => saveData;
+
     //private Dictionary<string, SceneData> sceneData = new Dictionary<string, SceneData>();
-    private Dictionary<string, Vector3> scenePositions = new Dictionary<string, Vector3>();
-    private string currentSceneName;
+    //private Dictionary<string, Vector3> scenePositions = new Dictionary<string, Vector3>();
+    //private string currentSceneName;
 
     private void Awake()
     {
@@ -20,9 +26,9 @@ public class SceneManagerScript : MonoBehaviour
             DontDestroyOnLoad(gameObject);
 
             SceneManager.sceneLoaded += OnSceneLoaded;
-            currentSceneName = SceneManager.GetActiveScene().name;
+            //currentSceneName = SceneManager.GetActiveScene().name;
 
-            LoadScenePositions();
+            //LoadScenePositions();
         }
         else
         {
@@ -33,63 +39,42 @@ public class SceneManagerScript : MonoBehaviour
     // Change to a new scene and save the current scene's state
     public void ChangeScene(string newSceneName)
     {
-        if(currentSceneName == "BETA_Main Menu")
+        if(SceneManager.GetActiveScene().name == "BETA_Main Menu")
         {
            GameObject.FindWithTag("MainMenu").SetActive(false);
         }
 
-        SaveCurrentSceneState();
+        SaveSceneState();
 
         // Load the new scene
         SceneManager.LoadScene(newSceneName);
         //currentSceneName = newSceneName;
     }
 
-    // Save the state of the current scene
-    private void SaveCurrentSceneState()
-    {
-        GameObject player = GameObject.FindWithTag("Player");
-        if (player != null)
-        {
-            Vector3 scenePosition = 
-                player.transform.position + player.transform.up + (player.transform.forward * -5f);
-
-            scenePositions[currentSceneName] = scenePosition;
-            SaveScenePositions();
-        }
-
-
-        /*
-        if (!string.IsNullOrEmpty(currentSceneName))
-        {
-            SceneData data = new SceneData();
-
-            // Example: Save player position
-            GameObject player = GameObject.FindWithTag("Player");
-            if (player != null)
-            {
-                data.playerPosition = player.transform.position + (player.transform.up) + //up to prevent falling through ground
-                    (player.transform.forward * -5f); //5 units back to prevent from spawning on a trigger
-            }
-                // Save other relevant data for the scene
-                // (e.g., inventory, enemies, objects, etc.)
-                sceneData[currentSceneName] = data;
-
-        }*/
-    }
-
     // Restore the state of a scene when it is loaded
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        currentSceneName = scene.name;
+        //currentSceneName = scene.name;
 
-        GameObject player;
-        while ((player = GameObject.FindWithTag("Player")) == null)
+        //restore player position in that scene
+        GameObject player = GameObject.FindWithTag("Player");
+        if (player != null && saveData != null && 
+            saveData.scenePositions.ContainsKey(SceneManager.GetActiveScene().name))
         {
-            return;
+            player.GetComponent<CharacterController>().enabled = false;
+            player.transform.position = saveData.scenePositions[SceneManager.GetActiveScene().name];
+            player.GetComponent<CharacterController>().enabled = true;
         }
 
-        LoadPlayerPosition();
+        //restore items and enemies to the state they were left in
+        foreach(SceneObjectData objData in saveData.sceneObjects)
+        {
+            GameObject obj = FindObjectByUniqueID(objData.uniqueID);
+            if (obj != null)
+            {
+                obj.SetActive(objData.isActive);
+            }
+        }
 
         /*if (sceneData.ContainsKey(scene.name))
         {
@@ -109,8 +94,60 @@ public class SceneManagerScript : MonoBehaviour
         // Unsubscribe from the event
         SceneManager.sceneLoaded -= OnSceneLoaded;*/
     }
+    // Save the state of the current scene
+    private void SaveSceneState()
+    {
+        if (saveData == null) { return; }
 
-    private IEnumerator RestorePlayerPosition()
+        GameObject player = GameObject.FindWithTag("Player");
+        if(player != null)
+        {
+            //saving player position to current scene
+            saveData.scenePositions[SceneManager.GetActiveScene().name] = player.transform.position;
+        }
+
+        saveData.sceneObjects.Clear();
+
+        foreach (UniqueID obj in FindObjectsOfType<UniqueID>())
+        {
+            saveData.sceneObjects.Add(new SceneObjectData
+            {
+                uniqueID = obj.uniqueID,
+                isActive = obj.gameObject.activeSelf
+            });
+        }
+
+        SaveSystem.SaveGame(saveData, activeSaveSlot);
+    }
+
+    public void SaveGame()
+    {
+        saveData.currentSceneName = SceneManager.GetActiveScene().name;
+        SaveSystem.SaveGame(saveData, activeSaveSlot);      //save data to specific slot
+    }
+
+    public void LoadGame(int slot)
+    {
+        activeSaveSlot = slot;
+        saveData = SaveSystem.LoadGame(slot);
+        if(saveData != null)
+        {
+            SceneManager.LoadScene(saveData.currentSceneName);
+        }
+    }
+
+    private GameObject FindObjectByUniqueID(string id)
+    {
+        foreach (UniqueID obj in FindObjectsOfType<UniqueID>())
+        {
+            if(obj.uniqueID == id)
+                return obj.gameObject;
+        }
+
+        return null;
+    }
+
+    /*private IEnumerator RestorePlayerPosition()
     {
         yield return new WaitForSeconds(0.1f);
 
@@ -169,7 +206,7 @@ public class SceneManagerScript : MonoBehaviour
                 Debug.Log($"Loaded position for {scene}: ({x}, {y}, {z})");
             }
         }
-    }
+    }*/
 
     private void OnDestroy()
     {
