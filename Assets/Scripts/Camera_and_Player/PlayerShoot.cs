@@ -15,7 +15,6 @@ public class PlayerShoot : MonoBehaviour
     {
         if (Input.GetButtonDown("Fire"))
         {
-            AudioManager.instance.PlaySFX(AudioManager.instance.Weapons, "AR_Sound");
             OnShootInput?.Invoke();
         }
 

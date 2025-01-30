@@ -471,11 +471,11 @@ public class ButtonFunctions : MonoBehaviour
 
             musicVolumeText.text = (_musicSlider.value * 100).ToString("F0");
         }
-        public void SFXAllVolume()
-        {
-            AudioManager.instance.SFXAllVolume(_sfxSlider.value);
+        //public void SFXAllVolume()
+        //{
+        //    AudioManager.instance.SFXAllVolume(_sfxSlider.value);
 
-            sfxVolumeText.text = (_sfxSlider.value * 100).ToString("F0");
-        }
+        //    sfxVolumeText.text = (_sfxSlider.value * 100).ToString("F0");
+        //}
 
 }

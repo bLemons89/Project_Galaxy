@@ -32,7 +32,7 @@ public class AudioManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
-    }       
+    }
     private void Start()
     {
         source_2D = GameManager.instance.GetComponent<AudioSource>();
@@ -43,10 +43,10 @@ public class AudioManager : MonoBehaviour
         if (sfxMaster != null) source_Player.outputAudioMixerGroup = sfxMaster;
 
         source_2D.loop = true;
-        PlayMusic(source_2D, MenuMusic,"LostSignal");
+        PlayMusic(source_2D, MenuMusic, "LostSignal");
     }
-    
-    
+
+
     public void PlayMusic(AudioSource source, Sound[] arrayName, string clipName = "")
     {
         Sound sound = null;
@@ -61,7 +61,7 @@ public class AudioManager : MonoBehaviour
             // If no clip name is provided, pick a random sound
             sound = arrayName[UnityEngine.Random.Range(0, arrayName.Length)];
         }
-        
+
         if (sound == null || sound.clips == null || sound.clips.Length == 0)
         {
             Debug.Log("Sound Not Found");
@@ -93,8 +93,8 @@ public class AudioManager : MonoBehaviour
             Debug.Log("Sound Not Found");
             return;
         }
-            AudioClip clipToPlay = sound.clips[0];
-        
+        AudioClip clipToPlay = sound.clips[0];
+
         // play the sound on the player audio source
         source_Player.PlayOneShot(clipToPlay);
     }
