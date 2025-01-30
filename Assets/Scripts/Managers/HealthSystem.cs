@@ -124,35 +124,36 @@ public class HealthSystem : MonoBehaviour
     void UpdateHealthBar()
     {
         float fillAmount = (float)currentHealth / maxHealth;
-
-        DOTween.KillAll(true);
-
-        if (isHeal)
+        if (healthBarFill != null)
         {
-
-            healthBarFill.DOFillAmount(fillAmount, topFillSpeed);
-
-            if (easeBar != null)                                            //leave ease bar empty for enemies
+            if (isHeal)
             {
-                easeBar.color = Color.green;
-                easeBar.DOFillAmount(fillAmount, bottomFillSpeed);
+                healthBarFill.fillAmount = Mathf.Lerp(healthBarFill.fillAmount, fillAmount, topFillSpeed * Time.deltaTime);
+                //healthBarFill.DOFillAmount(fillAmount, topFillSpeed);
+
+                //leave ease bar empty for enemies
+                if (easeBar != null)                                           
+                {
+                    easeBar.color = Color.green;
+                    easeBar.fillAmount = Mathf.Lerp(easeBar.fillAmount, fillAmount, bottomFillSpeed * Time.deltaTime);
+                    //easeBar.DOFillAmount(fillAmount, bottomFillSpeed);
+                }
+
             }
-
-        }
-        else
-        {
-
-            healthBarFill.DOFillAmount(fillAmount, bottomFillSpeed);
-
-            if (easeBar != null)
+            else
             {
-                easeBar.color = Color.red;
-                easeBar.DOFillAmount(fillAmount, topFillSpeed);
-            }
-        }
+             healthBarFill.fillAmount = Mathf.Lerp(healthBarFill.fillAmount, fillAmount, bottomFillSpeed * Time.deltaTime);
+             //healthBarFill.DOFillAmount(fillAmount, bottomFillSpeed);
 
-        if(healthBarFill != null)
-            healthBarFill.color = healthGradient.Evaluate((float)currentHealth / maxHealth);
+                if (easeBar != null)
+                {
+                    easeBar.color = Color.red;
+                    easeBar.fillAmount = Mathf.Lerp(easeBar.fillAmount, fillAmount, topFillSpeed * Time.deltaTime);
+                    //easeBar.DOFillAmount(fillAmount, topFillSpeed);
+                }
+            }
+            healthBarFill.color = healthGradient.Evaluate((float)currentHealth / maxHealth); 
+        }
     }
 
     // Critical Health //
