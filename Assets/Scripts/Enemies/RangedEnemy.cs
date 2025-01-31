@@ -35,8 +35,11 @@ public class RangedEnemy : EnemyBase
         base.Start();
 
         startingPos = transform.position; //to remember the starting position for roaming
+        animator = this.GetComponent<Animator>();
+            weaponInAction.EquipWeapon(0);
 
-        weaponInAction.EquipWeapon(0);
+        // if this is an override, it's not calling the base start
+        //GameManager.instance.OnGameStateChange += OnGameStateChange;
     }
 
     void Update()
@@ -109,4 +112,22 @@ public class RangedEnemy : EnemyBase
         //turn off
         isRoaming = false;
     }
+
+    //FOR PAUSE
+    //private void OnGameStateChange(GameState newGameState)
+    //{
+    //    if (newGameState == GameState.Pause)
+    //    {
+    //        this.enabled = false;
+    //    }
+    //    else if (newGameState == GameState.Gameplay)
+    //    {
+    //        this.enabled = true;
+    //    }
+    //}
+    //private void OnDestroy()
+    //{
+    //    // Unsubscribe
+    //    GameManager.instance.OnGameStateChange -= OnGameStateChange;
+    //}
 }

@@ -53,7 +53,7 @@ public abstract class EnemyBase : MonoBehaviour
             playerSettings = player.GetComponent<playerScript>();
 
             // Subscribe to the State Changes
-            GameManager.instance.OnGameStateChange += OnGameStateChange;
+            //GameManager.instance.OnGameStateChange += OnGameStateChange;
         }
 
         if (this.GetComponent<TargetingSystem>() != null)
@@ -109,20 +109,20 @@ public abstract class EnemyBase : MonoBehaviour
     }
 
     //FOR PAUSE
-    private void OnGameStateChange(GameState newGameState)
-    {
-        if (newGameState == GameState.Pause)
-        {
-            this.enabled = false;
-        }
-        else if (newGameState == GameState.Gameplay)
-        {
-            this.enabled = true;
-        }
-    }
-    private void OnDestroy()
-    {
-        // Unsubscribe
-        GameManager.instance.OnGameStateChange -= OnGameStateChange;
-    }
+    //private void OnGameStateChange(GameState newGameState)
+    //{
+    //    if (newGameState == GameState.Pause)
+    //    {
+    //        this.enabled = false;
+    //    }
+    //    else if (newGameState == GameState.Gameplay)
+    //    {
+    //        this.enabled = true;
+    //    }
+    //}
+    //private void OnDestroy()
+    //{
+    //    // Unsubscribe
+    //    GameManager.instance.OnGameStateChange -= OnGameStateChange;
+    //}
 }

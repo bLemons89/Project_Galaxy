@@ -186,7 +186,7 @@ public class ButtonFunctions : MonoBehaviour
             GameManager.instance.MenuActive.SetActive(true);
         }
     }
-    public void SaveMenuButton()
+    public IEnumerator SaveMenuButton()
     {
         if (GameManager.instance.MenuActive != saveMenu)
         {
@@ -201,9 +201,28 @@ public class ButtonFunctions : MonoBehaviour
         backgroundGroup.alpha = 1f;
         RectTransform saveTransform = saveMenu.GetComponent<RectTransform>();
 
-        saveTransform.DOAnchorPos(new Vector3(0, 0, 0), 0.25f)
-                     .SetEase(Ease.InOutQuad);
+        Vector3 startPos = saveTransform.anchoredPosition;
+        Vector3 endPos = new Vector3(0, 0, 0);
+        float duration = 0.25f;
+        float elapsedTime = 0f;
 
+        while (elapsedTime < duration)
+        {
+            // Lerp the position over time
+            saveTransform.anchoredPosition = Vector3.Lerp(startPos, endPos, elapsedTime / duration);
+
+            // Increase elapsed time by time passed
+            elapsedTime += Time.deltaTime;
+
+            // Wait for the next frame
+            yield return null;
+        }
+
+        // Ensure it ends exactly at the target position
+        saveTransform.anchoredPosition = endPos;
+
+        //saveTransform.DOAnchorPos(new Vector3(0, 0, 0), 0.25f)
+        //             .SetEase(Ease.InOutQuad);
 
     }
     public void CloseButton()
@@ -401,10 +420,27 @@ public class ButtonFunctions : MonoBehaviour
         settingsTransform.DOAnchorPos(new Vector3(-1983, 0, 0), 0.25f).SetEase(Ease.InOutQuad);
         settingsMenu.SetActive(false);
     }
-    public void SaveMenuReset()
+    public IEnumerator SaveMenuReset()
     {
         RectTransform saveTransform = saveMenu.GetComponent<RectTransform>();
-        saveTransform.DOAnchorPos(new Vector3(-1983, 0, 0), 0.25f).SetEase(Ease.InOutQuad);
+
+        Vector3 startPos = saveTransform.anchoredPosition;
+        Vector3 endPos = new Vector3(-1983, 0, 0);
+        float duration = 0.25f;
+        float elapsedTime = 0f;
+
+        // Move the position over time
+        while (elapsedTime < duration)
+        {
+            saveTransform.anchoredPosition = Vector3.Lerp(startPos, endPos, elapsedTime / duration);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        // Ensure it ends exactly at the target position
+        saveTransform.anchoredPosition = endPos;
+
+        // Deactivate the save menu after the movement
         saveMenu.SetActive(false);
     }
     public void CreditsReset()
@@ -422,7 +458,7 @@ public class ButtonFunctions : MonoBehaviour
         }
         else if(saveMenu.activeSelf)
         {
-            SaveMenuReset();
+            StartCoroutine(SaveMenuReset());
         }
         else if(creditScreen.activeSelf)
         {
@@ -473,11 +509,10 @@ public class ButtonFunctions : MonoBehaviour
 
             musicVolumeText.text = (_musicSlider.value * 100).ToString("F0");
         }
-        public void SFXAllVolume()
-        {
-            AudioManager.instance.SFXAllVolume(_sfxSlider.value);
+        //public void SFXAllVolume()
+        //{
+        //    AudioManager.instance.SFXAllVolume(_sfxSlider.value);
 
-            sfxVolumeText.text = (_sfxSlider.value * 100).ToString("F0");
-        }
-
+        //    sfxVolumeText.text = (_sfxSlider.value * 100).ToString("F0");
+        //}
 }

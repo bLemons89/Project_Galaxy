@@ -20,7 +20,7 @@ public class cameraController : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         origSensitivity = sensitivity;
 
-        GameManager.instance.OnGameStateChange += OnGameStateChange;
+        //GameManager.instance.OnGameStateChange += OnGameStateChange;
     }
 
     
@@ -42,29 +42,29 @@ public class cameraController : MonoBehaviour
     }
 
 
-    private void OnGameStateChange(GameState newGameState)
-    {
-        if (newGameState == GameState.Pause)
-        {
-            this.enabled = false;
-        }
-        else if (newGameState == GameState.Gameplay)
-        {
-            this.enabled = true;
-        }
-    }
-    private void OnDestroy()
-    {
-        if (GameManager.instance == null)
-        {
-            Debug.Log("GameManager is null");
-        }
-        if (Camera.main == null)
-        {
-            Debug.Log("cameraController is null");
-        }
-        // Unsubscribe
-        GameManager.instance.OnGameStateChange -= OnGameStateChange;
-    }
+    //private void OnGameStateChange(GameState newGameState)
+    //{
+    //    if (newGameState == GameState.Pause)
+    //    {
+    //        this.enabled = false;
+    //    }
+    //    else if (newGameState == GameState.Gameplay)
+    //    {
+    //        this.enabled = true;
+    //    }
+    //}
+    //private void OnDestroy()
+    //{
+    //    if (GameManager.instance == null)
+    //    {
+    //        Debug.Log("GameManager is null");
+    //    }
+    //    if (Camera.main == null)
+    //    {
+    //        Debug.Log("cameraController is null");
+    //    }
+    //    // Unsubscribe
+    //    GameManager.instance.OnGameStateChange -= OnGameStateChange;
+    //}
 
 }
