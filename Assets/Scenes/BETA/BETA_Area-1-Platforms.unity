@@ -305,7 +305,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &64150919
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6304,7 +6304,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &912948864
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6752,7 +6752,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &1002497171
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -8890,9 +8890,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0114f83322a1ba94ca43510d247f195c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioMixer: {fileID: 0}
-  audioSettings: {fileID: 0}
-  mixerAdapter: {fileID: 0}
   source_2D: {fileID: 0}
   source_Player: {fileID: 0}
   GameMusic: []

@@ -6349,7 +6349,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1331751413
 Transform:
   m_ObjectHideFlags: 0
@@ -8804,7 +8804,7 @@ MonoBehaviour:
   topFillSpeed: 0
   bottomFillSpeed: 0
   dmgFlashDuration: 0
-  critWarningText: {fileID: 0}
+  critWarning: {fileID: 0}
   critHealth: 0.2
   flashSpeed: 0.5
   OnDeath:
