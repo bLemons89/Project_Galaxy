@@ -936,7 +936,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -649, y: 366.78}
+  m_AnchoredPosition: {x: -649, y: 322}
   m_SizeDelta: {x: 405.5385, y: 244.99438}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4096387311128995992
@@ -33344,8 +33344,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -501, y: -412}
-  m_SizeDelta: {x: 708.7711, y: 48}
+  m_AnchoredPosition: {x: -502.0807, y: -412}
+  m_SizeDelta: {x: 706.608, y: 48}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6188717126497237053
 CanvasRenderer:
@@ -33893,8 +33893,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 354.8874, y: 20}
-  m_SizeDelta: {x: 717.9647, y: 56}
+  m_AnchoredPosition: {x: 352.34003, y: 20}
+  m_SizeDelta: {x: 712.87, y: 56}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3987548998008285848
 CanvasRenderer:
@@ -33929,7 +33929,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 0
-  m_FillAmount: 0.684
+  m_FillAmount: 0.827
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
@@ -34340,10 +34340,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1644447013530393672}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1925, y: 1085}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -14.02, y: 5.257}
+  m_SizeDelta: {x: 1888.088, y: 1163.749}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4575823334765573205
 CanvasRenderer:
@@ -44735,8 +44735,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0114f83322a1ba94ca43510d247f195c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioMixer: {fileID: 24100000, guid: 4f426bb281debb64394b130587d59837, type: 2}
-  sfxMaster: {fileID: 0}
   source_2D: {fileID: 8664675781185621932}
   source_Player: {fileID: 0}
   GameMusic: []
