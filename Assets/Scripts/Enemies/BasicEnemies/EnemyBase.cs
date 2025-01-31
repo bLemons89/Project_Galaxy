@@ -29,6 +29,7 @@ public abstract class EnemyBase : MonoBehaviour
 
     protected GameObject player;
     protected playerScript playerSettings;
+    protected UniqueID uniqueID;
 
     //getters and setters
     //public float CurrentHealth
@@ -41,13 +42,18 @@ public abstract class EnemyBase : MonoBehaviour
 
     protected virtual void Start()
     {
+        uniqueID = GetComponent<UniqueID>();
+
+        if(SceneManagerScript.instance.SaveData.destroyedObjects.Contains(uniqueID.ID))
+        { Destroy(gameObject); }        //destroy if previously killed
+
         if (GameManager.instance != null)
         {
             player = GameObject.FindWithTag("Player");
             playerSettings = player.GetComponent<playerScript>();
 
             // Subscribe to the State Changes
-            GameManager.instance.OnGameStateChange += OnGameStateChange;
+            //GameManager.instance.OnGameStateChange += OnGameStateChange;
         }
 
         if (this.GetComponent<TargetingSystem>() != null)
@@ -92,6 +98,9 @@ public abstract class EnemyBase : MonoBehaviour
         {
             animator.SetTrigger("isDead");
 
+            SceneManagerScript.instance.MarkObjectAsDestroyed(uniqueID.ID);
+            SceneManagerScript.instance.SaveGame();
+
             if (weaponInAction)
                 weaponInAction.DropEquippedGun();
 
@@ -100,20 +109,20 @@ public abstract class EnemyBase : MonoBehaviour
     }
 
     //FOR PAUSE
-    private void OnGameStateChange(GameState newGameState)
-    {
-        if (newGameState == GameState.Pause)
-        {
-            this.enabled = false;
-        }
-        else if (newGameState == GameState.Gameplay)
-        {
-            this.enabled = true;
-        }
-    }
-    private void OnDestroy()
-    {
-        // Unsubscribe
-        GameManager.instance.OnGameStateChange -= OnGameStateChange;
-    }
+    //private void OnGameStateChange(GameState newGameState)
+    //{
+    //    if (newGameState == GameState.Pause)
+    //    {
+    //        this.enabled = false;
+    //    }
+    //    else if (newGameState == GameState.Gameplay)
+    //    {
+    //        this.enabled = true;
+    //    }
+    //}
+    //private void OnDestroy()
+    //{
+    //    // Unsubscribe
+    //    GameManager.instance.OnGameStateChange -= OnGameStateChange;
+    //}
 }

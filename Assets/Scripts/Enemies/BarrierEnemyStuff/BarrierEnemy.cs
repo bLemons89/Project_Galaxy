@@ -33,6 +33,10 @@ public class BarrierEnemy : EnemyBase
         PlayerScript = FindObjectOfType<playerScript>();
 
         weaponInAction.EquipWeapon(0);
+        animator = this.GetComponent<Animator>();
+
+        // Subscribe to the State Changes
+        //GameManager.instance.OnGameStateChange += OnGameStateChange;
     }
     // Update is called once per frame
     void Update()
@@ -148,4 +152,22 @@ public class BarrierEnemy : EnemyBase
         if (barrierObj)
             Destroy(barrier, barrierLifetime);
     }
+
+    //FOR PAUSE
+    //private void OnGameStateChange(GameState newGameState)
+    //{
+    //    if (newGameState == GameState.Pause)
+    //    {
+    //        this.enabled = false;
+    //    }
+    //    else if (newGameState == GameState.Gameplay)
+    //    {
+    //        this.enabled = true;
+    //    }
+    //}
+    //private void OnDestroy()
+    //{
+    //    // Unsubscribe
+    //    GameManager.instance.OnGameStateChange -= OnGameStateChange;
+    //}
 }

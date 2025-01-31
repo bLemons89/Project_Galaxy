@@ -12,8 +12,8 @@ PlayerSettings:
   targetDevice: 2
   useOnDemandResources: 0
   accelerometerFrequency: 60
-  companyName: DefaultCompany
-  productName: Project_Galaxy
+  companyName: Out of Sink Studio
+  productName: Project Galaxy
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
@@ -330,7 +330,7 @@ PlayerSettings:
   - m_BuildTarget: 
     m_Icons:
     - serializedVersion: 2
-      m_Icon: {fileID: 2800000, guid: 4148de68b8b88854eb659f0c447b3003, type: 3}
+      m_Icon: {fileID: 2800000, guid: 1cece37914aaa76428e6e6963c07757e, type: 3}
       m_Width: 128
       m_Height: 128
       m_Kind: 0

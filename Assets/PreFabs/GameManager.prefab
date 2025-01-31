@@ -936,7 +936,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -649, y: 366.78}
+  m_AnchoredPosition: {x: -649, y: 322}
   m_SizeDelta: {x: 405.5385, y: 244.99438}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4096387311128995992
@@ -9482,7 +9482,7 @@ GameObject:
   - component: {fileID: 4689574399511382491}
   - component: {fileID: 3260487782645128415}
   - component: {fileID: 7771187740979673122}
-  - component: {fileID: 9131695848047055185}
+  - component: {fileID: 8655688921059050471}
   m_Layer: 5
   m_Name: Loading Particles
   m_TagString: UI
@@ -9587,7 +9587,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &9131695848047055185
+--- !u!114 &8655688921059050471
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9596,10 +9596,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3421996564046647485}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1df787993a1c00f4a94372c27a1f9312, type: 3}
+  m_Script: {fileID: 11500000, guid: cc8da814dcc174d4daf865955f58f45f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadDuration: 5
+  ps: {fileID: 7646557710180245329}
 --- !u!1 &3428430209816228702
 GameObject:
   m_ObjectHideFlags: 0
@@ -9930,16 +9930,16 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4400540016892391275}
-        m_TargetAssemblyTypeName: ButtonFunctions, Assembly-CSharp
-        m_MethodName: SaveMenuButton
-        m_Mode: 1
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: SceneManagerScript, Assembly-CSharp
+        m_MethodName: ChangeScene
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: BETA_ShipHub
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!1 &3748276777050735030
@@ -33344,8 +33344,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -501, y: -412}
-  m_SizeDelta: {x: 708.7711, y: 48}
+  m_AnchoredPosition: {x: -502.0807, y: -412}
+  m_SizeDelta: {x: 706.608, y: 48}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6188717126497237053
 CanvasRenderer:
@@ -33893,8 +33893,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 354.8874, y: 20}
-  m_SizeDelta: {x: 717.9647, y: 56}
+  m_AnchoredPosition: {x: 352.34003, y: 20}
+  m_SizeDelta: {x: 712.87, y: 56}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3987548998008285848
 CanvasRenderer:
@@ -33929,7 +33929,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 0
-  m_FillAmount: 0.684
+  m_FillAmount: 0.827
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
@@ -34340,10 +34340,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1644447013530393672}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1925, y: 1085}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -14.02, y: 5.257}
+  m_SizeDelta: {x: 1888.088, y: 1163.749}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4575823334765573205
 CanvasRenderer:
@@ -43939,7 +43939,7 @@ GameObject:
   - component: {fileID: 5621287962370738783}
   m_Layer: 5
   m_Name: Main Menu Primary
-  m_TagString: Untagged
+  m_TagString: MainMenu
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -44638,7 +44638,6 @@ GameObject:
   - component: {fileID: 8050409024001276447}
   - component: {fileID: 4917149712833974030}
   - component: {fileID: 4400540016892391275}
-  - component: {fileID: 2103310751629704479}
   - component: {fileID: 7129291247331537444}
   - component: {fileID: 8664675781185621932}
   - component: {fileID: 7643303237177001918}
@@ -44735,8 +44734,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0114f83322a1ba94ca43510d247f195c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioMixer: {fileID: 24100000, guid: 4f426bb281debb64394b130587d59837, type: 2}
-  sfxMaster: {fileID: 0}
   source_2D: {fileID: 8664675781185621932}
   source_Player: {fileID: 0}
   GameMusic: []

@@ -8,16 +8,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
+using TMPro;
 using UnityEngine;
 
 public class Objective8 : MonoBehaviour
 {
+    [SerializeField] TextMeshProUGUI winText;
+
     bool playerInRange;
     GameObject boss;
 
     private void Update()
     {
-        if (boss = GameObject.FindWithTag("Boss"))
+        /*if (boss = GameObject.FindWithTag("Boss"))
         {
 
             if (playerInRange &&
@@ -27,6 +30,12 @@ public class Objective8 : MonoBehaviour
 
                 Destroy(gameObject);
             }
+        }*/
+
+        if (playerInRange && boss == null && InventoryManager.instance.MissionItemsCollected >= 3)
+        {
+            Time.timeScale = 0;
+            winText.enabled = true;
         }
     }
     private void OnTriggerEnter(Collider other)
