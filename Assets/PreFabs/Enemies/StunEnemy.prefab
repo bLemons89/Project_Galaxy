@@ -15,13 +15,14 @@ GameObject:
   - component: {fileID: 3947773742501726010}
   - component: {fileID: 2847007721592726609}
   - component: {fileID: 3646712768927317839}
+  - component: {fileID: 8459488220897644194}
   m_Layer: 6
   m_Name: StunEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7190173908179760642
 Transform:
   m_ObjectHideFlags: 0
@@ -111,7 +112,7 @@ MonoBehaviour:
   topFillSpeed: 0
   bottomFillSpeed: 0
   dmgFlashDuration: 0
-  critWarningText: {fileID: 0}
+  critWarning: {fileID: 0}
   critHealth: 0.2
   flashSpeed: 0.5
   OnDeath:
@@ -212,3 +213,16 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+--- !u!114 &8459488220897644194
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8997302725253808589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b56260bc090ff774983b678a7302896a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uniqueID: 

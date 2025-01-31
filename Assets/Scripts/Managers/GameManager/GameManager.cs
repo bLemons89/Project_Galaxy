@@ -43,7 +43,9 @@ public class GameManager : MonoBehaviour
     public Camera LoadingCamera
     { get => loadingCamera; set => loadingCamera = value; }
     public bool IsPaused
-    { get => isPaused; set => isPaused = value; } 
+    { get => isPaused; set => isPaused = value; }
+    public playerScript PlayerScript
+    { get => _playerScript; set => _playerScript = value; }
 
     void Awake()
     {
