@@ -290,8 +290,6 @@ public class WeaponInAction : MonoBehaviour
                 AudioManager.instance.PlaySFX(AudioManager.instance.Weapons, "GunEmpty");
                 //Debug.Log("Player: Gun out of ammo");
                 reloadMessage.SetActive(true);
-                AudioManager.instance.PlaySFX(AudioManager.instance.Weapons, "GunReload");
-
             }
         }
     }
