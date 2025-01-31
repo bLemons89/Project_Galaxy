@@ -18,8 +18,8 @@ public class PickUp : MonoBehaviour
     [SerializeField] int quantity = 1;  //number of that item this pickup will add to the inventory
     [SerializeField] GameObject textToToggle;
 
-    [Header("For Saving/loading")]
-    public string itemID;
+    //for saving/loading
+    UniqueID uniqueID;
 
     bool playerInRange;
     //public UnityEvent<ItemBase, int> OnPickup;
@@ -27,8 +27,10 @@ public class PickUp : MonoBehaviour
 
     private void Start()
     {
-        if(SceneManagerScript.instance.SaveData.sceneObjects.Exists(o => o.uniqueID == itemID))
-        { gameObject.SetActive(false); }
+        uniqueID = GetComponent<UniqueID>();
+
+        if (SceneManagerScript.instance.SaveData.destroyedObjects.Contains(uniqueID.ID))
+        { Destroy(gameObject); }        //destroyed if picked up in past save
     }
 
     private void Update()
@@ -71,6 +73,10 @@ public class PickUp : MonoBehaviour
         if (item != null && InventoryManager.instance != null)
         {
             InventoryManager.instance.OnPickup(item, quantity);
+
+            //mark as destroyed for saving
+            SceneManagerScript.instance.MarkObjectAsDestroyed(uniqueID.ID);
+            SceneManagerScript.instance.SaveGame();
 
             //destroy item in the world
             Destroy(gameObject);

@@ -18,12 +18,44 @@ public class SceneObjectData
 }
 
 [Serializable]
-public class SaveData : MonoBehaviour
+public class SaveData
 {
     public string currentSceneName;
     public Vector3 playerPosition;
 
     //store positions in each scene
-    public Dictionary<string, Vector3> scenePositions = new Dictionary<string, Vector3>();
-    public List<SceneObjectData> sceneObjects = new List<SceneObjectData>();    //store object statuses per scene
+    public List<ScenePositionData> scenePositions = new List<ScenePositionData>();
+    public List<string> destroyedObjects = new List<String>();    //keep track of destroyed objects
+
+    public void SavePlayerPosition(string sceneName, Vector3 position)
+    {
+        ScenePositionData existing = scenePositions.Find(sp => sp.sceneName == sceneName);
+        if ((existing != null))
+        {
+            existing.position = position;
+        }
+        else
+        {
+            scenePositions.Add(new ScenePositionData(sceneName, position));
+        }
+    }
+
+    public Vector3 GetPlayerPosition(string sceneName)
+    {
+        ScenePositionData existing = scenePositions.Find(sp => sp.sceneName == sceneName);
+        return existing != null ? existing.position : Vector3.zero;
+    }
+}
+
+[Serializable]
+public class ScenePositionData
+{
+    public string sceneName;
+    public Vector3 position;
+
+    public ScenePositionData(string sceneName, Vector3 position)
+    {
+        this.sceneName = sceneName;
+        this.position = position;
+    }
 }

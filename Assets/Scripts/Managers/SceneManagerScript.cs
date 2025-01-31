@@ -14,7 +14,8 @@ public class SceneManagerScript : MonoBehaviour
 
     public SaveData SaveData => saveData;
 
-    //private Dictionary<string, SceneData> sceneData = new Dictionary<string, SceneData>();
+    Dictionary<string, GameObject> uniqueIDCache = new Dictionary<string, GameObject>();
+
     //private Dictionary<string, Vector3> scenePositions = new Dictionary<string, Vector3>();
     //private string currentSceneName;
 
@@ -26,13 +27,23 @@ public class SceneManagerScript : MonoBehaviour
             DontDestroyOnLoad(gameObject);
 
             SceneManager.sceneLoaded += OnSceneLoaded;
-            //currentSceneName = SceneManager.GetActiveScene().name;
-
-            //LoadScenePositions();
         }
         else
         {
             Destroy(gameObject);
+        }
+    }
+
+    private void Start()
+    {
+            saveData = SaveSystem.LoadGame(activeSaveSlot);
+
+        if (saveData == null &&
+            !(SceneManager.GetActiveScene().name == "BETA_Main Menu"))
+        {
+            saveData = new SaveData();
+
+            SaveGame(); 
         }
     }
 
@@ -47,52 +58,64 @@ public class SceneManagerScript : MonoBehaviour
         SaveSceneState();
 
         // Load the new scene
-        SceneManager.LoadScene(newSceneName);
-        //currentSceneName = newSceneName;
+        StartCoroutine(LoadSceneRoutine(newSceneName));
+
+        //SceneManager.LoadScene(newSceneName);
+    }
+
+    private IEnumerator LoadSceneRoutine(string newSceneName)
+    {
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(newSceneName);
+
+        //wait until it loads to restore the scene state (i.e. move player)
+        while (!asyncLoad.isDone) { yield return null; }
+
+        yield return new WaitForSeconds(0.1f);
+
+        RestoreSceneState();
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        //clear previous scene's cache
+        uniqueIDCache.Clear();
+
+        foreach (UniqueID obj in FindObjectsOfType<UniqueID>())
+        {
+            if (!uniqueIDCache.ContainsKey(obj.ID))
+            { uniqueIDCache[obj.ID] = obj.gameObject; }
+        }
     }
 
     // Restore the state of a scene when it is loaded
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    private void RestoreSceneState()
     {
-        //currentSceneName = scene.name;
+        if (saveData == null) { return; }
 
         //restore player position in that scene
         GameObject player = GameObject.FindWithTag("Player");
-        if (player != null && saveData != null && 
-            saveData.scenePositions.ContainsKey(SceneManager.GetActiveScene().name))
+        if (player != null)
         {
-            player.GetComponent<CharacterController>().enabled = false;
-            player.transform.position = saveData.scenePositions[SceneManager.GetActiveScene().name];
-            player.GetComponent<CharacterController>().enabled = true;
+            if (saveData.scenePositions.Exists(sp => sp.sceneName == SceneManager.GetActiveScene().name))
+            {
+
+                Vector3 savedPosition = saveData.GetPlayerPosition(SceneManager.GetActiveScene().name);
+
+                player.GetComponent<CharacterController>().enabled = false;
+                player.transform.position = savedPosition;
+                player.GetComponent<CharacterController>().enabled = true;
+            }
         }
 
-        //restore items and enemies to the state they were left in
-        foreach(SceneObjectData objData in saveData.sceneObjects)
+        //destroy objects that were removed before
+        foreach(string objectID in saveData.destroyedObjects)
         {
-            GameObject obj = FindObjectByUniqueID(objData.uniqueID);
+            GameObject obj = FindObjectByUniqueID(objectID);
             if (obj != null)
             {
-                obj.SetActive(objData.isActive);
+                Destroy(obj);
             }
         }
-
-        /*if (sceneData.ContainsKey(scene.name))
-        {
-            SceneData data = sceneData[scene.name];
-
-            // Restore player position
-            GameObject player = GameObject.FindWithTag("Player");
-            if (player != null)
-            {
-                player.transform.position = data.playerPosition;
-            }
-
-            // Restore other data for the scene
-            // (e.g., enemies, objects, etc.)
-        }
-
-        // Unsubscribe from the event
-        SceneManager.sceneLoaded -= OnSceneLoaded;*/
     }
     // Save the state of the current scene
     private void SaveSceneState()
@@ -103,18 +126,7 @@ public class SceneManagerScript : MonoBehaviour
         if(player != null)
         {
             //saving player position to current scene
-            saveData.scenePositions[SceneManager.GetActiveScene().name] = player.transform.position;
-        }
-
-        saveData.sceneObjects.Clear();
-
-        foreach (UniqueID obj in FindObjectsOfType<UniqueID>())
-        {
-            saveData.sceneObjects.Add(new SceneObjectData
-            {
-                uniqueID = obj.uniqueID,
-                isActive = obj.gameObject.activeSelf
-            });
+            saveData.SavePlayerPosition(SceneManager.GetActiveScene().name, player.transform.position);
         }
 
         SaveSystem.SaveGame(saveData, activeSaveSlot);
@@ -136,90 +148,30 @@ public class SceneManagerScript : MonoBehaviour
         }
     }
 
+    //call when an object is destroyed to save it in memory
+    public void MarkObjectAsDestroyed(string objectID)
+    {
+        if (saveData == null) { saveData = new SaveData(); }
+
+        if (!saveData.destroyedObjects.Contains(objectID))
+        {
+            saveData.destroyedObjects.Add(objectID);
+        }
+    }
+
     private GameObject FindObjectByUniqueID(string id)
     {
-        foreach (UniqueID obj in FindObjectsOfType<UniqueID>())
+        if (uniqueIDCache.ContainsKey(id))
         {
-            if(obj.uniqueID == id)
-                return obj.gameObject;
+            return uniqueIDCache[id];
         }
 
         return null;
     }
-
-    /*private IEnumerator RestorePlayerPosition()
-    {
-        yield return new WaitForSeconds(0.1f);
-
-        GameObject player;
-        while ((player = GameObject.FindWithTag("Player")) == null)
-        {
-            yield return null;
-        }
-
-        LoadPlayerPosition();
-    }
-
-    private void LoadPlayerPosition()
-    {
-        if (scenePositions.ContainsKey(currentSceneName))
-        {
-            Vector3 savedPosition = scenePositions[currentSceneName];
-
-            GameObject player = GameObject.FindWithTag("Player");
-            if (player != null)
-            {
-                player.GetComponent<CharacterController>().enabled = false;
-                player.transform.position = savedPosition;
-                player.GetComponent<CharacterController>().enabled = true;
-            }
-        }
-    }
-
-    private void SaveScenePositions()
-    {
-        foreach (var scene in scenePositions)
-        {
-            PlayerPrefs.SetFloat($"{scene.Key}_X", scene.Value.x);
-            PlayerPrefs.SetFloat($"{scene.Key}_Y", scene.Value.y);
-            PlayerPrefs.SetFloat($"{scene.Key}_Z", scene.Value.z);
-        }
-        PlayerPrefs.Save(); //ensure data is written to disk
-    }
-
-    private void LoadScenePositions()
-    {
-        scenePositions.Clear();
-        string[] sceneNames = { "BETA_Main Menu",
-                                "BETA_Outer Ship Area",
-                                "BETA_Area-1-Platforms",
-                                "BETA_Area-2-Industrial" }; //manually define known scene names
-
-        foreach (var scene in sceneNames)
-        {
-            if (PlayerPrefs.HasKey($"{scene}_X"))
-            {
-                float x = PlayerPrefs.GetFloat($"{scene}_X");
-                float y = PlayerPrefs.GetFloat($"{scene}_Y");
-                float z = PlayerPrefs.GetFloat($"{scene}_Z");
-                scenePositions[scene] = new Vector3(x, y, z);
-                Debug.Log($"Loaded position for {scene}: ({x}, {y}, {z})");
-            }
-        }
-    }*/
-
     private void OnDestroy()
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
-}
-
-[System.Serializable]
-public class SceneData
-{
-    public Vector3 playerPosition; // Example: Store player position
-
-    // Add other fields as needed to save scene-specific data
 }
 
 

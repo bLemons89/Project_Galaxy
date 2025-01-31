@@ -8,18 +8,30 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
+[ExecuteInEditMode]     //allow script to run in the Editor
 public class UniqueID : MonoBehaviour
 {
-    public string uniqueID;
+    [SerializeField] string uniqueID;
+
+    public string ID => uniqueID;
 
     // Start is called before the first frame update
     void Awake()
     {
         if(string.IsNullOrEmpty(uniqueID))
         {
-            uniqueID = Guid.NewGuid().ToString();
+            GenerateID();
         }
+    }
+
+    private void GenerateID()
+    {
+        uniqueID = Guid.NewGuid().ToString();
+#if UNITY_EDITOR
+        EditorUtility.SetDirty(this);
+#endif
     }
 }

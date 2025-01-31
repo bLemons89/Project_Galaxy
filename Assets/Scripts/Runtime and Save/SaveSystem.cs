@@ -26,10 +26,27 @@ public class SaveSystem : MonoBehaviour
     public static SaveData LoadGame(int slot)
     {
         string path = GetSavePath(slot);
-        if(File.Exists(path))
+
+        //create new save if one does not exist
+        if(!File.Exists(path))
         {
-            string json = File.ReadAllText(path);
+            return new SaveData();
+        }
+
+        string json = File.ReadAllText(path);
+
+        if (string.IsNullOrEmpty(json))
+        {
+            return new SaveData();      //to prevent crashes if empty
+        }
+
+        try
+        {
             return JsonUtility.FromJson<SaveData>(json);
+        }
+        catch (System.Exception e)
+        {
+            return new SaveData();      //prevent crash if file is corrupt
         }
 
         return null;    //no save found

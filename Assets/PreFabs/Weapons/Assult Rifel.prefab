@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4518168873719380981}
   - component: {fileID: 1825987474188783423}
   - component: {fileID: 4293607199694961033}
+  - component: {fileID: 4980320473588173830}
   m_Layer: 0
   m_Name: Assult Rifel
   m_TagString: Untagged
@@ -122,6 +123,19 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 1.25
   m_Center: {x: -0.00014794618, y: -0.015272446, z: 0.31202772}
+--- !u!114 &4980320473588173830
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 168825195215875818}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b56260bc090ff774983b678a7302896a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uniqueID: 1092335d-69c6-4219-9225-7befbb9b2da5
 --- !u!1 &623162914023047308
 GameObject:
   m_ObjectHideFlags: 0

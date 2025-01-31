@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8936607638303998298}
   - component: {fileID: 6620786255690462608}
   - component: {fileID: 7509444265595286962}
+  - component: {fileID: 3998645577775956816}
   m_Layer: 0
   m_Name: Energy Rifle
   m_TagString: Untagged
@@ -122,6 +123,19 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 1.25
   m_Center: {x: 0.000073034316, y: 0.038511768, z: 0.21504962}
+--- !u!114 &3998645577775956816
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4675086562006422597}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b56260bc090ff774983b678a7302896a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uniqueID: 3af5c24d-ae24-44bc-9f0d-9bf8e447e92d
 --- !u!1 &4737612375102117799
 GameObject:
   m_ObjectHideFlags: 0

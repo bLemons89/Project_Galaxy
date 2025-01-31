@@ -14,9 +14,6 @@ using UnityEngine.UI;
 
 public abstract class EnemyBase : MonoBehaviour
 {
-    [Header("For saving/loading")]
-    public string enemyID;
-
     [Header("BASE ENEMY STATS")]
     [SerializeField] protected NavMeshAgent agent;      //Components shared between all/most enemy types
     [SerializeField] protected int speed;
@@ -32,6 +29,7 @@ public abstract class EnemyBase : MonoBehaviour
 
     protected GameObject player;
     protected playerScript playerSettings;
+    protected UniqueID uniqueID;
 
     //getters and setters
     //public float CurrentHealth
@@ -44,8 +42,10 @@ public abstract class EnemyBase : MonoBehaviour
 
     protected virtual void Start()
     {
-        if(SceneManagerScript.instance.SaveData.sceneObjects.Exists(o => o.uniqueID == enemyID))
-        { Destroy(gameObject); }
+        uniqueID = GetComponent<UniqueID>();
+
+        if(SceneManagerScript.instance.SaveData.destroyedObjects.Contains(uniqueID.ID))
+        { Destroy(gameObject); }        //destroy if previously killed
 
         if (GameManager.instance != null)
         {
@@ -98,16 +98,12 @@ public abstract class EnemyBase : MonoBehaviour
         {
             animator.SetTrigger("isDead");
 
-            SceneManagerScript.instance.SaveData.sceneObjects.Add(new SceneObjectData
-            {
-                uniqueID = enemyID,
-                isActive = false
-            });
+            SceneManagerScript.instance.MarkObjectAsDestroyed(uniqueID.ID);
+            SceneManagerScript.instance.SaveGame();
 
             if (weaponInAction)
                 weaponInAction.DropEquippedGun();
 
-            SceneManagerScript.instance.SaveGame();
             Destroy(gameObject);        //Dead
         }
     }
