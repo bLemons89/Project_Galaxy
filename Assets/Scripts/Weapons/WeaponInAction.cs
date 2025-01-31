@@ -248,8 +248,6 @@ public class WeaponInAction : MonoBehaviour
         // fire only if player has weapon equiped
         if (gunInfo != null)
         {
-
-
             //fire only if the gun has ammo
             if (currentAmmo > 0)
             {
