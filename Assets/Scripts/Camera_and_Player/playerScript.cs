@@ -127,6 +127,7 @@ public class playerScript : MonoBehaviour
         {
             jumpCount++;
             horizontalVelocity.y = jumpSpeed;
+            AudioManager.instance.PlaySFX(AudioManager.instance.PlayerSounds, "PlayerJump");
         }
 
         playerController.Move(horizontalVelocity * Time.deltaTime);
@@ -187,6 +188,7 @@ public class playerScript : MonoBehaviour
     {
         isPlayingStep = true;
 
+        AudioManager.instance.PlaySFX(AudioManager.instance.PlayerSounds, "PlayerStep");
         //playerAudio.PlayOneShot(audStep[Random.Range(0, audStep.Length)], audStepVol);
 
         if (!isSprinting)
