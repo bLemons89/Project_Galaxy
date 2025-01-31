@@ -127,10 +127,7 @@ public class GameManager : MonoBehaviour
     }
     public void SaveGame()
     {
-        //Navigate to Save/Load Screen?
-        //GameManager.instance.MenuActive.SetActive(false);
-        //GameManager.instance.MenuActive = saveMenu;
-        //GameManager.instance.MenuActive.SetActive(true);
+        StartCoroutine(buttonFunctions.SaveMenuButton());
 
         //prompt for overwrite, or confirm 
         // call save method
@@ -147,11 +144,19 @@ public class GameManager : MonoBehaviour
 
     public void Quit()
     {
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#else
-                    Application.Quit();
-#endif
+        #if UNITY_EDITOR
+                // Stop play mode in the editor
+                UnityEditor.EditorApplication.isPlaying = false;
+        #endif
+
+        #if UNITY_WEBGL
+            // reload the page on quit
+            Application.OpenURL(Application.absoluteURL); // This reloads the page, effectively restarting the game
+        #endif
+
+        #if !UNITY_EDITOR && !UNITY_WEBGL
+            Application.Quit();
+        #endif
     }
 
 }
