@@ -127,10 +127,7 @@ public class GameManager : MonoBehaviour
     }
     public void SaveGame()
     {
-        //Navigate to Save/Load Screen?
-        //GameManager.instance.MenuActive.SetActive(false);
-        //GameManager.instance.MenuActive = saveMenu;
-        //GameManager.instance.MenuActive.SetActive(true);
+        StartCoroutine(buttonFunctions.SaveMenuButton());
 
         //prompt for overwrite, or confirm 
         // call save method
