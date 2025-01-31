@@ -173,9 +173,16 @@ public class GameManager : MonoBehaviour
 
         //prompt for overwrite, or confirm 
         // call save method
+        SceneManagerScript.instance.SaveGame();
+
         // Stamp
         //string timeStamp = System.DateTime.Now.ToString();
         //buttonFunctions.TimeDateStamp.text = timeStamp;
+    }
+
+    public void LoadGame()
+    {
+        SceneManagerScript.instance.LoadGame(1);            //takes an int for the slot number (i.e. 1, 2, or 3)
     }
 
     public void MainMenu()
