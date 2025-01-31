@@ -20,9 +20,9 @@ MonoBehaviour:
   itemModel: {fileID: 168825195215875818, guid: 77d2e92d2365b4e45836bb4581b6cc97, type: 3}
   weaponName: Assault Rifle
   shootDamage: 1
-  shootRate: 0.5
+  shootRate: 0.2
   shootDistance: 50
-  currentAmmo: 30
+  currentAmmo: 5
   maxClipAmmo: 30
   ammoStored: 120
   ammoTypeName: Long Range Calibre
@@ -32,9 +32,6 @@ MonoBehaviour:
   muzzleFlashPos: {fileID: 3210265144486865614, guid: caad128cba153cb40a44e18ee2df7d57, type: 3}
   areaOfEffectRadius: 0
   splashDamage: 0
-  shootSound: []
   shootSoundVol: 0
-  reloadSound: {fileID: 0}
   reloadSoundVol: 0
-  emptySound: {fileID: 0}
   emptySoundVol: 0

@@ -245,43 +245,54 @@ public class WeaponInAction : MonoBehaviour
 
     public void PlayerFireGun()
     {
-        //fire only if the gun has ammo
-        if (currentAmmo > 0)
+        // fire only if player has weapon equiped
+        if (gunInfo != null)
         {
-            //adjust ammo
-            currentAmmo--;
 
-            //raycast to where the player is looking
-            if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out RaycastHit hitInfo, gunInfo.shootDistance))
+
+            //fire only if the gun has ammo
+            if (currentAmmo > 0)
             {
-                //Debug.Log($"Player: Hit {hitInfo.transform.name}");
+                //adjust ammo
+                currentAmmo--;
 
-                //check if the hit object has a HealthSystem
-                HealthSystem targetHealth = hitInfo.transform.GetComponent<HealthSystem>();
-                if (targetHealth != null)
+                AudioManager.instance.PlaySFX(AudioManager.instance.Weapons, "AR_Sound");
+
+                //raycast to where the player is looking
+                if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out RaycastHit hitInfo, gunInfo.shootDistance))
                 {
-                    targetHealth.Damage(gunInfo.shootDamage);
-                    Debug.Log($"Player: Dealt {gunInfo.shootDamage} damage to {hitInfo.transform.name}");
+                    //Debug.Log($"Player: Hit {hitInfo.transform.name}");
+
+                    //check if the hit object has a HealthSystem
+                    HealthSystem targetHealth = hitInfo.transform.GetComponent<HealthSystem>();
+                    if (targetHealth != null)
+                    {
+                        targetHealth.Damage(gunInfo.shootDamage);
+                        Debug.Log($"Player: Dealt {gunInfo.shootDamage} damage to {hitInfo.transform.name}");
+                    }
+
+                    //hit effect for bullet impact
+                    if (gunInfo.hitEffect != null)
+                    {
+                        Instantiate(gunInfo.hitEffect, hitInfo.point, Quaternion.LookRotation(hitInfo.normal));
+                    }
+                }
+                else
+                {
+                    //Debug.Log("Player: Missed");
                 }
 
-                //hit effect for bullet impact
-                if (gunInfo.hitEffect != null)
-                {
-                    Instantiate(gunInfo.hitEffect, hitInfo.point, Quaternion.LookRotation(hitInfo.normal));
-                }
+                //muzzle flash method
+                //PlayMuzzleFlash();
             }
             else
             {
-                //Debug.Log("Player: Missed");
-            }
+                AudioManager.instance.PlaySFX(AudioManager.instance.Weapons, "GunEmpty");
+                //Debug.Log("Player: Gun out of ammo");
+                reloadMessage.SetActive(true);
+                AudioManager.instance.PlaySFX(AudioManager.instance.Weapons, "GunReload");
 
-            //muzzle flash method
-            //PlayMuzzleFlash();
-        }
-        else
-        {
-            //Debug.Log("Player: Gun out of ammo");
-            reloadMessage.SetActive(true);
+            }
         }
     }
 
