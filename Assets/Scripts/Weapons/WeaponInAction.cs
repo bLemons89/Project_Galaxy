@@ -248,8 +248,6 @@ public class WeaponInAction : MonoBehaviour
         // fire only if player has weapon equiped
         if (gunInfo != null)
         {
-
-
             //fire only if the gun has ammo
             if (currentAmmo > 0)
             {
@@ -290,8 +288,6 @@ public class WeaponInAction : MonoBehaviour
                 AudioManager.instance.PlaySFX(AudioManager.instance.Weapons, "GunEmpty");
                 //Debug.Log("Player: Gun out of ammo");
                 reloadMessage.SetActive(true);
-                AudioManager.instance.PlaySFX(AudioManager.instance.Weapons, "GunReload");
-
             }
         }
     }

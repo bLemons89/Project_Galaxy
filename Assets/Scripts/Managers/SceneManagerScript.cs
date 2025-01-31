@@ -26,6 +26,8 @@ public class SceneManagerScript : MonoBehaviour
             instance = this;
             DontDestroyOnLoad(gameObject);
 
+            if(saveData == null) { saveData = new SaveData(); }
+
             SceneManager.sceneLoaded += OnSceneLoaded;
         }
         else
