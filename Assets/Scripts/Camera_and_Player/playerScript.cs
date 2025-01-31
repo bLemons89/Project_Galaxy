@@ -51,7 +51,7 @@ public class playerScript : MonoBehaviour
     void Start()
     {       
         // Subscribe to the State Changes
-        GameManager.instance.OnGameStateChange += OnGameStateChange;
+        //GameManager.instance.OnGameStateChange += OnGameStateChange;
         
         // find and set player reference
         player = GameObject.FindWithTag("Player");
@@ -65,7 +65,7 @@ public class playerScript : MonoBehaviour
         if (isStunned)
             return;
 
-        if(GameManager.instance.CurrentGameState != GameState.Pause)
+        if(!GameManager.instance.IsPaused)
         {
             //always checking for
             Movement();
@@ -200,20 +200,20 @@ public class playerScript : MonoBehaviour
 
         isPlayingStep = false;
     }
-    private void OnGameStateChange(GameState newGameState)
-    {
-        if(newGameState == GameState.Pause)
-        {
-            this.enabled = false;
-        }
-        else if(newGameState == GameState.Gameplay)
-        {
-            this.enabled = true;
-        }
-    }
-    private void OnDestroy()
-    {
-        // Unsubscribe
-        GameManager.instance.OnGameStateChange -= OnGameStateChange;
-    }
+    //private void OnGameStateChange(GameState newGameState)
+    //{
+    //    if(newGameState == GameState.Pause)
+    //    {
+    //        this.enabled = false;
+    //    }
+    //    else if(newGameState == GameState.Gameplay)
+    //    {
+    //        this.enabled = true;
+    //    }
+    //}
+    //private void OnDestroy()
+    //{
+    //    // Unsubscribe
+    //    GameManager.instance.OnGameStateChange -= OnGameStateChange;
+    //}
 }

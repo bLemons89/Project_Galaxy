@@ -25,7 +25,8 @@ public class HealthSystem : MonoBehaviour
     [SerializeField] float dmgFlashDuration;
 
     [Header("===== CRITICAL HEALTH =====")]
-    [SerializeField] TextMeshProUGUI critWarningText;
+    [SerializeField] GameObject critWarning;
+    //[SerializeField] TextMeshProUGUI critWarningText;
     [SerializeField] float critHealth = 0.2f;
     [SerializeField] float flashSpeed = 0.5f;
 
@@ -187,17 +188,17 @@ public class HealthSystem : MonoBehaviour
     {
         CancelInvoke("FlashCritWarning");
 
-        if(critWarningText != null)
+        if(critWarning != null)
         { 
             // Hide the warning text
-            critWarningText.gameObject.SetActive(false);
+            critWarning.gameObject.SetActive(false);
         }
     }
     void FlashCritWarning()
     {
-        if(critWarningText != null) 
+        if(critWarning != null) 
         { 
-            critWarningText.gameObject.SetActive(!critWarningText.gameObject.activeSelf);
+            critWarning.gameObject.SetActive(!critWarning.gameObject.activeSelf);
         }
     }
     
