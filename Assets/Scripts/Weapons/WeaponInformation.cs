@@ -19,10 +19,9 @@ public class WeaponInformation : ItemBase
     public string ammoTypeName;
     public int reloadRate;
 
-    //[Header("Audio Info")]
-    //public AudioClip[] shootSound;
-    //public AudioClip reloadSound;
-    //public AudioClip emptySound;
+    [Header("Audio Info")]
+    public AudioClip[] shootSound;
+    
 
     [Header("VISUAL FX")]
     public ParticleSystem hitEffect;
@@ -45,5 +44,7 @@ public class WeaponInformation : ItemBase
     public float shootSoundVol;
     public float reloadSoundVol;
     public float emptySoundVol;
+    //public AudioClip reloadSound;
+    //public AudioClip emptySound;
 
 }

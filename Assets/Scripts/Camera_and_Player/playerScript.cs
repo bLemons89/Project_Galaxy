@@ -127,9 +127,9 @@ public class playerScript : MonoBehaviour
         {
             jumpCount++;
             horizontalVelocity.y = jumpSpeed;
-            AudioManager.instance.PlaySFX(AudioManager.instance.PlayerSounds, "PlayerJump");
+            AudioManager.instance.PlaySFX(AudioManager.instance.PlayerJump[Random.Range(0,
+                AudioManager.instance.PlayerJump.Length)]);
         }
-
         playerController.Move(horizontalVelocity * Time.deltaTime);
         horizontalVelocity.y -= gravity * Time.deltaTime;
     }
@@ -187,9 +187,9 @@ public class playerScript : MonoBehaviour
     IEnumerator PlayStep()
     {
         isPlayingStep = true;
-
-        AudioManager.instance.PlaySFX(AudioManager.instance.PlayerSounds, "PlayerStep");
-        //playerAudio.PlayOneShot(audStep[Random.Range(0, audStep.Length)], audStepVol);
+        // Player step audio here
+        AudioManager.instance.PlaySFX(AudioManager.instance.PlayerWalk[Random.Range(0,
+            AudioManager.instance.PlayerWalk.Length)]);
 
         if (!isSprinting)
         {

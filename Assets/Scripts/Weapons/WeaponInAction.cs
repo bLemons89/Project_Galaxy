@@ -254,7 +254,8 @@ public class WeaponInAction : MonoBehaviour
                 //adjust ammo
                 currentAmmo--;
 
-                AudioManager.instance.PlaySFX(AudioManager.instance.Weapons, "AR_Sound");
+                AudioManager.instance.PlaySFX(AudioManager.instance.Empty_Clip[0]);
+                ;
 
                 //raycast to where the player is looking
                 if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out RaycastHit hitInfo, gunInfo.shootDistance))
@@ -285,7 +286,7 @@ public class WeaponInAction : MonoBehaviour
             }
             else
             {
-                AudioManager.instance.PlaySFX(AudioManager.instance.Weapons, "GunEmpty");
+                AudioManager.instance.PlaySFX(AudioManager.instance.Reload[0]);
                 //Debug.Log("Player: Gun out of ammo");
                 reloadMessage.SetActive(true);
             }
@@ -299,6 +300,8 @@ public class WeaponInAction : MonoBehaviour
         {
             //adjust ammo
             currentAmmo--;
+
+            AudioManager.instance.PlaySFX(AudioManager.instance.ER_Sounds[3]);
 
             //adjusted shoot rate for enemies
             StartCoroutine(EnemyShootRate(this.gameObject.GetComponent<EnemyBase>().EnemyShootRate));
