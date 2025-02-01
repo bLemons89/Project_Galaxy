@@ -13,11 +13,11 @@ public class EnableBoss : MonoBehaviour
 {
     [SerializeField] GameObject boss;
 
-    private void OnTriggerEnter(Collider other)
+    /*private void OnTriggerEnter(Collider other)
     {
         if(other.CompareTag("Player") && InventoryManager.instance.MissionItemsCollected >= 3)      //maybe link to another number, works for now
         {
             boss.SetActive(true);
         }
-    }
+    }*/
 }

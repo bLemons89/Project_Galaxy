@@ -19,7 +19,7 @@ public class CountNDestroy : MonoBehaviour
         {
             if(InventoryManager.instance != null)
             {
-                InventoryManager.instance.MissionItemsCollected++;
+                //InventoryManager.instance.MissionItemsCollected++;
 
                 Destroy(gameObject);
             }
