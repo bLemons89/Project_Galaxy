@@ -5,6 +5,7 @@
     Date Updated: 01/28/2025
     Description: Class to display the objectives on the UI
  */
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;

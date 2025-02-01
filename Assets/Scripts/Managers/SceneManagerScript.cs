@@ -155,7 +155,7 @@ public class SceneManagerScript : MonoBehaviour
         SaveSystem.SaveGame(saveData, activeSaveSlot);      //save data to specific slot
     }
 
-    public void LoadGame(int slot)
+    public void LoadGame(int slot)              //loads specific save slot, starts at last scene and checkpoint
     {
         activeSaveSlot = slot;
         saveData = SaveSystem.LoadGame(slot);
