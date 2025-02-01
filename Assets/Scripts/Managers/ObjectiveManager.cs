@@ -11,6 +11,8 @@ using TMPro;
 
 public class ObjectiveManager : MonoBehaviour
 {
+    public static ObjectiveManager instance;
+
     [SerializeField] TextMeshProUGUI objectiveText;
 
     //defining objectives directly in the script as a Dictionary
@@ -28,6 +30,18 @@ public class ObjectiveManager : MonoBehaviour
     };
 
     private Queue<int> objectivesQueue = new Queue<int>(); //queue to store the IDs of objectives
+
+    void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject); //keeps inventory between scenes
+
+        }
+        else
+            Destroy(gameObject);
+    }
 
     private void Start()
     {

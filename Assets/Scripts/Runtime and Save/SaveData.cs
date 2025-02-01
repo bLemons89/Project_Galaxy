@@ -26,6 +26,7 @@ public class SaveData
     public List<ScenePositionData> scenePositions = new List<ScenePositionData>();
     public List<string> destroyedObjects = new List<String>();    //keep track of destroyed objects
     public List<CheckpointData> lastCheckpointPositions = new List<CheckpointData>();   //store checkpoints and know which to use
+    public List<string> completedObjectives = new List<string>();   //to store completed objectives
 
     public int energyCellsCollected = 0;  //keep track of collected cells
     public int shardsCollected = 0;       //keep track of collected shards
@@ -70,6 +71,21 @@ public class SaveData
     {
         ScenePositionData existing = scenePositions.Find(sp => sp.sceneName == sceneName);
         return existing != null ? existing.position : Vector3.zero;
+    }
+
+    //returns the objective if completed
+    public bool IsObjectiveCompleted(string objectiveID)
+    {
+        return completedObjectives.Contains(objectiveID);
+    }
+
+    //set the objective as complete
+    public void MarkObjectiveAsCompleted(string objectiveID)
+    {
+        if(!completedObjectives.Contains(objectiveID))
+        {
+            completedObjectives.Add(objectiveID);
+        }
     }
 }
 

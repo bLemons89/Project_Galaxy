@@ -2,7 +2,7 @@
     Author: Juan Contreras
     Edited by:
     Date Created: 01/28/2025
-    Date Updated: 01/28/2025
+    Date Updated: 02/01/2025
     Description: Triggers the next mission in the queue if the criteria is met
                  (put outside ship)
  */
@@ -18,7 +18,7 @@ public class Objective1 : MonoBehaviour
     {
         if (playerInRange)
         {
-            GameManager.instance.GetComponent<ObjectiveManager>().CompleteObjective();
+            ObjectiveManager.instance.CompleteObjective();
 
             Destroy(gameObject);
         }

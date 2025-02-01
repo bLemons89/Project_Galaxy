@@ -2,8 +2,9 @@
     Author: Juan Contreras
     Edited by:
     Date Created: 01/28/2025
-    Date Updated: 01/28/2025
+    Date Updated: 02/01/2025
     Description: Triggers the next mission in the queue if the criteria is met
+                 (Pick Up energy cell)
  */
 using System.Collections;
 using System.Collections.Generic;
@@ -17,9 +18,10 @@ public class Objective3 : MonoBehaviour
     {
         if (playerInRange && Input.GetKeyDown(KeyCode.Q))
         {
-            GameManager.instance.GetComponent<ObjectiveManager>().CompleteObjective();
+            InventoryManager.instance.CollectEnergyCell();
+            ObjectiveManager.instance.CompleteObjective();
 
-            //Destroy(gameObject);      //parent does this
+            Destroy(gameObject);      //remove from parent
         }
     }
     private void OnTriggerEnter(Collider other)

@@ -2,7 +2,7 @@
     Author: Juan Contreras
     Edited by:
     Date Created: 01/28/2025
-    Date Updated: 01/28/2025
+    Date Updated: 02/01/2025
     Description: Triggers the next mission in the queue if the criteria is met
  */
 using System.Collections;
@@ -11,30 +11,14 @@ using UnityEngine;
 
 public class Objective0 : MonoBehaviour
 {
-    bool playerInRange;
-
-    private void Update()
-    {
-        if(playerInRange && Input.GetKeyDown(KeyCode.Q))
-        {
-            GameManager.instance.GetComponent<ObjectiveManager>().CompleteObjective();
-
-            Destroy(gameObject);
-        }
-    }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") &&
+            InventoryManager.instance.InventorySlotsList.Count > 0)     //change to weapon specific?
         {
-            playerInRange = true;
-        }
-    }
+            ObjectiveManager.instance.CompleteObjective();
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            playerInRange = false;
+            Destroy(gameObject);        //remove trigger once complete
         }
     }
 }
