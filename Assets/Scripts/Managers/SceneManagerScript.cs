@@ -36,7 +36,7 @@ public class SceneManagerScript : MonoBehaviour
         }
     }
 
-    private void Start()
+    private void Start()                                        //MIGHT NOT NEED
     {
         saveData = SaveSystem.LoadGame(activeSaveSlot);
 
@@ -98,15 +98,21 @@ public class SceneManagerScript : MonoBehaviour
         GameObject player = GameObject.FindWithTag("Player");
         if (player != null)
         {
+            Vector3 spawnPosition;
             if (saveData.scenePositions.Exists(sp => sp.sceneName == SceneManager.GetActiveScene().name))
             {
-
-                Vector3 savedPosition = saveData.GetPlayerPosition(SceneManager.GetActiveScene().name);
-
-                player.GetComponent<CharacterController>().enabled = false;
-                player.transform.position = savedPosition;
-                player.GetComponent<CharacterController>().enabled = true;
+                spawnPosition = saveData.GetPlayerPosition(SceneManager.GetActiveScene().name);
+                spawnPosition = spawnPosition + Vector3.up + (player.transform.forward * 3);                //ADJUST TO AVOID SPAWNING ON TRIGGER
             }
+            else
+            {
+                spawnPosition = player.transform.position;
+            }
+
+            player.GetComponent<CharacterController>().enabled = false;
+            player.transform.position = spawnPosition;
+            player.GetComponent<CharacterController>().enabled = true;
+
         }
 
         //destroy objects that were removed before

@@ -27,6 +27,8 @@ public class SaveData
     public List<ScenePositionData> scenePositions = new List<ScenePositionData>();
     public List<string> destroyedObjects = new List<String>();    //keep track of destroyed objects
 
+    public Vector3 lastCheckpointPosition = Vector3.zero;       //stores most recent checkpoint
+
     public void SavePlayerPosition(string sceneName, Vector3 position)
     {
         ScenePositionData existing = scenePositions.Find(sp => sp.sceneName == sceneName);

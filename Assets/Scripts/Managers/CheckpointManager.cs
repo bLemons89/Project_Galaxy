@@ -14,7 +14,7 @@ public class CheckpointManager : MonoBehaviour
 {
     public static CheckpointManager instance;
 
-    Vector3 lastCheckpointPosition = new Vector3(36.05f, 100f, 80.95f);
+    Vector3 lastCheckpointPosition;             //in case it becomes (0,0,0)
 
     public Vector3 LastCheckpointPosition => lastCheckpointPosition;
 
@@ -30,12 +30,20 @@ public class CheckpointManager : MonoBehaviour
 
     public void SetCheckpoint(Vector3 position)
     {
-        //store position of checkpoint
-        lastCheckpointPosition = position;
+        if (SceneManagerScript.instance != null)
+        {
+            //store position of checkpoint
+            //lastCheckpointPosition = position;
 
-        Debug.Log($"Checkpoint set at: {lastCheckpointPosition}");
+            SceneManagerScript.instance.SaveData.lastCheckpointPosition = position;
 
-        //event sent to player respawn
+            //auto save game
+            SceneManagerScript.instance.SaveGame();
+
+            //Debug.Log($"Checkpoint set at: {SceneManagerScript.instance.SaveData.lastCheckpointPosition}");
+
+            //event sent to player respawn
+        }
     }    
 
     //public Vector3 GetCheckpointPosition()        //backup in case public getter does not work
