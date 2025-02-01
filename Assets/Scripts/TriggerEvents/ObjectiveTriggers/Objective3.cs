@@ -12,6 +12,8 @@ using UnityEngine;
 
 public class Objective3 : MonoBehaviour
 {
+    [SerializeField] GameObject[] exitColliders;
+
     bool playerInRange;
 
     private void Update()
@@ -19,7 +21,12 @@ public class Objective3 : MonoBehaviour
         if (playerInRange && Input.GetKeyDown(KeyCode.Q))
         {
             InventoryManager.instance.CollectEnergyCell();
-            ObjectiveManager.instance.CompleteObjective();
+            //ObjectiveManager.instance.CompleteObjective();
+
+            foreach (GameObject obj in exitColliders)           //turn off colliders to allow plater to continue
+            {
+                obj.SetActive(false);
+            }
 
             Destroy(gameObject);      //remove from parent
         }
