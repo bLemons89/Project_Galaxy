@@ -2101,6 +2101,7 @@ GameObject:
   - component: {fileID: 7890135538296169566}
   - component: {fileID: 882033330860162494}
   - component: {fileID: 3689567032438803782}
+  - component: {fileID: 7055146350524400817}
   m_Layer: 6
   m_Name: Sci-fi_character_unity_blue Variant_Barrier
   m_TagString: Untagged
@@ -2304,7 +2305,7 @@ MonoBehaviour:
   topFillSpeed: 0
   bottomFillSpeed: 0
   dmgFlashDuration: 0
-  critWarningText: {fileID: 0}
+  critWarning: {fileID: 0}
   critHealth: 0.2
   flashSpeed: 0.5
   OnDeath:
@@ -2342,6 +2343,19 @@ MonoBehaviour:
   - m_Rig: {fileID: 1701728299977538426}
     m_Active: 1
   m_Effectors: []
+--- !u!114 &7055146350524400817
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8174886444872268090}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b56260bc090ff774983b678a7302896a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uniqueID: a715c2a2-90e6-4747-908b-7738b9c64dda
 --- !u!1 &8359564512425811203
 GameObject:
   m_ObjectHideFlags: 0

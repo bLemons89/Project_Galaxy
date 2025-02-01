@@ -26,7 +26,7 @@ public class SceneManagerScript : MonoBehaviour
             instance = this;
             DontDestroyOnLoad(gameObject);
 
-            if(saveData == null) { saveData = new SaveData(); }
+            if(saveData == null) { saveData = new SaveData(); }             //EDITOR ONLY REMOVE BEFORE BUILDING
 
             SceneManager.sceneLoaded += OnSceneLoaded;
         }
@@ -38,14 +38,14 @@ public class SceneManagerScript : MonoBehaviour
 
     private void Start()
     {
-            saveData = SaveSystem.LoadGame(activeSaveSlot);
+        saveData = SaveSystem.LoadGame(activeSaveSlot);
 
         if (saveData == null &&
             !(SceneManager.GetActiveScene().name == "BETA_Main Menu"))
         {
             saveData = new SaveData();
 
-            SaveGame(); 
+            SaveGame();
         }
     }
 

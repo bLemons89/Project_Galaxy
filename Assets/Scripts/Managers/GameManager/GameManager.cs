@@ -43,7 +43,9 @@ public class GameManager : MonoBehaviour
     public Camera LoadingCamera
     { get => loadingCamera; set => loadingCamera = value; }
     public bool IsPaused
-    { get => isPaused; set => isPaused = value; } 
+    { get => isPaused; set => isPaused = value; }
+    public playerScript PlayerScript
+    { get => _playerScript; set => _playerScript = value; }
 
     void Awake()
     {
@@ -171,9 +173,16 @@ public class GameManager : MonoBehaviour
 
         //prompt for overwrite, or confirm 
         // call save method
+        SceneManagerScript.instance.SaveGame();
+
         // Stamp
         //string timeStamp = System.DateTime.Now.ToString();
         //buttonFunctions.TimeDateStamp.text = timeStamp;
+    }
+
+    public void LoadGame()
+    {
+        SceneManagerScript.instance.LoadGame(1);            //takes an int for the slot number (i.e. 1, 2, or 3)
     }
 
     public void MainMenu()
