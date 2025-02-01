@@ -27,6 +27,7 @@ MonoBehaviour:
   ammoStored: 80
   ammoTypeName: Energy Shells
   reloadRate: 1
+  shootSound: {fileID: 8300000, guid: 670cc71dcc125af458bbe92582ff504c, type: 3}
   hitEffect: {fileID: 5396372950321188654, guid: fcb74f28d107e284e80af037bfec14ca, type: 3}
   muzzleFlash: {fileID: 0}
   muzzleFlashPos: {fileID: 0}
