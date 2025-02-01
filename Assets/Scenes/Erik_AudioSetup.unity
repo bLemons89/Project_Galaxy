@@ -389,6 +389,10 @@ PrefabInstance:
       propertyPath: OutputAudioMixerGroup
       value: 
       objectReference: {fileID: 2537137618681924735, guid: a26be177a75b5a8459c23d8e4a765dc6, type: 2}
+    - target: {fileID: 8842954754004065791, guid: cb7a3b802c30154428b10e6f5f153164, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 2537137618681924735, guid: a26be177a75b5a8459c23d8e4a765dc6, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -650,7 +654,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1063486253
 Transform:
   m_ObjectHideFlags: 0
@@ -673,10 +677,10 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1063486251}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 2407059273730825554, guid: a26be177a75b5a8459c23d8e4a765dc6, type: 2}
-  m_audioClip: {fileID: 8300000, guid: 8bc5c4cb1dbdae0479df8fade6007c99, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -769,22 +773,94 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1063486251}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0114f83322a1ba94ca43510d247f195c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   source_2D: {fileID: 0}
   source_Player: {fileID: 0}
-  GameMusic: []
-  MenuMusic: []
-  LevelMusic: []
+  GameMusic:
+  - name: Boss
+    clips:
+    - {fileID: 8300000, guid: f694d8c7e5d065344b2d43b97d43b35b, type: 3}
+  - name: EXPMusic
+    clips:
+    - {fileID: 8300000, guid: 11d5023c1f33b4245bd6ac8564f0cd44, type: 3}
+  - name: GENCombat
+    clips:
+    - {fileID: 8300000, guid: 5c230281ba56b3c428fcfd79cafcc64e, type: 3}
+  - name: TransLVL
+    clips:
+    - {fileID: 8300000, guid: 6e8f28ef79dc40d45bf0cfa0876384f1, type: 3}
+  MenuMusic:
+  - name: LostSignal
+    clips:
+    - {fileID: 8300000, guid: 8bc5c4cb1dbdae0479df8fade6007c99, type: 3}
+  LevelMusic:
+  - name: LVL1
+    clips:
+    - {fileID: 8300000, guid: e42765bd556216b4590a7a617b96611b, type: 3}
+  - name: LVL2
+    clips:
+    - {fileID: 8300000, guid: e42765bd556216b4590a7a617b96611b, type: 3}
+    - {fileID: 8300000, guid: cb295dbb838c00642847ab8dd5ff4f77, type: 3}
   AmbientNoise: []
-  PlayerSounds: []
-  Weapons: []
+  PlayerSounds:
+  - name: PlayerStep
+    clips:
+    - {fileID: 8300000, guid: 6bdecf3ae5a31ce4d9db7c3bfd370a72, type: 3}
+    - {fileID: 8300000, guid: b80756031d561724f9b94e7c0e9839f2, type: 3}
+    - {fileID: 8300000, guid: b549845c1689b574b9626eafe92eb47a, type: 3}
+    - {fileID: 8300000, guid: bf7bb981625d5954985871981103b0a8, type: 3}
+    - {fileID: 8300000, guid: 994009fe1e4b98d43acf3cd45fcbf95d, type: 3}
+    - {fileID: 8300000, guid: f9e46df698e38a240a82d32df7925c15, type: 3}
+  - name: PlayerDMG
+    clips:
+    - {fileID: 8300000, guid: dd41e6ceade043249b0b19b474247935, type: 3}
+    - {fileID: 8300000, guid: d1fc1513b4aea304abd558493856b1b0, type: 3}
+    - {fileID: 8300000, guid: c3b42bccc410cc54fa834b9d22f7225b, type: 3}
+    - {fileID: 8300000, guid: 1539360d71235684dab36db32df29769, type: 3}
+  - name: PlayerLand
+    clips:
+    - {fileID: 8300000, guid: d1fc1513b4aea304abd558493856b1b0, type: 3}
+  - name: PlayerJump
+    clips:
+    - {fileID: 8300000, guid: 1d22af4c771e0a1438f4f046bd37300f, type: 3}
+    - {fileID: 8300000, guid: 8361a9c1d0e496e4eaf8320094cc0cd0, type: 3}
+    - {fileID: 8300000, guid: 7c095a19387964c4da683b116c0e17f4, type: 3}
+  Weapons:
+  - name: AR_Sound
+    clips:
+    - {fileID: 8300000, guid: ea64bdac87088fd4cbefe3def2d8307d, type: 3}
+    - {fileID: 8300000, guid: 7c304e330fa345345a9e4ee9bfd01f4f, type: 3}
+  - name: ER_Sound
+    clips:
+    - {fileID: 8300000, guid: 1c57a6c485fba404aac4a62970a6f89c, type: 3}
+    - {fileID: 8300000, guid: 373bece032e0632429bc22c595592258, type: 3}
+    - {fileID: 8300000, guid: bbbeb99f50cda9c44a81088b932c2f8b, type: 3}
+  - name: Shotty_Sound
+    clips:
+    - {fileID: 8300000, guid: 6d2f053f42537a6418f9eab25ee77ada, type: 3}
+    - {fileID: 8300000, guid: ab6e0cd2a7206cb479ea9197fd81abc1, type: 3}
+    - {fileID: 8300000, guid: f3017a2c5a388cf42b91f3ad5495d53e, type: 3}
+  - name: GunEmpty
+    clips:
+    - {fileID: 8300000, guid: e0bfa1b5854036849aaa7b89b6057f41, type: 3}
+  - name: GunReload
+    clips:
+    - {fileID: 8300000, guid: 217c043909e9cbf47bb84b0e2aa02e74, type: 3}
   UI: []
   Environment: []
-  Enemy: []
+  Enemy:
+  - name: EnemyDTH
+    clips:
+    - {fileID: 8300000, guid: 6fa8c41b7b0632240bfe22cd6fcb7826, type: 3}
+  - name: EnemyDMG
+    clips:
+    - {fileID: 8300000, guid: 1539360d71235684dab36db32df29769, type: 3}
+    - {fileID: 8300000, guid: c3b42bccc410cc54fa834b9d22f7225b, type: 3}
+    - {fileID: 8300000, guid: dd41e6ceade043249b0b19b474247935, type: 3}
 --- !u!1001 &1507645987
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1021,7 +1097,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 7129291247331537444, guid: 4d8038ad4bc603e459c4635bd6feb3be, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7129291247331537444, guid: 4d8038ad4bc603e459c4635bd6feb3be, type: 3}
       propertyPath: sfxMaster
@@ -1249,7 +1325,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8664675781185621932, guid: 4d8038ad4bc603e459c4635bd6feb3be, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8664675781185621932, guid: 4d8038ad4bc603e459c4635bd6feb3be, type: 3}
       propertyPath: m_audioClip
@@ -1258,7 +1334,7 @@ PrefabInstance:
     - target: {fileID: 8664675781185621932, guid: 4d8038ad4bc603e459c4635bd6feb3be, type: 3}
       propertyPath: OutputAudioMixerGroup
       value: 
-      objectReference: {fileID: 2407059273730825554, guid: a26be177a75b5a8459c23d8e4a765dc6, type: 2}
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

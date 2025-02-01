@@ -35,11 +35,9 @@ public class AudioManager : MonoBehaviour
     }
     private void Start()
     {
-        source_2D = GameManager.instance.GetComponent<AudioSource>();
-        source_Player = GameObject.Find("PlayerArmature").GetComponent<AudioSource>();
-        //AudioManager.instance.GetComponent<AudioMixer>();
-        //AudioManager.instance.GetComponent<MixerAdapter>();
-
+        source_2D = this.GetComponent<AudioSource>();
+        source_Player = GameObject.Find("Player_Skinned Variant").GetComponent<AudioSource>();
+        
         //if (sfxMaster != null) source_Player.outputAudioMixerGroup = sfxMaster;
 
         source_2D.loop = true;
