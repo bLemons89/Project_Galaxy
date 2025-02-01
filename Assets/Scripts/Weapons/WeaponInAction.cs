@@ -254,7 +254,7 @@ public class WeaponInAction : MonoBehaviour
                 //adjust ammo
                 currentAmmo--;
 
-                AudioManager.instance.PlaySFX(AudioManager.instance.AR_Sounds[0]);
+                AudioManager.instance.PlaySFX(gunInfo.shootSound);
                 
 
                 //raycast to where the player is looking

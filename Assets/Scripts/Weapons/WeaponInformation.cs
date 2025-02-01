@@ -20,7 +20,7 @@ public class WeaponInformation : ItemBase
     public int reloadRate;
 
     [Header("Audio Info")]
-    public AudioClip[] shootSound;
+    public AudioClip shootSound;
     
 
     [Header("VISUAL FX")]
