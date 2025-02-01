@@ -11,14 +11,27 @@ using UnityEngine;
 
 public class Objective0 : MonoBehaviour
 {
+    [SerializeField] GameObject exitCollider;
+
+    string objectiveID = "0";
+
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") &&
-            InventoryManager.instance.InventorySlotsList.Count > 0)     //change to weapon specific?
+        if (!SceneManagerScript.instance.SaveData.IsObjectiveCompleted(objectiveID))
         {
-            ObjectiveManager.instance.CompleteObjective();
+            if (other.CompareTag("Player") &&
+            InventoryManager.instance.InventorySlotsList.Find(slot => slot.Item.ItemType_ == ItemBase.ItemType.Weapon) != null)
+            {
+                ObjectiveManager.instance.CompleteObjective();
 
-            Destroy(gameObject);        //remove trigger once complete
+                //mark as complete
+                SceneManagerScript.instance.SaveData.MarkObjectiveAsCompleted(objectiveID);
+                SceneManagerScript.instance.SaveGame();     //save progress
+
+                exitCollider.SetActive(false);
+
+                Destroy(gameObject);        //remove trigger once complete
+            }
         }
     }
 }

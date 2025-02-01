@@ -19,7 +19,7 @@ public class Objective2 : MonoBehaviour
     private void Start()
     {
         //count enemies in the area
-        Collider[] colliders = Physics.OverlapBox(transform.position, transform.localScale / 2, Quaternion.identity);
+        Collider[] colliders = Physics.OverlapSphere(transform.position, this.GetComponent<SphereCollider>().radius);
         foreach (Collider c in colliders)
         {
             if (c.CompareTag("Enemy"))      //checks for enemies

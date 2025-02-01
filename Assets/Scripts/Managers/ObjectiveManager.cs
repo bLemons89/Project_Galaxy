@@ -5,6 +5,7 @@
     Date Updated: 01/28/2025
     Description: Class to display the objectives on the UI
  */
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
@@ -67,6 +68,13 @@ public class ObjectiveManager : MonoBehaviour
     //updates the UI text with the current objective
     private void UpdateObjectiveText()
     {
+        //remove completed objectives from queue
+        while (objectivesQueue.Count > 0 &&
+            SceneManagerScript.instance.SaveData.IsObjectiveCompleted(objectivesQueue.Peek().ToString()))
+        {
+            objectivesQueue.Dequeue();
+        }
+
         if (objectivesQueue.Count > 0)
         {
             int currentObjectiveId = objectivesQueue.Peek();

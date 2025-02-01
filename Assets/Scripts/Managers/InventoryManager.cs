@@ -99,7 +99,7 @@ public class InventoryManager : MonoBehaviour
         }
 
         //adjust weapon ammo if already in inventory
-        if (existingSlot != null && item.GetItemType == ItemBase.ItemType.Weapon)
+        if (existingSlot != null && item.ItemType_ == ItemBase.ItemType.Weapon)
         {
             //add the ammo only
             WeaponInformation weapon = (WeaponInformation)existingSlot.Item;
@@ -115,7 +115,7 @@ public class InventoryManager : MonoBehaviour
 
         //Debug.Log($"Added {quantity} of {item.ItemName} to inventory.");
 
-        if (item.GetItemType == ItemBase.ItemType.Weapon)
+        if (item.ItemType_ == ItemBase.ItemType.Weapon)
         {
             WeaponInAction weaponsToUpdate = player.GetComponent<WeaponInAction>();
 
@@ -155,15 +155,15 @@ public class InventoryManager : MonoBehaviour
             //notify other systems that the inventory has been updated
             OnInventoryUpdated?.Invoke();   //Unity event (for other managers to listen for)
         }
-        else
-            Debug.Log($"Item: {item.ItemName} not found in inventory");
+        //else
+            //Debug.Log($"Item: {item.ItemName} not found in inventory");
     }
 
     //called to update UI (for possible future use)
     void UpdateUI()
     {
         //event to update UI
-        Debug.Log("Inventory UI updated.");
+        //Debug.Log("Inventory UI updated.");
     }
 
     //*******************************************************************************************
