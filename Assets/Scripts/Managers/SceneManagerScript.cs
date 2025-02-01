@@ -99,13 +99,15 @@ public class SceneManagerScript : MonoBehaviour
         if (player != null)
         {
             Vector3 spawnPosition;
+            //if previously visited scene, use that position
             if (saveData.scenePositions.Exists(sp => sp.sceneName == SceneManager.GetActiveScene().name))
             {
-                spawnPosition = saveData.GetPlayerPosition(SceneManager.GetActiveScene().name);
+                spawnPosition = saveData.GetSceneTransitionPosition(SceneManager.GetActiveScene().name);
                 spawnPosition = spawnPosition + Vector3.up + (player.transform.forward * 3);                //ADJUST TO AVOID SPAWNING ON TRIGGER
             }
             else
             {
+                //if first time in that scene use the default position
                 spawnPosition = player.transform.position;
             }
 
@@ -134,7 +136,7 @@ public class SceneManagerScript : MonoBehaviour
         if(player != null)
         {
             //saving player position to current scene
-            saveData.SavePlayerPosition(SceneManager.GetActiveScene().name, player.transform.position);
+            saveData.SaveSceneTransitionPosition(SceneManager.GetActiveScene().name, player.transform.position);
         }
 
         SaveSystem.SaveGame(saveData, activeSaveSlot);
@@ -153,6 +155,23 @@ public class SceneManagerScript : MonoBehaviour
         if(saveData != null)
         {
             SceneManager.LoadScene(saveData.currentSceneName);
+            StartCoroutine(SpawnAtLastCheckpoint());
+        }
+    }
+
+    //use last saved checkpoint to spawn player there
+    IEnumerator SpawnAtLastCheckpoint()
+    {
+        yield return new WaitForSeconds(0.1f);
+
+        GameObject player = GameObject.FindWithTag("Player");
+        if(player != null &&
+            saveData.lastCheckpointPositions.Exists(cp =>  cp.sceneName == SceneManager.GetActiveScene().name))
+        {
+            //if the scene has a checkpoint stored, it is used
+            player.GetComponent<CharacterController>().enabled = false;
+            player.transform.position = saveData.GetCheckpointPosition(SceneManager.GetActiveScene().name);
+            player.GetComponent <CharacterController>().enabled = true;
         }
     }
 
