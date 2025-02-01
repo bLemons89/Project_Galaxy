@@ -2,7 +2,7 @@
     Author: Juan Contreras
     Edited by:
     Date Created: 01/28/2025
-    Date Updated: 01/28/2025
+    Date Updated: 02/01/2025
     Description: Triggers the next mission in the queue if the criteria is met
  */
 using System.Collections;
@@ -14,38 +14,32 @@ public class Objective2 : MonoBehaviour
 {
     [SerializeField] GameObject firstCell;
 
-    bool playerInRange;
-    int enemiesAlive;
+    List<GameObject> enemiesAlive = new List<GameObject>();     //track enemies alive
+
+    private void Start()
+    {
+        //count enemies in the area
+        Collider[] colliders = Physics.OverlapBox(transform.position, transform.localScale / 2, Quaternion.identity);
+        foreach (Collider c in colliders)
+        {
+            if (c.CompareTag("Enemy"))      //checks for enemies
+            {
+                enemiesAlive.Add(c.gameObject);
+            }
+        }
+    }
 
     private void Update()
     {
-        if (playerInRange && enemiesAlive == 0)
+        //update enemies killed
+        enemiesAlive.RemoveAll(enemy => enemy == null);
+
+        if (enemiesAlive.Count == 0)
         {
-            GameManager.instance.GetComponent<ObjectiveManager>().CompleteObjective();
+            ObjectiveManager.instance.CompleteObjective();
             firstCell.SetActive(true);
 
             Destroy(gameObject);
         }
-    }
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            playerInRange = true;
-        }
-
-        if(other.GetComponent<EnemyBase>() != null)
-            enemiesAlive++;
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            playerInRange = false;
-        }
-
-        if (other.GetComponent<EnemyBase>() != null)
-            enemiesAlive--;
     }
 }

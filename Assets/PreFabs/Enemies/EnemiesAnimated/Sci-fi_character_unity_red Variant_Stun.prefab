@@ -927,7 +927,7 @@ GameObject:
   - component: {fileID: 7285793867991921662}
   m_Layer: 6
   m_Name: Sci-fi_character_unity_red Variant_Stun
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1045,7 +1045,7 @@ MonoBehaviour:
   topFillSpeed: 0
   bottomFillSpeed: 0
   dmgFlashDuration: 0
-  critWarningText: {fileID: 0}
+  critWarning: {fileID: 0}
   critHealth: 0.2
   flashSpeed: 0.5
   OnDeath:

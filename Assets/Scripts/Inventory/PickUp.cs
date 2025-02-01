@@ -2,7 +2,7 @@
     Author: Breanna Lemons
     Edited By: Juan Contreras
     Date Created: 01/16/2025
-    Date Updated: 01/25/2025
+    Date Updated: 01/31/2025
     Description: Class to use when picking up objects in a scene to be
                  stored in the inventory.
  */

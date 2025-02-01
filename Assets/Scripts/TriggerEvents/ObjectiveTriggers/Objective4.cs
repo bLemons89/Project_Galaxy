@@ -2,9 +2,9 @@
     Author: Juan Contreras
     Edited by:
     Date Created: 01/28/2025
-    Date Updated: 01/28/2025
+    Date Updated: 02/01/2025
     Description: Triggers the next mission in the queue if the criteria is met
-                 (place in area: Destroy both when 1 is triggered)   
+                 (place in area: Destroy both when 1 is triggered) [Explore for cells]
  */
 using System.Collections;
 using System.Collections.Generic;
@@ -12,21 +12,22 @@ using UnityEngine;
 
 public class Objective4 : MonoBehaviour
 {
+    string objectiveID = "4";       //change in the future if objectives increase in complexity
     bool playerInRange;
 
     private void Update()
     {
         if (playerInRange)
         {
-            GameManager.instance.GetComponent<ObjectiveManager>().CompleteObjective();
-
-            //find all objects with the Objective4 script
-            Objective4[] objectives = FindObjectsOfType<Objective4>();
-
-            //loop through each object and destroy its GameObject
-            foreach (Objective4 objective in objectives)
+            if(!SceneManagerScript.instance.SaveData.IsObjectiveCompleted(objectiveID))
             {
-                Destroy(objective.gameObject);
+                //mark as complete
+                SceneManagerScript.instance.SaveData.MarkObjectiveAsCompleted(objectiveID);
+                SceneManagerScript.instance.SaveGame();     //save progress
+
+                //iterate to next objective
+                ObjectiveManager.instance.CompleteObjective();
+                Destroy(gameObject);
             }
         }
     }

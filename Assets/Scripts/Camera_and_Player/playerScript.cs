@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class playerScript : MonoBehaviour
 {
@@ -136,11 +137,21 @@ public class playerScript : MonoBehaviour
 
     public void Respawn()                   //called using Unity event
     {
-        if (CheckpointManager.instance)
+        if (SceneManagerScript.instance != null)
         {
-            Vector3 respawnPosition = CheckpointManager.instance.LastCheckpointPosition;
+            Vector3 respawnPosition;
 
-            Debug.Log($"Last Checkpoint position stored for respawn at {respawnPosition}");
+            //look for a checkpoint in the scene
+            if(SceneManagerScript.instance.SaveData.lastCheckpointPositions.Exists(cp => cp.sceneName == SceneManager.GetActiveScene().name))
+            {
+                respawnPosition = SceneManagerScript.instance.SaveData.GetCheckpointPosition(SceneManager.GetActiveScene().name);
+            }
+            else
+            {
+                respawnPosition = transform.position;
+            }
+
+            //Debug.Log($"Last Checkpoint position stored for respawn at {respawnPosition}");
 
             //disable controller to move player
             playerController.enabled = false;
@@ -150,18 +161,18 @@ public class playerScript : MonoBehaviour
             //resetting speed to prevent glitches
             horizontalVelocity = Vector3.zero;
 
-            Debug.Log($"Player respawned at {respawnPosition}");
+            //Debug.Log($"Player respawned at {respawnPosition}");
         }
         else
         {
-            Debug.Log("No CheckpointManager, unable to respawn");
+            //Debug.Log("No SceneManagerScript, unable to respawn");
         }
     }
 
     public void Stun(float duration, float stunSensitivity)        //called from stun enemy
     {
         //add stun effect logic
-        Debug.Log($"Player stunned for {duration} seconds");
+        //Debug.Log($"Player stunned for {duration} seconds");
 
         if(!isStunned)
             StartCoroutine(StunRoutine(duration, stunSensitivity));
