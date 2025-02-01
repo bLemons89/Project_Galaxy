@@ -2,7 +2,7 @@
     Author: Juan Contreras
     Edited By:
     Date Created: 01/16/2025
-    Date Updated: 01/17/2025
+    Date Updated: 01/31/2025
     Description: Class to manage checkpoints the player sets off in game
  */
 using System.Collections;

@@ -44,14 +44,14 @@ public class InventoryManager : MonoBehaviour
     public List<InventorySlot> InventorySlotsList => inventorySlots;
 
 
-    int missionItemsCollected = 1;
-    int shardsCollected = 0;
+    //int missionItemsCollected = 1;            //using methods for this instead
+    //int shardsCollected = 0;
 
-    public int MissionItemsCollected
-    { get => missionItemsCollected; set => missionItemsCollected = value; }             //to be changed by triggers on the mission items
+    //public int MissionItemsCollected
+    //{ get => missionItemsCollected; set => missionItemsCollected = value; }             //to be changed by triggers on the mission items
 
-    public int ShardsCollected
-    { get => shardsCollected; set => shardsCollected = value; }             //to be changed by triggers on the shards
+    //public int ShardsCollected
+    //{ get => shardsCollected; set => shardsCollected = value; }             //to be changed by triggers on the shards
 
     // Start is called before the first frame update
     void Awake()
@@ -164,6 +164,26 @@ public class InventoryManager : MonoBehaviour
     {
         //event to update UI
         Debug.Log("Inventory UI updated.");
+    }
+
+    //*******************************************************************************************
+    //update important items to keep track off
+    public void CollectEnergyCell()
+    {
+        if(SceneManagerScript.instance != null)
+        {
+            SceneManagerScript.instance.SaveData.energyCellsCollected++;
+            SceneManagerScript.instance.SaveGame();                         //possibly not save when this happens?
+        }
+    }
+
+    public void CollectShard()
+    {
+        if (SceneManagerScript.instance != null)
+        {
+            SceneManagerScript.instance.SaveData.shardsCollected++;
+            SceneManagerScript.instance.SaveGame();                         //possibly not save when this happens?
+        }
     }
 }
 

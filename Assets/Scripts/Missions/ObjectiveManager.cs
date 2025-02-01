@@ -22,7 +22,7 @@ public class ObjectiveManager : MonoBehaviour
         { 3, "Pick up the Energy Cell" },
         { 4, "Explore the planet for more cells" },         //in start of Area 1 and 2
         { 5, "Search the areas for a cell" },
-        { 6, "Cells collected 2/3" },
+        { 6, "Search the other area for the last cell" },
         { 7, "All cells collected. Return to the ship." },
         { 8, "Survive." }
     };
@@ -48,10 +48,6 @@ public class ObjectiveManager : MonoBehaviour
             objectivesQueue.Dequeue(); //remove the current objective
             UpdateObjectiveText();    //update the UI text
         }
-        else
-        {
-            //Debug.Log("All objectives completed!");
-        }
     }
 
     //updates the UI text with the current objective
@@ -64,7 +60,7 @@ public class ObjectiveManager : MonoBehaviour
         }
         else
         {
-            objectiveText.text = "Not bad, insert the cells into the ship and skedaddle!";
+            objectiveText.text = "Not bad, insert the cells into the ship and skedaddle!";      //FINAL OBJECTIVE HERE
         }
     }
 

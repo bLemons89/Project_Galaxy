@@ -2,7 +2,7 @@
     Author: Juan Contreras
     Edited By:
     Date Created: 01/30/2025
-    Date Updated: 01/30/2025
+    Date Updated: 02/01/2025
     Description: Save data structure to store player position, collected items, and defeated enemies
  */
 using System;
@@ -26,6 +26,9 @@ public class SaveData
     public List<ScenePositionData> scenePositions = new List<ScenePositionData>();
     public List<string> destroyedObjects = new List<String>();    //keep track of destroyed objects
     public List<CheckpointData> lastCheckpointPositions = new List<CheckpointData>();   //store checkpoints and know which to use
+
+    public int energyCellsCollected = 0;  //keep track of collected cells
+    public int shardsCollected = 0;       //keep track of collected shards
 
     //store newest checkpoint
     public void SaveCheckpoint(string sceneName, Vector3 position)
