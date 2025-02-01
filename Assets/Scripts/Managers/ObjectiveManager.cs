@@ -68,6 +68,13 @@ public class ObjectiveManager : MonoBehaviour
     //updates the UI text with the current objective
     private void UpdateObjectiveText()
     {
+        //remove completed objectives from queue
+        while (objectivesQueue.Count > 0 &&
+            SceneManagerScript.instance.SaveData.IsObjectiveCompleted(objectivesQueue.Peek().ToString()))
+        {
+            objectivesQueue.Dequeue();
+        }
+
         if (objectivesQueue.Count > 0)
         {
             int currentObjectiveId = objectivesQueue.Peek();

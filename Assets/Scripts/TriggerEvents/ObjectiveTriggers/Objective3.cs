@@ -21,7 +21,7 @@ public class Objective3 : MonoBehaviour
         if (playerInRange && Input.GetKeyDown(KeyCode.Q))
         {
             InventoryManager.instance.CollectEnergyCell();
-            //ObjectiveManager.instance.CompleteObjective();
+            ObjectiveManager.instance.CompleteObjective();
 
             foreach (GameObject obj in exitColliders)           //turn off colliders to allow plater to continue
             {
