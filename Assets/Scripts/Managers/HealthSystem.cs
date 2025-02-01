@@ -88,7 +88,7 @@ public class HealthSystem : MonoBehaviour
             if(this.CompareTag("Player"))
             {
                 Invoke("FlashDamageScreen", 0f);
-                //AudioManager2.PlaySound(AudioManager2.Sound.PlayerDamage);
+                AudioManager.instance.PlaySFX(AudioManager.instance.PlayerSounds, "PlayerDMG");
             }
         }
         //check for death
