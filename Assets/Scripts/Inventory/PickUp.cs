@@ -29,8 +29,8 @@ public class PickUp : MonoBehaviour
     {
         uniqueID = GetComponent<UniqueID>();
 
-        if (SceneManagerScript.instance.SaveData.destroyedObjects.Contains(uniqueID.ID))
-        { Destroy(gameObject); }        //destroyed if picked up in past save
+        //if (SceneManagerScript.instance.SaveData.destroyedObjects.Contains(uniqueID.ID))
+        //{ Destroy(gameObject); }        //destroyed if picked up in past save
     }
 
     private void Update()

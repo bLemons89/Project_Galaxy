@@ -18,6 +18,10 @@ MonoBehaviour:
   maxStackSize: 1
   value: 0
   itemModel: {fileID: 6536510104674936741, guid: b034a42daa6b23a459727bf741d00205, type: 3}
+  invImage: {fileID: 0}
+  invName: {fileID: 0}
+  invNumText: {fileID: 0}
+  invMaxText: {fileID: 0}
   weaponName: Shotgun
   shootDamage: 3
   shootRate: 1
@@ -26,13 +30,13 @@ MonoBehaviour:
   maxClipAmmo: 10
   ammoStored: 48
   ammoTypeName: Shotgun Shells
-  reloadRate: 2
+  reloadRate: 4
   shootSound: {fileID: 8300000, guid: f3017a2c5a388cf42b91f3ad5495d53e, type: 3}
   hitEffect: {fileID: 3836854531972415411, guid: 4790206eadc817b4196e071640e653af, type: 3}
   muzzleFlash: {fileID: 0}
   muzzleFlashPos: {fileID: 0}
   areaOfEffectRadius: 2
-  splashDamage: 5
+  splashDamage: 2
   shootSoundVol: 0
   reloadSoundVol: 0
   emptySoundVol: 0
