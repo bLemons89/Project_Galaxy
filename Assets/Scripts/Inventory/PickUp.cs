@@ -80,7 +80,7 @@ public class PickUp : MonoBehaviour
 
             //destroy item in the world
             Destroy(gameObject);
-            AudioManager.instance.PlaySFX(AudioManager.instance.AR_Sounds[2]);
+            //AudioManager.instance.PlaySFX(AudioManager.instance.AR_Sounds[2]);
         }
     }    
 

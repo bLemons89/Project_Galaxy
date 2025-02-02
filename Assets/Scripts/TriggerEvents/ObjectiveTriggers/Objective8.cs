@@ -56,15 +56,18 @@ public class Objective8 : MonoBehaviour
 
         //mark as complete
         SceneManagerScript.instance.SaveData.MarkObjectiveAsCompleted(objectiveID);
-        SceneManagerScript.instance.SaveGame();     //save progress
+        SceneManagerScript.instance.MarkObjectAsDestroyed(this.GetComponent<UniqueID>().ID);
+        SceneManagerScript.instance.MarkObjectAsDestroyed(shipEntranceCollider.GetComponent<UniqueID>().ID);
 
         Destroy(shipEntranceCollider);
 
         foreach (GameObject wall in walls)
         {
+            SceneManagerScript.instance.MarkObjectAsDestroyed(wall.GetComponent<UniqueID>().ID);
             Destroy(wall);
         }
 
+        SceneManagerScript.instance.SaveGame();     //save progress
         Destroy(gameObject);
     }
 }

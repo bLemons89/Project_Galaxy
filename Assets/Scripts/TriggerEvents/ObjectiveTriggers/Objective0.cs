@@ -7,6 +7,7 @@
  */
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml;
 using UnityEngine;
 
 public class Objective0 : MonoBehaviour
@@ -17,18 +18,23 @@ public class Objective0 : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!SceneManagerScript.instance.SaveData.IsObjectiveCompleted(objectiveID))
+        if (other.CompareTag("Player") &&
+        InventoryManager.instance.InventorySlotsList.Find(slot => slot.Item.ItemType_ == ItemBase.ItemType.Weapon) != null)
         {
-            if (other.CompareTag("Player") &&
-            InventoryManager.instance.InventorySlotsList.Find(slot => slot.Item.ItemType_ == ItemBase.ItemType.Weapon) != null)
+            if (!SceneManagerScript.instance.SaveData.IsObjectiveCompleted(objectiveID))
             {
+
                 ObjectiveManager.instance.CompleteObjective();
 
                 //mark as complete
                 SceneManagerScript.instance.SaveData.MarkObjectiveAsCompleted(objectiveID);
+
+                //mark as destroyed for saving
+                SceneManagerScript.instance.MarkObjectAsDestroyed(this.GetComponent<UniqueID>().ID);
+                SceneManagerScript.instance.MarkObjectAsDestroyed(exitCollider.GetComponent<UniqueID>().ID);
                 SceneManagerScript.instance.SaveGame();     //save progress
 
-                exitCollider.SetActive(false);
+                Destroy(exitCollider);
 
                 Destroy(gameObject);        //remove trigger once complete
             }

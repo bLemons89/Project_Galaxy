@@ -9,24 +9,27 @@ public class ParticleUI : MonoBehaviour
     void Awake()
     {
         ps = GetComponent<ParticleSystem>();
-        StopParticles();
+
+        if (ps != null )
+            StopParticles();
     }
     public void SimulateParticles()
     {
-        if (!ps.isPlaying)
+        if (ps != null && !ps.isPlaying)
         {
             ps.Simulate(Time.unscaledDeltaTime, true, false);
         }
     }
     public void PlayParticles()
     {
-        if (!ps.isPlaying)
+        if (ps != null && !ps.isPlaying)
         {
             ps.Play();
         }
     }
     public void StopParticles()
     {
-        ps.Stop();
+        if(ps != null)
+            ps.Stop();
     }
 }

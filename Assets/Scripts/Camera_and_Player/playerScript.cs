@@ -84,7 +84,7 @@ public class playerScript : MonoBehaviour
         {
             if (moveDirection.magnitude > 0.3f && !isPlayingStep)
             {
-                StartCoroutine(PlayStep());
+                //StartCoroutine(PlayStep());
             }
 
             jumpCount = 0;
@@ -128,8 +128,8 @@ public class playerScript : MonoBehaviour
         {
             jumpCount++;
             horizontalVelocity.y = jumpSpeed;
-            AudioManager.instance.PlaySFX(AudioManager.instance.PlayerJump[Random.Range(0,
-                AudioManager.instance.PlayerJump.Length)]);
+            //AudioManager.instance.PlaySFX(AudioManager.instance.PlayerJump[Random.Range(0,
+                //AudioManager.instance.PlayerJump.Length)]);
         }
         playerController.Move(horizontalVelocity * Time.deltaTime);
         horizontalVelocity.y -= gravity * Time.deltaTime;

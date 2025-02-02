@@ -30,7 +30,7 @@ public class TargetingSystem : MonoBehaviour
     public void AimAtTarget()
     {
         //finds targets matching the layer mask and in the radius   (future proof for multiplayer)
-        Collider[] targets = Physics.OverlapSphere(transform.position, detectionRadius, targetMask);
+        Collider[] targets = Physics.OverlapSphere(transform.position , detectionRadius, targetMask);
 
         if(targets.Length > 0)
         {

@@ -164,7 +164,7 @@ GameObject:
   - component: {fileID: 7316735949329231184}
   - component: {fileID: 7979485282607032704}
   - component: {fileID: 6279900208408636334}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -279,7 +279,7 @@ GameObject:
   - component: {fileID: 4054726637496779129}
   - component: {fileID: 6935064256135854104}
   - component: {fileID: 2010865186693433782}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: PlayerTesting
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -428,7 +428,7 @@ MonoBehaviour:
   OnDeath:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 971081580317537632}
         m_TargetAssemblyTypeName: playerScript, Assembly-CSharp
         m_MethodName: Respawn
         m_Mode: 1

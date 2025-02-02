@@ -44,16 +44,13 @@ public abstract class EnemyBase : MonoBehaviour
     {
         uniqueID = GetComponent<UniqueID>();
 
-        ///if(SceneManagerScript.instance.SaveData.destroyedObjects.Contains(uniqueID.ID))
-        ///{ Destroy(gameObject); }        //destroy if previously killed
+        if(SceneManagerScript.instance.SaveData.destroyedObjects.Contains(uniqueID.ID))
+        { Destroy(gameObject); }        //destroy if previously killed
 
         if (GameManager.instance != null)
         {
             player = GameObject.FindWithTag("Player");
             playerSettings = player.GetComponent<playerScript>();
-
-            // Subscribe to the State Changes
-            //GameManager.instance.OnGameStateChange += OnGameStateChange;
         }
 
         if (this.GetComponent<TargetingSystem>() != null)
@@ -78,12 +75,12 @@ public abstract class EnemyBase : MonoBehaviour
             //shoot while gun has ammo in the clip
             if (weaponInAction.CurrentAmmo > 0)
             {
-                ///shoot
+                //shoot
                 weaponInAction.EnemyFireGun(targetingSystem.CurrentTarget);
             }
             else
             {
-                ///reload
+                //reload
                 weaponInAction.Reload();
             }
         }
@@ -108,21 +105,4 @@ public abstract class EnemyBase : MonoBehaviour
         }
     }
 
-    //FOR PAUSE
-    //private void OnGameStateChange(GameState newGameState)
-    //{
-    //    if (newGameState == GameState.Pause)
-    //    {
-    //        this.enabled = false;
-    //    }
-    //    else if (newGameState == GameState.Gameplay)
-    //    {
-    //        this.enabled = true;
-    //    }
-    //}
-    //private void OnDestroy()
-    //{
-    //    // Unsubscribe
-    //    GameManager.instance.OnGameStateChange -= OnGameStateChange;
-    //}
 }
