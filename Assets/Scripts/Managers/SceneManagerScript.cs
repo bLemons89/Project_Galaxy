@@ -33,8 +33,10 @@ public class SceneManagerScript : MonoBehaviour
             instance = this;
             DontDestroyOnLoad(gameObject);
 
-            if(saveData == null) { saveData = new SaveData(); }             //EDITOR ONLY REMOVE BEFORE BUILDING
-
+             //EDITOR ONLY REMOVE BEFORE BUILDING
+            LoadOnWake();
+            if(saveData == null) { saveData = new SaveData(); }
+            /////////////////////////////////////////
             SceneManager.sceneLoaded += OnSceneLoaded;
         }
         else
@@ -43,7 +45,7 @@ public class SceneManagerScript : MonoBehaviour
         }
     }
 
-    private void Start()                                        //MIGHT NOT NEED
+    private void LoadOnWake()         //Start() was here                               //MIGHT NOT NEED
     {
         saveData = SaveSystem.LoadGame(activeSaveSlot);
 

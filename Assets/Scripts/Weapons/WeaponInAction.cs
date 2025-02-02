@@ -29,13 +29,17 @@ public class WeaponInAction : MonoBehaviour
     [SerializeField] GameObject shootOrigin;
 
     [Header("UI")]
+    [Header("Automatically found")]
     [SerializeField] Image gunImage;
     [SerializeField] TextMeshProUGUI currentAmmoUI;
     [SerializeField] TextMeshProUGUI ammoStoredUI;
     [SerializeField] GameObject reloadMessage;
-    [SerializeField] TMP_Text reloadText;
+    [SerializeField] TextMeshProUGUI reloadText;
 
     //===========VARIABLES===========
+    int playerLayer;
+    int layerMask;
+
     WeaponInformation gunInfo;
     //int currentWeaponIndex = 0;
     int currentAmmo = 0;
@@ -59,6 +63,17 @@ public class WeaponInAction : MonoBehaviour
             {
                 InventoryManager.instance.OnInventoryUpdated.AddListener(CheckAvailableWeapons);
             }
+
+            //ignore player mask
+            playerLayer = LayerMask.NameToLayer("Player");
+            layerMask = ~(1 << playerLayer);
+
+            //find UI components (reset every scene)
+            gunImage = GameObject.Find("WeaponSprite").GetComponent<Image>();
+            currentAmmoUI = GameObject.Find("CurrentAmmo").GetComponent<TextMeshProUGUI>();
+            ammoStoredUI = GameObject.Find("TotalAmmo").GetComponent<TextMeshProUGUI>();
+            reloadMessage = GameObject.Find("ReloadMsgBackground");
+            //reloadText = GameObject.Find("ReloadMessageText").GetComponent<TextMeshProUGUI>();
 
             CheckAvailableWeapons();
 
@@ -217,6 +232,7 @@ public class WeaponInAction : MonoBehaviour
             currentAmmo += ammoToRefill;
             ammoStored -= ammoToRefill;
 
+            currentAmmoUI.text = currentAmmo.ToString();
             ammoStoredUI.text = ammoStored.ToString();
 
             reloadMessage.SetActive(false);
@@ -287,7 +303,7 @@ public class WeaponInAction : MonoBehaviour
                 
 
                 //raycast to where the player is looking
-                if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out RaycastHit hitInfo, gunInfo.shootDistance))
+                if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out RaycastHit hitInfo, gunInfo.shootDistance, layerMask))
                 {
                     //Debug.Log($"Player: Hit {hitInfo.transform.name}");
 
@@ -315,7 +331,8 @@ public class WeaponInAction : MonoBehaviour
             }
             else
             {
-                AudioManager.instance.PlaySFX(AudioManager.instance.Empty_Clip[0]);
+                if(AudioManager.instance != null)
+                    AudioManager.instance.PlaySFX(AudioManager.instance.Empty_Clip[0]);
                 //Debug.Log("Player: Gun out of ammo");
                 reloadMessage.SetActive(true);
             }

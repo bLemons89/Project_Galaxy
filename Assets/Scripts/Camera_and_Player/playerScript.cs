@@ -58,6 +58,9 @@ public class playerScript : MonoBehaviour
         player = GameObject.FindWithTag("Player");
         _playerScript = player.GetComponent<playerScript>();
         playerCamera = GameObject.FindWithTag("MainCamera").GetComponent<cameraController>();
+
+        playerDamageScreen = GameObject.Find("PlayerDmgScreen");
+        playerDamageScreen.SetActive(false);
     }
 
     void Update()
