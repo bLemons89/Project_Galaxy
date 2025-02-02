@@ -36,7 +36,7 @@ public class AudioManager : MonoBehaviour
     private void Start()
     {
         source_2D = GameManager.instance.GetComponent<AudioSource>();
-        source_Player = GameObject.Find("PlayerArmature").GetComponent<AudioSource>();
+        //source_Player = GameObject.Find("PlayerArmature").GetComponent<AudioSource>();
         //AudioManager.instance.GetComponent<AudioMixer>();
         //AudioManager.instance.GetComponent<MixerAdapter>();
 

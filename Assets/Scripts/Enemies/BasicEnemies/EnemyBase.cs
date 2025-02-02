@@ -44,8 +44,8 @@ public abstract class EnemyBase : MonoBehaviour
     {
         uniqueID = GetComponent<UniqueID>();
 
-        if(SceneManagerScript.instance.SaveData.destroyedObjects.Contains(uniqueID.ID))
-        { Destroy(gameObject); }        //destroy if previously killed
+        ///if(SceneManagerScript.instance.SaveData.destroyedObjects.Contains(uniqueID.ID))
+        ///{ Destroy(gameObject); }        //destroy if previously killed
 
         if (GameManager.instance != null)
         {
