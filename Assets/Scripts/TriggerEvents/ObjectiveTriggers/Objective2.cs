@@ -16,6 +16,8 @@ public class Objective2 : MonoBehaviour
 
     List<GameObject> enemiesAlive = new List<GameObject>();     //track enemies alive
 
+    string objectiveID = "2";
+
     private void Start()
     {
         //count enemies in the area
@@ -31,15 +33,22 @@ public class Objective2 : MonoBehaviour
 
     private void Update()
     {
-        //update enemies killed
-        enemiesAlive.RemoveAll(enemy => enemy == null);
-
-        if (enemiesAlive.Count == 0)
+        if (!SceneManagerScript.instance.SaveData.IsObjectiveCompleted(objectiveID))
         {
-            ObjectiveManager.instance.CompleteObjective();
-            firstCell.SetActive(true);
+            //update enemies killed
+            enemiesAlive.RemoveAll(enemy => enemy == null);
 
-            Destroy(gameObject);
+            if (enemiesAlive.Count == 0)
+            {
+                ObjectiveManager.instance.CompleteObjective();
+                firstCell.SetActive(true);
+
+                //mark as complete
+                SceneManagerScript.instance.SaveData.MarkObjectiveAsCompleted(objectiveID);
+                SceneManagerScript.instance.SaveGame();     //save progress
+
+                Destroy(gameObject);
+            }
         }
     }
 }
