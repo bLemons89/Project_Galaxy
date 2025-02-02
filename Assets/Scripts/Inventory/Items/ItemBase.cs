@@ -25,6 +25,7 @@ public abstract class ItemBase : ScriptableObject
     public int MaxStackSize => maxStackSize;
     public GameObject ItemModel => itemModel;
     public ItemType ItemType_ => itemType;
+    public Sprite Icon => icon;
     public enum ItemType
     {
         Weapon,

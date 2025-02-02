@@ -403,7 +403,7 @@ PrefabInstance:
     - target: {fileID: 7129291247331537444, guid: 4d8038ad4bc603e459c4635bd6feb3be, type: 3}
       propertyPath: source_Player
       value: 
-      objectReference: {fileID: 2020332452}
+      objectReference: {fileID: 0}
     - target: {fileID: 7129291247331537444, guid: 4d8038ad4bc603e459c4635bd6feb3be, type: 3}
       propertyPath: Enemy.Array.size
       value: 2
@@ -670,7 +670,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8122107270376519820, guid: 4d8038ad4bc603e459c4635bd6feb3be, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8122107270376519820, guid: 4d8038ad4bc603e459c4635bd6feb3be, type: 3}
       propertyPath: m_TagString
@@ -1023,11 +1023,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!82 &2020332452 stripped
-AudioSource:
-  m_CorrespondingSourceObject: {fileID: 8664675781185621932, guid: 4d8038ad4bc603e459c4635bd6feb3be, type: 3}
-  m_PrefabInstance: {fileID: 572821457}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8740618979839178543
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Energy Rifle
   m_EditorClassIdentifier: 
   itemName: ER
-  icon: {fileID: 21300000, guid: 76d9b38f74ad31040a577745e7df833b, type: 3}
+  icon: {fileID: 21300000, guid: ab0304a152f89b646bc133b9c560efe8, type: 3}
   itemType: 0
   maxStackSize: 1
   value: 0
