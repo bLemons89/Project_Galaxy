@@ -9,7 +9,6 @@ public class GameManager : MonoBehaviour
 {
     //singleton
     public static GameManager instance;
-    private GameState currentGameState;
 
     [Header("===== MANAGERS =====")]
     private AudioManager audioManager;
@@ -25,13 +24,18 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Camera loadingCamera;
     private Camera currentCamera;
 
+    float timeScaleOrig;
+    bool isPaused;
+    bool isWebGL;
+    public bool IsWebGL
+    { get { return isWebGL; } }
     // Pause Events //
-    public delegate void GameStateChangeHandler(GameState newGameState);
-    public event GameStateChangeHandler OnGameStateChange;
+    //private GameState currentGameState;
+    //public delegate void GameStateChangeHandler(GameState newGameState);
+    //public event GameStateChangeHandler OnGameStateChange;
+    //public GameState CurrentGameState { get; private set; }
 
     // Getters and Setters //
-    public GameState CurrentGameState { get; private set; }
-
     public GameObject MenuActive
     { get => menuActive; set => menuActive = value; }
     public Camera CurrentCamera
@@ -40,28 +44,36 @@ public class GameManager : MonoBehaviour
     { get => gameCamera; set => gameCamera = value; }
     public Camera LoadingCamera
     { get => loadingCamera; set => loadingCamera = value; }
+    public bool IsPaused
+    { get => isPaused; set => isPaused = value; }
+    public playerScript PlayerScript
+    { get => _playerScript; set => _playerScript = value; }
 
     void Awake()
     {
         if (instance == null)
         {
             instance = this;
+            // Commented this out The scene transition should work normally, just put all the required SerializeField on each level. 
             DontDestroyOnLoad(gameObject);
         }
         else 
         { 
             Destroy(gameObject);
         }
+        isWebGL = Application.platform == RuntimePlatform.WebGLPlayer;
+
         // Set Current GameState
-        currentGameState = GameState.Gameplay;
-        OnGameStateChange?.Invoke(currentGameState);
+        //currentGameState = GameState.Gameplay;
+        //OnGameStateChange?.Invoke(currentGameState);
+        timeScaleOrig = Time.timeScale;
+        isPaused = false;
+        menuActive = null;
 
         // Instantiate        
         sceneManager = this.GetComponent<SceneManagerScript>();
-        audioManager = this.GetComponent<AudioManager>();
         buttonFunctions = FindObjectOfType<ButtonFunctions>();
         _playerScript = FindObjectOfType<playerScript>();
-        
     }
     
     // Input //
@@ -70,87 +82,98 @@ public class GameManager : MonoBehaviour
         // Pause Input
         if (Input.GetButtonDown("Cancel") || Input.GetButtonDown("Pause"))
         {
-            ///disable for main menu
-            if (currentGameState == GameState.Gameplay)
+            if (!isPaused)
             {
-                HandleGameStateChange(GameState.Pause);
-                buttonFunctions.OpenPauseMenu();                
+                StatePause();
+                buttonFunctions.OpenPauseMenuBase();
             }
-            else if (currentGameState == GameState.Pause)
-            {                
-                HandleGameStateChange(GameState.Gameplay);
+            else if (isPaused)
+            {
+                buttonFunctions.MenuOpenCheck();
 
-                if (menuActive != null)
-                {
-                    buttonFunctions.CloseAllMenus();                    
-                }                
-            }
+                menuActive = null;
+
+                StateUnpause();
+            }           
         }
     }
-
-    // Game States //
-    private void HandleGameStateChange(GameState newState)
+    public void StatePause()
     {
-        // Pause //
-        if (newState == GameState.Pause)
-        {            
-            currentGameState = GameState.Pause;
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.None;
-            
-            OnGameStateChange?.Invoke(currentGameState);            
-        }
-        // Unpause //
-        else if (newState == GameState.Gameplay)
-        {            
-            currentGameState = GameState.Gameplay;
-            Cursor.visible = false;
-            Cursor.lockState = CursorLockMode.Locked;
-
-            OnGameStateChange?.Invoke(currentGameState);
-        }
+        //toggle
+        isPaused = !isPaused;
+        Time.timeScale = 0;
+        //cursor
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.Confined; //none can go outside the window/app
     }
+    public void StateUnpause()
+    {
+        //toggle
+        isPaused = !isPaused;
+        Time.timeScale = timeScaleOrig;
+        //cursor
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+
     // Pause Buttons //
     public void Resume()
     {
-        //GameManager.instance.StateUnPause();
-        HandleGameStateChange(GameState.Gameplay);
-        buttonFunctions.ClosePauseMenu();
+        StateUnpause();
+        buttonFunctions.ClosePauseMenuBase();
     }
-
+    /// <summary>
+    /// test, make sure restart reloads the player to the last checkpoint (and items)
+    /// </summary>
     public void Restart()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         _playerScript.Respawn();
-        //GameManager.instance.StateUnPause();        
+        StateUnpause();        
     }
+    /// <summary>
+    /// test, make sure save works and updates screen
+    /// </summary>
     public void SaveGame()
     {
-        //Navigate to Save/Load Screen?
-        //GameManager.instance.MenuActive.SetActive(false);
-        //GameManager.instance.MenuActive = saveMenu;
-        //GameManager.instance.MenuActive.SetActive(true);
-
         //prompt for overwrite, or confirm 
         // call save method
+        SceneManagerScript.instance.SaveGame();
+
         // Stamp
-        string timeStamp = System.DateTime.Now.ToString();
-        buttonFunctions.TimeDateStamp.text = timeStamp;
+        //string timeStamp = System.DateTime.Now.ToString();
+        //buttonFunctions.TimeDateStamp.text = timeStamp;
+    }
+    /// <summary>
+    /// test, make sure load and main menu buttons work
+    /// </summary>
+    public void LoadGame()
+    {
+        SceneManagerScript.instance.LoadGame(1);
     }
 
     public void MainMenu()
     {
         //Navigate to Main Menu Scene
         //remember to disable input?
+        SceneManager.LoadScene(0);
     }
 
     public void Quit()
     {
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#else
-                    Application.Quit();
-#endif
+        #if UNITY_EDITOR
+                // Stop play mode in the editor
+                UnityEditor.EditorApplication.isPlaying = false;
+        #endif
+
+        #if UNITY_WEBGL
+            // reload the page on quit
+            Application.OpenURL(Application.absoluteURL); // This reloads the page, effectively restarting the game
+        #endif
+
+        #if !UNITY_EDITOR && !UNITY_WEBGL
+            Application.Quit();
+        #endif
     }
 
 }

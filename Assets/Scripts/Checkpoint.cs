@@ -33,7 +33,10 @@ public class Checkpoint : MonoBehaviour
 
             //activating the checkpoint
             isActivated = true;
-            OnCheckpointSetPos?.Invoke(transform.position);
+
+            //setting checkpoint through manager
+            CheckpointManager.instance.SetCheckpoint(transform.position);
+
 
             //to use when notifying other parts of the game (i.e. UI, and Sound)
             //OnCheckpointActivated?.Invoke();

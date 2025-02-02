@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class playerScript : MonoBehaviour
 {
@@ -51,7 +52,7 @@ public class playerScript : MonoBehaviour
     void Start()
     {       
         // Subscribe to the State Changes
-        GameManager.instance.OnGameStateChange += OnGameStateChange;
+        //GameManager.instance.OnGameStateChange += OnGameStateChange;
         
         // find and set player reference
         player = GameObject.FindWithTag("Player");
@@ -65,7 +66,7 @@ public class playerScript : MonoBehaviour
         if (isStunned)
             return;
 
-        if(GameManager.instance.CurrentGameState != GameState.Pause)
+        if(!GameManager.instance.IsPaused)
         {
             //always checking for
             Movement();
@@ -83,7 +84,7 @@ public class playerScript : MonoBehaviour
         {
             if (moveDirection.magnitude > 0.3f && !isPlayingStep)
             {
-                StartCoroutine(PlayStep());
+                //StartCoroutine(PlayStep());
             }
 
             jumpCount = 0;
@@ -127,20 +128,30 @@ public class playerScript : MonoBehaviour
         {
             jumpCount++;
             horizontalVelocity.y = jumpSpeed;
-            AudioManager.instance.PlaySFX(AudioManager.instance.PlayerSounds, "Jump");
+            //AudioManager.instance.PlaySFX(AudioManager.instance.PlayerJump[Random.Range(0,
+                //AudioManager.instance.PlayerJump.Length)]);
         }
-
         playerController.Move(horizontalVelocity * Time.deltaTime);
         horizontalVelocity.y -= gravity * Time.deltaTime;
     }
 
     public void Respawn()                   //called using Unity event
     {
-        if (CheckpointManager.instance)
+        if (SceneManagerScript.instance != null)
         {
-            Vector3 respawnPosition = CheckpointManager.instance.LastCheckpointPosition;
+            Vector3 respawnPosition;
 
-            Debug.Log($"Last Checkpoint position stored for respawn at {respawnPosition}");
+            //look for a checkpoint in the scene
+            if(SceneManagerScript.instance.SaveData.lastCheckpointPositions.Exists(cp => cp.sceneName == SceneManager.GetActiveScene().name))
+            {
+                respawnPosition = SceneManagerScript.instance.SaveData.GetCheckpointPosition(SceneManager.GetActiveScene().name);
+            }
+            else
+            {
+                respawnPosition = transform.position;
+            }
+
+            //Debug.Log($"Last Checkpoint position stored for respawn at {respawnPosition}");
 
             //disable controller to move player
             playerController.enabled = false;
@@ -150,18 +161,18 @@ public class playerScript : MonoBehaviour
             //resetting speed to prevent glitches
             horizontalVelocity = Vector3.zero;
 
-            Debug.Log($"Player respawned at {respawnPosition}");
+            //Debug.Log($"Player respawned at {respawnPosition}");
         }
         else
         {
-            Debug.Log("No CheckpointManager, unable to respawn");
+            //Debug.Log("No SceneManagerScript, unable to respawn");
         }
     }
 
     public void Stun(float duration, float stunSensitivity)        //called from stun enemy
     {
         //add stun effect logic
-        Debug.Log($"Player stunned for {duration} seconds");
+        //Debug.Log($"Player stunned for {duration} seconds");
 
         if(!isStunned)
             StartCoroutine(StunRoutine(duration, stunSensitivity));
@@ -187,9 +198,9 @@ public class playerScript : MonoBehaviour
     IEnumerator PlayStep()
     {
         isPlayingStep = true;
-
-        AudioManager.instance.PlaySFX(AudioManager.instance.PlayerSounds, "Steps");
-        //playerAudio.PlayOneShot(audStep[Random.Range(0, audStep.Length)], audStepVol);
+        // Player step audio here
+        AudioManager.instance.PlaySFX(AudioManager.instance.PlayerWalk[Random.Range(0,
+            AudioManager.instance.PlayerWalk.Length)]);
 
         if (!isSprinting)
         {
@@ -197,25 +208,25 @@ public class playerScript : MonoBehaviour
         }
         else
         {
-            yield return new WaitForSeconds(0.3f);
+            yield return new WaitForSeconds(0.2f);
         }
 
         isPlayingStep = false;
     }
-    private void OnGameStateChange(GameState newGameState)
-    {
-        if(newGameState == GameState.Pause)
-        {
-            this.enabled = false;
-        }
-        else if(newGameState == GameState.Gameplay)
-        {
-            this.enabled = true;
-        }
-    }
-    private void OnDestroy()
-    {
-        // Unsubscribe
-        GameManager.instance.OnGameStateChange -= OnGameStateChange;
-    }
+    //private void OnGameStateChange(GameState newGameState)
+    //{
+    //    if(newGameState == GameState.Pause)
+    //    {
+    //        this.enabled = false;
+    //    }
+    //    else if(newGameState == GameState.Gameplay)
+    //    {
+    //        this.enabled = true;
+    //    }
+    //}
+    //private void OnDestroy()
+    //{
+    //    // Unsubscribe
+    //    GameManager.instance.OnGameStateChange -= OnGameStateChange;
+    //}
 }

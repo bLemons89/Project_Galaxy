@@ -30,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 23.05, y: 1.5, z: -31.41}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 2.3772, y: 2.3772, z: 2.3772}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -50,6 +50,7 @@ MonoBehaviour:
   maxHealth: 2
   healthBarBack: {fileID: 0}
   healthBarFill: {fileID: 0}
+  easeBar: {fileID: 0}
   healthGradient:
     serializedVersion: 2
     key0: {r: 1, g: 1, b: 1, a: 1}
@@ -82,7 +83,6 @@ MonoBehaviour:
     m_NumAlphaKeys: 2
   topFillSpeed: 0
   bottomFillSpeed: 0
-  easeBar: {fileID: 0}
   dmgFlashDuration: 0
   critWarningText: {fileID: 0}
   critHealth: 0.2
@@ -118,7 +118,8 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e197f36ddad9f8e4fbd6860276c10b6a, type: 2}
+  - {fileID: 2100000, guid: 32a76832b79e84347ad9df08b12709c3, type: 2}
+  - {fileID: 2100000, guid: ed10a3e4f161c77439e07f3eca55cde9, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

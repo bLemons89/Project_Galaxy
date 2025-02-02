@@ -19,11 +19,11 @@ public class RangedEnemy : EnemyBase
     [SerializeField] int roamDist;  //sphere distance of roaming
     [SerializeField] int roamTimer; //how long to wait before move again
 
-    private float shootRate;
+    /*private float shootRate;
     private int currentAmmo;
     private int maxAmmo;
     private int shootDistance;
-    private int reloadRate;
+    private int reloadRate;*/
 
     Vector3 startingPos;
 
@@ -35,15 +35,18 @@ public class RangedEnemy : EnemyBase
         base.Start();
 
         startingPos = transform.position; //to remember the starting position for roaming
+        animator = this.GetComponent<Animator>();
+            weaponInAction.EquipWeapon(0);
 
-        weaponInAction.EquipWeapon(0);
+        // if this is an override, it's not calling the base start
+        //GameManager.instance.OnGameStateChange += OnGameStateChange;
     }
 
     void Update()
     {
         //EnemyHPBar.fillAmount = (float)currentHealth / maxHealth;
-
         Behavior();
+        animator.SetFloat("Speed", agent.velocity.magnitude);
     }
 
     protected override void Behavior()
@@ -51,7 +54,8 @@ public class RangedEnemy : EnemyBase
         if (player == null || this == null) return;
 
         if(playerInSight)
-        {   
+        {
+            StopCoroutine(RoamRoutine());
             base.HandleWeapon();
         }
         else if (!isRoaming && !playerInSight)
@@ -109,4 +113,22 @@ public class RangedEnemy : EnemyBase
         //turn off
         isRoaming = false;
     }
+
+    //FOR PAUSE
+    //private void OnGameStateChange(GameState newGameState)
+    //{
+    //    if (newGameState == GameState.Pause)
+    //    {
+    //        this.enabled = false;
+    //    }
+    //    else if (newGameState == GameState.Gameplay)
+    //    {
+    //        this.enabled = true;
+    //    }
+    //}
+    //private void OnDestroy()
+    //{
+    //    // Unsubscribe
+    //    GameManager.instance.OnGameStateChange -= OnGameStateChange;
+    //}
 }

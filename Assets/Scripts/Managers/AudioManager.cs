@@ -8,91 +8,95 @@ public class AudioManager : MonoBehaviour
 {
     public static AudioManager instance;
 
-    [SerializeField] public AudioMixer audioMixer;
-    [SerializeField] public AudioSettings audioSettings;
-    [SerializeField] public MixerAdapter mixerAdapter;
-
     [Header("===== Audio Sources =====")]
     public AudioSource source_2D;
     public AudioSource source_Player;
 
     [Header("===== Audio Arrays =====")]
-    public Sound[] GameMusic;
-    public Sound[] MenuMusic;
-    public Sound[] LevelMusic;
-    public Sound[] AmbientNoise;
-    public Sound[] PlayerSounds;
-    public Sound[] Weapons;
-    public Sound[] UI;
-    public Sound[] Environment;
-    public Sound[] Enemy;
+    public AudioClip[] GameMusic;
+    public AudioClip[] MenuMusic;
+    public AudioClip[] LevelMusic;
+
+    [Header("===== Audio Player =====")]
+    public AudioClip[] PlayerWalk;
+    public AudioClip[] PlayerJump;
+    public AudioClip[] PlayerDMG;
+
+    [Header("===== Audio Weapons =====")]
+    public AudioClip[] AR_Sounds;
+    public AudioClip[] ER_Sounds;
+    public AudioClip[] SH_Sounds;
+    public AudioClip[] Empty_Clip;
+    public AudioClip[] Reload;
+
+    [Header(" ==== Audio UI ==== ")]
+    public AudioClip[] UI_Menu;
+
+    [Header(" ==== Audio Enemy ==== ")]
+    public AudioClip[] EnemyDMG;
+    public AudioClip[] EnemyDTH;
 
     private void Awake()
     {
         instance = this;
-    }       
+    }
     private void Start()
     {
-        source_2D = GameManager.instance.GetComponent<AudioSource>();
-        //source_Player = GameObject.FindWithTag("Player").GetComponent<AudioSource>();
-        AudioManager.instance.GetComponent<AudioMixer>();
-        AudioManager.instance.GetComponent<MixerAdapter>();
+        source_2D = this.GetComponent<AudioSource>();
+        source_Player = GameObject.Find("Player").GetComponent<AudioSource>();
 
+        //if (sfxMaster != null) source_Player.outputAudioMixerGroup = sfxMaster;
+
+        //source_2D.loop = true;
+        PlayMusic(MenuMusic[0]);
+    }
+
+
+    //public void PlayMusic(AudioSource source, AudioClip[] arrayName, string clipName = "")
+    public void PlayMusic(AudioClip music)
+    {
+        source_2D.clip = music;
         source_2D.loop = true;
-        PlayMusic(source_2D, MenuMusic,"Odessey");
-    }
-    
-    
-    public void PlayMusic(AudioSource source, Sound[] arrayName, string clipName = "")
-    {
-        Sound sound = null;
+        source_2D.Play();
 
-        // if clip name is passed
-        if (!string.IsNullOrEmpty(clipName))
-        {
-            sound = Array.Find(arrayName, targetSound => targetSound.name == clipName);
-        }
-        else
-        {
-            // If no clip name is provided, pick a random sound
-            sound = arrayName[UnityEngine.Random.Range(0, arrayName.Length)];
-        }
-        
-        if (sound == null || sound.clips == null || sound.clips.Length == 0)
-        {
-            Debug.Log("Sound Not Found");
-        }
-        else
-        {
-            AudioClip clipToPlay = sound.clips[0];
-            source.clip = clipToPlay;
-            source.Play();
-        }
+        //AudioClip audioClip = null;
+
+        //// if clip name is passed
+        //if (!string.IsNullOrEmpty(clipName))
+        //{
+        //    audioClip = Array.Find(arrayName, clip => clip.name == clipName);
+        //}
+        //else
+        //{
+        //    // If no clip name is provided, pick a random sound
+        //    audioClip = arrayName[UnityEngine.Random.Range(0, arrayName.Length)];
+        //}
+        //if (audioClip == null) return;
     }
 
-    public void PlaySFX(Sound[] arrayName, string clipName = "")
+    //public void PlaySFX(AudioClip[] arrayName, string clipName = "")
+    public void PlaySFX(AudioClip clipSFX)
     {
-        Sound sound = null;
+        source_Player.clip = clipSFX;
+        source_Player.PlayOneShot(clipSFX);
 
-        // if clip name is passed
-        if (!string.IsNullOrEmpty(clipName))
-        {
-            sound = Array.Find(arrayName, targetSound => targetSound.name == clipName);
-        }
-        else
-        {
-            sound = arrayName[UnityEngine.Random.Range(0, arrayName.Length)];
-        }
+        //   AudioClip audioClip = null;
 
-        if (sound == null || sound.clips == null || sound.clips.Length == 0)
-        {
-            Debug.Log("Sound Not Found");
-        }
-        else
-        {
-            AudioClip clipToPlay = sound.clips[0];
-            //sfxSource.PlayOneShot(clipToPlay);
-        }
+        //// if clip name is passed
+        //if (!string.IsNullOrEmpty(clipName))
+        //    {
+        //        audioClip = Array.Find(arrayName, clip => clip.name == clipName);
+        //    }
+        //    else
+        //    {
+        //    audioClip = arrayName[UnityEngine.Random.Range(0, arrayName.Length)];
+        //    }
+
+        //    if (audioClip == null)
+        //    {
+        //        return;
+        //    }
+        // play the sound on the player audio source
     }
 
     // Toggle //

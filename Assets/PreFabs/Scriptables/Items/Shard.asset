@@ -15,6 +15,10 @@ MonoBehaviour:
   itemName: Shard
   icon: {fileID: 0}
   itemType: 2
-  maxStackSize: 64
+  maxStackSize: 14
   value: 1
-  itemModel: {fileID: 1116121932276693872, guid: c4354e58fa1d3aa4da17faf6baa6433c, type: 3}
+  itemModel: {fileID: 1116121932276693872, guid: c65d357f6a279e34f81fbbac579563c7, type: 3}
+  invImage: {fileID: 0}
+  invName: {fileID: 0}
+  invNumText: {fileID: 0}
+  invMaxText: {fileID: 0}

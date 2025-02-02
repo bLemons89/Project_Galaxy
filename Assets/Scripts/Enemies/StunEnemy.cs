@@ -41,6 +41,10 @@ public class StunEnemy : EnemyBase
         agent.speed *= speed;
         agent.stoppingDistance = distanceFromPlayer;
         roamPosition = agent.destination;
+        animator = this.GetComponent<Animator>();
+
+        // Subscribe to the State Changes
+        //GameManager.instance.OnGameStateChange += OnGameStateChange;
     }
 
     // Update is called once per frame
@@ -58,6 +62,7 @@ public class StunEnemy : EnemyBase
         //drop item right before dying
         if (healthSystem.CurrentHealth - amount <= 0)
         {
+
             if (itemModel != null)
             {
                 //drop item logic
@@ -269,10 +274,28 @@ public class StunEnemy : EnemyBase
         {
             if (InventoryManager.instance.InventorySlotsList.Count > 0)
                 isInventoryEmpty = false;
-            else
-                Debug.Log("Stun Enemy: Player Inventory Empty");
+            //else
+               // Debug.Log("Stun Enemy: Player Inventory Empty");
         }
         else
             Debug.Log("Stun Enemy: No Inventory Manager Instance");
     }
+
+    //FOR PAUSE
+    //private void OnGameStateChange(GameState newGameState)
+    //{
+    //    if (newGameState == GameState.Pause)
+    //    {
+    //        this.enabled = false;
+    //    }
+    //    else if (newGameState == GameState.Gameplay)
+    //    {
+    //        this.enabled = true;
+    //    }
+    //}
+    //private void OnDestroy()
+    //{
+    //    // Unsubscribe
+    //    GameManager.instance.OnGameStateChange -= OnGameStateChange;
+    //}
 }

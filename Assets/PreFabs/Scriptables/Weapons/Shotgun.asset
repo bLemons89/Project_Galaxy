@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Shotgun
   m_EditorClassIdentifier: 
   itemName: SG
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 247a97ed2f9ce46459dc407496b041cc, type: 3}
   itemType: 0
   maxStackSize: 1
   value: 0
@@ -21,20 +21,18 @@ MonoBehaviour:
   weaponName: Shotgun
   shootDamage: 3
   shootRate: 1
-  shootDistance: 15
+  shootDistance: 20
   currentAmmo: 10
   maxClipAmmo: 10
   ammoStored: 48
   ammoTypeName: Shotgun Shells
   reloadRate: 2
+  shootSound: {fileID: 0}
   hitEffect: {fileID: 3836854531972415411, guid: 4790206eadc817b4196e071640e653af, type: 3}
   muzzleFlash: {fileID: 0}
   muzzleFlashPos: {fileID: 0}
   areaOfEffectRadius: 2
   splashDamage: 5
-  shootSound: []
   shootSoundVol: 0
-  reloadSound: {fileID: 0}
   reloadSoundVol: 0
-  emptySound: {fileID: 0}
   emptySoundVol: 0

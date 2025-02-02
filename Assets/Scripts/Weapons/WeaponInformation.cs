@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Inventory/Weapon Information")]
@@ -19,6 +20,10 @@ public class WeaponInformation : ItemBase
     public string ammoTypeName;
     public int reloadRate;
 
+    [Header("Audio Info")]
+    public AudioClip shootSound;
+    
+
     [Header("VISUAL FX")]
     public ParticleSystem hitEffect;
     public GameObject muzzleFlash;
@@ -37,12 +42,10 @@ public class WeaponInformation : ItemBase
     }
 
     // Anything below are from the class PP2, I am not sure if you would like to use these:
-    [Header("Audio Info")]        
-    public AudioClip[] shootSound;
     public float shootSoundVol;
-    public AudioClip reloadSound;
     public float reloadSoundVol;
-    public AudioClip emptySound;
     public float emptySoundVol;
+    //public AudioClip reloadSound;
+    //public AudioClip emptySound;
 
 }

@@ -9,7 +9,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public abstract class ItemBase : ScriptableObject
 {
@@ -21,10 +23,17 @@ public abstract class ItemBase : ScriptableObject
     [Header("MODEL PREFAB NEEDED HERE TO INSTANTIATE")]
     [SerializeField] protected GameObject itemModel;
 
+    [Header("INVENTORY UI")]
+    [SerializeField] Image invImage;
+    [SerializeField] TextMeshProUGUI invName;
+    [SerializeField] TextMeshProUGUI invNumText;
+    [SerializeField] TextMeshProUGUI invMaxText;
+
     public string ItemName => itemName;
     public int MaxStackSize => maxStackSize;
     public GameObject ItemModel => itemModel;
-    public ItemType GetItemType => itemType;
+    public ItemType ItemType_ => itemType;
+    public Sprite Icon => icon;
     public enum ItemType
     {
         Weapon,

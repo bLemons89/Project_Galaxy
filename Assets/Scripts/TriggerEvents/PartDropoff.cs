@@ -61,7 +61,7 @@ public class PartDropoff : MonoBehaviour
     void DropOffCollectible()
     {
         //check the player's inventory for a collectible item (ship part)
-        InventorySlot missionItemSlot = playerInventory.InventorySlotsList.Find(slot => slot.Item.GetItemType == ItemBase.ItemType.MissionItem);
+        InventorySlot missionItemSlot = playerInventory.InventorySlotsList.Find(slot => slot.Item.ItemType_ == ItemBase.ItemType.MissionItem);
 
         if (missionItemSlot != null)
         {
