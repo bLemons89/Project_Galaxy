@@ -479,8 +479,12 @@ MonoBehaviour:
   availableWeapons:
   - {fileID: 11400000, guid: a26bf364d3604e24ab9eccb02ff35d9f, type: 2}
   gunModelPlaceHolder: {fileID: 1383022041243710263}
-  reloadText: {fileID: 0}
+  shootOrigin: {fileID: 0}
+  gunImage: {fileID: 0}
+  currentAmmoUI: {fileID: 0}
+  ammoStoredUI: {fileID: 0}
   reloadMessage: {fileID: 0}
+  reloadText: {fileID: 0}
 --- !u!143 &4054726637496779129
 CharacterController:
   m_ObjectHideFlags: 0
@@ -539,9 +543,9 @@ AudioSource:
   m_GameObject: {fileID: 7660752696633536382}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 2537137618681924735, guid: a26be177a75b5a8459c23d8e4a765dc6, type: 2}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
