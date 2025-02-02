@@ -23,28 +23,31 @@ public class ASyncLoader : MonoBehaviour
     /// </summary>   
 
 
-    public void LoadLevelBtn(string sceneToLoad)
+    public void LoadLevelBtn(AsyncOperation loadOperation)
     {
-        GameManager.instance.MenuActive.SetActive(false);
-        loadingScreen.SetActive(true);
+        //GameManager.instance.MenuActive.SetActive(false);
+        //loadingScreen.SetActive(true);
         
-        StartCoroutine(LoadLevelASync(sceneToLoad));
+        StartCoroutine(LoadLevelASync(loadOperation));
     }
 
-    IEnumerator LoadLevelASync(string sceneToLoad)
+    IEnumerator LoadLevelASync(AsyncOperation loadOperation)
     {
         if (!loadingScreen.activeSelf)
         {            
             loadingScreen.SetActive(true);
         }
-        
+
         if (loadingParticle == null)
         {
             loadingParticle = GetComponentInChildren<ParticleUI>();
+
+            if (loadingParticle != null)
+                loadingParticle.PlayParticles();
         }
-        loadingParticle.PlayParticles();
-        Debug.Log("Particle active ? " + loadingScreen.activeSelf);
-        AsyncOperation loadOperation = SceneManager.LoadSceneAsync(sceneToLoad);
+
+        //Debug.Log("Particle active ? " + loadingScreen.activeSelf);
+        //AsyncOperation loadOperation = SceneManager.LoadSceneAsync(sceneToLoad);
         
         while(!loadOperation.isDone)
         {
@@ -53,7 +56,9 @@ public class ASyncLoader : MonoBehaviour
             yield return null;
         }
 
-        loadingParticle.StopParticles();        
+        if(loadingParticle != null)
+            loadingParticle.StopParticles();   
+        
         if (loadingScreen.activeSelf)
         { 
             loadingScreen.SetActive(false); 

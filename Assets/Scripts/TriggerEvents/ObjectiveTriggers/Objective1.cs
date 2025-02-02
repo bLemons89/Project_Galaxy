@@ -12,13 +12,19 @@ using UnityEngine;
 
 public class Objective1 : MonoBehaviour
 {
+    string objectiveID = "1";
     bool playerInRange;
 
     private void Update()
     {
-        if (playerInRange)
+        if (playerInRange &&
+                        !SceneManagerScript.instance.SaveData.IsObjectiveCompleted(objectiveID))        //make sure objective has not been completed before
         {
             ObjectiveManager.instance.CompleteObjective();
+
+            //mark as complete
+            SceneManagerScript.instance.SaveData.MarkObjectiveAsCompleted(objectiveID);
+            SceneManagerScript.instance.SaveGame();     //save progress
 
             Destroy(gameObject);
         }

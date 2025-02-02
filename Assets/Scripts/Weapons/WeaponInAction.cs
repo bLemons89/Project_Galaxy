@@ -2,7 +2,7 @@
     Author: Harry Tanama
     Edited by: Juan Contreras
     Date Created: 01/18/2025
-    Date Updated: 01/25/2025
+    Date Updated: 02/02/2025
     Description: Script to handle all gun functionalities and store gun info from scriptables
                  **GUN CONTROLS, DOES NOT UPDATE**
 
@@ -24,10 +24,22 @@ public class WeaponInAction : MonoBehaviour
     [Header("Weapon Scriptable List")]
     [SerializeField] List<WeaponInformation> availableWeapons = new List<WeaponInformation>();   //player and enemy can use    (connect to player inventory)
     [SerializeField] GameObject gunModelPlaceHolder;
-    [SerializeField] TMP_Text reloadText;
+
+
+    [SerializeField] GameObject shootOrigin;
+
+    [Header("UI")]
+    [Header("Automatically found")]
+    [SerializeField] Image gunImage;
+    [SerializeField] TextMeshProUGUI currentAmmoUI;
+    [SerializeField] TextMeshProUGUI ammoStoredUI;
     [SerializeField] GameObject reloadMessage;
+    [SerializeField] TextMeshProUGUI reloadText;
 
     //===========VARIABLES===========
+    int playerLayer;
+    int layerMask;
+
     WeaponInformation gunInfo;
     //int currentWeaponIndex = 0;
     int currentAmmo = 0;
@@ -41,6 +53,7 @@ public class WeaponInAction : MonoBehaviour
 
     public GameObject GunModelPlaceHolder => gunModelPlaceHolder;
     public WeaponInformation GunInfo { get; set; }
+    public GameObject ShootOrigin => shootOrigin;
 
     private void Start()
     {
@@ -51,6 +64,17 @@ public class WeaponInAction : MonoBehaviour
                 InventoryManager.instance.OnInventoryUpdated.AddListener(CheckAvailableWeapons);
             }
 
+            //ignore player mask
+            playerLayer = LayerMask.NameToLayer("Player");
+            layerMask = ~(1 << playerLayer);
+
+            //find UI components (reset every scene)
+            gunImage = GameObject.Find("WeaponSprite").GetComponent<Image>();
+            currentAmmoUI = GameObject.Find("CurrentAmmo").GetComponent<TextMeshProUGUI>();
+            ammoStoredUI = GameObject.Find("TotalAmmo").GetComponent<TextMeshProUGUI>();
+            reloadMessage = GameObject.Find("ReloadMsgBackground");
+            //reloadText = GameObject.Find("ReloadMessageText").GetComponent<TextMeshProUGUI>();
+
             CheckAvailableWeapons();
 
             EquipWeapon(0);
@@ -59,6 +83,9 @@ public class WeaponInAction : MonoBehaviour
 
     private void Update()
     {
+        //if(!CompareTag("Player"))
+            //Debug.DrawRay(shootOrigin.transform.position, transform.forward * gunInfo.shootDistance, Color.yellow);
+
         if (this.gameObject.CompareTag("Player"))
         {
             OnSwitchWeapon();
@@ -81,7 +108,7 @@ public class WeaponInAction : MonoBehaviour
     }
     public void OnSwitchWeapon()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1) && availableWeapons.Count > 0)        //press 1 for primary
+        /*if (Input.GetKeyDown(KeyCode.Alpha1) && availableWeapons.Count > 0)        //press 1 for primary
         {
             EquipWeapon(0);
 
@@ -97,8 +124,8 @@ public class WeaponInAction : MonoBehaviour
                 reloadMessage.SetActive(false);
         }
         else if (availableWeapons.Count <= 0 && gunInfo != null)
-            gunInfo = null;
-
+            gunInfo = null;*/
+        
         //USE IF ADDING MORE EQUIPABLE WEAPONS
         for (int i = 0; i < availableWeapons.Count; i++)
         {
@@ -150,8 +177,17 @@ public class WeaponInAction : MonoBehaviour
             //currentWeaponIndex = index;
             gunInfo = availableWeapons[index];
 
-            currentAmmo = gunInfo.maxClipAmmo;
-            ammoStored = gunInfo.ammoStored;
+            if (this.gameObject.CompareTag("Player"))
+            {
+                gunImage.sprite = gunInfo.Icon;
+
+                currentAmmo = gunInfo.maxClipAmmo;
+                ammoStored = gunInfo.ammoStored;
+
+                currentAmmoUI.text = currentAmmo.ToString();
+                ammoStoredUI.text = ammoStored.ToString();
+            }
+            else currentAmmo = gunInfo.maxClipAmmo;
 
             UpdateWeaponModel(gunInfo);
         }
@@ -189,12 +225,20 @@ public class WeaponInAction : MonoBehaviour
         //Debug.Log("Reloading...");
         yield return new WaitForSeconds(gunInfo.reloadRate);
 
-        //refill ammo
-        int ammoToRefill = Mathf.Min(gunInfo.maxClipAmmo - currentAmmo, ammoStored);     //makes sure to not use more bullets than stored
-        currentAmmo += ammoToRefill;
-        ammoStored -= ammoToRefill;
+        if (CompareTag("Player"))
+        {
+            //refill ammo
+            int ammoToRefill = Mathf.Min(gunInfo.maxClipAmmo - currentAmmo, ammoStored);     //makes sure to not use more bullets than stored
+            currentAmmo += ammoToRefill;
+            ammoStored -= ammoToRefill;
 
-        if(CompareTag("Player")) reloadMessage.SetActive(false);
+            currentAmmoUI.text = currentAmmo.ToString();
+            ammoStoredUI.text = ammoStored.ToString();
+
+            reloadMessage.SetActive(false);
+
+        }
+        else currentAmmo = gunInfo.maxClipAmmo;
 
         isReloading = false;
     }
@@ -254,11 +298,12 @@ public class WeaponInAction : MonoBehaviour
                 //adjust ammo
                 currentAmmo--;
 
-                AudioManager.instance.PlaySFX(gunInfo.shootSound);
+                currentAmmoUI.text = currentAmmo.ToString();
+                //AudioManager.instance.PlaySFX(gunInfo.shootSound);
                 
 
                 //raycast to where the player is looking
-                if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out RaycastHit hitInfo, gunInfo.shootDistance))
+                if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out RaycastHit hitInfo, gunInfo.shootDistance, layerMask))
                 {
                     //Debug.Log($"Player: Hit {hitInfo.transform.name}");
 
@@ -286,7 +331,8 @@ public class WeaponInAction : MonoBehaviour
             }
             else
             {
-                AudioManager.instance.PlaySFX(AudioManager.instance.Empty_Clip[0]);
+                if(AudioManager.instance != null)
+                    AudioManager.instance.PlaySFX(AudioManager.instance.Empty_Clip[0]);
                 //Debug.Log("Player: Gun out of ammo");
                 reloadMessage.SetActive(true);
             }
@@ -301,24 +347,29 @@ public class WeaponInAction : MonoBehaviour
             //adjust ammo
             currentAmmo--;
 
-            AudioManager.instance.PlaySFX(AudioManager.instance.ER_Sounds[3]);
+            //AudioManager.instance.PlaySFX(AudioManager.instance.ER_Sounds[3]);
 
             //adjusted shoot rate for enemies
             StartCoroutine(EnemyShootRate(this.gameObject.GetComponent<EnemyBase>().EnemyShootRate));
 
             //calculate the direction to the target
-            Vector3 directionToTarget = (target.position - transform.position).normalized;              //TODO: Add randomization to have them miss once in a while
+            Vector3 directionToTarget = (target.position - shootOrigin.transform.position).normalized;              //TODO: Add randomization to have them miss once in a while
+
+            //Debug.DrawRay(transform.position, directionToTarget, Color.yellow);
+
+            Debug.Log("Enemy Shooting...");
 
             //raycast towards the target
-            if (Physics.Raycast(transform.position, directionToTarget, out RaycastHit hitInfo, gunInfo.shootDistance))
+            if (Physics.Raycast(shootOrigin.transform.position, directionToTarget, out RaycastHit hitInfo, gunInfo.shootDistance))
             {
                 //Debug.Log($"Enemy: Hit {hitInfo.transform.name}");
+                shootOrigin.transform.LookAt(target.position);
 
                 //check if the hit object has a HealthSystem
                 HealthSystem targetHealth = hitInfo.transform.GetComponent<HealthSystem>();
                 if (targetHealth != null)
                 {
-                    targetHealth.Damage(gunInfo.shootDamage);
+                    targetHealth.Damage((float)gunInfo.shootDamage);
                     Debug.Log($"Enemy: Dealt {gunInfo.shootDamage} damage to {hitInfo.transform.name}");
                 }
 
@@ -330,7 +381,7 @@ public class WeaponInAction : MonoBehaviour
             }
             else
             {
-                //Debug.Log("Enemy: Missed");
+                Debug.Log("Enemy: Missed");
             }
 
             //PlayMuzzleFlash();

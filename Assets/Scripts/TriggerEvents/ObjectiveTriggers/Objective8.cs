@@ -13,13 +13,18 @@ using UnityEngine;
 
 public class Objective8 : MonoBehaviour
 {
+    [SerializeField] GameObject[] walls;
+    [SerializeField] GameObject shipEntranceCollider;
+
     HealthSystem bossHealth;
-    bool playerInRange;
+
+    string objectiveID = "8";
     
 
     private void Start()
     {
-        StartCoroutine(WaitForBoss());
+        if (!SceneManagerScript.instance.SaveData.IsObjectiveCompleted(objectiveID))
+            StartCoroutine(WaitForBoss());
     }
 
     IEnumerator WaitForBoss()
@@ -49,6 +54,20 @@ public class Objective8 : MonoBehaviour
     {
         ObjectiveManager.instance.CompleteObjective();
 
+        //mark as complete
+        SceneManagerScript.instance.SaveData.MarkObjectiveAsCompleted(objectiveID);
+        SceneManagerScript.instance.MarkObjectAsDestroyed(this.GetComponent<UniqueID>().ID);
+        SceneManagerScript.instance.MarkObjectAsDestroyed(shipEntranceCollider.GetComponent<UniqueID>().ID);
+
+        Destroy(shipEntranceCollider);
+
+        foreach (GameObject wall in walls)
+        {
+            SceneManagerScript.instance.MarkObjectAsDestroyed(wall.GetComponent<UniqueID>().ID);
+            Destroy(wall);
+        }
+
+        SceneManagerScript.instance.SaveGame();     //save progress
         Destroy(gameObject);
     }
 }

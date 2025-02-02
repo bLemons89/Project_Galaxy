@@ -19,13 +19,15 @@ public class Objective6 : MonoBehaviour
     {
         if (!SceneManagerScript.instance.SaveData.IsObjectiveCompleted(objectiveID))
         {
-            if (playerInRange && Input.GetKeyDown(KeyCode.Q))
+            if (playerInRange && Input.GetKeyDown(KeyCode.Q) &&
+                SceneManagerScript.instance.SaveData.energyCellsCollected >= 2)
             {
                 //mark as complete
                 SceneManagerScript.instance.SaveData.MarkObjectiveAsCompleted(objectiveID);
                 SceneManagerScript.instance.SaveGame();     //save progress
 
                 //iterate to next objective
+                InventoryManager.instance.CollectEnergyCell();
                 ObjectiveManager.instance.CompleteObjective();
                 Destroy(gameObject);
             }

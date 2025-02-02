@@ -33,8 +33,10 @@ public class SceneManagerScript : MonoBehaviour
             instance = this;
             DontDestroyOnLoad(gameObject);
 
-            if(saveData == null) { saveData = new SaveData(); }             //EDITOR ONLY REMOVE BEFORE BUILDING
-
+             //EDITOR ONLY REMOVE BEFORE BUILDING
+            LoadOnWake();
+            if(saveData == null) { saveData = new SaveData(); }
+            /////////////////////////////////////////
             SceneManager.sceneLoaded += OnSceneLoaded;
         }
         else
@@ -43,7 +45,7 @@ public class SceneManagerScript : MonoBehaviour
         }
     }
 
-    private void Start()                                        //MIGHT NOT NEED
+    private void LoadOnWake()         //Start() was here                               //MIGHT NOT NEED
     {
         saveData = SaveSystem.LoadGame(activeSaveSlot);
 
@@ -76,8 +78,10 @@ public class SceneManagerScript : MonoBehaviour
     {
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(newSceneName);
 
+        GameManager.instance.gameObject.GetComponent<ASyncLoader>().LoadLevelBtn(asyncLoad);
+
         //wait until it loads to restore the scene state (i.e. move player)
-        while (!asyncLoad.isDone) { yield return null; }
+        //while (!asyncLoad.isDone) { yield return null; }
 
         yield return new WaitForSeconds(0.1f);
 

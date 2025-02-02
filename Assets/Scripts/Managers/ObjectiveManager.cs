@@ -37,7 +37,7 @@ public class ObjectiveManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject); //keeps inventory between scenes
+            DontDestroyOnLoad(gameObject); //keeps objectives between scenes
 
         }
         else
@@ -46,6 +46,8 @@ public class ObjectiveManager : MonoBehaviour
 
     private void Start()
     {
+        objectiveText = GameObject.Find("ObjectiveText").GetComponent<TextMeshProUGUI>();
+
         //add the objectives to queue (in order)
         foreach (var id in objectives.Keys)
         {
@@ -82,7 +84,7 @@ public class ObjectiveManager : MonoBehaviour
         }
         else
         {
-            objectiveText.text = "Not bad, insert the cells into the ship and skedaddle!";      //FINAL OBJECTIVE HERE
+            objectiveText.text = "Not bad, insert the cells inside in the ship's power room and skedaddle!";      //FINAL OBJECTIVE HERE
         }
     }
 

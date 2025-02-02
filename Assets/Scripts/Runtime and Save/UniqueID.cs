@@ -27,6 +27,14 @@ public class UniqueID : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        if (SceneManagerScript.instance.SaveData.destroyedObjects.Contains(uniqueID))       //might throw error during editing, play test first
+        {
+            Destroy(gameObject);
+        }
+    }
+
     private void GenerateID()
     {
         uniqueID = Guid.NewGuid().ToString();
