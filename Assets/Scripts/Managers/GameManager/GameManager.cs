@@ -11,7 +11,6 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
 
     [Header("===== MANAGERS =====")]
-    private AudioManager audioManager;
     private SceneManagerScript sceneManager;
     private ButtonFunctions buttonFunctions;
     private playerScript _playerScript;
@@ -54,7 +53,6 @@ public class GameManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            // Commented this out The scene transition should work normally, just put all the required SerializeField on each level. 
             DontDestroyOnLoad(gameObject);
         }
         else 
