@@ -181,7 +181,7 @@ public class InventoryManager : MonoBehaviour
         }
 
         //save game to memory
-        SceneManagerScript.instance.SaveGame();
+        //SceneManagerScript.instance.SaveGame();
     }
 
     public void LoadInventoryData()
