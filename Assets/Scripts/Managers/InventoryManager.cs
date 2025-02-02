@@ -2,7 +2,7 @@
     Author: Juan Contreras
     Edited By
     Date Created: 01/16/2025
-    Date Updated: 01/19/2025
+    Date Updated: 02/02/2025
     Description: Everything related to the player's inventory starts here
 
     Possible Edits: 
@@ -12,6 +12,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor.Animations.Rigging;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -35,6 +36,9 @@ public class InventoryManager : MonoBehaviour
 
     GameObject player;
 
+    //to use when loading inventory from save data
+    public ItemBase[] itemsLoad;
+
     //Unity Event notifies Inventory was updated
     public UnityEvent OnInventoryUpdated;   //connect to CheckAvailable weapons in WeaponInAction
 
@@ -42,16 +46,6 @@ public class InventoryManager : MonoBehaviour
     List<InventorySlot> inventorySlots = new List<InventorySlot>();
 
     public List<InventorySlot> InventorySlotsList => inventorySlots;
-
-
-    //int missionItemsCollected = 1;            //using methods for this instead
-    //int shardsCollected = 0;
-
-    //public int MissionItemsCollected
-    //{ get => missionItemsCollected; set => missionItemsCollected = value; }             //to be changed by triggers on the mission items
-
-    //public int ShardsCollected
-    //{ get => shardsCollected; set => shardsCollected = value; }             //to be changed by triggers on the shards
 
     // Start is called before the first frame update
     void Awake()
@@ -125,7 +119,6 @@ public class InventoryManager : MonoBehaviour
             }
         }
 
-        //update ui??
         //notifies that inventory was updated
         OnInventoryUpdated?.Invoke();   //Unity event (for other managers to listen for)
     }
@@ -166,7 +159,67 @@ public class InventoryManager : MonoBehaviour
         //Debug.Log("Inventory UI updated.");
     }
 
-    //*******************************************************************************************
+    //=============================SAVE AND LOAD INVENTORY TO/FROM SAVE DATA=============================
+
+    public void SaveInventoryData()
+    {
+        //get save data from scenemanager
+        SaveData data = SceneManagerScript.instance.SaveData;
+
+        //clear old data
+        data.inventorySlots.Clear();
+
+        //add each item in the inventory to be saved
+        foreach (InventorySlot slot in inventorySlots)
+        {
+            InventorySlotData slotData = new InventorySlotData();
+            slotData.itemName = slot.Item.ItemName;
+            slotData.quantity = slot.Quantity;
+
+            //store in the save data list
+            data.inventorySlots.Add(slotData);
+        }
+
+        //save game to memory
+        SceneManagerScript.instance.SaveGame();
+    }
+
+    public void LoadInventoryData()
+    {
+        //get save data from scene manager
+        SaveData data = SceneManagerScript.instance.SaveData;
+
+        //clear any current inventory
+        inventorySlots.Clear();
+
+        //load each slot
+        foreach(InventorySlotData slotData in data.inventorySlots)
+        {
+            ItemBase item = GetItemByName(slotData.itemName);
+            if (item != null)
+            {
+                InventorySlot newSlot = new InventorySlot(item, slotData.quantity);
+                inventorySlots.Add(newSlot);
+            }
+        }
+
+        OnInventoryUpdated?.Invoke();
+    }
+
+    private ItemBase GetItemByName(string itemName)
+    {
+        foreach(ItemBase item in itemsLoad)
+        {
+            if(item.ItemName == itemName)
+                return item;
+        }
+
+        return null;
+    }
+
+    //=============================SAVE AND LOAD INVENTORY TO/FROM SAVE DATA=============================
+
+    
     //update important items to keep track off
     public void CollectEnergyCell()
     {

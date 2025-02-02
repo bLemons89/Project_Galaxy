@@ -24,8 +24,6 @@ public class WeaponInAction : MonoBehaviour
     [Header("Weapon Scriptable List")]
     [SerializeField] List<WeaponInformation> availableWeapons = new List<WeaponInformation>();   //player and enemy can use    (connect to player inventory)
     [SerializeField] GameObject gunModelPlaceHolder;
-
-
     [SerializeField] GameObject shootOrigin;
 
     [Header("UI")]
@@ -41,16 +39,25 @@ public class WeaponInAction : MonoBehaviour
     int layerMask;
 
     WeaponInformation gunInfo;
-    //int currentWeaponIndex = 0;
     int currentAmmo = 0;
     int ammoStored = 0;
 
     bool isReloading;
     bool isShooting;
     bool isFlashing;
+
+    //===========STORE WEAPON AMMO===========
+    Dictionary<WeaponInformation, AmmoState> ammoStates = new Dictionary<WeaponInformation, AmmoState>();
+
+    private class AmmoState
+    {
+        public int currentAmmo;
+        public int ammoStored;
+    }
+
+
     //===========GETTERS===========
     public int CurrentAmmo => currentAmmo;
-
     public GameObject GunModelPlaceHolder => gunModelPlaceHolder;
     public WeaponInformation GunInfo { get; set; }
     public GameObject ShootOrigin => shootOrigin;
@@ -76,8 +83,8 @@ public class WeaponInAction : MonoBehaviour
             //reloadText = GameObject.Find("ReloadMessageText").GetComponent<TextMeshProUGUI>();
 
             CheckAvailableWeapons();
-
-            EquipWeapon(0);
+            if(availableWeapons.Count > 0)
+                EquipWeapon(0);
         }
     }
 
@@ -151,27 +158,51 @@ public class WeaponInAction : MonoBehaviour
     {
         if (InventoryManager.instance)
         {
+            bool newWeaponAdded = false;
             foreach (InventorySlot slot in InventoryManager.instance.InventorySlotsList)
             {
                 if (slot.Item is WeaponInformation weapon)       //if they match, casts to WeaponInformation to add to list of weapons
                 {
                     //avoids adding dupes
-                    if(!availableWeapons.Contains(weapon))
+                    if (!availableWeapons.Contains(weapon))
+                    {
                         availableWeapons.Add(weapon);
+
+                        newWeaponAdded = true;
+                    }
+                    else
+                    {
+                        //add logic to restore ammo to max instead
+                    }    
                 }
             }
 
             //remove guns that are no longer in the player's inventory
             availableWeapons.RemoveAll(weapon =>
                 !InventoryManager.instance.InventorySlotsList.Exists(slot => slot.Item == weapon));
+
+            if (newWeaponAdded )
+                EquipWeapon(availableWeapons.Count - 1);    //auto equip new gun
         }
-        else { }
             //Debug.Log("No Inventory Manager for weapons");
     }
 
     //equips the weapon based on the index
     public void EquipWeapon(int index)
     {
+        if(gunInfo != null)
+        {
+            if(!ammoStates.ContainsKey(gunInfo))
+            {
+                ammoStates.Add(gunInfo, new AmmoState { currentAmmo = currentAmmo, ammoStored = ammoStored });
+            }
+            else
+            {
+                ammoStates[gunInfo].currentAmmo = currentAmmo;
+                ammoStates[gunInfo].ammoStored = ammoStored;
+            }
+        }
+
         if (index >= 0 && index < availableWeapons.Count)
         {
             //currentWeaponIndex = index;
@@ -181,8 +212,18 @@ public class WeaponInAction : MonoBehaviour
             {
                 gunImage.sprite = gunInfo.Icon;
 
-                currentAmmo = gunInfo.maxClipAmmo;
-                ammoStored = gunInfo.ammoStored;
+                //use previous gun ammo state if it exists
+                if (ammoStates.ContainsKey(gunInfo))
+                {
+                    currentAmmo = ammoStates[gunInfo].currentAmmo;
+                    ammoStored = ammoStates[gunInfo].ammoStored;
+                }
+                else
+                {
+                    currentAmmo = gunInfo.maxClipAmmo;
+                    ammoStored = gunInfo.ammoStored;
+                    ammoStates.Add(gunInfo, new AmmoState { currentAmmo = currentAmmo, ammoStored = ammoStored});
+                }
 
                 currentAmmoUI.text = currentAmmo.ToString();
                 ammoStoredUI.text = ammoStored.ToString();
@@ -312,7 +353,7 @@ public class WeaponInAction : MonoBehaviour
                     if (targetHealth != null)
                     {
                         targetHealth.Damage(gunInfo.shootDamage);
-                        Debug.Log($"Player: Dealt {gunInfo.shootDamage} damage to {hitInfo.transform.name}");
+                        //Debug.Log($"Player: Dealt {gunInfo.shootDamage} damage to {hitInfo.transform.name}");
                     }
 
                     //hit effect for bullet impact
