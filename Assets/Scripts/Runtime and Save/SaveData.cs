@@ -27,6 +27,7 @@ public class SaveData
     public List<string> destroyedObjects = new List<String>();    //keep track of destroyed objects
     public List<CheckpointData> lastCheckpointPositions = new List<CheckpointData>();   //store checkpoints and know which to use
     public List<string> completedObjectives = new List<string>();   //to store completed objectives
+    public List<InventorySlotData> inventorySlots = new List<InventorySlotData>();      //to save inventory
 
     public int energyCellsCollected = 0;  //keep track of collected cells
     public int shardsCollected = 0;       //keep track of collected shards

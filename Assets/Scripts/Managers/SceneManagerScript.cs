@@ -98,6 +98,8 @@ public class SceneManagerScript : MonoBehaviour
             if (!uniqueIDCache.ContainsKey(obj.ID))
             { uniqueIDCache[obj.ID] = obj.gameObject; }
         }
+
+        InventoryManager.instance.LoadInventoryData();
     }
 
     // Restore the state of a scene when it is loaded
@@ -156,6 +158,7 @@ public class SceneManagerScript : MonoBehaviour
     public void SaveGame()
     {
         saveData.currentSceneName = SceneManager.GetActiveScene().name;
+        InventoryManager.instance.SaveInventoryData();
         SaveSystem.SaveGame(saveData, activeSaveSlot);      //save data to specific slot
     }
 
@@ -166,6 +169,7 @@ public class SceneManagerScript : MonoBehaviour
         if(saveData != null)
         {
             SceneManager.LoadScene(saveData.currentSceneName);
+
             StartCoroutine(SpawnAtLastCheckpoint());
         }
     }
