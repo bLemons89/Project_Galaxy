@@ -274,8 +274,8 @@ public class StunEnemy : EnemyBase
         {
             if (InventoryManager.instance.InventorySlotsList.Count > 0)
                 isInventoryEmpty = false;
-            else
-                Debug.Log("Stun Enemy: Player Inventory Empty");
+            //else
+               // Debug.Log("Stun Enemy: Player Inventory Empty");
         }
         else
             Debug.Log("Stun Enemy: No Inventory Manager Instance");
