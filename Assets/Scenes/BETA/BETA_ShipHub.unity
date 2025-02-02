@@ -10966,6 +10966,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7403627013391570503, guid: fa2c388f07d2e1e499b0be80b6494713, type: 3}
+      propertyPath: itemsLoad.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7403627013391570503, guid: fa2c388f07d2e1e499b0be80b6494713, type: 3}
+      propertyPath: itemsLoad.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: e2de7583e7502e049ba464278e21dbaa, type: 2}
+    - target: {fileID: 7403627013391570503, guid: fa2c388f07d2e1e499b0be80b6494713, type: 3}
+      propertyPath: itemsLoad.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 5f49226ca510d8d4e8c33b214f686488, type: 2}
+    - target: {fileID: 7403627013391570503, guid: fa2c388f07d2e1e499b0be80b6494713, type: 3}
+      propertyPath: itemsLoad.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: a26bf364d3604e24ab9eccb02ff35d9f, type: 2}
+    - target: {fileID: 7403627013391570503, guid: fa2c388f07d2e1e499b0be80b6494713, type: 3}
+      propertyPath: itemsLoad.Array.data[3]
+      value: 
+      objectReference: {fileID: 11400000, guid: a4b9403197ab98b498ca8f1a514aac90, type: 2}
+    - target: {fileID: 7403627013391570503, guid: fa2c388f07d2e1e499b0be80b6494713, type: 3}
+      propertyPath: itemsLoad.Array.data[4]
+      value: 
+      objectReference: {fileID: 11400000, guid: 929a28ad414901b4691ff207fa57301d, type: 2}
     - target: {fileID: 7503647098439693896, guid: fa2c388f07d2e1e499b0be80b6494713, type: 3}
       propertyPath: m_Name
       value: InventoryManager
