@@ -319,7 +319,7 @@ public class WeaponInAction : MonoBehaviour
                 if (targetHealth != null)
                 {
                     targetHealth.Damage(gunInfo.shootDamage);
-                    Debug.Log($"Enemy: Dealt {gunInfo.shootDamage} damage to {hitInfo.transform.name}");
+                    //Debug.Log($"Enemy: Dealt {gunInfo.shootDamage} damage to {hitInfo.transform.name}");
                 }
 
                 //hit effect for bullet impact
