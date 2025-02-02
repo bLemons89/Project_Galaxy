@@ -2,28 +2,28 @@
     Author: Juan Contreras
     Edited by:
     Date Created: 01/26/2025
-    Date Updated: 01/26/2025
-    Description: Class to keep a world counter of mission items collected (prevent double count if dropped)
+    Date Updated: 02/01/2025
+    Description: Class to simply toggle text on and off
  */
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
-public class CountNDestroy : MonoBehaviour
+public class ToggleText : MonoBehaviour
 {
+    [SerializeField] GameObject textToToggle;
+
     bool playerInRange;
 
     private void Update()
     {
-        if (playerInRange && Input.GetKeyDown(KeyCode.Q))
+        if (playerInRange)
         {
-            if(InventoryManager.instance != null)
-            {
-                InventoryManager.instance.MissionItemsCollected++;
-
-                Destroy(gameObject);
-            }
+            textToToggle.SetActive(true);
         }
+        else
+            textToToggle.SetActive(false);
     }
 
     void OnTriggerEnter(Collider other)

@@ -44,14 +44,14 @@ public class InventoryManager : MonoBehaviour
     public List<InventorySlot> InventorySlotsList => inventorySlots;
 
 
-    int missionItemsCollected = 1;
-    int shardsCollected = 0;
+    //int missionItemsCollected = 1;            //using methods for this instead
+    //int shardsCollected = 0;
 
-    public int MissionItemsCollected
-    { get => missionItemsCollected; set => missionItemsCollected = value; }             //to be changed by triggers on the mission items
+    //public int MissionItemsCollected
+    //{ get => missionItemsCollected; set => missionItemsCollected = value; }             //to be changed by triggers on the mission items
 
-    public int ShardsCollected
-    { get => shardsCollected; set => shardsCollected = value; }             //to be changed by triggers on the shards
+    //public int ShardsCollected
+    //{ get => shardsCollected; set => shardsCollected = value; }             //to be changed by triggers on the shards
 
     // Start is called before the first frame update
     void Awake()
@@ -99,7 +99,7 @@ public class InventoryManager : MonoBehaviour
         }
 
         //adjust weapon ammo if already in inventory
-        if (existingSlot != null && item.GetItemType == ItemBase.ItemType.Weapon)
+        if (existingSlot != null && item.ItemType_ == ItemBase.ItemType.Weapon)
         {
             //add the ammo only
             WeaponInformation weapon = (WeaponInformation)existingSlot.Item;
@@ -115,7 +115,7 @@ public class InventoryManager : MonoBehaviour
 
         //Debug.Log($"Added {quantity} of {item.ItemName} to inventory.");
 
-        if (item.GetItemType == ItemBase.ItemType.Weapon)
+        if (item.ItemType_ == ItemBase.ItemType.Weapon)
         {
             WeaponInAction weaponsToUpdate = player.GetComponent<WeaponInAction>();
 
@@ -155,15 +155,35 @@ public class InventoryManager : MonoBehaviour
             //notify other systems that the inventory has been updated
             OnInventoryUpdated?.Invoke();   //Unity event (for other managers to listen for)
         }
-        else
-            Debug.Log($"Item: {item.ItemName} not found in inventory");
+        //else
+            //Debug.Log($"Item: {item.ItemName} not found in inventory");
     }
 
     //called to update UI (for possible future use)
     void UpdateUI()
     {
         //event to update UI
-        Debug.Log("Inventory UI updated.");
+        //Debug.Log("Inventory UI updated.");
+    }
+
+    //*******************************************************************************************
+    //update important items to keep track off
+    public void CollectEnergyCell()
+    {
+        if(SceneManagerScript.instance != null)
+        {
+            SceneManagerScript.instance.SaveData.energyCellsCollected++;
+            SceneManagerScript.instance.SaveGame();                         //possibly not save when this happens?
+        }
+    }
+
+    public void CollectShard()
+    {
+        if (SceneManagerScript.instance != null)
+        {
+            SceneManagerScript.instance.SaveData.shardsCollected++;
+            SceneManagerScript.instance.SaveGame();                         //possibly not save when this happens?
+        }
     }
 }
 

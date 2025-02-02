@@ -88,7 +88,8 @@ public class HealthSystem : MonoBehaviour
             if(this.CompareTag("Player"))
             {
                 Invoke("FlashDamageScreen", 0f);
-                //AudioManager2.PlaySound(AudioManager2.Sound.PlayerDamage);
+                AudioManager.instance.PlaySFX(AudioManager.instance.PlayerDMG[Random.Range(0, 
+                    AudioManager.instance.PlayerDMG.Length)]);
             }
         }
         //check for death
@@ -105,9 +106,11 @@ public class HealthSystem : MonoBehaviour
             else if (this.GetComponent<EnemyBase>() != null)
             {
                 this.GetComponent<EnemyBase>().TakeDamage(damageAmt);
+                AudioManager.instance.PlaySFX(AudioManager.instance.EnemyDMG[0]);
             }
             else
             {
+                AudioManager.instance.PlaySFX(AudioManager.instance.EnemyDTH[0]);
                 Destroy(this.gameObject);
             }
         }

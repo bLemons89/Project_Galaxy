@@ -2,7 +2,7 @@
     Author: Juan Contreras
     Edited by:
     Date Created: 01/28/2025
-    Date Updated: 01/28/2025
+    Date Updated: 02/01/2025
     Description: Triggers the next mission in the queue if the criteria is met
                  (put outside ship)
  */
@@ -12,13 +12,19 @@ using UnityEngine;
 
 public class Objective1 : MonoBehaviour
 {
+    string objectiveID = "1";
     bool playerInRange;
 
     private void Update()
     {
-        if (playerInRange)
+        if (playerInRange &&
+                        !SceneManagerScript.instance.SaveData.IsObjectiveCompleted(objectiveID))        //make sure objective has not been completed before
         {
-            GameManager.instance.GetComponent<ObjectiveManager>().CompleteObjective();
+            ObjectiveManager.instance.CompleteObjective();
+
+            //mark as complete
+            SceneManagerScript.instance.SaveData.MarkObjectiveAsCompleted(objectiveID);
+            SceneManagerScript.instance.SaveGame();     //save progress
 
             Destroy(gameObject);
         }

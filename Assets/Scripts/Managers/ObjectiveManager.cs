@@ -5,12 +5,15 @@
     Date Updated: 01/28/2025
     Description: Class to display the objectives on the UI
  */
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
 public class ObjectiveManager : MonoBehaviour
 {
+    public static ObjectiveManager instance;
+
     [SerializeField] TextMeshProUGUI objectiveText;
 
     //defining objectives directly in the script as a Dictionary
@@ -22,12 +25,24 @@ public class ObjectiveManager : MonoBehaviour
         { 3, "Pick up the Energy Cell" },
         { 4, "Explore the planet for more cells" },         //in start of Area 1 and 2
         { 5, "Search the areas for a cell" },
-        { 6, "Cells collected 2/3" },
+        { 6, "Search the other area for the last cell" },
         { 7, "All cells collected. Return to the ship." },
         { 8, "Survive." }
     };
 
     private Queue<int> objectivesQueue = new Queue<int>(); //queue to store the IDs of objectives
+
+    void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject); //keeps inventory between scenes
+
+        }
+        else
+            Destroy(gameObject);
+    }
 
     private void Start()
     {
@@ -48,15 +63,18 @@ public class ObjectiveManager : MonoBehaviour
             objectivesQueue.Dequeue(); //remove the current objective
             UpdateObjectiveText();    //update the UI text
         }
-        else
-        {
-            //Debug.Log("All objectives completed!");
-        }
     }
 
     //updates the UI text with the current objective
     private void UpdateObjectiveText()
     {
+        //remove completed objectives from queue
+        while (objectivesQueue.Count > 0 &&
+            SceneManagerScript.instance.SaveData.IsObjectiveCompleted(objectivesQueue.Peek().ToString()))
+        {
+            objectivesQueue.Dequeue();
+        }
+
         if (objectivesQueue.Count > 0)
         {
             int currentObjectiveId = objectivesQueue.Peek();
@@ -64,7 +82,7 @@ public class ObjectiveManager : MonoBehaviour
         }
         else
         {
-            objectiveText.text = "Not bad, insert the cells into the ship and skedaddle!";
+            objectiveText.text = "Not bad, insert the cells inside in the ship's power room and skedaddle!";      //FINAL OBJECTIVE HERE
         }
     }
 

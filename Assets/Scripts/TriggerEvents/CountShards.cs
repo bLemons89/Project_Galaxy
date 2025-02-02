@@ -19,7 +19,7 @@ public class CountShards : MonoBehaviour
         {
             if (InventoryManager.instance != null)
             {
-                InventoryManager.instance.ShardsCollected++;
+                //InventoryManager.instance.ShardsCollected++;
 
                 Destroy(gameObject);
             }

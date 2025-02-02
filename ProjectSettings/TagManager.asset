@@ -12,7 +12,7 @@ TagManager:
   - Boss
   - PlayerSpawnArea
   - MainMenu
-  - Area1Exit
+  - Enemy
   layers:
   - Default
   - TransparentFX

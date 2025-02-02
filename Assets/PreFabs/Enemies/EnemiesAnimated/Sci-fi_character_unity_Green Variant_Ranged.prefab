@@ -1280,7 +1280,7 @@ GameObject:
   - component: {fileID: 7701938263504393102}
   m_Layer: 6
   m_Name: Sci-fi_character_unity_Green Variant_Ranged
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

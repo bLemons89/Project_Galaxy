@@ -16,7 +16,7 @@ public class EnableBossWalls : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") && InventoryManager.instance.MissionItemsCollected >= 3)
+        /*if (other.CompareTag("Player") && InventoryManager.instance.MissionItemsCollected >= 3)
         {
             boss.enabled = true;
             boss.Start();
@@ -25,6 +25,6 @@ public class EnableBossWalls : MonoBehaviour
             {
                 wall.SetActive(true);
             }
-        }
+        }*/
     }
 }

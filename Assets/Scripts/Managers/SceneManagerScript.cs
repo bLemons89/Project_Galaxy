@@ -1,3 +1,10 @@
+/*
+    Author: Harry Tanama
+    Edited By: Juan Contreras
+    Date Created: 01/30/2025
+    Date Updated: 02/01/2025
+    Description: Manage scene changes, saving data, and retrieving saved data for scene continuity
+ */
 using System.Collections.Generic;
 using System.Collections;
 using UnityEditor;
@@ -36,7 +43,7 @@ public class SceneManagerScript : MonoBehaviour
         }
     }
 
-    private void Start()
+    private void Start()                                        //MIGHT NOT NEED
     {
         saveData = SaveSystem.LoadGame(activeSaveSlot);
 
@@ -98,15 +105,23 @@ public class SceneManagerScript : MonoBehaviour
         GameObject player = GameObject.FindWithTag("Player");
         if (player != null)
         {
+            Vector3 spawnPosition;
+            //if previously visited scene, use that position
             if (saveData.scenePositions.Exists(sp => sp.sceneName == SceneManager.GetActiveScene().name))
             {
-
-                Vector3 savedPosition = saveData.GetPlayerPosition(SceneManager.GetActiveScene().name);
-
-                player.GetComponent<CharacterController>().enabled = false;
-                player.transform.position = savedPosition;
-                player.GetComponent<CharacterController>().enabled = true;
+                spawnPosition = saveData.GetSceneTransitionPosition(SceneManager.GetActiveScene().name);
+                spawnPosition = spawnPosition + Vector3.up + (player.transform.forward * 3);                //ADJUST TO AVOID SPAWNING ON TRIGGER
             }
+            else
+            {
+                //if first time in that scene use the default position
+                spawnPosition = player.transform.position;
+            }
+
+            player.GetComponent<CharacterController>().enabled = false;
+            player.transform.position = spawnPosition;
+            player.GetComponent<CharacterController>().enabled = true;
+
         }
 
         //destroy objects that were removed before
@@ -128,7 +143,7 @@ public class SceneManagerScript : MonoBehaviour
         if(player != null)
         {
             //saving player position to current scene
-            saveData.SavePlayerPosition(SceneManager.GetActiveScene().name, player.transform.position);
+            saveData.SaveSceneTransitionPosition(SceneManager.GetActiveScene().name, player.transform.position);
         }
 
         SaveSystem.SaveGame(saveData, activeSaveSlot);
@@ -140,13 +155,30 @@ public class SceneManagerScript : MonoBehaviour
         SaveSystem.SaveGame(saveData, activeSaveSlot);      //save data to specific slot
     }
 
-    public void LoadGame(int slot)
+    public void LoadGame(int slot)              //loads specific save slot, starts at last scene and checkpoint
     {
         activeSaveSlot = slot;
         saveData = SaveSystem.LoadGame(slot);
         if(saveData != null)
         {
             SceneManager.LoadScene(saveData.currentSceneName);
+            StartCoroutine(SpawnAtLastCheckpoint());
+        }
+    }
+
+    //use last saved checkpoint to spawn player there
+    IEnumerator SpawnAtLastCheckpoint()
+    {
+        yield return new WaitForSeconds(0.1f);
+
+        GameObject player = GameObject.FindWithTag("Player");
+        if(player != null &&
+            saveData.lastCheckpointPositions.Exists(cp =>  cp.sceneName == SceneManager.GetActiveScene().name))
+        {
+            //if the scene has a checkpoint stored, it is used
+            player.GetComponent<CharacterController>().enabled = false;
+            player.transform.position = saveData.GetCheckpointPosition(SceneManager.GetActiveScene().name);
+            player.GetComponent <CharacterController>().enabled = true;
         }
     }
 

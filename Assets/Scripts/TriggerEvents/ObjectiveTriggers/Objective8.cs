@@ -2,7 +2,7 @@
     Author: Juan Contreras
     Edited by:
     Date Created: 01/28/2025
-    Date Updated: 01/28/2025
+    Date Updated: 02/01/2025
     Description: Triggers the next mission in the queue if the criteria is met
  */
 using System.Collections;
@@ -13,44 +13,58 @@ using UnityEngine;
 
 public class Objective8 : MonoBehaviour
 {
-    [SerializeField] TextMeshProUGUI winText;
+    [SerializeField] GameObject[] walls;
+    [SerializeField] GameObject shipEntranceCollider;
 
-    bool playerInRange;
-    GameObject boss;
+    HealthSystem bossHealth;
 
-    private void Update()
+    string objectiveID = "8";
+    
+
+    private void Start()
     {
-        /*if (boss = GameObject.FindWithTag("Boss"))
-        {
+        if (!SceneManagerScript.instance.SaveData.IsObjectiveCompleted(objectiveID))
+            StartCoroutine(WaitForBoss());
+    }
 
-            if (playerInRange &&
-                boss.GetComponent<HealthSystem>().CurrentHealth <= 0)
+    IEnumerator WaitForBoss()
+    {
+        GameObject boss = null;
+
+        //wait until the boss is spawned in
+        while (boss == null)
+        {
+            boss = GameObject.FindWithTag("Boss");
+
+            if(boss != null )
             {
-                GameManager.instance.GetComponent<ObjectiveManager>().CompleteObjective();
+                bossHealth = boss.GetComponent<HealthSystem>();
 
-                Destroy(gameObject);
+                if(bossHealth != null )
+                {
+                    bossHealth.OnDeath.AddListener(OnBossDefeated);     //subscribe to detect when killed
+                }
             }
-        }*/
 
-        if (playerInRange && boss == null && InventoryManager.instance.MissionItemsCollected >= 3)
-        {
-            Time.timeScale = 0;
-            winText.enabled = true;
-        }
-    }
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            playerInRange = true;
+            yield return null;      //keeps checking next frame
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    private void OnBossDefeated()
     {
-        if (other.CompareTag("Player"))
+        ObjectiveManager.instance.CompleteObjective();
+
+        //mark as complete
+        SceneManagerScript.instance.SaveData.MarkObjectiveAsCompleted(objectiveID);
+        SceneManagerScript.instance.SaveGame();     //save progress
+
+        Destroy(shipEntranceCollider);
+
+        foreach (GameObject wall in walls)
         {
-            playerInRange = false;
+            Destroy(wall);
         }
+
+        Destroy(gameObject);
     }
 }
