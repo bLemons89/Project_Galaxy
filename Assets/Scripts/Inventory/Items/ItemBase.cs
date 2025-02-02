@@ -9,7 +9,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public abstract class ItemBase : ScriptableObject
 {
@@ -20,6 +22,12 @@ public abstract class ItemBase : ScriptableObject
     [SerializeField] protected int value;   //how much that single pick up is worth
     [Header("MODEL PREFAB NEEDED HERE TO INSTANTIATE")]
     [SerializeField] protected GameObject itemModel;
+
+    [Header("INVENTORY UI")]
+    [SerializeField] Image invImage;
+    [SerializeField] TextMeshProUGUI invName;
+    [SerializeField] TextMeshProUGUI invNumText;
+    [SerializeField] TextMeshProUGUI invMaxText;
 
     public string ItemName => itemName;
     public int MaxStackSize => maxStackSize;

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15ed0b3c810fac942adc5eb80f8b54cc, type: 3}
   m_Name: MissionItem
   m_EditorClassIdentifier: 
-  itemName: ShipPart
+  itemName: Energy Cell
   icon: {fileID: 0}
   itemType: 3
   maxStackSize: 3

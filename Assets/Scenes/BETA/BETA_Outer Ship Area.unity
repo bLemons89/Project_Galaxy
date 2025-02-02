@@ -4506,7 +4506,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walls: []
-  shipEntranceCollider: {fileID: 0}
+  shipEntranceCollider: {fileID: 93867465}
 --- !u!135 &852827349
 SphereCollider:
   m_ObjectHideFlags: 0
