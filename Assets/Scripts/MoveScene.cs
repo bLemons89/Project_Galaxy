@@ -14,9 +14,8 @@ public class MoveScene : MonoBehaviour
     {
         // Check if the object entering the trigger has the specified tag
         if (other.CompareTag("Player"))
-        {
-            SceneManagerScript.instance.ChangeScene(loadNextScene);
-
+        {            
+            SceneManagerScript.instance.ChangeScene(loadNextScene);            
         }
     }
 }
