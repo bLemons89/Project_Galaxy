@@ -54,7 +54,8 @@ public class RangedEnemy : EnemyBase
         if (player == null || this == null) return;
 
         if(playerInSight)
-        {   
+        {
+            StopCoroutine(RoamRoutine());
             base.HandleWeapon();
         }
         else if (!isRoaming && !playerInSight)

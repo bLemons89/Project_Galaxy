@@ -26,6 +26,7 @@ public class WeaponInAction : MonoBehaviour
     [SerializeField] GameObject gunModelPlaceHolder;
     [SerializeField] TMP_Text reloadText;
     [SerializeField] GameObject reloadMessage;
+    [SerializeField] GameObject shootOrigin;
 
     //===========VARIABLES===========
     WeaponInformation gunInfo;
@@ -41,6 +42,7 @@ public class WeaponInAction : MonoBehaviour
 
     public GameObject GunModelPlaceHolder => gunModelPlaceHolder;
     public WeaponInformation GunInfo { get; set; }
+    public GameObject ShootOrigin => shootOrigin;
 
     private void Start()
     {
@@ -59,6 +61,9 @@ public class WeaponInAction : MonoBehaviour
 
     private void Update()
     {
+        if(!CompareTag("Player"))
+            Debug.DrawRay(shootOrigin.transform.position, transform.forward * gunInfo.shootDistance, Color.yellow);
+
         if (this.gameObject.CompareTag("Player"))
         {
             OnSwitchWeapon();
@@ -301,25 +306,30 @@ public class WeaponInAction : MonoBehaviour
             //adjust ammo
             currentAmmo--;
 
-            AudioManager.instance.PlaySFX(AudioManager.instance.ER_Sounds[3]);
+            //AudioManager.instance.PlaySFX(AudioManager.instance.ER_Sounds[3]);
 
             //adjusted shoot rate for enemies
             StartCoroutine(EnemyShootRate(this.gameObject.GetComponent<EnemyBase>().EnemyShootRate));
 
             //calculate the direction to the target
-            Vector3 directionToTarget = (target.position - transform.position).normalized;              //TODO: Add randomization to have them miss once in a while
+            Vector3 directionToTarget = (target.position - shootOrigin.transform.position).normalized;              //TODO: Add randomization to have them miss once in a while
+
+            //Debug.DrawRay(transform.position, directionToTarget, Color.yellow);
+
+            Debug.Log("Enemy Shooting...");
 
             //raycast towards the target
-            if (Physics.Raycast(transform.position, directionToTarget, out RaycastHit hitInfo, gunInfo.shootDistance))
+            if (Physics.Raycast(shootOrigin.transform.position, directionToTarget, out RaycastHit hitInfo, gunInfo.shootDistance))
             {
                 //Debug.Log($"Enemy: Hit {hitInfo.transform.name}");
+                shootOrigin.transform.LookAt(target.position);
 
                 //check if the hit object has a HealthSystem
                 HealthSystem targetHealth = hitInfo.transform.GetComponent<HealthSystem>();
                 if (targetHealth != null)
                 {
-                    targetHealth.Damage(gunInfo.shootDamage);
-                    //Debug.Log($"Enemy: Dealt {gunInfo.shootDamage} damage to {hitInfo.transform.name}");
+                    targetHealth.Damage((float)gunInfo.shootDamage);
+                    Debug.Log($"Enemy: Dealt {gunInfo.shootDamage} damage to {hitInfo.transform.name}");
                 }
 
                 //hit effect for bullet impact
@@ -330,7 +340,7 @@ public class WeaponInAction : MonoBehaviour
             }
             else
             {
-                //Debug.Log("Enemy: Missed");
+                Debug.Log("Enemy: Missed");
             }
 
             //PlayMuzzleFlash();
