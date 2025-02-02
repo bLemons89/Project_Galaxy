@@ -82,7 +82,7 @@ public class ObjectiveManager : MonoBehaviour
         }
         else
         {
-            objectiveText.text = "Not bad, insert the cells into the ship and skedaddle!";      //FINAL OBJECTIVE HERE
+            objectiveText.text = "Not bad, insert the cells inside in the ship's power room and skedaddle!";      //FINAL OBJECTIVE HERE
         }
     }
 

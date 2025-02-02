@@ -15,20 +15,30 @@ public class Objective7 : MonoBehaviour
     [SerializeField] Transform bossSpawn;
     [SerializeField] GameObject[] walls;
 
+    string objectiveID = "7";
+
     bool playerInRange;
 
     private void Update()
     {
         if (playerInRange && SceneManagerScript.instance.SaveData.energyCellsCollected >= 3)
         {
-            Instantiate(boss, bossSpawn.position, Quaternion.identity);     //spawn boss
-            foreach (GameObject wall in walls) { wall.SetActive(true); }    //activate walls
+            if (!SceneManagerScript.instance.SaveData.IsObjectiveCompleted(objectiveID))
+            {
+                Instantiate(boss, bossSpawn.position, Quaternion.identity);     //spawn boss
+                foreach (GameObject wall in walls) { wall.SetActive(true); }    //activate walls
 
-            ObjectiveManager.instance.CompleteObjective();
+                ObjectiveManager.instance.CompleteObjective();
 
-            Destroy(gameObject);
+                //mark as complete
+                SceneManagerScript.instance.SaveData.MarkObjectiveAsCompleted(objectiveID);
+                SceneManagerScript.instance.SaveGame();     //save progress
+
+                Destroy(gameObject);
+            }
         }
     }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))

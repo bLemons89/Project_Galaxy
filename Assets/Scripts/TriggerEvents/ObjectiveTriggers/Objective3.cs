@@ -14,21 +14,30 @@ public class Objective3 : MonoBehaviour
 {
     [SerializeField] GameObject[] exitColliders;
 
+    string objectiveID = "3";
+
     bool playerInRange;
 
     private void Update()
     {
         if (playerInRange && Input.GetKeyDown(KeyCode.Q))
         {
-            InventoryManager.instance.CollectEnergyCell();
-            ObjectiveManager.instance.CompleteObjective();
-
-            foreach (GameObject obj in exitColliders)           //turn off colliders to allow plater to continue
+            if (!SceneManagerScript.instance.SaveData.IsObjectiveCompleted(objectiveID))
             {
-                obj.SetActive(false);
-            }
+                InventoryManager.instance.CollectEnergyCell();
+                ObjectiveManager.instance.CompleteObjective();
 
-            Destroy(gameObject);      //remove from parent
+                foreach (GameObject obj in exitColliders)           //turn off colliders to allow plater to continue
+                {
+                    obj.SetActive(false);
+                }
+
+                //mark as complete
+                SceneManagerScript.instance.SaveData.MarkObjectiveAsCompleted(objectiveID);
+                SceneManagerScript.instance.SaveGame();     //save progress
+
+                Destroy(gameObject);      //remove from parent
+            }
         }
     }
     private void OnTriggerEnter(Collider other)

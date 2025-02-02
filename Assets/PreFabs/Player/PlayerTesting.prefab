@@ -478,7 +478,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   availableWeapons:
   - {fileID: 11400000, guid: a26bf364d3604e24ab9eccb02ff35d9f, type: 2}
-  gunModelPlaceHolder: {fileID: 0}
+  gunModelPlaceHolder: {fileID: 1383022041243710263}
   reloadText: {fileID: 0}
   reloadMessage: {fileID: 0}
 --- !u!143 &4054726637496779129
