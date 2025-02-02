@@ -1629,6 +1629,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8212964682222028522, guid: 54a546a7c496e8b4fbf8f8a11fb5a92f, type: 3}
+      propertyPath: Reload.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8212964682222028522, guid: 54a546a7c496e8b4fbf8f8a11fb5a92f, type: 3}
+      propertyPath: Reload.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 217c043909e9cbf47bb84b0e2aa02e74, type: 3}
+    - target: {fileID: 8212964682222028522, guid: 54a546a7c496e8b4fbf8f8a11fb5a92f, type: 3}
+      propertyPath: Empty_Clip.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8212964682222028522, guid: 54a546a7c496e8b4fbf8f8a11fb5a92f, type: 3}
+      propertyPath: Empty_Clip.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: e0bfa1b5854036849aaa7b89b6057f41, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2707,10 +2723,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 971081580317537632, guid: 1c218eb8eccad1a449704e828e2da757, type: 3}
-      propertyPath: speed
-      value: 6
-      objectReference: {fileID: 0}
     - target: {fileID: 2630377576881185172, guid: 1c218eb8eccad1a449704e828e2da757, type: 3}
       propertyPath: m_Mesh
       value: 
