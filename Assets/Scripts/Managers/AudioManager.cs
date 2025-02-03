@@ -36,11 +36,14 @@ public class AudioManager : MonoBehaviour
     public AudioClip[] EnemyDMG;
     public AudioClip[] EnemyDTH;
 
+    bool firstBoot = true;
+
     private void Awake()
     {
         if (instance == null)
         {
             instance = this;
+
             DontDestroyOnLoad(gameObject);
         }
         else
@@ -48,12 +51,21 @@ public class AudioManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    private void Start()
+    private void Update()
     {
-        source_2D = this.GetComponent<AudioSource>();
-        source_Player = GameObject.FindWithTag("Player").GetComponent<AudioSource>();
 
-        PlayMusic(MenuMusic[0]);
+        if (source_Player == null)
+        {
+            source_2D = this.GetComponent<AudioSource>();
+            source_Player = GameObject.FindWithTag("Player").GetComponent<AudioSource>();
+
+            if (firstBoot)
+            {
+                PlayMusic(GameMusic[0]);
+
+                firstBoot = false;
+            }
+        }
     }
 
     public void PlayMusic(AudioClip music)

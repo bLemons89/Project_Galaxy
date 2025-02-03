@@ -56,6 +56,12 @@ public class PartDropoff : MonoBehaviour
             DropOffCollectible();
             UpdatePartsMesh();
         }
+
+        if(insertedParts >= 3)
+        {
+            Time.timeScale = 0;
+            GameManager.instance.GetComponent<ButtonFunctions>().WinScreen.SetActive(true) ;
+        }
     }
 
     void DropOffCollectible()

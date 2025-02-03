@@ -11,6 +11,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Xml;
+using JetBrains.Annotations;
 
 public class SceneManagerScript : MonoBehaviour
 {
@@ -45,6 +46,29 @@ public class SceneManagerScript : MonoBehaviour
         }
     }
 
+    public void NewGame()
+    {
+        //create a new SaveData object (reset all progress)
+        saveData = new SaveData();
+
+        //set starting scene name
+        saveData.currentSceneName = "BETA_ShipHub";
+
+        //clear any previous progress (if needed)
+        saveData.scenePositions.Clear();
+        saveData.destroyedObjects.Clear();
+        saveData.lastCheckpointPositions.Clear();
+        saveData.completedObjectives.Clear();
+        saveData.energyCellsCollected = 0;
+        saveData.shardsCollected = 0;
+
+        //save the new game data to the active save slot
+        SaveSystem.SaveGame(saveData, activeSaveSlot);
+
+        //load the starting scene
+        SceneManager.LoadScene(saveData.currentSceneName);
+    }
+
     private void LoadOnWake()         //Start() was here                               //MIGHT NOT NEED
     {
         saveData = SaveSystem.LoadGame(activeSaveSlot);
@@ -65,6 +89,8 @@ public class SceneManagerScript : MonoBehaviour
         {
            GameObject.FindWithTag("MainMenu").SetActive(false);
         }
+        if(AudioManager.instance != null)
+            AudioManager.instance.PlayMusic(AudioManager.instance.GameMusic[Random.Range(0, AudioManager.instance.GameMusic.Length)]);
 
         SaveSceneState();
 
@@ -154,6 +180,8 @@ public class SceneManagerScript : MonoBehaviour
 
         SaveSystem.SaveGame(saveData, activeSaveSlot);
     }
+
+
 
     public void SaveGame()
     {

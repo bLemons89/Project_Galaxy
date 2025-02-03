@@ -6,6 +6,7 @@ using TMPro;
 using UnityEditor;
 using DG.Tweening;
 using UnityEngine.Events;
+using Unity.VisualScripting;
 
 public class HealthSystem : MonoBehaviour
 {
@@ -101,7 +102,9 @@ public class HealthSystem : MonoBehaviour
             //Handle Death - message, respawn
             if (this.CompareTag("Player"))
             {
-                OnDeath?.Invoke();
+                Time.timeScale = 0;
+                GameManager.instance.GetComponent<ButtonFunctions>().WinScreen.SetActive(true);
+                //OnDeath?.Invoke();
 
                 currentHealth = maxHealth;                      //Change where this is done i.e. Respawn?
             }
@@ -114,6 +117,9 @@ public class HealthSystem : MonoBehaviour
             {
                 AudioManager.instance.PlaySFX(AudioManager.instance.EnemyDTH[0]);
                 Destroy(this.gameObject);
+
+                if (this.CompareTag("Boss"))
+                    OnDeath?.Invoke();
             }
         }
     }
@@ -210,11 +216,11 @@ public class HealthSystem : MonoBehaviour
     // Player Damage Screen //
     private void FlashDamageScreen()
     {
-        PlayerScript.PlayerDamageScreen.SetActive(true);
+        PlayerScript.PlayerDamageScreen.GetComponent<Image>().enabled = true;
         Invoke("HideDamageScreen", dmgFlashDuration);
     }
     private void HideDamageScreen()
     {
-       PlayerScript.PlayerDamageScreen.SetActive(false);
+       PlayerScript.PlayerDamageScreen.GetComponent<Image>().enabled = false; ;
     }
 }

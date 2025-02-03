@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class playerScript : MonoBehaviour
 {
@@ -47,20 +48,22 @@ public class playerScript : MonoBehaviour
     { get => playerDamageScreen; set => playerDamageScreen = value; }
     public playerScript PlayerScript
     { get => _playerScript; set => _playerScript = value; }
-  
+
+    float origTime;
 
     void Start()
-    {       
+    {
         // Subscribe to the State Changes
-        //GameManager.instance.OnGameStateChange += OnGameStateChange;
-        
+        origTime = Time.timeScale;
+
         // find and set player reference
         player = GameObject.FindWithTag("Player");
         _playerScript = player.GetComponent<playerScript>();
         playerCamera = GameObject.FindWithTag("MainCamera").GetComponent<cameraController>();
 
         playerDamageScreen = GameObject.Find("PlayerDmgScreen");
-        playerDamageScreen.SetActive(false);
+        if(playerDamageScreen != null)
+            playerDamageScreen.GetComponent<Image>().enabled = false;
     }
 
     void Update()
@@ -142,6 +145,8 @@ public class playerScript : MonoBehaviour
     {
         if (SceneManagerScript.instance != null)
         {
+            Time.timeScale = origTime;
+
             Vector3 respawnPosition;
 
             //look for a checkpoint in the scene

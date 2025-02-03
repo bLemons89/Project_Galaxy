@@ -8,6 +8,7 @@
  */
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml;
 using UnityEngine;
 
 public class Objective3 : MonoBehaviour
@@ -29,8 +30,14 @@ public class Objective3 : MonoBehaviour
 
                 foreach (GameObject obj in exitColliders)           //turn off colliders to allow plater to continue
                 {
-                    obj.SetActive(false);
+                    //mark as destroyed for saving
+                    SceneManagerScript.instance.MarkObjectAsDestroyed(obj.GetComponent<UniqueID>().ID);
+
+                    Destroy(obj);
                 }
+
+                //mark as destroyed for saving
+                SceneManagerScript.instance.MarkObjectAsDestroyed(this.GetComponent<UniqueID>().ID);
 
                 //mark as complete
                 SceneManagerScript.instance.SaveData.MarkObjectiveAsCompleted(objectiveID);
