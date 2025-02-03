@@ -340,7 +340,7 @@ public class WeaponInAction : MonoBehaviour
                 currentAmmo--;
 
                 currentAmmoUI.text = currentAmmo.ToString();
-                //AudioManager.instance.PlaySFX(gunInfo.shootSound);
+                AudioManager.instance.PlaySFX(gunInfo.shootSound);
                 
 
                 //raycast to where the player is looking
