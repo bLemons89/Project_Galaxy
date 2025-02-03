@@ -459,7 +459,7 @@ MonoBehaviour:
   ignoreMask:
     serializedVersion: 2
     m_Bits: 136
-  speed: 4
+  speed: 6
   sprintMod: 2
   jumpMax: 1
   jumpSpeed: 14
