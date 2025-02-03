@@ -29,7 +29,7 @@ public class SaveData
     public List<string> completedObjectives = new List<string>();   //to store completed objectives
     public List<InventorySlotData> inventorySlots = new List<InventorySlotData>();      //to save inventory
 
-    public int energyCellsCollected = 3;  //keep track of collected cells
+    public int energyCellsCollected = 0;  //keep track of collected cells
     public int shardsCollected = 0;       //keep track of collected shards
 
     //store newest checkpoint
