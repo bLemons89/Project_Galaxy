@@ -32,6 +32,8 @@ public class playerScript : MonoBehaviour
     //bool isReloading
     bool isStunned;
 
+    int speedOrg;
+
     // Vectors //
     Vector3 moveDirection;
     Vector3 horizontalVelocity;
@@ -66,153 +68,158 @@ public class playerScript : MonoBehaviour
         if (isStunned)
             return;
 
-        if(!GameManager.instance.IsPaused)
+        if (!GameManager.instance.IsPaused)
         {
             //always checking for
             Movement();
         }
-        
-        //Ouside condition to prevent infinite glitch
-        Sprint();
-    }
-
-    // Player Movement //
-    void Movement()
-    {
-        //resets jumps once player is on the ground
-        if (playerController.isGrounded)
+        if (!isSprinting)
         {
-            if (moveDirection.magnitude > 0.3f && !isPlayingStep)
+            speed = speedOrg;
+        }
+            //Ouside condition to prevent infinite glitch
+            Sprint();
+        }
+
+        // Player Movement //
+        void Movement()
+        {
+            //resets jumps once player is on the ground
+            if (playerController.isGrounded)
             {
-                //StartCoroutine(PlayStep());
+                if (moveDirection.magnitude > 0.3f && !isPlayingStep)
+                {
+                    //StartCoroutine(PlayStep());
+                }
+
+                jumpCount = 0;
+
+                //falling/ledge
+                horizontalVelocity = Vector3.zero;
             }
 
-            jumpCount = 0;
+            //tie movement to camera, normalized to handle diagonal movement
+            moveDirection = (transform.right * Input.GetAxis("Horizontal")) +
+                            (transform.forward * Input.GetAxis("Vertical"));
 
-            //falling/ledge
-            horizontalVelocity = Vector3.zero;
-        }
+            playerController.Move(moveDirection * speed * Time.deltaTime);
 
-        //tie movement to camera, normalized to handle diagonal movement
-        moveDirection = (transform.right * Input.GetAxis("Horizontal")) +
-                        (transform.forward * Input.GetAxis("Vertical"));
+            Jump();
 
-        playerController.Move(moveDirection * speed * Time.deltaTime);
-
-        Jump();
-
-        //physics fix for under object
-        if ((playerController.collisionFlags & CollisionFlags.Above) != 0)
-        {
-            horizontalVelocity.y = Vector3.zero.y;
-        }
-    }
-
-    void Sprint()
-    {
-        if (Input.GetButtonDown("Sprint"))
-        {
-            speed *= sprintMod;
-            isSprinting = true;
-        }
-        else if(Input.GetButtonUp("Sprint"))
-        {
-            speed /= sprintMod;
-            isSprinting = false;
-        }
-    }
-
-    void Jump()
-    {
-        if(Input.GetButtonDown("Jump") && jumpCount < jumpMax)
-        {
-            jumpCount++;
-            horizontalVelocity.y = jumpSpeed;
-            //AudioManager.instance.PlaySFX(AudioManager.instance.PlayerJump[Random.Range(0,
-                //AudioManager.instance.PlayerJump.Length)]);
-        }
-        playerController.Move(horizontalVelocity * Time.deltaTime);
-        horizontalVelocity.y -= gravity * Time.deltaTime;
-    }
-
-    public void Respawn()                   //called using Unity event
-    {
-        if (SceneManagerScript.instance != null)
-        {
-            Vector3 respawnPosition;
-
-            //look for a checkpoint in the scene
-            if(SceneManagerScript.instance.SaveData.lastCheckpointPositions.Exists(cp => cp.sceneName == SceneManager.GetActiveScene().name))
+            //physics fix for under object
+            if ((playerController.collisionFlags & CollisionFlags.Above) != 0)
             {
-                respawnPosition = SceneManagerScript.instance.SaveData.GetCheckpointPosition(SceneManager.GetActiveScene().name);
+                horizontalVelocity.y = Vector3.zero.y;
+            }
+        }
+
+        void Sprint()
+        {
+            if (Input.GetButtonDown("Sprint"))
+            {
+                speed *= sprintMod;
+                isSprinting = true;
+            }
+            else if (Input.GetButtonUp("Sprint"))
+            {
+                speed /= sprintMod;
+                isSprinting = false;
+            }
+        }
+
+        void Jump()
+        {
+            if (Input.GetButtonDown("Jump") && jumpCount < jumpMax)
+            {
+                jumpCount++;
+                horizontalVelocity.y = jumpSpeed;
+                //AudioManager.instance.PlaySFX(AudioManager.instance.PlayerJump[Random.Range(0,
+                //AudioManager.instance.PlayerJump.Length)]);
+            }
+            playerController.Move(horizontalVelocity * Time.deltaTime);
+            horizontalVelocity.y -= gravity * Time.deltaTime;
+        }
+
+        public void Respawn()                   //called using Unity event
+        {
+            if (SceneManagerScript.instance != null)
+            {
+                Vector3 respawnPosition;
+
+                //look for a checkpoint in the scene
+                if (SceneManagerScript.instance.SaveData.lastCheckpointPositions.Exists(cp => cp.sceneName == SceneManager.GetActiveScene().name))
+                {
+                    respawnPosition = SceneManagerScript.instance.SaveData.GetCheckpointPosition(SceneManager.GetActiveScene().name);
+                }
+                else
+                {
+                    respawnPosition = transform.position;
+                }
+
+                //Debug.Log($"Last Checkpoint position stored for respawn at {respawnPosition}");
+
+                //disable controller to move player
+                playerController.enabled = false;
+                transform.position = respawnPosition;
+                playerController.enabled = true;
+
+                //resetting speed to prevent glitches
+                horizontalVelocity = Vector3.zero;
+
+                //Debug.Log($"Player respawned at {respawnPosition}");
             }
             else
             {
-                respawnPosition = transform.position;
+                //Debug.Log("No SceneManagerScript, unable to respawn");
+            }
+        }
+
+        public void Stun(float duration, float stunSensitivity)        //called from stun enemy
+        {
+            //add stun effect logic
+            //Debug.Log($"Player stunned for {duration} seconds");
+
+            if (!isStunned)
+                StartCoroutine(StunRoutine(duration, stunSensitivity));
+        }
+
+        IEnumerator StunRoutine(float duration, float stunSensitivity)
+        {
+            //disable movement/actions
+            isStunned = true;
+
+            //adjust camera sensitivity
+            playerCamera.Sensitivity = stunSensitivity;
+
+            //stun duration
+            yield return new WaitForSeconds(duration);
+
+            //restore camera sensitivity
+            playerCamera.Sensitivity = playerCamera.OrigSensitivity;
+
+            //enable movement/actions
+            isStunned = false;
+        }
+        IEnumerator PlayStep()
+        {
+            isPlayingStep = true;
+            // Player step audio here
+            AudioManager.instance.PlaySFX(AudioManager.instance.PlayerWalk[Random.Range(0,
+                AudioManager.instance.PlayerWalk.Length)]);
+
+            if (!isSprinting)
+            {
+                yield return new WaitForSeconds(0.5f);
+            }
+            else
+            {
+                yield return new WaitForSeconds(0.2f);
             }
 
-            //Debug.Log($"Last Checkpoint position stored for respawn at {respawnPosition}");
-
-            //disable controller to move player
-            playerController.enabled = false;
-            transform.position = respawnPosition;
-            playerController.enabled = true;
-
-            //resetting speed to prevent glitches
-            horizontalVelocity = Vector3.zero;
-
-            //Debug.Log($"Player respawned at {respawnPosition}");
-        }
-        else
-        {
-            //Debug.Log("No SceneManagerScript, unable to respawn");
+            isPlayingStep = false;
         }
     }
-
-    public void Stun(float duration, float stunSensitivity)        //called from stun enemy
-    {
-        //add stun effect logic
-        //Debug.Log($"Player stunned for {duration} seconds");
-
-        if(!isStunned)
-            StartCoroutine(StunRoutine(duration, stunSensitivity));
-    }
-
-    IEnumerator StunRoutine(float duration, float stunSensitivity)
-    {
-        //disable movement/actions
-        isStunned = true;
-
-        //adjust camera sensitivity
-        playerCamera.Sensitivity = stunSensitivity;
-
-        //stun duration
-        yield return new WaitForSeconds(duration);
-
-        //restore camera sensitivity
-        playerCamera.Sensitivity = playerCamera.OrigSensitivity;
-
-        //enable movement/actions
-        isStunned = false;
-    }
-    IEnumerator PlayStep()
-    {
-        isPlayingStep = true;
-        // Player step audio here
-        AudioManager.instance.PlaySFX(AudioManager.instance.PlayerWalk[Random.Range(0,
-            AudioManager.instance.PlayerWalk.Length)]);
-
-        if (!isSprinting)
-        {
-            yield return new WaitForSeconds(0.5f);
-        }
-        else
-        {
-            yield return new WaitForSeconds(0.2f);
-        }
-
-        isPlayingStep = false;
-    }
+          
     //private void OnGameStateChange(GameState newGameState)
     //{
     //    if(newGameState == GameState.Pause)
@@ -229,4 +236,4 @@ public class playerScript : MonoBehaviour
     //    // Unsubscribe
     //    GameManager.instance.OnGameStateChange -= OnGameStateChange;
     //}
-}
+
