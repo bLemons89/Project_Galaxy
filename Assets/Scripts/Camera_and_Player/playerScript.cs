@@ -84,7 +84,7 @@ public class playerScript : MonoBehaviour
         // Player Movement //
         void Movement()
         {
-            //resets jumps once player is on the ground
+            
             if (playerController.isGrounded)
             {
                 if (moveDirection.magnitude > 0.3f && !isPlayingStep)
