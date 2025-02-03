@@ -101,7 +101,9 @@ public class HealthSystem : MonoBehaviour
             //Handle Death - message, respawn
             if (this.CompareTag("Player"))
             {
-                OnDeath?.Invoke();
+                Time.timeScale = 0;
+                GameManager.instance.GetComponent<ButtonFunctions>().WinScreen.SetActive(true);
+                //OnDeath?.Invoke();
 
                 currentHealth = maxHealth;                      //Change where this is done i.e. Respawn?
             }

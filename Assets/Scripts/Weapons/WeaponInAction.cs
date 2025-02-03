@@ -110,8 +110,11 @@ public class WeaponInAction : MonoBehaviour
                 if ((gunModelPlaceHolder.GetComponent<MeshFilter>().sharedMesh == null) && (reloadMessage.GetComponent<Image>().enabled) ||
                     gunInfo != null && currentAmmo > (gunInfo.maxClipAmmo / 3))
                 {
-                    reloadMessage.GetComponent<Image>().enabled = false;
-                    reloadText.enabled = false;
+                    if (!isReloading)
+                    {
+                        reloadMessage.GetComponent<Image>().enabled = false;
+                        reloadText.enabled = false;
+                    }
                 }
             }
 
@@ -266,8 +269,12 @@ public class WeaponInAction : MonoBehaviour
     IEnumerator ReloadRoutine()
     {
         isReloading = true;     //so enemy does not infinite reload
-        //sounds/animations
-        //Debug.Log("Reloading...");
+
+        reloadMessage.GetComponent<Image>().enabled = true;
+        reloadText.enabled = true;
+        reloadText.text = "Reloading...";
+
+
         yield return new WaitForSeconds(gunInfo.reloadRate);
 
         if (CompareTag("Player"))
@@ -281,6 +288,7 @@ public class WeaponInAction : MonoBehaviour
             ammoStoredUI.text = ammoStored.ToString();
 
             reloadMessage.GetComponent<Image>().enabled = false;
+            reloadText.text = "Reload";
             reloadText.enabled = false;
 
         }
@@ -337,7 +345,7 @@ public class WeaponInAction : MonoBehaviour
     public void PlayerFireGun()
     {
         // fire only if player has weapon equiped
-        if (gunInfo != null)
+        if (gunInfo != null && !isReloading)
         {
             //fire only if the gun has ammo
             if (currentAmmo > 0)

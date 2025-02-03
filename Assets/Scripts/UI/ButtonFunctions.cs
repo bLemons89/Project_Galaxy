@@ -91,6 +91,8 @@ public class ButtonFunctions : MonoBehaviour
     public TextMeshProUGUI TimeDateStamp
     { get => timeDateStamp; set => timeDateStamp = value; }
 
+    public GameObject WinScreen => winScreen;
+    public GameObject LoseScreen => loseScreen;
     // Radial Menu //
     //RadialMenu radialMenu;
     //[SerializeField] GameObject radialMenuObject;

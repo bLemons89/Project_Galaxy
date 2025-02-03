@@ -49,12 +49,13 @@ public class playerScript : MonoBehaviour
     public playerScript PlayerScript
     { get => _playerScript; set => _playerScript = value; }
 
+    float origTime;
 
     void Start()
-    {       
+    {
         // Subscribe to the State Changes
-        //GameManager.instance.OnGameStateChange += OnGameStateChange;
-        
+        origTime = Time.timeScale;
+
         // find and set player reference
         player = GameObject.FindWithTag("Player");
         _playerScript = player.GetComponent<playerScript>();
@@ -144,6 +145,8 @@ public class playerScript : MonoBehaviour
     {
         if (SceneManagerScript.instance != null)
         {
+            Time.timeScale = origTime;
+
             Vector3 respawnPosition;
 
             //look for a checkpoint in the scene
