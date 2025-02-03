@@ -6,6 +6,7 @@ using TMPro;
 using UnityEditor;
 using DG.Tweening;
 using UnityEngine.Events;
+using Unity.VisualScripting;
 
 public class HealthSystem : MonoBehaviour
 {
@@ -116,6 +117,9 @@ public class HealthSystem : MonoBehaviour
             {
                 AudioManager.instance.PlaySFX(AudioManager.instance.EnemyDTH[0]);
                 Destroy(this.gameObject);
+
+                if (this.CompareTag("Boss"))
+                    OnDeath?.Invoke();
             }
         }
     }
