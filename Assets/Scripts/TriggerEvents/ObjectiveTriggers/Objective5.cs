@@ -28,6 +28,7 @@ public class Objective5 : MonoBehaviour
                 //iterate to next objective
                 InventoryManager.instance.CollectEnergyCell();
                 ObjectiveManager.instance.CompleteObjective();
+
                 Destroy(gameObject);
             }
         }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class playerScript : MonoBehaviour
 {
@@ -47,7 +48,7 @@ public class playerScript : MonoBehaviour
     { get => playerDamageScreen; set => playerDamageScreen = value; }
     public playerScript PlayerScript
     { get => _playerScript; set => _playerScript = value; }
-  
+
 
     void Start()
     {       
@@ -60,7 +61,8 @@ public class playerScript : MonoBehaviour
         playerCamera = GameObject.FindWithTag("MainCamera").GetComponent<cameraController>();
 
         playerDamageScreen = GameObject.Find("PlayerDmgScreen");
-        playerDamageScreen.SetActive(false);
+        if(playerDamageScreen != null)
+            playerDamageScreen.GetComponent<Image>().enabled = false;
     }
 
     void Update()
@@ -87,7 +89,7 @@ public class playerScript : MonoBehaviour
         {
             if (moveDirection.magnitude > 0.3f && !isPlayingStep)
             {
-                //StartCoroutine(PlayStep());
+                StartCoroutine(PlayStep());
             }
 
             jumpCount = 0;
@@ -131,8 +133,8 @@ public class playerScript : MonoBehaviour
         {
             jumpCount++;
             horizontalVelocity.y = jumpSpeed;
-            //AudioManager.instance.PlaySFX(AudioManager.instance.PlayerJump[Random.Range(0,
-                //AudioManager.instance.PlayerJump.Length)]);
+            AudioManager.instance.PlaySFX(AudioManager.instance.PlayerJump[Random.Range(0,
+                AudioManager.instance.PlayerJump.Length)]);
         }
         playerController.Move(horizontalVelocity * Time.deltaTime);
         horizontalVelocity.y -= gravity * Time.deltaTime;
