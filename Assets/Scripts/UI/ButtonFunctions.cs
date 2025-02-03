@@ -289,6 +289,16 @@ public class ButtonFunctions : MonoBehaviour
     }
     public void MenuSettingsButton()
     {
+        if(!baseMenuBackground.activeSelf)
+        {
+            baseMenuBackground.GetComponent<RectTransform>().anchoredPosition = onScreenPos;
+            baseMenuBackground.SetActive(true);
+            if(!headerBar.activeSelf)
+            {
+                headerBar.SetActive(true);
+            }
+        }
+
         if(GameManager.instance.MenuActive != settingsMenu)
         { 
             GameManager.instance.MenuActive.SetActive(false);
@@ -311,6 +321,15 @@ public class ButtonFunctions : MonoBehaviour
     }
     public void MenuCreditButton()
     {
+        if (!baseMenuBackground.activeSelf)
+        {
+            baseMenuBackground.GetComponent<RectTransform>().anchoredPosition = onScreenPos;
+            baseMenuBackground.SetActive(true);
+            if (!headerBar.activeSelf)
+            {
+                headerBar.SetActive(true);
+            }
+        }
         if (GameManager.instance.MenuActive != creditScreen)
         {
             GameManager.instance.MenuActive.SetActive(false);
@@ -333,6 +352,15 @@ public class ButtonFunctions : MonoBehaviour
     }
     public void MenuSaveButton()
     {
+        if (!baseMenuBackground.activeSelf)
+        {
+            baseMenuBackground.GetComponent<RectTransform>().anchoredPosition = onScreenPos;
+            baseMenuBackground.SetActive(true);
+            if (!headerBar.activeSelf)
+            {
+                headerBar.SetActive(true);
+            }
+        }
         if (GameManager.instance.MenuActive != saveMenu)
         {
             GameManager.instance.MenuActive.SetActive(false);
@@ -357,6 +385,15 @@ public class ButtonFunctions : MonoBehaviour
     }
     public void MenuControlsButton()
     {
+        if (!baseMenuBackground.activeSelf)
+        {
+            baseMenuBackground.GetComponent<RectTransform>().anchoredPosition = onScreenPos;
+            baseMenuBackground.SetActive(true);
+            if (!headerBar.activeSelf)
+            {
+                headerBar.SetActive(true);
+            }
+        }
         if (GameManager.instance.MenuActive != controlsMenu)
         {
             GameManager.instance.MenuActive.SetActive(false);
@@ -378,6 +415,15 @@ public class ButtonFunctions : MonoBehaviour
     }
     public void MenuInventoryButton()
     {
+        if (!baseMenuBackground.activeSelf)
+        {
+            baseMenuBackground.GetComponent<RectTransform>().anchoredPosition = onScreenPos;
+            baseMenuBackground.SetActive(true);
+            if (!headerBar.activeSelf)
+            {
+                headerBar.SetActive(true);
+            }
+        }
         if (GameManager.instance.MenuActive != inventoryMenu)
         {
             GameManager.instance.MenuActive.SetActive(false);
