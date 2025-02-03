@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class playerScript : MonoBehaviour
 {
@@ -47,7 +48,7 @@ public class playerScript : MonoBehaviour
     { get => playerDamageScreen; set => playerDamageScreen = value; }
     public playerScript PlayerScript
     { get => _playerScript; set => _playerScript = value; }
-  
+
 
     void Start()
     {       
@@ -60,7 +61,8 @@ public class playerScript : MonoBehaviour
         playerCamera = GameObject.FindWithTag("MainCamera").GetComponent<cameraController>();
 
         playerDamageScreen = GameObject.Find("PlayerDmgScreen");
-        playerDamageScreen.SetActive(false);
+        if(playerDamageScreen != null)
+            playerDamageScreen.GetComponent<Image>().enabled = false;
     }
 
     void Update()

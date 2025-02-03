@@ -6634,6 +6634,83 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 888587148}
   m_Mesh: {fileID: 4300002, guid: 07a088acddb7c4b41babb46ac5503475, type: 3}
+--- !u!1001 &901317240
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 892624900857005164, guid: 54a546a7c496e8b4fbf8f8a11fb5a92f, type: 3}
+      propertyPath: m_Name
+      value: AudioManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 5246060603216236818, guid: 54a546a7c496e8b4fbf8f8a11fb5a92f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.44160128
+      objectReference: {fileID: 0}
+    - target: {fileID: 5246060603216236818, guid: 54a546a7c496e8b4fbf8f8a11fb5a92f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.25964618
+      objectReference: {fileID: 0}
+    - target: {fileID: 5246060603216236818, guid: 54a546a7c496e8b4fbf8f8a11fb5a92f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.30988228
+      objectReference: {fileID: 0}
+    - target: {fileID: 5246060603216236818, guid: 54a546a7c496e8b4fbf8f8a11fb5a92f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5246060603216236818, guid: 54a546a7c496e8b4fbf8f8a11fb5a92f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5246060603216236818, guid: 54a546a7c496e8b4fbf8f8a11fb5a92f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5246060603216236818, guid: 54a546a7c496e8b4fbf8f8a11fb5a92f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5246060603216236818, guid: 54a546a7c496e8b4fbf8f8a11fb5a92f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5246060603216236818, guid: 54a546a7c496e8b4fbf8f8a11fb5a92f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5246060603216236818, guid: 54a546a7c496e8b4fbf8f8a11fb5a92f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8212964682222028522, guid: 54a546a7c496e8b4fbf8f8a11fb5a92f, type: 3}
+      propertyPath: source_Player
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8212964682222028522, guid: 54a546a7c496e8b4fbf8f8a11fb5a92f, type: 3}
+      propertyPath: Reload.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8212964682222028522, guid: 54a546a7c496e8b4fbf8f8a11fb5a92f, type: 3}
+      propertyPath: Reload.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 217c043909e9cbf47bb84b0e2aa02e74, type: 3}
+    - target: {fileID: 8212964682222028522, guid: 54a546a7c496e8b4fbf8f8a11fb5a92f, type: 3}
+      propertyPath: Empty_Clip.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8212964682222028522, guid: 54a546a7c496e8b4fbf8f8a11fb5a92f, type: 3}
+      propertyPath: Empty_Clip.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: e0bfa1b5854036849aaa7b89b6057f41, type: 3}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 54a546a7c496e8b4fbf8f8a11fb5a92f, type: 3}
 --- !u!114 &905948159 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5547842988705874653, guid: 4d8038ad4bc603e459c4635bd6feb3be, type: 3}
@@ -12237,6 +12314,10 @@ PrefabInstance:
     - target: {fileID: 1459900626901210009, guid: 4d8038ad4bc603e459c4635bd6feb3be, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1815611766399745448, guid: 4d8038ad4bc603e459c4635bd6feb3be, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1826666885810960622, guid: 4d8038ad4bc603e459c4635bd6feb3be, type: 3}
       propertyPath: m_Sprite
@@ -18925,6 +19006,7 @@ SceneRoots:
   - {fileID: 886969599}
   - {fileID: 399016559}
   - {fileID: 1568859380}
+  - {fileID: 901317240}
   - {fileID: 1989069453}
   - {fileID: 671127705}
   - {fileID: 200064718}

@@ -208,11 +208,11 @@ public class HealthSystem : MonoBehaviour
     // Player Damage Screen //
     private void FlashDamageScreen()
     {
-        PlayerScript.PlayerDamageScreen.SetActive(true);
+        PlayerScript.PlayerDamageScreen.GetComponent<Image>().enabled = true;
         Invoke("HideDamageScreen", dmgFlashDuration);
     }
     private void HideDamageScreen()
     {
-       PlayerScript.PlayerDamageScreen.SetActive(false);
+       PlayerScript.PlayerDamageScreen.GetComponent<Image>().enabled = false; ;
     }
 }

@@ -11,6 +11,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Xml;
+using JetBrains.Annotations;
 
 public class SceneManagerScript : MonoBehaviour
 {
@@ -65,6 +66,8 @@ public class SceneManagerScript : MonoBehaviour
         {
            GameObject.FindWithTag("MainMenu").SetActive(false);
         }
+
+        AudioManager.instance.PlayMusic(AudioManager.instance.GameMusic[Random.Range(0, AudioManager.instance.GameMusic.Length)]);
 
         SaveSceneState();
 

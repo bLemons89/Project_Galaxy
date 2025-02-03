@@ -80,7 +80,7 @@ public class WeaponInAction : MonoBehaviour
             currentAmmoUI = GameObject.Find("CurrentAmmo").GetComponent<TextMeshProUGUI>();
             ammoStoredUI = GameObject.Find("TotalAmmo").GetComponent<TextMeshProUGUI>();
             reloadMessage = GameObject.Find("ReloadMsgBackground");
-            //reloadText = GameObject.Find("ReloadMessageText").GetComponent<TextMeshProUGUI>();
+            reloadText = GameObject.Find("ReloadMessageText").GetComponent<TextMeshProUGUI>();
 
             CheckAvailableWeapons();
             if(availableWeapons.Count > 0)
@@ -107,8 +107,12 @@ public class WeaponInAction : MonoBehaviour
 
             if (gunModelPlaceHolder != null && reloadMessage != null)
             {
-                if ((gunModelPlaceHolder.GetComponent<MeshFilter>().sharedMesh == null) && (reloadMessage.activeSelf))
-                    reloadMessage.SetActive(false);
+                if ((gunModelPlaceHolder.GetComponent<MeshFilter>().sharedMesh == null) && (reloadMessage.GetComponent<Image>().enabled) ||
+                    gunInfo != null && currentAmmo > (gunInfo.maxClipAmmo / 3))
+                {
+                    reloadMessage.GetComponent<Image>().enabled = false;
+                    reloadText.enabled = false;
+                }
             }
 
         }
@@ -276,7 +280,8 @@ public class WeaponInAction : MonoBehaviour
             currentAmmoUI.text = currentAmmo.ToString();
             ammoStoredUI.text = ammoStored.ToString();
 
-            reloadMessage.SetActive(false);
+            reloadMessage.GetComponent<Image>().enabled = false;
+            reloadText.enabled = false;
 
         }
         else currentAmmo = gunInfo.maxClipAmmo;
@@ -324,7 +329,8 @@ public class WeaponInAction : MonoBehaviour
         else if (this.gameObject.CompareTag("Player"))
         {
             //Debug.Log("WeaponInAction: Gun out of ammo");
-            reloadMessage.SetActive(true);
+            reloadMessage.GetComponent<Image>().enabled = true;
+            reloadText.enabled = true;
         }
     }
 
@@ -340,7 +346,7 @@ public class WeaponInAction : MonoBehaviour
                 currentAmmo--;
 
                 currentAmmoUI.text = currentAmmo.ToString();
-                //AudioManager.instance.PlaySFX(gunInfo.shootSound);
+                AudioManager.instance.PlaySFX(gunInfo.shootSound);
                 
 
                 //raycast to where the player is looking
@@ -367,6 +373,11 @@ public class WeaponInAction : MonoBehaviour
                     //Debug.Log("Player: Missed");
                 }
 
+                if (currentAmmo < (gunInfo.maxClipAmmo / 3))
+                {
+                    reloadMessage.GetComponent<Image>().enabled = true;
+                    reloadText.enabled = true;
+                }
                 //muzzle flash method
                 //PlayMuzzleFlash();
             }
@@ -375,7 +386,7 @@ public class WeaponInAction : MonoBehaviour
                 if(AudioManager.instance != null)
                     AudioManager.instance.PlaySFX(AudioManager.instance.Empty_Clip[0]);
                 //Debug.Log("Player: Gun out of ammo");
-                reloadMessage.SetActive(true);
+                //reloadMessage.SetActive(true);
             }
         }
     }
@@ -388,7 +399,7 @@ public class WeaponInAction : MonoBehaviour
             //adjust ammo
             currentAmmo--;
 
-            //AudioManager.instance.PlaySFX(AudioManager.instance.ER_Sounds[3]);
+            AudioManager.instance.PlaySFX(AudioManager.instance.ER_Sounds[3]);
 
             //adjusted shoot rate for enemies
             StartCoroutine(EnemyShootRate(this.gameObject.GetComponent<EnemyBase>().EnemyShootRate));
