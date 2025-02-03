@@ -29,6 +29,7 @@ public class WeaponInAction : MonoBehaviour
     [Header("UI")]
     [Header("Automatically found")]
     [SerializeField] Image gunImage;
+    [SerializeField] TextMeshProUGUI gunName;
     [SerializeField] TextMeshProUGUI currentAmmoUI;
     [SerializeField] TextMeshProUGUI ammoStoredUI;
     [SerializeField] GameObject reloadMessage;
@@ -77,6 +78,7 @@ public class WeaponInAction : MonoBehaviour
 
             //find UI components (reset every scene)
             gunImage = GameObject.Find("WeaponSprite").GetComponent<Image>();
+            gunName = GameObject.Find("WeaponName").GetComponent<TextMeshProUGUI>();
             currentAmmoUI = GameObject.Find("CurrentAmmo").GetComponent<TextMeshProUGUI>();
             ammoStoredUI = GameObject.Find("TotalAmmo").GetComponent<TextMeshProUGUI>();
             reloadMessage = GameObject.Find("ReloadMsgBackground");
@@ -91,7 +93,10 @@ public class WeaponInAction : MonoBehaviour
     private void Update()
     {
         //if(!CompareTag("Player"))
-            //Debug.DrawRay(shootOrigin.transform.position, transform.forward * gunInfo.shootDistance, Color.yellow);
+        //Debug.DrawRay(shootOrigin.transform.position, transform.forward * gunInfo.shootDistance, Color.yellow);
+
+        if (Time.timeScale == 0)
+            return;
 
         if (this.gameObject.CompareTag("Player"))
         {
@@ -232,6 +237,7 @@ public class WeaponInAction : MonoBehaviour
                     ammoStates.Add(gunInfo, new AmmoState { currentAmmo = currentAmmo, ammoStored = ammoStored});
                 }
 
+                gunName.text = gunInfo.ItemName;
                 currentAmmoUI.text = currentAmmo.ToString();
                 ammoStoredUI.text = ammoStored.ToString();
             }

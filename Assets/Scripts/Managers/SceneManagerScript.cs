@@ -67,6 +67,8 @@ public class SceneManagerScript : MonoBehaviour
 
         //load the starting scene
         SceneManager.LoadScene(saveData.currentSceneName);
+
+        GameObject.FindWithTag("MainMenu").SetActive(false);
     }
 
     private void LoadOnWake()         //Start() was here                               //MIGHT NOT NEED

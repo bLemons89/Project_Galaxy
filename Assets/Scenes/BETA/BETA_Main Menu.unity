@@ -762,7 +762,11 @@ PrefabInstance:
       objectReference: {fileID: 189383318}
     - target: {fileID: 7774239541134823689, guid: 4d8038ad4bc603e459c4635bd6feb3be, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ChangeScene
+      value: NewGame
+      objectReference: {fileID: 0}
+    - target: {fileID: 7774239541134823689, guid: 4d8038ad4bc603e459c4635bd6feb3be, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: SceneManagerScript, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 8050409024001276447, guid: 4d8038ad4bc603e459c4635bd6feb3be, type: 3}
       propertyPath: m_LocalPosition.x

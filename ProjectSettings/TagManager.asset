@@ -13,6 +13,7 @@ TagManager:
   - PlayerSpawnArea
   - MainMenu
   - Enemy
+  - BossBar
   layers:
   - Default
   - TransparentFX

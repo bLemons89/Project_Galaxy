@@ -339,9 +339,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
-  healthBarBack: {fileID: 0}
-  healthBarFill: {fileID: 0}
-  easeBar: {fileID: 0}
+  healthBarBack: {fileID: 5144590393094826717, guid: e3a21b86dda665c4abee8a16c4ec6d4e, type: 3}
+  healthBarFill: {fileID: 3437984645634953909, guid: a5de4cf757ce0844798e80cb1494fc35, type: 3}
+  easeBar: {fileID: 4209323475538589853, guid: 7196d217fd51f87479f5f846445d2c26, type: 3}
   healthGradient:
     serializedVersion: 2
     key0: {r: 1, g: 1, b: 1, a: 1}

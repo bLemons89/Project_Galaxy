@@ -119,7 +119,11 @@ public class HealthSystem : MonoBehaviour
                 Destroy(this.gameObject);
 
                 if (this.CompareTag("Boss"))
+                {
                     OnDeath?.Invoke();
+
+                    GameObject.FindWithTag("BossBar").SetActive(false);
+                }
             }
         }
     }

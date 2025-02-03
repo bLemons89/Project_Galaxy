@@ -60,7 +60,9 @@ public class PartDropoff : MonoBehaviour
         if(insertedParts >= 3)
         {
             Time.timeScale = 0;
-            GameManager.instance.GetComponent<ButtonFunctions>().WinScreen.SetActive(true) ;
+            GameManager.instance.GetComponent<ButtonFunctions>().WinScreen.SetActive(true);
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
         }
     }
 

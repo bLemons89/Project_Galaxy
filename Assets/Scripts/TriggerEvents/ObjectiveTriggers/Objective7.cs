@@ -26,12 +26,22 @@ public class Objective7 : MonoBehaviour
         {
             if (!SceneManagerScript.instance.SaveData.IsObjectiveCompleted(objectiveID))
             {
-                Instantiate(boss, bossSpawn.position, Quaternion.identity);     //spawn boss
+                GameObject boss = GameObject.FindWithTag("Boss");
+
+                boss.GetComponent<Boss>().enabled = true;
+                boss.GetComponent<MeshRenderer>().enabled = true;
+                boss.GetComponent<CapsuleCollider>().enabled = true;
+
+                //Instantiate(boss, bossSpawn.position, Quaternion.identity);     //spawn boss
                 foreach (GameObject wall in walls) { wall.SetActive(true); }    //activate walls
+
+                GameObject.FindWithTag("BossBar").SetActive(true);
 
                 entranceCollider.enabled = true;
 
                 ObjectiveManager.instance.CompleteObjective();
+
+                SceneManagerScript.instance.MarkObjectAsDestroyed(this.GetComponent<UniqueID>().ID);
 
                 //mark as complete
                 SceneManagerScript.instance.SaveData.MarkObjectiveAsCompleted(objectiveID);
