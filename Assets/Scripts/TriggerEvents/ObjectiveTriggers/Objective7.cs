@@ -15,6 +15,7 @@ public class Objective7 : MonoBehaviour
     [SerializeField] Transform bossSpawn;
     [SerializeField] GameObject[] walls;
     [SerializeField] GameManager entranceCollider;
+    [SerializeField] GameObject bossBar;
 
     string objectiveID = "7";
 
@@ -35,7 +36,7 @@ public class Objective7 : MonoBehaviour
                 //Instantiate(boss, bossSpawn.position, Quaternion.identity);     //spawn boss
                 foreach (GameObject wall in walls) { wall.SetActive(true); }    //activate walls
 
-                GameObject.FindWithTag("BossBar").SetActive(true);
+                bossBar.SetActive(true);
 
                 entranceCollider.enabled = true;
 
